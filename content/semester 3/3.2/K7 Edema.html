@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edema Decoded — Gangguan Hemodinamik: Edema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f8f9;--bg2:#eef3f5;--bg3:#e3ebee;--bg4:#d5e1e5;
+  --border:rgba(15,80,95,.10);--border2:rgba(15,80,95,.20);
+  --text:#0e2430;--text2:#2c4a58;--text3:#6f8894;
+  --green:#1f7a4a;--greenbg:rgba(31,122,74,.09);--greenb:rgba(31,122,74,.25);
+  --gold:#0f6a7a;--goldbg:rgba(15,106,122,.09);--goldb:rgba(15,106,122,.28);
+  --red:#b03030;--redbg:rgba(176,48,48,.08);--redb:rgba(176,48,48,.25);
+  --blue:#1a4faa;--bluebg:rgba(26,79,170,.09);--blueb:rgba(26,79,170,.28);
+  --purp:#4433a0;--purpbg:rgba(68,51,160,.08);--purpb:rgba(68,51,160,.25);
+  --teal:#0c8299;--tealbg:rgba(12,130,153,.08);--tealb:rgba(12,130,153,.25);
+  --r:10px;--rl:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+.app{max-width:900px;margin:0 auto;padding:0 16px 60px}
+header{padding:40px 0 28px;text-align:center}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--text3);text-transform:uppercase;margin-bottom:10px}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(30px,6vw,54px);letter-spacing:-.03em;line-height:1;margin-bottom:10px}
+h1 span{color:var(--teal)}
+.sub{font-size:13px;color:var(--text2);max-width:520px;margin:0 auto}
+.main-tabs{display:flex;gap:3px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:24px}
+.main-tab{flex:1;padding:9px 6px;border-radius:9px;border:none;background:transparent;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s}
+.main-tab:hover{color:var(--text)}
+.main-tab.active{background:var(--gold);color:#fff;font-weight:600}
+.main-panel{display:none}
+.main-panel.active{display:block;animation:fi .2s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sub-tabs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:4px;margin-bottom:20px}
+.sub-tab{padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg2);color:var(--text3);font-family:'DM Mono',monospace;font-size:10.5px;cursor:pointer;transition:all .18s;text-align:center;line-height:1.4}
+.sub-tab:hover{background:var(--bg3);color:var(--text2);border-color:var(--border2)}
+.sub-tab.active{background:var(--gold);color:#fff;border-color:var(--text);font-weight:600}
+.sub-panel{display:none}
+.sub-panel.active{display:block;animation:fi .18s ease}
+.sec-h{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;padding-bottom:8px;border-bottom:2px solid var(--gold);margin-bottom:14px;color:var(--text)}
+p{margin-bottom:10px;color:var(--text2)}
+ul{margin:0 0 12px 20px;color:var(--text2)}
+li{margin-bottom:5px}
+strong{color:var(--text)}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.note{border-radius:var(--r);padding:12px 14px;margin:10px 0;font-size:13.5px;border:1px solid}
+.note.blue{background:var(--bluebg);border-color:var(--blueb);color:var(--text)}
+.note.green{background:var(--greenbg);border-color:var(--greenb);color:var(--text)}
+.note.gold{background:var(--goldbg);border-color:var(--goldb);color:var(--text)}
+.note.red{background:var(--redbg);border-color:var(--redb);color:var(--text)}
+.note.purp{background:var(--purpbg);border-color:var(--purpb);color:var(--text)}
+.note.teal{background:var(--tealbg);border-color:var(--tealb);color:var(--text)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border2);padding:8px 10px;text-align:left}
+th{background:var(--bg3);font-family:'DM Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--text2)}
+.imgcap{text-align:center;margin:16px 0}
+.imgcap .cap{font-size:11px;color:var(--text3);margin-top:6px;font-family:'DM Mono',monospace}
+.flowbox{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px 0}
+.flowitem{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--text)}
+.flowarrow{color:var(--gold);font-size:18px}
+
+/* Quiz */
+.qconfig{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:24px}
+.qconfig-title{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:4px}
+.qconfig-sub{font-size:12.5px;color:var(--text3);margin-bottom:16px}
+.cfg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:18px}
+.cfg-btn{padding:10px 8px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;color:var(--text3);font-size:11.5px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;line-height:1.3}
+.cfg-btn.sel{background:var(--gold);color:#fff;border-color:var(--text)}
+.start-btn{width:100%;padding:14px;border-radius:10px;border:none;background:var(--text);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:15px;cursor:pointer;transition:all .15s}
+.start-btn:hover{background:var(--gold)}
+.qheader{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;font-size:13px;color:var(--text3)}
+.qnum-display strong{color:var(--text);font-size:16px}
+.qtype-pill{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace}
+.qscore-display strong{color:var(--green);font-size:16px}
+.qcard{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:14px}
+.qscen{background:var(--bg3);border-left:3px solid var(--gold);padding:10px 14px;border-radius:6px;margin-bottom:14px;font-size:13.5px}
+.qdata{background:var(--bg2);border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px}
+.qtext{font-size:16px;font-weight:600;line-height:1.5;color:var(--text)}
+.opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.opt{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border2);background:#fff;cursor:pointer;text-align:left;font-size:13.5px;transition:all .12s;font-family:'DM Sans',sans-serif}
+.opt:hover:not(:disabled){border-color:var(--gold);background:var(--goldbg)}
+.opt:disabled{cursor:default}
+.opt-key{font-family:'DM Mono',monospace;font-weight:700;font-size:11px;color:var(--text3);background:var(--bg3);border-radius:5px;padding:3px 7px;flex-shrink:0}
+.opt.correct{border-color:var(--green);background:var(--greenbg)}
+.opt.correct .opt-key{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:var(--redbg)}
+.opt.wrong .opt-key{background:var(--red);color:#fff}
+.expbox{display:none;background:var(--tealbg);border:1px solid var(--tealb);border-radius:10px;padding:14px;font-size:13px;margin-bottom:14px;line-height:1.55}
+.expbox.show{display:block;animation:fi .2s ease}
+.actrow{display:flex;gap:10px}
+.next-btn{flex:1;padding:13px;border-radius:10px;border:none;background:var(--text);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+.next-btn:hover{background:var(--gold)}
+.end-btn{padding:13px 18px;border-radius:10px;border:1.5px solid var(--border2);background:#fff;color:var(--text3);font-weight:600;font-size:13px;cursor:pointer}
+.end-btn:hover{border-color:var(--red);color:var(--red)}
+.results-wrap{text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:30px 20px}
+.res-big{font-family:'Syne',sans-serif;font-weight:800;font-size:56px;color:var(--gold)}
+.res-sub{font-size:13px;color:var(--text3);margin-bottom:20px}
+.res-grid{display:none}
+.retry-btn{padding:11px 20px;border-radius:9px;border:none;background:var(--text);color:#fff;font-weight:700;font-size:13px;cursor:pointer}
+.dtable-wrap{overflow-x:auto;text-align:left}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="eyebrow">Patofisiologi · Gangguan Hemodinamik · FK Unsoed</div>
+  <h1>Edema <span style="color:var(--gold)">Decoded</span></h1>
+  <p class="sub">Gangguan hemodinamik: edema (dr. Susiana Candrawati, Sp.KO) — cairan tubuh, hormon pengatur, gaya Starling, sistem limfatik, dan patogenesis edema.</p>
+</header>
+
+<div class="main-tabs">
+  <button class="main-tab active" onclick="switchMain('materi',this)">📋 Materi</button>
+  <button class="main-tab" onclick="switchMain('quiz',this)">🎯 Quiz</button>
+</div>
+
+<!-- MATERI -->
+<div class="main-panel active" id="mp-materi">
+<div class="sub-tabs">
+<button class="sub-tab active" onclick="switchSub('tab-cairan',this)">Cairan Tubuh</button>
+<button class="sub-tab" onclick="switchSub('tab-hormon',this)">Hormon Cairan</button>
+<button class="sub-tab" onclick="switchSub('tab-starling',this)">Gaya Starling</button>
+<button class="sub-tab" onclick="switchSub('tab-limfe',this)">Sistem Limfatik</button>
+<button class="sub-tab" onclick="switchSub('tab-definisi',this)">Definisi Edema</button>
+<button class="sub-tab" onclick="switchSub('tab-patogenesis',this)">Patogenesis</button>
+</div>
+
+<!-- CAIRAN TUBUH -->
+<div class="sub-panel active" id="tab-cairan">
+<div class="sec-h">Cairan dan Hemodinamik</div>
+<p style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text3)">Slide 1 – 4</p>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">Dasar (Slide 2)</div>
+<ul>
+<li>Kehidupan sel dan jaringan bergantung pada <strong>oksigen</strong> yang dibawa aliran darah yang normal</li>
+<li>Sekitar <strong>60%</strong> berat badan manusia dewasa berupa cairan</li>
+</ul>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">Kompartemen Cairan Tubuh (Slide 3)</div>
+<table>
+<tr><th>Kompartemen</th><th>% berat badan</th></tr>
+<tr><td><strong>Cairan tubuh total</strong></td><td>60%</td></tr>
+<tr><td>&nbsp;&nbsp;Intrasel (ICF)</td><td>40%</td></tr>
+<tr><td>&nbsp;&nbsp;Ekstrasel (ECF)</td><td>20%</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Interstitial</td><td>15%</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Plasma</td><td>5%</td></tr>
+</table>
+<div class="flowbox">
+<div class="flowitem">Cairan tubuh 60%</div><div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--bluebg);border-color:var(--blueb)">Intrasel 40%</div>
+<div class="flowitem" style="background:var(--tealbg);border-color:var(--tealb)">Ekstrasel 20%</div><div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--greenbg);border-color:var(--greenb)">Interstitial 15%</div>
+<div class="flowitem" style="background:var(--redbg);border-color:var(--redb)">Plasma 5%</div>
+</div>
+<div class="divider"></div>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">Pertukaran Cairan (Slide 4, Fig 27-3)</div>
+<p>Pergerakan cairan antara ICF dan ECF, serta antara ECF dan lingkungan (volume tidak digambar sesuai skala; fungsional, ICF dua kali lebih besar daripada ECF).</p>
+<table>
+<tr><th>Masuk</th><th>Volume</th><th>Keluar</th><th>Volume</th></tr>
+<tr><td>Absorpsi epitel saluran cerna</td><td>2200 ml</td><td>Urin</td><td>1200 ml</td></tr>
+<tr><td>Generasi metabolik</td><td>300 ml</td><td>Respirasi dan insensible perspiration</td><td>1150 ml</td></tr>
+<tr><td></td><td></td><td>Feses</td><td>150 ml</td></tr>
+<tr><td></td><td></td><td>Sensible perspiration (keringat)</td><td>Bervariasi</td></tr>
+</table>
+<div class="note teal"><strong>Hafalan:</strong> cairan tubuh 60% BB = ICF 40% + ECF 20% (interstitial 15% + plasma 5%). Total masuk 2200 + 300 = 2500 ml; total keluar tanpa keringat 1200 + 1150 + 150 = 2500 ml.</div>
+</div>
+
+<!-- HORMON -->
+<div class="sub-panel" id="tab-hormon">
+<div class="sec-h">Keseimbangan Cairan & Hormon</div>
+<p style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text3)">Slide 5 – 8</p>
+<p>Hormon yang mengendalikan keseimbangan cairan dan elektrolit (Slide 5):</p>
+<ul>
+<li><strong>Anti-diuretic hormone (ADH)</strong></li>
+<li><strong>Aldosteron</strong></li>
+<li><strong>Atrial natriuretic peptide (ANP)</strong></li>
+</ul>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">1. ADH (Slide 6)</div>
+<div class="flowbox">
+<div class="flowitem" style="background:var(--redbg);border-color:var(--redb)">↑ Osmolalitas / ↑ Na<sup>+</sup> plasma</div><div class="flowarrow">→</div>
+<div class="flowitem">Osmoreseptor hipotalamus</div><div class="flowarrow">→</div>
+<div class="flowitem">Hipofisis posterior</div><div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--tealbg);border-color:var(--tealb)">Lepas ADH</div><div class="flowarrow">→</div>
+<div class="flowitem">Duktus koligentes ginjal</div><div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--greenbg);border-color:var(--greenb)">↑ Reabsorpsi air → urin sedikit</div>
+</div>
+<ul>
+<li>Pemicu kedua: <strong>↓ volume plasma / ↓ tekanan darah (10 – 15%)</strong> → baroreseptor di atrium dan pembuluh besar → hipofisis posterior melepas ADH</li>
+<li>Hasil: <strong>↓ osmolalitas dan ↑ volume plasma</strong></li>
+<li>Umpan balik negatif: menghambat osmoreseptor hipotalamus</li>
+</ul>
+<div class="divider"></div>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">2. Aldosteron (Slide 7)</div>
+<div class="flowbox">
+<div class="flowitem" style="background:var(--redbg);border-color:var(--redb)">↓ Na<sup>+</sup> atau ↑ K<sup>+</sup> plasma<br>+ mekanisme renin-angiotensin</div><div class="flowarrow">→</div>
+<div class="flowitem">Korteks adrenal</div><div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--tealbg);border-color:var(--tealb)">Aldosteron</div><div class="flowarrow">→</div>
+<div class="flowitem">Tubulus ginjal</div><div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--greenbg);border-color:var(--greenb)">↑ reabsorpsi Na<sup>+</sup> + ↑ sekresi K<sup>+</sup></div>
+</div>
+<ul>
+<li>Memulihkan kadar Na<sup>+</sup> dan K<sup>+</sup> plasma yang homeostatik; umpan balik negatif menghambat korteks adrenal</li>
+</ul>
+<div class="divider"></div>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">3. ANP (Slide 8)</div>
+<div class="flowbox">
+<div class="flowitem" style="background:var(--redbg);border-color:var(--redb)">↑ Regangan atrium (↑ TD)</div><div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--tealbg);border-color:var(--tealb)">Lepas ANP</div><div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--greenbg);border-color:var(--greenb)">↓ reabsorpsi Na<sup>+</sup> &amp; H<sub>2</sub>O → ↓ volume darah → ↓ TD</div>
+</div>
+<table>
+<tr><th>Target ANP</th><th>Efek</th></tr>
+<tr><td>Aparatus JG ginjal</td><td>↓ pelepasan renin → ↓ angiotensin II → vasodilatasi</td></tr>
+<tr><td>Hipotalamus dan hipofisis posterior</td><td>↓ pelepasan ADH</td></tr>
+<tr><td>Korteks adrenal</td><td>↓ pelepasan aldosteron</td></tr>
+<tr><td>Duktus koligentes</td><td>Dihambat → ↓ reabsorpsi Na<sup>+</sup> dan H<sub>2</sub>O</td></tr>
+</table>
+<div class="note blue"><strong>Perbandingan:</strong> ADH dan aldosteron <strong>menahan</strong> air/Na (menaikkan volume), sedangkan ANP <strong>membuang</strong> Na dan air (menurunkan volume dan tekanan darah).</div>
+</div>
+
+<!-- STARLING -->
+<div class="sub-panel" id="tab-starling">
+<div class="sec-h">Gaya Starling di Dinding Kapiler</div>
+<p style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text3)">Slide 9 – 11</p>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">Empat Gaya (Slide 9)</div>
+<table>
+<tr><th>Simbol</th><th>Gaya</th><th>Arah</th></tr>
+<tr><td><strong>Pc</strong></td><td>Tekanan kapiler (hidrostatik)</td><td>Keluar dari kapiler</td></tr>
+<tr><td><strong>Pif</strong></td><td>Tekanan cairan interstitial</td><td>Masuk ke kapiler</td></tr>
+<tr><td><strong>Πp</strong></td><td>Tekanan osmotik koloid plasma</td><td>Masuk ke kapiler</td></tr>
+<tr><td><strong>Πif</strong></td><td>Tekanan osmotik koloid cairan interstitial</td><td>Keluar dari kapiler</td></tr>
+</table>
+<div class="note gold"><strong>Rumus:</strong> tekanan filtrasi netto = (Pc + Πif) – (Pif + Πp). Positif = filtrasi keluar; negatif = reabsorpsi.</div>
+<div class="divider"></div>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">Gaya Netto: Versi Slide 10 (McGraw-Hill)</div>
+<table>
+<tr><th>Ujung</th><th>Gaya keluar (termasuk hidrostatik)</th><th>Gaya masuk (osmotik)</th><th>Netto</th></tr>
+<tr><td><strong>Arteriol</strong></td><td>41,3 mmHg</td><td>28 mmHg</td><td><strong>13,3 mmHg keluar</strong></td></tr>
+<tr><td><strong>Venul</strong></td><td>21,3 mmHg</td><td>28 mmHg</td><td><strong>6,7 mmHg masuk</strong></td></tr>
+</table>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">Gaya Netto: Versi Slide 11 (Fig 10-22, semua dalam mmHg)</div>
+<table>
+<tr><th>Ujung</th><th>Pc</th><th>Πif</th><th>Πp</th><th>Pif</th><th>Netto</th></tr>
+<tr><td><strong>Arteriol</strong></td><td>37</td><td>0</td><td>25</td><td>1</td><td><strong>11 keluar</strong> = tekanan ultrafiltrasi</td></tr>
+<tr><td><strong>Venul</strong></td><td>17</td><td>0</td><td>25</td><td>1</td><td><strong>9 masuk</strong> = tekanan reabsorpsi</td></tr>
+</table>
+<ul>
+<li><strong>Ultrafiltrasi</strong> terjadi di ujung arteriol; <strong>reabsorpsi</strong> di ujung venul</li>
+<li>Cairan interstitial yang tersisa diambil oleh <strong>pembuluh limfe awal (initial lymphatic)</strong></li>
+</ul>
+<div class="note red"><strong>Edema</strong> terjadi bila keseimbangan gaya ini terganggu: Pc naik, Πp turun, permeabilitas naik, atau drainase limfe terganggu.</div>
+</div>
+
+<!-- LIMFE -->
+<div class="sub-panel" id="tab-limfe">
+<div class="sec-h">Sistem Limfatik</div>
+<p style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text3)">Slide 13 – 14</p>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">Initial Lymphatics (Slide 13, Fig 10-24)</div>
+<ul>
+<li>Pembuluh limfe awal <strong>berujung buntu (blind-ended)</strong>, mengambil kelebihan cairan yang difiltrasi kapiler darah dan mengembalikannya ke sistem vena di dada</li>
+<li>Tepi sel endotel yang <strong>saling tumpang tindih</strong> membentuk bukaan seperti katup</li>
+<li><strong>Tekanan cairan di luar</strong> pembuluh mendorong tepi bebas sel endotel ke dalam → cairan interstitial (kini limfe) masuk</li>
+<li><strong>Tekanan di dalam</strong> pembuluh merapatkan tepi yang tumpang tindih → limfe tidak dapat keluar kembali</li>
+</ul>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">Sistem Limfatik & Sirkulasi (Slide 14, Fig 10-25)</div>
+<ul>
+<li>Limfe bermuara ke <strong>sistem vena dekat pintu masuk atrium kanan</strong></li>
+<li>Komponen: initial lymphatics, pembuluh limfe (dengan katup), dan <strong>kelenjar limfe</strong>, pada sirkulasi sistemik maupun pulmonal</li>
+</ul>
+<table>
+<tr><th>Aliran per hari</th><th>Volume</th></tr>
+<tr><td>Aliran darah</td><td><strong>7200 L/hari</strong></td></tr>
+<tr><td>Difiltrasi keluar kapiler</td><td><strong>20 L/hari</strong></td></tr>
+<tr><td>Direabsorpsi kembali ke kapiler</td><td><strong>17 L/hari</strong></td></tr>
+<tr><td>Dikembalikan lewat limfe</td><td><strong>3 L/hari</strong></td></tr>
+</table>
+<div class="flowbox">
+<div class="flowitem" style="background:var(--redbg);border-color:var(--redb)">Filtrasi 20 L</div><div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--bluebg);border-color:var(--blueb)">Reabsorpsi 17 L</div>
+<div class="flowitem" style="background:var(--greenbg);border-color:var(--greenb)">Limfe 3 L</div>
+</div>
+<div class="note teal"><strong>Kunci:</strong> 20 = 17 + 3. Bila drainase limfe terganggu, cairan menumpuk di interstitial → edema (mis. elephantiasis).</div>
+</div>
+
+<!-- DEFINISI -->
+<div class="sub-panel" id="tab-definisi">
+<div class="sec-h">Definisi Edema</div>
+<p style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text3)">Slide 12</p>
+<ul>
+<li>Edema = <strong>penimbunan cairan dalam celah interstitial dan ruang/rongga dalam tubuh</strong></li>
+<li>Terjadi karena <strong>gaya fisik yang bekerja pada dinding kapiler menjadi abnormal</strong> karena suatu sebab</li>
+</ul>
+<table>
+<tr><th>Jenis</th><th>Keterangan</th></tr>
+<tr><td><strong>Lokal</strong></td><td>Mengenai satu organ atau bagian tubuh</td></tr>
+<tr><td><strong>Umum / anasarka</strong></td><td>Mengenai seluruh tubuh</td></tr>
+</table>
+<div class="note gold"><strong>Hubungan dengan Starling:</strong> edema = filtrasi netto keluar kapiler melebihi kemampuan reabsorpsi dan drainase limfe.</div>
+</div>
+
+<!-- PATOGENESIS -->
+<div class="sub-panel" id="tab-patogenesis">
+<div class="sec-h">Klasifikasi Edema Berdasarkan Patogenesis</div>
+<p style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text3)">Slide 15 – 16</p>
+<table>
+<tr><th>Mekanisme</th><th>Contoh penyebab (slide)</th></tr>
+<tr><td><strong>↑ Tekanan intravaskular (hidrostatik)</strong></td><td>Gagal jantung kanan</td></tr>
+<tr><td><strong>↑ Permeabilitas dinding pembuluh darah</strong></td><td>Proses radang sistemik</td></tr>
+<tr><td><strong>↓ Tekanan osmotik plasma</strong></td><td>Hipoalbuminemia (penyakit hati, sindrom nefrotik, kwashiorkor)</td></tr>
+<tr><td><strong>Retensi natrium</strong></td><td>Gagal ginjal</td></tr>
+<tr><td><strong>Obstruksi aliran limfe</strong></td><td>Elephantiasis</td></tr>
+</table>
+<div class="flowbox">
+<div class="flowitem" style="background:var(--redbg);border-color:var(--redb)">Pc ↑</div>
+<div class="flowitem" style="background:var(--purpbg);border-color:var(--purpb)">Permeabilitas ↑</div>
+<div class="flowitem" style="background:var(--bluebg);border-color:var(--blueb)">Πp ↓</div>
+<div class="flowitem" style="background:var(--tealbg);border-color:var(--tealb)">Retensi Na<sup>+</sup></div>
+<div class="flowitem" style="background:var(--greenbg);border-color:var(--greenb)">Limfe terhambat</div>
+<div class="flowarrow">→</div>
+<div class="flowitem"><strong>EDEMA</strong></div>
+</div>
+
+<div class="sec-h" style="font-size:13px;border:none;margin-top:14px">Elephantiasis (Slide 16, Fig 10-26)</div>
+<ul>
+<li>Kondisi tropis akibat <strong>cacing parasit yang dibawa nyamuk</strong> yang menginvasi pembuluh limfe</li>
+<li>Gangguan drainase limfe → bagian tubuh yang terkena, biasanya <strong>ekstremitas</strong>, menjadi sangat edematosa dan tampak seperti kaki gajah</li>
+</ul>
+<div class="note red"><strong>Pola ingat:</strong> jantung kanan gagal → Pc naik · hati/ginjal/gizi buruk → albumin turun · radang → permeabilitas naik · ginjal gagal → Na tertahan · filariasis → limfe tersumbat.</div>
+</div>
+
+</div>
+
+<!-- QUIZ -->
+<div class="main-panel" id="mp-quiz">
+  <div id="qconfig" class="qconfig">
+    <div class="qconfig-title">Mulai Sesi Quiz</div>
+    <div class="qconfig-sub">Pilih topik (multi-pilih)</div>
+    <div class="cfg-grid" id="cfg-grid">
+<button class="cfg-btn sel" data-type="pool_cairan">Cairan Tubuh</button>
+<button class="cfg-btn sel" data-type="pool_hormon">Hormon Keseimbangan Cairan</button>
+<button class="cfg-btn sel" data-type="pool_starling">Gaya Starling Kapiler</button>
+<button class="cfg-btn sel" data-type="pool_limfe">Sistem Limfatik</button>
+<button class="cfg-btn sel" data-type="pool_edema">Definisi &amp; Jenis Edema</button>
+<button class="cfg-btn sel" data-type="pool_patogenesis">Patogenesis Edema</button>
+<button class="cfg-btn sel" data-type="pool_cases">Studi Kasus Klinis</button>
+</div>
+    <button class="start-btn" onclick="startSession()">Mulai →</button>
+  </div>
+  <div id="qactive" style="display:none">
+    <div class="qheader">
+      <div class="qnum-display">Soal ke-<strong id="qnum">1</strong></div>
+      <div id="qpill" class="qtype-pill"></div>
+      <div class="qscore-display"><strong id="qscore">0</strong> benar</div>
+    </div>
+    <div class="qcard">
+      <div id="qscen" class="qscen" style="display:none"></div>
+      <div id="qdata" class="qdata" style="display:none"></div>
+      <div id="qtext" class="qtext"></div>
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="expbox" id="expbox"></div>
+    <div class="actrow">
+      <button class="next-btn" id="nextbtn" onclick="nextQ()">Soal Berikutnya →</button>
+      <button class="end-btn" onclick="endSession()">Akhiri Sesi</button>
+    </div>
+  </div>
+  <div id="qresults" style="display:none">
+    <div class="results-wrap">
+      <div class="res-big" id="res-pct">—</div>
+      <div class="res-sub" id="res-sub">—</div>
+      <div class="res-grid" id="res-grid"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px">
+        <button class="retry-btn" style="margin-bottom:0" onclick="restartQuiz()">Coba Lagi</button>
+      </div>
+      <div class="dtable-wrap" style="margin-bottom:14px"><table><thead><tr><th>Topik</th><th>Soal</th><th>Benar</th></tr></thead><tbody id="res-bytype"></tbody></table></div>
+      <div class="dtable-wrap"><table><thead><tr><th>#</th><th>Soal (ringkas)</th><th>Jawaban Benar</th><th>Hasil</th></tr></thead><tbody id="res-detail"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<script>
+// ═══ TAB ═══
+window.switchMain=function(id,b){document.querySelectorAll('.main-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.main-tab').forEach(x=>x.classList.remove('active'));document.getElementById('mp-'+id).classList.add('active');b.classList.add('active');};
+window.switchSub=function(id,b){const parent=b.closest('.main-panel');parent.querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));parent.querySelectorAll('.sub-tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');b.classList.add('active');};
+
+// ═══ CFG TOGGLE ═══
+document.querySelectorAll('.cfg-btn').forEach(b=>{
+  b.onclick=()=>b.classList.toggle('sel');
+});
+
+const KEYS=['A','B','C','D','E'];
+function shuf(a){const arr=[...a];for(let i=arr.length-1;i>0;i--){const j=0|Math.random()*(i+1);[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function stripHtml(s){const d=document.createElement('div');d.innerHTML=s;return d.textContent||d.innerText||'';}
+
+// ═══ POOLS ═══
+
+const pool_cairan = [
+  {
+    pertanyaan: `Persentase cairan terhadap berat badan manusia dewasa adalah sekitar...`,
+    pilihan: [`60%`, `40%`, `20%`, `75%`, `90%`],
+    jawaban: `60%`,
+    pembahasan: `Sekitar 60% berat badan dewasa berupa cairan.`
+  },
+  {
+    pertanyaan: `Cairan intrasel (ICF) merupakan ... berat badan.`,
+    pilihan: [`40%`, `20%`, `15%`, `5%`, `60%`],
+    jawaban: `40%`,
+    pembahasan: `Cairan tubuh 60% = intrasel 40% + ekstrasel 20%.`
+  },
+  {
+    pertanyaan: `Cairan ekstrasel (ECF) terdiri dari...`,
+    pilihan: [`Interstitial 15% dan plasma 5%`, `Interstitial 5% dan plasma 15%`, `Interstitial 20% dan plasma 20%`, `Plasma 40% dan limfe 20%`, `Intrasel 15% dan plasma 5%`],
+    jawaban: `Interstitial 15% dan plasma 5%`,
+    pembahasan: `ECF 20% = interstitial 15% + plasma 5%.`
+  },
+  {
+    pertanyaan: `Persentase cairan plasma terhadap berat badan adalah...`,
+    pilihan: [`5%`, `15%`, `20%`, `40%`, `60%`],
+    jawaban: `5%`,
+    pembahasan: `Plasma 5% BB.`
+  },
+  {
+    pertanyaan: `Pada Fig 27-3, sumber masuk cairan terbesar ke ECF adalah...`,
+    pilihan: [`Absorpsi epitel saluran cerna (2200 ml)`, `Generasi metabolik (300 ml)`, `Urin (1200 ml)`, `Respirasi (1150 ml)`, `Feses (150 ml)`],
+    jawaban: `Absorpsi epitel saluran cerna (2200 ml)`,
+    pembahasan: `Absorpsi saluran cerna 2200 ml; generasi metabolik 300 ml.`
+  },
+  {
+    pertanyaan: `Jalur kehilangan cairan terbesar menurut Fig 27-3 adalah...`,
+    pilihan: [`Urin (1200 ml)`, `Feses (150 ml)`, `Absorpsi pencernaan (2200 ml)`, `Generasi metabolik (300 ml)`, `Tidak ada yang tercatat`],
+    jawaban: `Urin (1200 ml)`,
+    pembahasan: `Urin 1200 ml; respirasi dan insensible perspiration 1150 ml; feses 150 ml; keringat bervariasi.`
+  },
+  {
+    pertanyaan: `Menurut keterangan gambar, secara fungsional ukuran ICF dibanding ECF adalah...`,
+    pilihan: [`ICF dua kali lebih besar daripada ECF`, `ICF setengah ECF`, `ICF sama dengan ECF`, `ICF tiga kali ECF`, `ICF tidak dapat dibandingkan`],
+    jawaban: `ICF dua kali lebih besar daripada ECF`,
+    pembahasan: `Caption Fig 27-3: functionally, the ICF is twice as large as the ECF.`
+  },
+  {
+    pertanyaan: `Kehilangan cairan yang jumlahnya bervariasi pada Fig 27-3 adalah...`,
+    pilihan: [`Sensible perspiration (keringat)`, `Feses`, `Urin`, `Respirasi`, `Generasi metabolik`],
+    jawaban: `Sensible perspiration (keringat)`,
+    pembahasan: `Sensible perspiration (variable).`
+  }
+];
+
+const pool_hormon = [
+  {
+    pertanyaan: `Tiga hormon yang mengendalikan keseimbangan cairan dan elektrolit menurut slide adalah...`,
+    pilihan: [`ADH, aldosteron, dan ANP`, `ADH, insulin, dan glukagon`, `Aldosteron, kortisol, dan TSH`, `ANP, oksitosin, dan prolaktin`, `ADH, renin, dan eritropoietin saja`],
+    jawaban: `ADH, aldosteron, dan ANP`,
+    pembahasan: `Slide 5: ADH, aldosteron, atrial natriuretic peptide.`
+  },
+  {
+    pertanyaan: `Peningkatan osmolalitas plasma akan dideteksi oleh...`,
+    pilihan: [`Osmoreseptor di hipotalamus`, `Baroreseptor karotis`, `Aparatus juxtaglomerular`, `Sel D lambung`, `Korteks adrenal`],
+    jawaban: `Osmoreseptor di hipotalamus`,
+    pembahasan: `↑ Osmolalitas / ↑ Na plasma merangsang osmoreseptor hipotalamus lalu hipofisis posterior melepas ADH.`
+  },
+  {
+    pertanyaan: `ADH bekerja pada...`,
+    pilihan: [`Duktus koligentes ginjal untuk meningkatkan reabsorpsi air`, `Tubulus proksimal untuk ekskresi Na`, `Glomerulus untuk filtrasi`, `Korteks adrenal untuk aldosteron`, `Atrium jantung`],
+    jawaban: `Duktus koligentes ginjal untuk meningkatkan reabsorpsi air`,
+    pembahasan: `ADH → duktus koligentes → ↑ reabsorpsi air → urin sedikit.`
+  },
+  {
+    pertanyaan: `Efek akhir ADH pada osmolalitas dan volume plasma adalah...`,
+    pilihan: [`Osmolalitas turun, volume plasma naik`, `Osmolalitas naik, volume plasma turun`, `Osmolalitas dan volume plasma sama-sama naik`, `Osmolalitas dan volume plasma sama-sama turun`, `Tidak ada perubahan`],
+    jawaban: `Osmolalitas turun, volume plasma naik`,
+    pembahasan: `Hasil: ↓ osmolalitas dan ↑ volume plasma.`
+  },
+  {
+    pertanyaan: `Pemicu pelepasan aldosteron dari korteks adrenal adalah...`,
+    pilihan: [`↓ Na plasma atau ↑ K plasma, dan mekanisme renin-angiotensin`, `↑ Na plasma dan ↓ K plasma`, `↑ regangan atrium`, `↑ osmolalitas plasma saja`, `↑ tekanan darah saja`],
+    jawaban: `↓ Na plasma atau ↑ K plasma, dan mekanisme renin-angiotensin`,
+    pembahasan: `Slide 7: ↓Na atau ↑K plasma, dan renin-angiotensin menstimulasi adrenal.`
+  },
+  {
+    pertanyaan: `Efek aldosteron pada tubulus ginjal adalah...`,
+    pilihan: [`↑ reabsorpsi Na dan ↑ sekresi K`, `↓ reabsorpsi Na dan ↓ sekresi K`, `↑ reabsorpsi K dan ↑ sekresi Na`, `↑ reabsorpsi air tanpa Na`, `↓ filtrasi glomerulus`],
+    jawaban: `↑ reabsorpsi Na dan ↑ sekresi K`,
+    pembahasan: `Aldosteron: ↑ Na reabsorption dan ↑ K secretion.`
+  },
+  {
+    pertanyaan: `ANP dilepaskan sebagai respons terhadap...`,
+    pilihan: [`Regangan atrium akibat ↑ tekanan darah`, `↓ volume plasma`, `↓ Na plasma`, `↑ K plasma`, `↑ osmolalitas plasma`],
+    jawaban: `Regangan atrium akibat ↑ tekanan darah`,
+    pembahasan: `↑ Stretch of atria due to ↑ BP → ANP.`
+  },
+  {
+    pertanyaan: `Efek ANP pada ginjal dan hormon lain adalah...`,
+    pilihan: [`↓ renin, ↓ ADH, ↓ aldosteron, ↓ reabsorpsi Na dan H2O`, `↑ renin, ↑ ADH, ↑ aldosteron`, `↑ reabsorpsi Na dan H2O`, `↑ renin dan ↓ ADH saja`, `Tidak mempengaruhi ginjal`],
+    jawaban: `↓ renin, ↓ ADH, ↓ aldosteron, ↓ reabsorpsi Na dan H2O`,
+    pembahasan: `ANP menghambat renin, ADH, aldosteron sehingga ↓ volume darah dan ↓ tekanan darah.`
+  },
+  {
+    pertanyaan: `Hormon yang menurunkan volume darah dan tekanan darah adalah...`,
+    pilihan: [`ANP`, `ADH`, `Aldosteron`, `Renin`, `Angiotensin II`],
+    jawaban: `ANP`,
+    pembahasan: `ANP menurunkan reabsorpsi Na dan air sehingga volume darah turun.`
+  }
+];
+
+const pool_starling = [
+  {
+    pertanyaan: `Gaya yang mendorong cairan keluar dari kapiler adalah...`,
+    pilihan: [`Tekanan kapiler (Pc)`, `Tekanan osmotik koloid plasma (Πp)`, `Tekanan cairan interstitial (Pif)`, `Tekanan limfe`, `Tekanan atmosfer`],
+    jawaban: `Tekanan kapiler (Pc)`,
+    pembahasan: `Pc dan Πif mendorong keluar; Πp dan Pif mendorong masuk.`
+  },
+  {
+    pertanyaan: `Gaya yang menahan cairan di dalam kapiler adalah...`,
+    pilihan: [`Tekanan osmotik koloid plasma (Πp)`, `Tekanan kapiler (Pc)`, `Tekanan osmotik koloid interstitial (Πif)`, `Tekanan hidrostatik arteri`, `Tekanan intrapleura`],
+    jawaban: `Tekanan osmotik koloid plasma (Πp)`,
+    pembahasan: `Πp (dari albumin) menarik cairan masuk ke kapiler.`
+  },
+  {
+    pertanyaan: `Simbol Πif menyatakan...`,
+    pilihan: [`Tekanan osmotik koloid cairan interstitial`, `Tekanan cairan interstitial`, `Tekanan kapiler`, `Tekanan osmotik plasma`, `Tekanan limfe`],
+    jawaban: `Tekanan osmotik koloid cairan interstitial`,
+    pembahasan: `Pif = tekanan cairan interstitial; Πif = tekanan osmotik koloid interstitial.`
+  },
+  {
+    pertanyaan: `Pada Fig 10-22, tekanan netto di ujung arteriol adalah...`,
+    pilihan: [`11 mmHg keluar (ultrafiltrasi)`, `9 mmHg masuk`, `13,3 mmHg keluar`, `6,7 mmHg masuk`, `37 mmHg keluar`],
+    jawaban: `11 mmHg keluar (ultrafiltrasi)`,
+    pembahasan: `Pc 37 + Πif 0 = 37 keluar; Πp 25 + Pif 1 = 26 masuk; netto 11 keluar.`
+  },
+  {
+    pertanyaan: `Pada Fig 10-22, tekanan netto di ujung venul adalah...`,
+    pilihan: [`9 mmHg masuk (reabsorpsi)`, `11 mmHg keluar`, `6,7 mmHg masuk`, `26 mmHg keluar`, `17 mmHg keluar`],
+    jawaban: `9 mmHg masuk (reabsorpsi)`,
+    pembahasan: `Pc 17 keluar; 25 + 1 = 26 masuk; netto 9 masuk.`
+  },
+  {
+    pertanyaan: `Pada gambar McGraw-Hill (slide 10), gaya netto di ujung arteriol adalah...`,
+    pilihan: [`13,3 mmHg keluar`, `6,7 mmHg masuk`, `28 mmHg keluar`, `41,3 mmHg masuk`, `21,3 mmHg keluar`],
+    jawaban: `13,3 mmHg keluar`,
+    pembahasan: `41,3 keluar - 28 masuk = 13,3 keluar.`
+  },
+  {
+    pertanyaan: `Pada gambar McGraw-Hill (slide 10), gaya netto di ujung venul adalah...`,
+    pilihan: [`6,7 mmHg masuk`, `13,3 mmHg keluar`, `21,3 mmHg keluar`, `28 mmHg masuk`, `7,3 mmHg keluar`],
+    jawaban: `6,7 mmHg masuk`,
+    pembahasan: `21,3 keluar - 28 masuk = 6,7 masuk.`
+  },
+  {
+    pertanyaan: `Bila Pc = 37, Πif = 0, Πp = 25, dan Pif = 1 (mmHg), tekanan filtrasi netto adalah...`,
+    pilihan: [`+11 mmHg`, `-11 mmHg`, `+26 mmHg`, `+37 mmHg`, `0 mmHg`],
+    jawaban: `+11 mmHg`,
+    pembahasan: `(37 + 0) - (25 + 1) = 11 mmHg.`
+  },
+  {
+    pertanyaan: `Ultrafiltrasi pada kapiler terjadi terutama di...`,
+    pilihan: [`Ujung arteriol`, `Ujung venul`, `Pembuluh limfe`, `Vena besar`, `Atrium kanan`],
+    jawaban: `Ujung arteriol`,
+    pembahasan: `Ultrafiltrasi di arteriol, reabsorpsi di venul.`
+  }
+];
+
+const pool_limfe = [
+  {
+    pertanyaan: `Struktur pembuluh limfe awal (initial lymphatic) adalah...`,
+    pilihan: [`Berujung buntu dengan sel endotel tumpang tindih seperti katup`, `Berujung terbuka ke arteriol`, `Berdinding otot tebal`, `Tanpa sel endotel`, `Langsung terhubung ke atrium`],
+    jawaban: `Berujung buntu dengan sel endotel tumpang tindih seperti katup`,
+    pembahasan: `Initial lymphatics blind-ended; tepi endotel tumpang tindih membentuk bukaan seperti katup.`
+  },
+  {
+    pertanyaan: `Cairan interstitial masuk ke pembuluh limfe awal karena...`,
+    pilihan: [`Tekanan cairan di luar mendorong tepi endotel ke dalam`, `Tekanan di dalam membuka tepi endotel`, `Pompa Na-K ATPase`, `Kontraksi otot jantung`, `Gradien osmotik albumin`],
+    jawaban: `Tekanan cairan di luar mendorong tepi endotel ke dalam`,
+    pembahasan: `Tekanan luar mendorong tepi sel endotel ke dalam sehingga cairan masuk; tekanan dalam menutupnya.`
+  },
+  {
+    pertanyaan: `Limfe tidak dapat keluar kembali dari pembuluh karena...`,
+    pilihan: [`Tekanan di dalam merapatkan tepi endotel yang tumpang tindih`, `Adanya klep jantung`, `Limfe menguap`, `Membran basal tebal`, `Aliran limfe berhenti`],
+    jawaban: `Tekanan di dalam merapatkan tepi endotel yang tumpang tindih`,
+    pembahasan: `Tekanan di dalam pembuluh menutup tepi endotel.`
+  },
+  {
+    pertanyaan: `Limfe bermuara ke sistem vena di dekat...`,
+    pilihan: [`Pintu masuk atrium kanan`, `Pintu masuk atrium kiri`, `Ventrikel kiri`, `Arteri pulmonalis`, `Aorta asendens`],
+    jawaban: `Pintu masuk atrium kanan`,
+    pembahasan: `Caption Fig 10-25: lymph empties into the venous system near its entrance to the right atrium.`
+  },
+  {
+    pertanyaan: `Menurut Fig 10-25, rata-rata aliran limfe per hari adalah...`,
+    pilihan: [`3 L/hari`, `17 L/hari`, `20 L/hari`, `7200 L/hari`, `0,3 L/hari`],
+    jawaban: `3 L/hari`,
+    pembahasan: `Aliran limfe rata-rata 3 L/hari.`
+  },
+  {
+    pertanyaan: `Menurut slide, volume cairan yang difiltrasi keluar kapiler per hari adalah...`,
+    pilihan: [`20 L`, `3 L`, `17 L`, `7200 L`, `2 L`],
+    jawaban: `20 L`,
+    pembahasan: `20 L difiltrasi: 17 L direabsorpsi, 3 L kembali lewat limfe.`
+  },
+  {
+    pertanyaan: `Aliran darah rata-rata per hari menurut Fig 10-25 adalah...`,
+    pilihan: [`7200 L`, `20 L`, `17 L`, `3 L`, `720 L`],
+    jawaban: `7200 L`,
+    pembahasan: `Blood flow averages 7200 liters per day.`
+  },
+  {
+    pertanyaan: `Volume cairan yang direabsorpsi kembali ke kapiler per hari adalah...`,
+    pilihan: [`17 L`, `3 L`, `20 L`, `7200 L`, `10 L`],
+    jawaban: `17 L`,
+    pembahasan: `20 L filtrasi = 17 L reabsorpsi + 3 L limfe.`
+  }
+];
+
+const pool_edema = [
+  {
+    pertanyaan: `Edema adalah...`,
+    pilihan: [`Penimbunan cairan dalam celah interstitial dan rongga tubuh`, `Kehilangan cairan dari interstitial`, `Peningkatan sel darah merah`, `Penimbunan lemak di jaringan`, `Penurunan volume plasma`],
+    jawaban: `Penimbunan cairan dalam celah interstitial dan rongga tubuh`,
+    pembahasan: `Edema: penimbunan cairan dalam celah interstitial dan ruang/rongga tubuh.`
+  },
+  {
+    pertanyaan: `Edema terjadi karena...`,
+    pilihan: [`Gaya fisik pada dinding kapiler menjadi abnormal`, `Peningkatan produksi limfe saja`, `Penurunan filtrasi glomerulus saja`, `Peningkatan tekanan osmotik interstitial saja`, `Hilangnya seluruh protein tubuh`],
+    jawaban: `Gaya fisik pada dinding kapiler menjadi abnormal`,
+    pembahasan: `Gaya fisik yang bekerja pada dinding kapiler menjadi abnormal.`
+  },
+  {
+    pertanyaan: `Edema yang mengenai seluruh tubuh disebut...`,
+    pilihan: [`Anasarka`, `Edema lokal`, `Elephantiasis`, `Efusi pleura`, `Ascites`],
+    jawaban: `Anasarka`,
+    pembahasan: `Edema umum = anasarka; lokal mengenai satu organ atau bagian tubuh.`
+  },
+  {
+    pertanyaan: `Edema yang mengenai satu organ atau bagian tubuh disebut edema...`,
+    pilihan: [`Lokal`, `Umum`, `Anasarka`, `Sistemik`, `Dilusional`],
+    jawaban: `Lokal`,
+    pembahasan: `Edema bersifat lokal atau umum/anasarka.`
+  },
+  {
+    pertanyaan: `Edema terbentuk pada ruang...`,
+    pilihan: [`Celah interstitial dan rongga tubuh`, `Hanya intravaskular`, `Hanya intrasel`, `Hanya di dalam limfe`, `Hanya di rongga mulut`],
+    jawaban: `Celah interstitial dan rongga tubuh`,
+    pembahasan: `Penimbunan cairan di interstitial dan rongga tubuh.`
+  }
+];
+
+const pool_patogenesis = [
+  {
+    pertanyaan: `Gagal jantung kanan menyebabkan edema melalui...`,
+    pilihan: [`Peningkatan tekanan intravaskular (hidrostatik)`, `Penurunan tekanan osmotik plasma`, `Obstruksi limfe`, `Peningkatan permeabilitas`, `Retensi natrium primer`],
+    jawaban: `Peningkatan tekanan intravaskular (hidrostatik)`,
+    pembahasan: `Slide 15: ↑ tekanan intravaskuler (hidrostatik) – gagal jantung kanan.`
+  },
+  {
+    pertanyaan: `Proses radang sistemik menyebabkan edema melalui...`,
+    pilihan: [`Peningkatan permeabilitas dinding pembuluh darah`, `Penurunan Pc`, `Peningkatan Πp`, `Penurunan Πif`, `Obstruksi limfe`],
+    jawaban: `Peningkatan permeabilitas dinding pembuluh darah`,
+    pembahasan: `↑ Permeabilitas dinding pembuluh darah – proses radang sistemik.`
+  },
+  {
+    pertanyaan: `Hipoalbuminemia menyebabkan edema karena...`,
+    pilihan: [`Penurunan tekanan osmotik plasma`, `Peningkatan tekanan hidrostatik`, `Peningkatan permeabilitas`, `Obstruksi limfe`, `Retensi natrium`],
+    jawaban: `Penurunan tekanan osmotik plasma`,
+    pembahasan: `Albumin menjaga Πp; bila turun cairan keluar ke interstitial.`
+  },
+  {
+    pertanyaan: `Penyebab hipoalbuminemia yang disebut di slide adalah...`,
+    pilihan: [`Penyakit hati, sindrom nefrotik, dan kwashiorkor`, `Gagal jantung kanan, filariasis, dan radang`, `Gagal ginjal, elephantiasis, dan sepsis`, `Hipertensi, anemia, dan diabetes`, `Obesitas, asma, dan gout`],
+    jawaban: `Penyakit hati, sindrom nefrotik, dan kwashiorkor`,
+    pembahasan: `Turunnya tekanan osmotik plasma – hipoalbuminemia.`
+  },
+  {
+    pertanyaan: `Gagal ginjal menyebabkan edema melalui...`,
+    pilihan: [`Retensi natrium`, `Obstruksi limfe`, `Penurunan Pc`, `Peningkatan Πp`, `Penurunan permeabilitas`],
+    jawaban: `Retensi natrium`,
+    pembahasan: `Slide 15: retensi natrium – gagal ginjal.`
+  },
+  {
+    pertanyaan: `Elephantiasis disebabkan oleh...`,
+    pilihan: [`Obstruksi aliran limfe`, `Penurunan tekanan osmotik plasma`, `Peningkatan permeabilitas vaskular`, `Gagal jantung kanan`, `Retensi natrium`],
+    jawaban: `Obstruksi aliran limfe`,
+    pembahasan: `Obstruksi aliran limfe – elephantiasis.`
+  },
+  {
+    pertanyaan: `Elephantiasis dalam Fig 10-26 digambarkan akibat...`,
+    pilihan: [`Cacing parasit yang dibawa nyamuk dan menginvasi pembuluh limfe`, `Bakteri yang menginfeksi kulit`, `Defisiensi protein`, `Gagal jantung kronis`, `Reaksi alergi`],
+    jawaban: `Cacing parasit yang dibawa nyamuk dan menginvasi pembuluh limfe`,
+    pembahasan: `Kondisi tropis oleh cacing parasit bawaan nyamuk yang menyerang pembuluh limfe; ekstremitas jadi sangat edematosa.`
+  },
+  {
+    pertanyaan: `Mekanisme edema berikut yang BUKAN termasuk klasifikasi patogenesis di slide adalah...`,
+    pilihan: [`Peningkatan tekanan osmotik plasma`, `Peningkatan tekanan hidrostatik`, `Peningkatan permeabilitas`, `Retensi natrium`, `Obstruksi limfe`],
+    jawaban: `Peningkatan tekanan osmotik plasma`,
+    pembahasan: `Yang menyebabkan edema adalah penurunan (bukan peningkatan) tekanan osmotik plasma.`
+  }
+];
+
+const pool_cases = [
+  {
+    pertanyaan: `<strong>Kasus:</strong> Pria 60 tahun dengan gagal jantung kanan mengalami edema pada kedua tungkai. Mekanisme dominan edema adalah...`,
+    pilihan: [`Peningkatan tekanan hidrostatik kapiler (Pc)`, `Penurunan albumin plasma`, `Obstruksi limfe`, `Peningkatan permeabilitas akibat radang`, `Penurunan tekanan interstitial`],
+    jawaban: `Peningkatan tekanan hidrostatik kapiler (Pc)`,
+    pembahasan: `Gagal jantung kanan → bendungan vena → Pc naik.`
+  },
+  {
+    pertanyaan: `<strong>Kasus:</strong> Anak dengan kwashiorkor tampak perut buncit dan edema tungkai. Mekanisme utama edema adalah...`,
+    pilihan: [`Penurunan tekanan osmotik plasma akibat hipoalbuminemia`, `Peningkatan tekanan hidrostatik`, `Obstruksi limfe`, `Retensi natrium primer`, `Peningkatan permeabilitas oleh radang`],
+    jawaban: `Penurunan tekanan osmotik plasma akibat hipoalbuminemia`,
+    pembahasan: `Kwashiorkor menyebabkan hipoalbuminemia → Πp turun.`
+  },
+  {
+    pertanyaan: `<strong>Kasus:</strong> Pasien dari daerah endemis memiliki tungkai membesar seperti kaki gajah akibat infeksi cacing parasit. Mekanismenya adalah...`,
+    pilihan: [`Obstruksi aliran limfe`, `Hipoalbuminemia`, `Gagal jantung kanan`, `Retensi natrium`, `Peningkatan permeabilitas sistemik`],
+    jawaban: `Obstruksi aliran limfe`,
+    pembahasan: `Elephantiasis: obstruksi limfe oleh cacing parasit.`
+  },
+  {
+    pertanyaan: `<strong>Kasus:</strong> Pasien sindrom nefrotik dengan proteinuria berat dan edema generalisata. Penyebab edema yang paling tepat adalah...`,
+    pilihan: [`Hipoalbuminemia yang menurunkan Πp`, `Obstruksi limfe`, `Peningkatan Pc akibat gagal jantung kanan`, `Peningkatan Pif`, `Penurunan Πif`],
+    jawaban: `Hipoalbuminemia yang menurunkan Πp`,
+    pembahasan: `Sindrom nefrotik adalah salah satu penyebab hipoalbuminemia.`
+  },
+  {
+    pertanyaan: `<strong>Kasus:</strong> Pasien dengan gagal ginjal memiliki edema disertai retensi garam dan air. Mekanisme yang diklasifikasikan slide adalah...`,
+    pilihan: [`Retensi natrium`, `Obstruksi limfe`, `Peningkatan permeabilitas`, `Penurunan Pc`, `Peningkatan Πp`],
+    jawaban: `Retensi natrium`,
+    pembahasan: `Gagal ginjal → retensi natrium.`
+  },
+  {
+    pertanyaan: `<strong>Kasus:</strong> Seorang pasien dehidrasi dengan ↑ osmolalitas plasma. Respons hormonal yang diharapkan adalah...`,
+    pilihan: [`↑ ADH sehingga reabsorpsi air meningkat dan urin sedikit`, `↑ ANP sehingga diuresis meningkat`, `↓ ADH dan ↑ urin encer`, `↓ aldosteron`, `Tidak ada respons hormonal`],
+    jawaban: `↑ ADH sehingga reabsorpsi air meningkat dan urin sedikit`,
+    pembahasan: `↑ Osmolalitas → osmoreseptor → ADH → ↑ reabsorpsi air.`
+  },
+  {
+    pertanyaan: `<strong>Kasus:</strong> Pada pasien dengan tekanan darah tinggi dan atrium teregang, hormon yang dilepaskan untuk menurunkan volume darah adalah...`,
+    pilihan: [`ANP`, `ADH`, `Aldosteron`, `Renin`, `Kortisol`],
+    jawaban: `ANP`,
+    pembahasan: `Regangan atrium → ANP → ↓ Na dan H2O reabsorpsi → ↓ volume darah.`
+  },
+  {
+    pertanyaan: `<strong>Kasus:</strong> Pada kapiler normal, ujung arteriol memiliki Pc 37, Πp 25, Pif 1, Πif 0 mmHg. Bila Πp turun menjadi 15 mmHg dan lainnya tetap, tekanan filtrasi netto menjadi...`,
+    pilihan: [`+21 mmHg`, `+11 mmHg`, `+1 mmHg`, `+31 mmHg`, `-9 mmHg`],
+    jawaban: `+21 mmHg`,
+    pembahasan: `(37 + 0) - (15 + 1) = 21 mmHg; filtrasi bertambah sehingga edema.`
+  }
+];
+
+// ═══ POOL PICKERS ═══
+const usedIdx = {};
+function pick_pool(poolName, poolArr){
+  if(!usedIdx[poolName]) usedIdx[poolName] = [];
+  if(usedIdx[poolName].length >= poolArr.length) usedIdx[poolName] = [];
+  let idx;
+  do { idx = 0 | Math.random()*poolArr.length; } while(usedIdx[poolName].includes(idx) && usedIdx[poolName].length < poolArr.length);
+  usedIdx[poolName].push(idx);
+  return poolArr[idx];
+}
+
+const POOL_MAP = {
+  pool_cairan, pool_hormon, pool_starling,
+  pool_limfe, pool_edema, pool_patogenesis,
+  pool_cases
+};
+const POOL_LABELS = {
+  pool_cairan:`Cairan Tubuh`,
+  pool_hormon:`Hormon Keseimbangan Cairan`,
+  pool_starling:`Gaya Starling Kapiler`,
+  pool_limfe:`Sistem Limfatik`,
+  pool_edema:`Definisi & Jenis Edema`,
+  pool_patogenesis:`Patogenesis Edema`,
+  pool_cases:`Studi Kasus Klinis`
+};
+const POOL_COLORS = {
+  pool_cairan:['var(--teal)','var(--tealbg)'],
+  pool_hormon:['var(--blue)','var(--bluebg)'],
+  pool_starling:['var(--gold)','var(--goldbg)'],
+  pool_limfe:['var(--green)','var(--greenbg)'],
+  pool_edema:['var(--red)','var(--redbg)'],
+  pool_patogenesis:['var(--purp)','var(--purpbg)'],
+  pool_cases:['var(--purp)','var(--purpbg)']
+};
+
+function makeQ(type){
+  const poolArr = POOL_MAP[type];
+  if(!poolArr) return {type:'dummy', typeName:'End of Pool', tpColor:'gray', tpBg:'lightgray', q:'No more questions', opts:['A'], ans:'A', exp:''};
+  const item = pick_pool(type, poolArr);
+  const [tpColor, tpBg] = POOL_COLORS[type] || ['var(--gold)','var(--goldbg)'];
+  let optsArr = [...item.pilihan];
+  return {
+    type, typeName: POOL_LABELS[type] || type,
+    tpColor, tpBg,
+    scenario: null, rawData: null,
+    q: item.pertanyaan,
+    opts: shuf(optsArr),
+    ans: item.jawaban,
+    exp: item.pembahasan
+  };
+}
+
+// ═══ SESSION ═══
+let typeQueue=[], activeTypes=[], sessIdx=0, sessScore=0, sessLog=[], currentQ=null, typeStats={};
+const TOTAL_Q = 20;
+
+function nextType(){
+  if(!typeQueue.length){
+    const t=[...activeTypes];
+    for(let i=t.length-1;i>0;i--){const j=0|Math.random()*(i+1);[t[i],t[j]]=[t[j],t[i]];}
+    typeQueue=[...t];
+  }
+  return typeQueue.shift();
+}
+
+function startSession(){
+  activeTypes = Array.from(document.querySelectorAll('.cfg-btn.sel')).map(b=>b.dataset.type);
+  if(activeTypes.length===0){ alert('Pilih minimal satu topik.'); return; }
+  sessIdx=0; sessScore=0; sessLog=[]; typeQueue=[]; typeStats={};
+  activeTypes.forEach(t=>typeStats[t]={correct:0,total:0});
+  document.getElementById('qconfig').style.display='none';
+  document.getElementById('qresults').style.display='none';
+  document.getElementById('qactive').style.display='block';
+  renderQ();
+}
+
+function renderQ(){
+  const q=makeQ(nextType()); currentQ=q;
+  document.getElementById('qnum').textContent=sessIdx+1;
+  document.getElementById('qscore').textContent=sessScore;
+  const pill=document.getElementById('qpill');
+  pill.textContent=q.typeName; pill.style.background=q.tpBg; pill.style.color=q.tpColor; pill.style.border=`1px solid ${q.tpColor}44`;
+  const scen=document.getElementById('qscen');
+  if(q.scenario){scen.innerHTML=`<strong>Kasus:</strong> ${q.scenario}`;scen.style.display='block';}else scen.style.display='none';
+  const db=document.getElementById('qdata');
+  if(q.rawData){db.innerHTML=q.rawData;db.style.display='block';}else db.style.display='none';
+  document.getElementById('qtext').innerHTML=q.q;
+  const og=document.getElementById('opts'); og.innerHTML='';
+  q.opts.forEach((opt,i)=>{
+    const btn=document.createElement('button'); btn.className='opt';
+    btn.innerHTML=`<span class="opt-key">${KEYS[i]}</span><span>${opt}</span>`;
+    btn.onclick=()=>selectAns(opt,q,btn); og.appendChild(btn);
+  });
+  const ebox=document.getElementById('expbox'); ebox.classList.remove('show'); ebox.style.display='none';
+  document.getElementById('nextbtn').style.display='none';
+}
+
+function selectAns(chosen,q,clickedBtn){
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  const correct = stripHtml(chosen)===stripHtml(q.ans);
+  if(correct) sessScore++;
+  typeStats[q.type].total++;
+  if(correct) typeStats[q.type].correct++;
+  document.querySelectorAll('.opt').forEach(b=>{
+    const txt = b.querySelector('span:last-child').textContent;
+    if(stripHtml(txt)===stripHtml(q.ans)) b.classList.add('correct');
+    else if(b===clickedBtn) b.classList.add('wrong');
+  });
+  const ebox=document.getElementById('expbox');
+  ebox.innerHTML = `<strong>${correct ? '✓ Benar!' : '✗ Kurang tepat.'}</strong><br>${q.exp}`;
+  ebox.style.display='block'; ebox.classList.add('show');
+  document.getElementById('qscore').textContent=sessScore;
+  sessLog.push({q:stripHtml(q.q).slice(0,80), ans:stripHtml(q.ans), correct});
+  document.getElementById('nextbtn').style.display='block';
+}
+
+function nextQ(){
+  sessIdx++;
+  if(sessIdx>=TOTAL_Q){ endSession(); return; }
+  renderQ();
+}
+
+function endSession(){
+  document.getElementById('qactive').style.display='none';
+  document.getElementById('qresults').style.display='block';
+  const pct = sessLog.length ? Math.round(sessScore/sessLog.length*100) : 0;
+  document.getElementById('res-pct').textContent = pct+'%';
+  document.getElementById('res-sub').textContent = `${sessScore} dari ${sessLog.length} soal benar`;
+  const byType = document.getElementById('res-bytype'); byType.innerHTML='';
+  Object.keys(typeStats).forEach(t=>{
+    if(typeStats[t].total===0) return;
+    const tr=document.createElement('tr');
+    tr.innerHTML = `<td>${POOL_LABELS[t]||t}</td><td>${typeStats[t].total}</td><td>${typeStats[t].correct}</td>`;
+    byType.appendChild(tr);
+  });
+  const detail = document.getElementById('res-detail'); detail.innerHTML='';
+  sessLog.forEach((l,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td>${l.q}...</td><td>${l.ans}</td><td>${l.correct?'✓':'✗'}</td>`;
+    detail.appendChild(tr);
+  });
+}
+
+function restartQuiz(){
+  document.getElementById('qresults').style.display='none';
+  document.getElementById('qconfig').style.display='block';
+}
+</script>
+</body>
+</html>
