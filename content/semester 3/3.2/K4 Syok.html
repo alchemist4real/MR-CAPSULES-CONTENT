@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Am I in Shock? — Quiz Gangguan Hemodinamik: Syok</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f8f9;--bg2:#eef3f5;--bg3:#e3ebee;--bg4:#d5e1e5;
+  --border:rgba(15,80,95,.10);--border2:rgba(15,80,95,.20);
+  --text:#0e2430;--text2:#2c4a58;--text3:#6f8894;
+  --green:#1f7a4a;--greenbg:rgba(31,122,74,.09);--greenb:rgba(31,122,74,.25);
+  --gold:#0f6a7a;--goldbg:rgba(15,106,122,.09);--goldb:rgba(15,106,122,.28);
+  --red:#b03030;--redbg:rgba(176,48,48,.08);--redb:rgba(176,48,48,.25);
+  --blue:#1a4faa;--bluebg:rgba(26,79,170,.09);--blueb:rgba(26,79,170,.28);
+  --purp:#4433a0;--purpbg:rgba(68,51,160,.08);--purpb:rgba(68,51,160,.25);
+  --teal:#0c8299;--tealbg:rgba(12,130,153,.08);--tealb:rgba(12,130,153,.25);
+  --r:10px;--rl:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+.app{max-width:900px;margin:0 auto;padding:0 16px 60px}
+header{padding:40px 0 28px;text-align:center}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--text3);text-transform:uppercase;margin-bottom:10px}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(30px,6vw,54px);letter-spacing:-.03em;line-height:1;margin-bottom:10px}
+.sub{font-size:13px;color:var(--text2);max-width:520px;margin:0 auto}
+.main-tabs{display:flex;gap:3px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:24px}
+.main-tab{flex:1;padding:9px 6px;border-radius:9px;border:none;background:transparent;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s}
+.main-tab:hover{color:var(--text)}
+.main-tab.active{background:var(--gold);color:#fff;font-weight:600}
+.main-panel{display:none}
+.main-panel.active{display:block;animation:fi .2s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sub-tabs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:4px;margin-bottom:20px}
+.sub-tab{padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg2);color:var(--text3);font-family:'DM Mono',monospace;font-size:10.5px;cursor:pointer;transition:all .18s;text-align:center;line-height:1.4}
+.sub-tab:hover{background:var(--bg3);color:var(--text2);border-color:var(--border2)}
+.sub-tab.active{background:var(--gold);color:#fff;border-color:var(--text);font-weight:600}
+.sub-panel{display:none}
+.sub-panel.active{display:block;animation:fi .18s ease}
+.sec-h{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;padding-bottom:8px;border-bottom:2px solid var(--gold);margin-bottom:14px;color:var(--text)}
+p{margin-bottom:10px;color:var(--text2)}
+ul{margin:0 0 12px 20px;color:var(--text2)}
+li{margin-bottom:5px}
+strong{color:var(--text)}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.note{border-radius:var(--r);padding:12px 14px;margin:10px 0;font-size:13.5px;border:1px solid}
+.note.blue{background:var(--bluebg);border-color:var(--blueb);color:var(--text)}
+.note.green{background:var(--greenbg);border-color:var(--greenb);color:var(--text)}
+.note.gold{background:var(--goldbg);border-color:var(--goldb);color:var(--text)}
+.note.red{background:var(--redbg);border-color:var(--redb);color:var(--text)}
+.note.purp{background:var(--purpbg);border-color:var(--purpb);color:var(--text)}
+.note.teal{background:var(--tealbg);border-color:var(--tealb);color:var(--text)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border2);padding:8px 10px;text-align:left}
+th{background:var(--bg3);font-family:'DM Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--text2)}
+.flowbox{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px 0}
+.flowitem{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--text);text-align:center}
+.flowarrow{color:var(--gold);font-size:18px}
+.flowcol{display:flex;flex-direction:column;align-items:center;gap:8px;margin:14px 0}
+.flowcol .flowarrow{font-size:18px}
+
+/* Quiz */
+.qconfig{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:24px}
+.qconfig-title{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:4px}
+.qconfig-sub{font-size:12.5px;color:var(--text3);margin-bottom:16px}
+.cfg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:18px}
+.cfg-btn{padding:10px 8px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;color:var(--text3);font-size:11.5px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;line-height:1.3}
+.cfg-btn.sel{background:var(--gold);color:#fff;border-color:var(--text)}
+.start-btn{width:100%;padding:14px;border-radius:10px;border:none;background:var(--text);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:15px;cursor:pointer;transition:all .15s}
+.start-btn:hover{background:var(--gold)}
+.qheader{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;font-size:13px;color:var(--text3)}
+.qnum-display strong{color:var(--text);font-size:16px}
+.qtype-pill{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace}
+.qscore-display strong{color:var(--green);font-size:16px}
+.qcard{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:14px}
+.qscen{background:var(--bg3);border-left:3px solid var(--gold);padding:10px 14px;border-radius:6px;margin-bottom:14px;font-size:13.5px}
+.qdata{background:var(--bg2);border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px}
+.qtext{font-size:16px;font-weight:600;line-height:1.5;color:var(--text)}
+.opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.opt{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border2);background:#fff;cursor:pointer;text-align:left;font-size:13.5px;transition:all .12s;font-family:'DM Sans',sans-serif}
+.opt:hover:not(:disabled){border-color:var(--gold);background:var(--goldbg)}
+.opt:disabled{cursor:default}
+.opt-key{font-family:'DM Mono',monospace;font-weight:700;font-size:11px;color:var(--text3);background:var(--bg3);border-radius:5px;padding:3px 7px;flex-shrink:0}
+.opt.correct{border-color:var(--green);background:var(--greenbg)}
+.opt.correct .opt-key{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:var(--redbg)}
+.opt.wrong .opt-key{background:var(--red);color:#fff}
+.expbox{display:none;background:var(--tealbg);border:1px solid var(--tealb);border-radius:10px;padding:14px;font-size:13px;margin-bottom:14px;line-height:1.55}
+.expbox.show{display:block;animation:fi .2s ease}
+.actrow{display:flex;gap:10px}
+.next-btn{flex:1;padding:13px;border-radius:10px;border:none;background:var(--text);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+.next-btn:hover{background:var(--gold)}
+.end-btn{padding:13px 18px;border-radius:10px;border:1.5px solid var(--border2);background:#fff;color:var(--text3);font-weight:600;font-size:13px;cursor:pointer}
+.end-btn:hover{border-color:var(--red);color:var(--red)}
+.results-wrap{text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:30px 20px}
+.res-big{font-family:'Syne',sans-serif;font-weight:800;font-size:56px;color:var(--gold)}
+.res-sub{font-size:13px;color:var(--text3);margin-bottom:20px}
+.retry-btn{padding:11px 20px;border-radius:9px;border:none;background:var(--text);color:#fff;font-weight:700;font-size:13px;cursor:pointer}
+.dtable-wrap{overflow-x:auto;text-align:left}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="eyebrow">Patofisiologi · Gangguan Hemodinamik: Syok · FK Unsoed</div>
+  <h1>Am I in <span style="color:var(--gold)">Shock?</span></h1>
+  <p class="sub">Quiz Gangguan Hemodinamik: Syok — klasifikasi, patofisiologi, kompensasi hemoragik, stadium syok, dan organ yang terpengaruh.</p>
+</header>
+
+<div class="main-tabs">
+  <button class="main-tab active" onclick="switchMain('materi',this)">📋 Materi</button>
+  <button class="main-tab" onclick="switchMain('quiz',this)">🎯 Quiz</button>
+</div>
+
+<!-- MATERI -->
+<div class="main-panel active" id="mp-materi">
+<div class="sub-tabs">
+<button class="sub-tab active" onclick="switchSub('tab-definisi',this)">Definisi & Patofisiologi</button>
+<button class="sub-tab" onclick="switchSub('tab-klasifikasi',this)">Klasifikasi Syok</button>
+<button class="sub-tab" onclick="switchSub('tab-sebab',this)">Sebab Syok</button>
+<button class="sub-tab" onclick="switchSub('tab-penyebabcirculatory',this)">Penyebab Circulatory Shock</button>
+<button class="sub-tab" onclick="switchSub('tab-kompensasihemoragik',this)">Kompensasi Hemoragik</button>
+<button class="sub-tab" onclick="switchSub('tab-stadium',this)">Stadium Syok</button>
+<button class="sub-tab" onclick="switchSub('tab-kompensasi',this)">Stadium Kompensasi</button>
+<button class="sub-tab" onclick="switchSub('tab-dekompensasi',this)">Stadium Dekompensasi</button>
+<button class="sub-tab" onclick="switchSub('tab-ireversibel',this)">Syok Ireversibel</button>
+<button class="sub-tab" onclick="switchSub('tab-organ',this)">Organ yang Terpengaruh</button>
+</div>
+
+<!-- DEFINISI -->
+<div class="sub-panel active" id="tab-definisi">
+<div class="sec-h">Syok — Definisi & Patofisiologi</div>
+<ul>
+<li><strong>Syok</strong> adalah keadaan yang disebabkan oleh <strong>hipoperfusi jaringan</strong>, di mana jumlah darah yang dialirkan ke jaringan tidak mencukupi untuk memenuhi kebutuhan metabolismenya.</li>
+<li>Jika tekanan darah turun sedemikian rendah sehingga aliran darah ke jaringan tidak lagi dapat dipertahankan secara adekuat, timbul keadaan <strong>SYOK SIRKULASI</strong> (circulatory shock).</li>
+</ul>
+<div class="note red">Inti patofisiologi syok: ketidakmampuan sistem kardiovaskuler mempertahankan perfusi jaringan yang adekuat, akibat penurunan tekanan darah arteri rata-rata (MAP) yang terlalu rendah.</div>
+</div>
+
+<!-- KLASIFIKASI -->
+<div class="sub-panel" id="tab-klasifikasi">
+<div class="sec-h">Klasifikasi Syok</div>
+<p>Syok diklasifikasikan menjadi empat jenis utama berdasarkan mekanisme yang mendasarinya:</p>
+<div class="flowbox">
+<div class="flowitem" style="background:var(--goldbg);border-color:var(--goldb);color:var(--gold)">Syok</div>
+</div>
+<div class="flowbox">
+<div class="flowitem">Kardiogenik</div>
+<div class="flowitem">Hipovolemik</div>
+<div class="flowitem">Vasogenik</div>
+<div class="flowitem">Neurogenik</div>
+</div>
+<div class="note gold">Keempat jenis syok ini memiliki mekanisme hemodinamik dasar yang berbeda — ada yang menurunkan cardiac output (kardiogenik, hipovolemik) dan ada yang menurunkan total peripheral resistance (vasogenik, neurogenik) — namun bermuara pada hasil akhir yang sama: penurunan MAP dan hipoperfusi jaringan.</div>
+</div>
+
+<!-- SEBAB -->
+<div class="sub-panel" id="tab-sebab">
+<div class="sec-h">Sebab Syok</div>
+<table>
+<tr><th>Jenis Syok</th><th>Penyebab Utama</th></tr>
+<tr><td><strong>Kardiogenik</strong></td><td>Kegagalan pompa jantung</td></tr>
+<tr><td><strong>Hipovolemik</strong></td><td>Perdarahan masif atau hilangnya cairan tubuh yang berlebihan</td></tr>
+<tr><td><strong>Vasogenik — Septik</strong></td><td>Septikaemia, infeksi bakteri</td></tr>
+<tr><td><strong>Vasogenik — Anafilaktik</strong></td><td>Reaksi anafilaktik, misalnya alergi obat</td></tr>
+<tr><td><strong>Neurogenik</strong></td><td>Nyeri hebat yang menghambat aktivitas vasokonstriktor simpatis, sehingga terjadi vasodilatasi berlebihan</td></tr>
+</table>
+<div class="note teal">Syok vasogenik memiliki dua subtipe utama: <strong>septik</strong> (akibat infeksi bakteri/septikaemia) dan <strong>anafilaktik</strong> (akibat reaksi alergi berat) — keduanya menyebabkan vasodilatasi perifer berlebihan melalui mekanisme berbeda.</div>
+</div>
+
+<!-- PENYEBAB CIRCULATORY -->
+<div class="sub-panel" id="tab-penyebabcirculatory">
+<div class="sec-h">Penyebab Circulatory Shock (Mekanisme Hemodinamik)</div>
+<p>Circulatory shock terjadi ketika tekanan darah arteri rata-rata turun sedemikian rendah sehingga aliran darah ke jaringan tidak lagi dapat dipertahankan. Secara hemodinamik, terdapat dua jalur utama penurunan MAP:</p>
+
+<div class="sec-h" style="font-size:13px;border:none">Jalur ↓Cardiac Output — Hypovolemic Shock</div>
+<div class="flowcol">
+<div class="flowitem">Severe hemorrhage / Excessive vomiting, diarrhea, urinary losses</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem">Loss of blood volume (atau Loss of fluids derived from plasma)</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem">↓Cardiac output</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem" style="background:var(--goldbg);color:var(--gold)">Circulatory Shock (↓MAP)</div>
+</div>
+
+<div class="divider"></div>
+<div class="sec-h" style="font-size:13px;border:none">Jalur ↓Cardiac Output — Cardiogenic Shock</div>
+<div class="flowcol">
+<div class="flowitem">Weakened heart</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem">↓Cardiac output</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem" style="background:var(--goldbg);color:var(--gold)">Circulatory Shock (↓MAP)</div>
+</div>
+
+<div class="divider"></div>
+<div class="sec-h" style="font-size:13px;border:none">Jalur ↓Total Peripheral Resistance — Vasogenic & Neurogenic Shock</div>
+<div class="flowcol">
+<div class="flowitem">Septic shock (vasodilator substances dari bakteri) / Anaphylactic shock (histamine pada reaksi alergi berat) / ↓Sympathetic nerve activity (loss of vascular tone)</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem">Widespread vasodilation</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem">↓Total peripheral resistance</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem" style="background:var(--goldbg);color:var(--gold)">Circulatory Shock (↓MAP)</div>
+</div>
+
+<div class="note red">Empat mekanisme dasar penyebab circulatory shock: (1) kehilangan volume darah ekstensif (hipovolemik), (2) kegagalan jantung memompa darah secara adekuat (kardiogenik), (3) vasodilatasi arteriolar yang meluas (vasogenik), atau (4) tonus vasokonstriktor yang secara neural defektif (neurogenik).</div>
+</div>
+
+<!-- KOMPENSASI HEMORAGIK -->
+<div class="sub-panel" id="tab-kompensasihemoragik">
+<div class="sec-h">Konsekuensi dan Kompensasi Perdarahan (Hemoragik)</div>
+<p>Penurunan volume darah akibat perdarahan (hemorrhage) menyebabkan penurunan tekanan arteri, yang kemudian memicu serangkaian kompensasi untuk memulihkan volume plasma, tekanan arteri, dan jumlah sel darah merah menuju normal.</p>
+
+<div class="sec-h" style="font-size:13px;border:none">Rangkaian Konsekuensi (Akibat Langsung Perdarahan)</div>
+<div class="flowcol">
+<div class="flowitem" style="background:var(--redbg);color:var(--red)">Hemorrhage</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem">↓Blood volume</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem">↓Venous return</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem">↓Stroke volume</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem">↓Cardiac output</div>
+<div class="flowarrow">↓</div>
+<div class="flowitem" style="background:var(--redbg);color:var(--red)">↓Arterial pressure</div>
+</div>
+
+<div class="divider"></div>
+<div class="sec-h" style="font-size:13px;border:none">Jalur Kompensasi via Baroreseptor (Refleks Jangka Pendek)</div>
+<p>↓Arterial pressure → ↓Firing of baroreceptors → (melalui pusat kardiovaskuler) → bercabang ke 4 jalur:</p>
+<ul>
+<li><strong>↓Parasympathetic activity to heart</strong> → ↑Heart rate</li>
+<li><strong>↑Sympathetic activity to heart</strong> → ↑Heart rate dan ↑Contractility of heart → ↑Stroke volume</li>
+<li><strong>↑Sympathetic activity to veins</strong> → ↑Venous vasoconstriction → ↑Venous return</li>
+<li><strong>↑Sympathetic activity to arterioles</strong> → ↑Arteriolar vasoconstriction (kecuali otak) → ↑Total peripheral resistance</li>
+</ul>
+<p>Keempatnya bermuara pada: ↑Stroke volume & ↑Heart rate → <strong>↑Cardiac output</strong>, serta ↑Total peripheral resistance — keduanya bersama meningkatkan <strong>↑Arterial pressure</strong> kembali menuju normal.</p>
+
+<div class="divider"></div>
+<div class="sec-h" style="font-size:13px;border:none">Jalur Kompensasi Lain</div>
+<ul>
+<li><strong>↑Thirst (rasa haus)</strong> — dipicu oleh ↓blood volume, mendorong asupan cairan untuk memulihkan volume plasma.</li>
+<li><strong>↑Vasopressin and renin-angiotensin-aldosterone</strong> — dipicu oleh ↓blood volume, bekerja meningkatkan retensi cairan dan garam.</li>
+<li><strong>↓Capillary blood pressure → ↓Filtration and ↑Reabsorption</strong> → fluid shift dari cairan interstisial ke plasma → <strong>↑Plasma volume</strong>.</li>
+<li><strong>↑Synthesis of plasma proteins by liver</strong> — turut membantu fluid shift ke plasma.</li>
+<li><strong>↓Arteriolar vasoconstriction → ↓Renal blood flow → ↓Urine output</strong> — mengonservasi volume plasma.</li>
+<li><strong>↓Renal blood flow → ↑Release of hormone yang menstimulasi produksi sel darah merah</strong> → <strong>↑Red blood cells</strong>.</li>
+</ul>
+<div class="note green">Seluruh rangkaian kompensasi ini (baik melalui saraf otonom maupun hormonal) secara bersama-sama bertujuan memulihkan tiga hal utama menuju normal: <strong>plasma volume</strong>, <strong>arterial pressure</strong>, dan <strong>jumlah sel darah merah</strong>.</div>
+</div>
+
+<!-- STADIUM -->
+<div class="sub-panel" id="tab-stadium">
+<div class="sec-h">Stadium Syok</div>
+<p>Perjalanan syok terbagi menjadi tiga stadium progresif:</p>
+<div class="flowbox">
+<div class="flowitem" style="background:var(--greenbg);color:var(--green)">Kompensasi</div>
+<div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--goldbg);color:var(--gold)">Dekompensasi</div>
+<div class="flowarrow">→</div>
+<div class="flowitem" style="background:var(--redbg);color:var(--red)">Ireversibel</div>
+</div>
+<div class="note blue">Ketiga stadium ini menggambarkan perjalanan progresif syok: dari fase di mana tubuh masih mampu mengompensasi (kompensasi), ke fase ketika mekanisme kompensasi mulai gagal (dekompensasi), hingga fase akhir ketika terjadi kolaps sirkulasi yang tidak dapat dipulihkan (ireversibel).</div>
+</div>
+
+<!-- KOMPENSASI -->
+<div class="sub-panel" id="tab-kompensasi">
+<div class="sec-h">Stadium Kompensasi</div>
+<ul>
+<li>Pada stadium ini, tubuh masih mampu mengompensasi penurunan tekanan darah dengan cara:
+<ul>
+<li><strong>Meningkatkan denyut jantung</strong></li>
+<li><strong>Mengurangi produksi urin</strong></li>
+</ul>
+</li>
+</ul>
+<div class="note green">Stadium kompensasi terbagi menjadi dua fase metabolik:
+<ul style="margin-top:6px">
+<li><strong>Fase katabolik</strong></li>
+<li><strong>Fase anabolik</strong></li>
+</ul>
+</div>
+</div>
+
+<!-- DEKOMPENSASI -->
+<div class="sub-panel" id="tab-dekompensasi">
+<div class="sec-h">Stadium Dekompensasi</div>
+<p>Bila mekanisme kompensasi gagal, syok akan berlanjut ke stadium dekompensasi, ditandai dengan:</p>
+<table>
+<tr><th>Tanda Klinis</th><th>Keterangan</th></tr>
+<tr><td><strong>Hipotensi</strong></td><td>Penurunan tekanan darah yang nyata</td></tr>
+<tr><td><strong>Takipneu dan dispneu</strong></td><td>Kompensasi paru terhadap hipoksia</td></tr>
+<tr><td><strong>Oliguri</strong></td><td>Produksi urin &lt;500 cc/hari</td></tr>
+<tr><td><strong>Asidosis</strong></td><td>Akibat menurunnya fungsi ginjal dan paru</td></tr>
+</table>
+<div class="note gold">Pada stadium dekompensasi, tubuh mulai kehilangan kemampuan mempertahankan homeostasis, sehingga mulai muncul tanda klinis objektif kegagalan sirkulasi — berbeda dengan stadium kompensasi yang masih relatif tersamar secara klinis.</div>
+</div>
+
+<!-- IREVERSIBEL -->
+<div class="sub-panel" id="tab-ireversibel">
+<div class="sec-h">Syok Ireversibel</div>
+<ul>
+<li>Terjadi <strong>kolaps sirkulasi</strong> serta <strong>hipoperfusi organ vital</strong>, menyebabkan hilangnya fungsi vital serta kegagalan berbagai organ (multi-organ failure).</li>
+</ul>
+<p>Tanda-tanda klinis syok ireversibel meliputi:</p>
+<ul>
+<li><strong>Hipotensi dan takikardi hebat</strong></li>
+<li><strong>Respiratory distress</strong></li>
+<li><strong>Menurunnya kesadaran hingga koma</strong></li>
+<li><strong>Anuria</strong></li>
+<li><strong>Asidosis hebat</strong></li>
+</ul>
+<div class="note red">Syok ireversibel berujung pada <strong>kematian</strong> — pada tahap ini, kerusakan sel dan organ sudah sedemikian berat sehingga tidak dapat lagi dipulihkan meskipun penyebab utama syok telah diatasi.</div>
+</div>
+
+<!-- ORGAN -->
+<div class="sub-panel" id="tab-organ">
+<div class="sec-h">Organ yang Terpengaruh oleh Syok</div>
+<table>
+<tr><th>Organ</th><th>Efek yang Ditimbulkan</th></tr>
+<tr><td><strong>Paru</strong></td><td>Respiratory distress syndrome</td></tr>
+<tr><td><strong>Gastrointestinal</strong></td><td>Iskemia mukosa sehingga erosi/ulserasi dan akhirnya perdarahan</td></tr>
+<tr><td><strong>Ginjal</strong></td><td>Nekrosis tubuler</td></tr>
+<tr><td><strong>Hati</strong></td><td>Nekrosis centrilobuler</td></tr>
+<tr><td><strong>Otak</strong></td><td>Iskemia (manifestasi klinis seperti stroke)</td></tr>
+<tr><td><strong>Kelenjar adrenal</strong></td><td>Nekrosis korteks dan perdarahan</td></tr>
+</table>
+<div class="note red">Kegagalan multi-organ pada syok lanjut terjadi akibat hipoperfusi berkepanjangan — setiap organ memiliki pola kerusakan khas yang mencerminkan kerentanannya masing-masing terhadap iskemia.</div>
+</div>
+
+</div>
+
+<!-- QUIZ -->
+<div class="main-panel" id="mp-quiz">
+  <div id="qconfig" class="qconfig">
+    <div class="qconfig-title">Mulai Sesi Quiz</div>
+    <div class="qconfig-sub">Pilih topik (multi-pilih)</div>
+    <div class="cfg-grid" id="cfg-grid">
+<button class="cfg-btn sel" data-type="pool_definisi">Definisi & Patofisiologi</button>
+<button class="cfg-btn sel" data-type="pool_klasifikasi">Klasifikasi Syok</button>
+<button class="cfg-btn sel" data-type="pool_sebab">Sebab Syok</button>
+<button class="cfg-btn sel" data-type="pool_penyebabcirculatory">Penyebab Circulatory Shock</button>
+<button class="cfg-btn sel" data-type="pool_kompensasihemoragik">Kompensasi Hemoragik</button>
+<button class="cfg-btn sel" data-type="pool_stadium">Stadium Syok</button>
+<button class="cfg-btn sel" data-type="pool_kompensasi">Stadium Kompensasi</button>
+<button class="cfg-btn sel" data-type="pool_dekompensasi">Stadium Dekompensasi</button>
+<button class="cfg-btn sel" data-type="pool_ireversibel">Syok Ireversibel</button>
+<button class="cfg-btn sel" data-type="pool_organ">Organ yang Terpengaruh</button>
+<button class="cfg-btn sel" data-type="pool_cases">Studi Kasus Terintegrasi</button>
+</div>
+    <button class="start-btn" onclick="startSession()">Mulai →</button>
+  </div>
+  <div id="qactive" style="display:none">
+    <div class="qheader">
+      <div class="qnum-display">Soal ke-<strong id="qnum">1</strong></div>
+      <div id="qpill" class="qtype-pill"></div>
+      <div class="qscore-display"><strong id="qscore">0</strong> benar</div>
+    </div>
+    <div class="qcard">
+      <div id="qscen" class="qscen" style="display:none"></div>
+      <div id="qdata" class="qdata" style="display:none"></div>
+      <div id="qtext" class="qtext"></div>
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="expbox" id="expbox"></div>
+    <div class="actrow">
+      <button class="next-btn" id="nextbtn" onclick="nextQ()">Soal Berikutnya →</button>
+      <button class="end-btn" onclick="endSession()">Akhiri Sesi</button>
+    </div>
+  </div>
+  <div id="qresults" style="display:none">
+    <div class="results-wrap">
+      <div class="res-big" id="res-pct">—</div>
+      <div class="res-sub" id="res-sub">—</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px">
+        <button class="retry-btn" style="margin-bottom:0" onclick="restartQuiz()">Coba Lagi</button>
+      </div>
+      <div class="dtable-wrap" style="margin-bottom:14px"><table><thead><tr><th>Topik</th><th>Soal</th><th>Benar</th></tr></thead><tbody id="res-bytype"></tbody></table></div>
+      <div class="dtable-wrap"><table><thead><tr><th>#</th><th>Soal (ringkas)</th><th>Jawaban Benar</th><th>Hasil</th></tr></thead><tbody id="res-detail"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ═══ TAB ═══
+window.switchMain=function(id,b){document.querySelectorAll('.main-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.main-tab').forEach(x=>x.classList.remove('active'));document.getElementById('mp-'+id).classList.add('active');b.classList.add('active');};
+window.switchSub=function(id,b){const parent=b.closest('.main-panel');parent.querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));parent.querySelectorAll('.sub-tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');b.classList.add('active');};
+
+document.querySelectorAll('.cfg-btn').forEach(b=>{b.onclick=()=>b.classList.toggle('sel');});
+
+const KEYS=['A','B','C','D','E'];
+function shuf(a){const arr=[...a];for(let i=arr.length-1;i>0;i--){const j=0|Math.random()*(i+1);[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function stripHtml(s){const d=document.createElement('div');d.innerHTML=s;return d.textContent||d.innerText||'';}
+
+// ═══ POOLS ═══
+
+const pool_definisi = [
+  {
+    pertanyaan: `Syok didefinisikan sebagai keadaan yang disebabkan oleh...`,
+    pilihan: [`Hipoperfusi jaringan, dimana jumlah darah yang dialirkan ke jaringan tidak mencukupi kebutuhan metabolismenya`, `Hiperperfusi jaringan yang berlebihan`, `Peningkatan tekanan darah mendadak`, `Peningkatan curah jantung yang berlebihan`, `Vasokonstriksi sistemik yang menguntungkan`],
+    jawaban: `Hipoperfusi jaringan, dimana jumlah darah yang dialirkan ke jaringan tidak mencukupi kebutuhan metabolismenya`,
+    pembahasan: `Syok adalah keadaan yang disebabkan oleh hipoperfusi jaringan, di mana jumlah darah yang dialirkan ke jaringan tidak mencukupi untuk memenuhi kebutuhan metabolismenya.`
+  },
+  {
+    pertanyaan: `Keadaan "syok sirkulasi" timbul ketika...`,
+    pilihan: [`Tekanan darah turun sedemikian rendah sehingga aliran darah ke jaringan tidak lagi dapat dipertahankan secara adekuat`, `Tekanan darah meningkat secara drastis`, `Curah jantung meningkat tanpa batas`, `Volume darah meningkat berlebihan`, `Resistensi perifer menurun tanpa efek klinis`],
+    jawaban: `Tekanan darah turun sedemikian rendah sehingga aliran darah ke jaringan tidak lagi dapat dipertahankan secara adekuat`,
+    pembahasan: `Syok sirkulasi (circulatory shock) timbul ketika tekanan darah turun sedemikian rendah sehingga aliran darah ke jaringan tidak lagi dapat dipertahankan secara adekuat.`
+  },
+  {
+    pertanyaan: `Inti patofisiologi dasar yang mendasari seluruh jenis syok adalah...`,
+    pilihan: [`Ketidakmampuan sistem kardiovaskuler mempertahankan perfusi jaringan yang adekuat`, `Peningkatan jumlah sel darah merah yang berlebihan`, `Penurunan kebutuhan metabolisme jaringan`, `Peningkatan kapasitas vaskuler tanpa batas`, `Hiperaktivitas sistem imun tubuh`],
+    jawaban: `Ketidakmampuan sistem kardiovaskuler mempertahankan perfusi jaringan yang adekuat`,
+    pembahasan: `Inti patofisiologi syok adalah ketidakmampuan sistem kardiovaskuler mempertahankan perfusi jaringan yang adekuat, akibat penurunan tekanan darah arteri rata-rata (MAP) yang terlalu rendah.`
+  }
+];
+
+const pool_klasifikasi = [
+  {
+    pertanyaan: `Empat klasifikasi utama syok menurut materi kuliah adalah...`,
+    pilihan: [`Kardiogenik, Hipovolemik, Vasogenik, Neurogenik`, `Septik, Anafilaktik, Traumatik, Hemoragik`, `Primer, Sekunder, Tersier, Kuarterner`, `Akut, Subakut, Kronik, Fulminan`, `Ringan, Sedang, Berat, Fatal`],
+    jawaban: `Kardiogenik, Hipovolemik, Vasogenik, Neurogenik`,
+    pembahasan: `Klasifikasi syok menurut materi kuliah dibagi menjadi empat jenis: Kardiogenik, Hipovolemik, Vasogenik, dan Neurogenik.`
+  },
+  {
+    pertanyaan: `Syok kardiogenik dan hipovolemik memiliki kesamaan dalam mekanisme hemodinamik, yaitu keduanya menyebabkan...`,
+    pilihan: [`↓Cardiac output`, `↓Total peripheral resistance`, `↑Cardiac output`, `↑Total peripheral resistance`, `↑Blood viscosity`],
+    jawaban: `↓Cardiac output`,
+    pembahasan: `Syok kardiogenik (akibat weakened heart) dan syok hipovolemik (akibat loss of blood volume) sama-sama bermuara pada penurunan cardiac output, yang kemudian menurunkan mean arterial pressure.`
+  },
+  {
+    pertanyaan: `Syok vasogenik dan neurogenik memiliki kesamaan dalam mekanisme hemodinamik, yaitu keduanya menyebabkan...`,
+    pilihan: [`↓Total peripheral resistance akibat widespread vasodilation`, `↓Cardiac output akibat weakened heart`, `↑Blood volume akibat retensi cairan`, `↑Heart rate akibat aktivasi simpatis`, `↑Blood viscosity akibat dehidrasi`],
+    jawaban: `↓Total peripheral resistance akibat widespread vasodilation`,
+    pembahasan: `Syok vasogenik (septik/anafilaktik) dan syok neurogenik sama-sama menyebabkan widespread vasodilation, yang menurunkan total peripheral resistance dan akhirnya menurunkan mean arterial pressure.`
+  },
+  {
+    pertanyaan: `Berdasarkan mekanisme hemodinamiknya, keempat jenis syok dapat dikelompokkan menjadi dua kategori besar, yaitu...`,
+    pilihan: [`Kelompok yang menurunkan cardiac output (kardiogenik, hipovolemik) dan kelompok yang menurunkan total peripheral resistance (vasogenik, neurogenik)`, `Kelompok akut dan kelompok kronik`, `Kelompok reversibel dan kelompok ireversibel`, `Kelompok infeksius dan kelompok non-infeksius`, `Kelompok dengan hipertensi dan kelompok dengan hipotensi`],
+    jawaban: `Kelompok yang menurunkan cardiac output (kardiogenik, hipovolemik) dan kelompok yang menurunkan total peripheral resistance (vasogenik, neurogenik)`,
+    pembahasan: `Keempat jenis syok dapat dikelompokkan menjadi dua kategori mekanisme hemodinamik: yang menurunkan cardiac output (kardiogenik dan hipovolemik), dan yang menurunkan total peripheral resistance (vasogenik dan neurogenik) — keduanya bermuara pada penurunan MAP.`
+  }
+];
+
+const pool_sebab = [
+  {
+    pertanyaan: `Syok kardiogenik disebabkan oleh...`,
+    pilihan: [`Kegagalan pompa jantung`, `Perdarahan masif`, `Septikaemia`, `Reaksi anafilaktik`, `Nyeri hebat`],
+    jawaban: `Kegagalan pompa jantung`,
+    pembahasan: `Syok kardiogenik disebabkan oleh kegagalan pompa jantung (weakened heart), sehingga jantung tidak mampu memompa darah secara adekuat.`
+  },
+  {
+    pertanyaan: `Syok hipovolemik disebabkan oleh...`,
+    pilihan: [`Perdarahan masif atau hilangnya cairan tubuh yang berlebihan`, `Kegagalan pompa jantung`, `Reaksi alergi berat`, `Infeksi bakteri sistemik`, `Nyeri hebat yang menghambat aktivitas simpatis`],
+    jawaban: `Perdarahan masif atau hilangnya cairan tubuh yang berlebihan`,
+    pembahasan: `Syok hipovolemik disebabkan oleh perdarahan masif (severe hemorrhage) atau hilangnya cairan tubuh yang berlebihan (excessive vomiting, diarrhea, urinary losses).`
+  },
+  {
+    pertanyaan: `Syok vasogenik disebabkan oleh mekanisme dasar berupa...`,
+    pilihan: [`Vasodilatasi perifer berlebihan`, `Vasokonstriksi perifer berlebihan`, `Kegagalan pompa jantung`, `Kehilangan volume darah`, `Peningkatan viskositas darah`],
+    jawaban: `Vasodilatasi perifer berlebihan`,
+    pembahasan: `Syok vasogenik disebabkan oleh vasodilatasi perifer yang berlebihan, dengan dua subtipe utama yaitu septik dan anafilaktik.`
+  },
+  {
+    pertanyaan: `Syok vasogenik tipe septik disebabkan oleh...`,
+    pilihan: [`Septikaemia, infeksi bakteri`, `Reaksi anafilaktik`, `Kegagalan pompa jantung`, `Perdarahan masif`, `Nyeri hebat`],
+    jawaban: `Septikaemia, infeksi bakteri`,
+    pembahasan: `Syok vasogenik tipe septik disebabkan oleh septikaemia atau infeksi bakteri, yang melepaskan zat vasodilator sehingga menyebabkan vasodilatasi perifer berlebihan.`
+  },
+  {
+    pertanyaan: `Syok vasogenik tipe anafilaktik disebabkan oleh...`,
+    pilihan: [`Reaksi anafilaktik, misalnya alergi obat`, `Infeksi bakteri sistemik`, `Perdarahan masif`, `Kegagalan pompa jantung`, `Dehidrasi berat`],
+    jawaban: `Reaksi anafilaktik, misalnya alergi obat`,
+    pembahasan: `Syok vasogenik tipe anafilaktik disebabkan oleh reaksi anafilaktik, misalnya akibat alergi obat, yang melepaskan histamin dan menyebabkan vasodilatasi perifer berlebihan.`
+  },
+  {
+    pertanyaan: `Syok neurogenik disebabkan oleh...`,
+    pilihan: [`Nyeri hebat yang menghambat aktivitas vasokonstriktor simpatis sehingga terjadi vasodilatasi berlebihan`, `Infeksi bakteri sistemik`, `Reaksi alergi berat terhadap obat`, `Kegagalan pompa jantung akibat infark miokard`, `Perdarahan masif akut`],
+    jawaban: `Nyeri hebat yang menghambat aktivitas vasokonstriktor simpatis sehingga terjadi vasodilatasi berlebihan`,
+    pembahasan: `Syok neurogenik disebabkan oleh nyeri hebat yang menghambat aktivitas vasokonstriktor simpatis, sehingga terjadi vasodilatasi berlebihan dan penurunan resistensi perifer total.`
+  },
+  {
+    pertanyaan: `Zat yang dilepaskan dari bakteri dan berperan menyebabkan vasodilatasi pada syok septik adalah...`,
+    pilihan: [`Vasodilator substances`, `Histamin`, `Epinefrin`, `Aldosteron`, `Vasopressin`],
+    jawaban: `Vasodilator substances`,
+    pembahasan: `Pada syok septik, bakteri melepaskan vasodilator substances yang menyebabkan vasodilatasi luas dan penurunan total peripheral resistance.`
+  },
+  {
+    pertanyaan: `Zat yang dilepaskan pada reaksi alergi berat dan berperan menyebabkan vasodilatasi pada syok anafilaktik adalah...`,
+    pilihan: [`Histamin`, `Vasodilator substances dari bakteri`, `Epinefrin`, `Aldosteron`, `Renin`],
+    jawaban: `Histamin`,
+    pembahasan: `Pada syok anafilaktik, histamin dilepaskan dalam reaksi alergi berat, menyebabkan vasodilatasi luas dan penurunan total peripheral resistance.`
+  }
+];
+
+const pool_penyebabcirculatory = [
+  {
+    pertanyaan: `Pada syok hipovolemik, urutan mekanisme hemodinamik yang terjadi adalah...`,
+    pilihan: [`Loss of blood volume → ↓Cardiac output → Circulatory shock`, `Widespread vasodilation → ↓Total peripheral resistance → Circulatory shock`, `Weakened heart → ↓Cardiac output → Circulatory shock`, `↓Sympathetic nerve activity → ↓Total peripheral resistance → Circulatory shock`, `Histamine release → ↑Cardiac output → Circulatory shock`],
+    jawaban: `Loss of blood volume → ↓Cardiac output → Circulatory shock`,
+    pembahasan: `Pada syok hipovolemik, kehilangan volume darah (dari perdarahan hebat atau kehilangan cairan plasma) menyebabkan penurunan cardiac output, yang kemudian menimbulkan circulatory shock.`
+  },
+  {
+    pertanyaan: `Dua sumber utama "loss of blood volume" pada syok hipovolemik menurut skema hemodinamik adalah...`,
+    pilihan: [`Severe hemorrhage dan loss of fluids derived from plasma (vomiting, diarrhea, urinary losses)`, `Weakened heart dan widespread vasodilation`, `Septic shock dan anaphylactic shock`, `↓Sympathetic nerve activity dan loss of vascular tone`, `Histamine release dan vasodilator substances`],
+    jawaban: `Severe hemorrhage dan loss of fluids derived from plasma (vomiting, diarrhea, urinary losses)`,
+    pembahasan: `Loss of blood volume pada syok hipovolemik dapat berasal dari severe hemorrhage (perdarahan hebat) atau loss of fluids derived from plasma akibat excessive vomiting, diarrhea, urinary losses, dan sejenisnya.`
+  },
+  {
+    pertanyaan: `Pada syok kardiogenik, penyebab langsung penurunan cardiac output adalah...`,
+    pilihan: [`Weakened heart`, `Loss of blood volume`, `Widespread vasodilation`, `↓Sympathetic nerve activity`, `Histamine release`],
+    jawaban: `Weakened heart`,
+    pembahasan: `Pada syok kardiogenik, jantung yang melemah (weakened heart) langsung menyebabkan penurunan cardiac output, tanpa melalui mekanisme kehilangan volume darah.`
+  },
+  {
+    pertanyaan: `Tiga pemicu "widespread vasodilation" yang menyebabkan syok vasogenik/neurogenik menurut skema hemodinamik adalah...`,
+    pilihan: [`Vasodilator substances dari bakteri (septik), histamine pada reaksi alergi (anafilaktik), dan loss of vascular tone akibat ↓sympathetic nerve activity (neurogenik)`, `Severe hemorrhage, excessive vomiting, dan urinary losses`, `Weakened heart, loss of blood volume, dan ↓cardiac output`, `↑Cardiac output, ↑heart rate, dan ↑stroke volume`, `↑Blood viscosity, ↑red blood cells, dan ↑renal blood flow`],
+    jawaban: `Vasodilator substances dari bakteri (septik), histamine pada reaksi alergi (anafilaktik), dan loss of vascular tone akibat ↓sympathetic nerve activity (neurogenik)`,
+    pembahasan: `Widespread vasodilation pada syok vasogenik/neurogenik dapat dipicu oleh tiga sumber: vasodilator substances dari bakteri (septic shock), histamine pada reaksi alergi berat (anaphylactic shock), dan loss of vascular tone akibat penurunan sympathetic nerve activity (neurogenic shock).`
+  },
+  {
+    pertanyaan: `Empat mekanisme dasar yang dapat menyebabkan circulatory shock menurut materi adalah...`,
+    pilihan: [`Kehilangan volume darah ekstensif, kegagalan jantung memompa darah, vasodilatasi arteriolar meluas, dan tonus vasokonstriktor yang defektif secara neural`, `Peningkatan curah jantung, peningkatan resistensi perifer, peningkatan volume darah, dan peningkatan viskositas darah`, `Hipertrofi ventrikel, stenosis katup, aritmia, dan infark miokard`, `Peningkatan tekanan vena sentral, edema paru, asites, dan efusi pleura`, `Hiperkalemia, hiponatremia, asidosis metabolik, dan alkalosis respiratorik`],
+    jawaban: `Kehilangan volume darah ekstensif, kegagalan jantung memompa darah, vasodilatasi arteriolar meluas, dan tonus vasokonstriktor yang defektif secara neural`,
+    pembahasan: `Circulatory shock dapat terjadi akibat empat mekanisme: (1) extensive loss of blood volume (hipovolemik), (2) failure of the heart to pump blood adequately (kardiogenik), (3) widespread arteriolar vasodilation (vasogenik), atau (4) neurally defective vasoconstrictor tone (neurogenik).`
+  }
+];
+
+const pool_kompensasihemoragik = [
+  {
+    pertanyaan: `Urutan rangkaian konsekuensi langsung akibat hemorrhage (perdarahan) yang benar adalah...`,
+    pilihan: [`↓Blood volume → ↓Venous return → ↓Stroke volume → ↓Cardiac output → ↓Arterial pressure`, `↓Arterial pressure → ↓Blood volume → ↓Cardiac output → ↓Stroke volume`, `↓Cardiac output → ↓Blood volume → ↓Venous return → ↓Arterial pressure`, `↓Venous return → ↓Arterial pressure → ↓Blood volume → ↓Stroke volume`, `↓Stroke volume → ↓Blood volume → ↓Arterial pressure → ↓Venous return`],
+    jawaban: `↓Blood volume → ↓Venous return → ↓Stroke volume → ↓Cardiac output → ↓Arterial pressure`,
+    pembahasan: `Rangkaian konsekuensi perdarahan: hemorrhage → ↓blood volume → ↓venous return → ↓stroke volume → ↓cardiac output → ↓arterial pressure — ini merupakan rantai kausal langsung penurunan tekanan arteri.`
+  },
+  {
+    pertanyaan: `Penurunan arterial pressure akibat perdarahan memicu kompensasi melalui penurunan...`,
+    pilihan: [`Firing of baroreceptors`, `Firing of chemoreceptors`, `Firing of osmoreceptors`, `Firing of thermoreceptors`, `Firing of proprioceptors`],
+    jawaban: `Firing of baroreceptors`,
+    pembahasan: `Penurunan arterial pressure akibat perdarahan menyebabkan penurunan firing of baroreceptors, yang kemudian melalui pusat kardiovaskuler memicu serangkaian respons kompensasi.`
+  },
+  {
+    pertanyaan: `Pada kompensasi hemoragik, penurunan parasympathetic activity to heart menghasilkan efek...`,
+    pilihan: [`↑Heart rate`, `↓Heart rate`, `↑Venous return`, `↓Venous return`, `↑Blood viscosity`],
+    jawaban: `↑Heart rate`,
+    pembahasan: `Penurunan parasympathetic activity to heart (sebagai bagian kompensasi hemoragik) menghasilkan peningkatan heart rate.`
+  },
+  {
+    pertanyaan: `Pada kompensasi hemoragik, peningkatan sympathetic activity to heart menghasilkan dua efek, yaitu...`,
+    pilihan: [`↑Heart rate dan ↑Contractility of heart (→↑Stroke volume)`, `↓Heart rate dan ↓Contractility of heart`, `↑Venous vasoconstriction dan ↑Venous return`, `↑Arteriolar vasoconstriction dan ↑Total peripheral resistance`, `↓Urine output dan ↑Plasma volume`],
+    jawaban: `↑Heart rate dan ↑Contractility of heart (→↑Stroke volume)`,
+    pembahasan: `Peningkatan sympathetic activity to heart meningkatkan heart rate secara langsung, dan juga meningkatkan contractility of heart yang kemudian meningkatkan stroke volume.`
+  },
+  {
+    pertanyaan: `Pada kompensasi hemoragik, peningkatan sympathetic activity to veins menghasilkan efek berurutan...`,
+    pilihan: [`↑Venous vasoconstriction → ↑Venous return`, `↓Venous vasoconstriction → ↓Venous return`, `↑Arteriolar vasoconstriction → ↑Total peripheral resistance`, `↓Heart rate → ↓Cardiac output`, `↑Urine output → ↓Plasma volume`],
+    jawaban: `↑Venous vasoconstriction → ↑Venous return`,
+    pembahasan: `Peningkatan sympathetic activity to veins menyebabkan peningkatan venous vasoconstriction, yang kemudian meningkatkan venous return.`
+  },
+  {
+    pertanyaan: `Pada kompensasi hemoragik, peningkatan sympathetic activity to arterioles menghasilkan efek berurutan, KECUALI pada pembuluh darah...`,
+    pilihan: [`Otak`, `Ginjal`, `Kulit`, `Otot rangka`, `Organ visera abdomen`],
+    jawaban: `Otak`,
+    pembahasan: `Peningkatan sympathetic activity to arterioles menyebabkan arteriolar vasoconstriction di seluruh tubuh KECUALI pada pembuluh darah otak — hal ini melindungi aliran darah otak tetap terjaga meskipun terjadi vasokonstriksi sistemik.`
+  },
+  {
+    pertanyaan: `Dua hormon/sistem hormonal yang dilepaskan sebagai respons terhadap penurunan blood volume pada kompensasi hemoragik adalah...`,
+    pilihan: [`Vasopressin dan sistem renin-angiotensin-aldosteron`, `Insulin dan glukagon`, `Tiroksin dan kalsitonin`, `Hormon pertumbuhan dan prolaktin`, `Oksitosin dan progesteron`],
+    jawaban: `Vasopressin dan sistem renin-angiotensin-aldosteron`,
+    pembahasan: `Penurunan blood volume memicu pelepasan vasopressin dan aktivasi sistem renin-angiotensin-aldosteron, keduanya bekerja meningkatkan retensi cairan dan garam untuk memulihkan volume plasma.`
+  },
+  {
+    pertanyaan: `Mekanisme fluid shift dari cairan interstisial ke plasma pada kompensasi hemoragik terjadi melalui...`,
+    pilihan: [`↓Capillary blood pressure → ↓Filtration dan ↑Reabsorption`, `↑Capillary blood pressure → ↑Filtration dan ↓Reabsorption`, `↑Venous return → ↑Stroke volume`, `↓Arteriolar vasoconstriction → ↑Renal blood flow`, `↑Thirst → ↑Water intake`],
+    jawaban: `↓Capillary blood pressure → ↓Filtration dan ↑Reabsorption`,
+    pembahasan: `Penurunan capillary blood pressure (akibat vasokonstriksi dan penurunan cardiac output) menyebabkan penurunan filtrasi dan peningkatan reabsorpsi di kapiler, sehingga cairan bergeser dari interstisial ke plasma, meningkatkan plasma volume.`
+  },
+  {
+    pertanyaan: `Organ yang berperan meningkatkan sintesis protein plasma sebagai bagian kompensasi hemoragik adalah...`,
+    pilihan: [`Hati (liver)`, `Ginjal`, `Limpa`, `Pankreas`, `Kelenjar adrenal`],
+    jawaban: `Hati (liver)`,
+    pembahasan: `Hati meningkatkan sintesis protein plasma sebagai bagian dari kompensasi hemoragik, yang turut membantu fluid shift cairan ke dalam plasma dan memulihkan plasma volume.`
+  },
+  {
+    pertanyaan: `Penurunan renal blood flow akibat arteriolar vasoconstriction pada kompensasi hemoragik menghasilkan dua efek penting, yaitu...`,
+    pilihan: [`↓Urine output (konservasi plasma volume) dan ↑Release of hormone yang menstimulasi produksi sel darah merah`, `↑Urine output dan ↓Red blood cell production`, `↑Glomerular filtration rate dan ↓Reabsorpsi natrium`, `↓Sekresi renin dan ↑Ekskresi kalium`, `↑Sekresi insulin dan ↓Sekresi glukagon`],
+    jawaban: `↓Urine output (konservasi plasma volume) dan ↑Release of hormone yang menstimulasi produksi sel darah merah`,
+    pembahasan: `Penurunan renal blood flow menyebabkan dua efek: penurunan urine output (yang mengonservasi plasma volume), dan peningkatan pelepasan hormon yang menstimulasi produksi sel darah merah (eritropoietin), sehingga meningkatkan jumlah sel darah merah.`
+  },
+  {
+    pertanyaan: `Tiga parameter akhir yang dipulihkan menuju normal melalui seluruh rangkaian kompensasi hemoragik adalah...`,
+    pilihan: [`Plasma volume, arterial pressure, dan jumlah sel darah merah`, `Heart rate, respiratory rate, dan suhu tubuh`, `pH darah, kadar glukosa, dan kadar elektrolit`, `Kadar hemoglobin, hematokrit, dan leukosit`, `Kadar kreatinin, ureum, dan asam urat`],
+    jawaban: `Plasma volume, arterial pressure, dan jumlah sel darah merah`,
+    pembahasan: `Seluruh rangkaian kompensasi hemoragik bertujuan memulihkan tiga parameter utama menuju normal: plasma volume (melalui fluid shift, thirst, retensi hormonal), arterial pressure (melalui refleks baroreseptor), dan jumlah sel darah merah (melalui eritropoietin).`
+  },
+  {
+    pertanyaan: `Rasa haus (thirst) yang meningkat pada kompensasi hemoragik dipicu oleh...`,
+    pilihan: [`↓Blood volume`, `↑Blood volume`, `↑Arterial pressure`, `↓Heart rate`, `↑Urine output`],
+    jawaban: `↓Blood volume`,
+    pembahasan: `Penurunan blood volume akibat perdarahan memicu peningkatan rasa haus (thirst), yang mendorong individu untuk meningkatkan asupan cairan guna membantu memulihkan volume plasma.`
+  }
+];
+
+const pool_stadium = [
+  {
+    pertanyaan: `Tiga stadium syok yang berurutan secara progresif menurut materi kuliah adalah...`,
+    pilihan: [`Kompensasi, Dekompensasi, Ireversibel`, `Ringan, Sedang, Berat`, `Akut, Subakut, Kronik`, `Primer, Sekunder, Tersier`, `Awal, Pertengahan, Akhir`],
+    jawaban: `Kompensasi, Dekompensasi, Ireversibel`,
+    pembahasan: `Perjalanan syok terbagi menjadi tiga stadium progresif: Kompensasi, Dekompensasi, dan Ireversibel.`
+  },
+  {
+    pertanyaan: `Urutan progresivitas stadium syok dari yang paling awal (ringan) ke yang paling berat adalah...`,
+    pilihan: [`Kompensasi → Dekompensasi → Ireversibel`, `Ireversibel → Dekompensasi → Kompensasi`, `Dekompensasi → Kompensasi → Ireversibel`, `Ireversibel → Kompensasi → Dekompensasi`, `Kompensasi → Ireversibel → Dekompensasi`],
+    jawaban: `Kompensasi → Dekompensasi → Ireversibel`,
+    pembahasan: `Stadium syok berjalan progresif dari Kompensasi (tubuh masih mampu mengompensasi) → Dekompensasi (kompensasi mulai gagal) → Ireversibel (kolaps sirkulasi, kerusakan organ permanen).`
+  },
+  {
+    pertanyaan: `Perbedaan utama antara stadium kompensasi dan dekompensasi pada syok adalah...`,
+    pilihan: [`Pada stadium kompensasi, tubuh masih mampu mempertahankan homeostasis; pada dekompensasi, mekanisme kompensasi mulai gagal`, `Stadium kompensasi selalu berakhir dengan kematian`, `Stadium dekompensasi selalu dapat dipulihkan sepenuhnya`, `Kedua stadium ini identik tanpa perbedaan klinis`, `Stadium kompensasi hanya terjadi pada syok kardiogenik`],
+    jawaban: `Pada stadium kompensasi, tubuh masih mampu mempertahankan homeostasis; pada dekompensasi, mekanisme kompensasi mulai gagal`,
+    pembahasan: `Pada stadium kompensasi, tubuh masih mampu mempertahankan homeostasis melalui mekanisme kompensasi (meningkatkan denyut jantung, mengurangi produksi urin). Pada stadium dekompensasi, mekanisme kompensasi mulai gagal, sehingga muncul tanda klinis objektif seperti hipotensi, takipneu, oliguri, dan asidosis.`
+  }
+];
+
+const pool_kompensasi = [
+  {
+    pertanyaan: `Pada stadium kompensasi syok, tubuh melakukan dua respons utama, yaitu...`,
+    pilihan: [`Meningkatkan denyut jantung dan mengurangi produksi urin`, `Menurunkan denyut jantung dan meningkatkan produksi urin`, `Meningkatkan produksi urin dan menurunkan tekanan darah`, `Menurunkan denyut jantung dan menurunkan produksi urin`, `Meningkatkan permeabilitas kapiler dan menurunkan denyut jantung`],
+    jawaban: `Meningkatkan denyut jantung dan mengurangi produksi urin`,
+    pembahasan: `Pada stadium kompensasi syok, tubuh melakukan dua respons kompensasi utama: meningkatkan denyut jantung (untuk mempertahankan cardiac output) dan mengurangi produksi urin (untuk mengonservasi volume plasma).`
+  },
+  {
+    pertanyaan: `Stadium kompensasi syok terbagi menjadi dua fase metabolik, yaitu...`,
+    pilihan: [`Fase katabolik dan fase anabolik`, `Fase akut dan fase kronik`, `Fase inisiasi dan fase resolusi`, `Fase aerobik dan fase anaerobik`, `Fase oksidatif dan fase reduktif`],
+    jawaban: `Fase katabolik dan fase anabolik`,
+    pembahasan: `Stadium kompensasi pada syok terbagi menjadi fase katabolik dan fase anabolik.`
+  },
+  {
+    pertanyaan: `Pengurangan produksi urin pada stadium kompensasi syok bertujuan untuk...`,
+    pilihan: [`Mengonservasi volume plasma`, `Meningkatkan ekskresi toksin`, `Menurunkan tekanan darah lebih lanjut`, `Meningkatkan filtrasi glomerulus`, `Meningkatkan konsentrasi elektrolit urin`],
+    jawaban: `Mengonservasi volume plasma`,
+    pembahasan: `Pengurangan produksi urin pada stadium kompensasi bertujuan mengonservasi volume plasma yang tersisa, sebagai bagian dari upaya tubuh mempertahankan tekanan darah dan perfusi jaringan.`
+  }
+];
+
+const pool_dekompensasi = [
+  {
+    pertanyaan: `Empat tanda klinis stadium dekompensasi syok menurut materi kuliah adalah...`,
+    pilihan: [`Hipotensi, takipneu dan dispneu, oliguri, asidosis`, `Hipertensi, bradipneu, poliuri, alkalosis`, `Takikardi ringan, eupneu, anuria, asidosis respiratorik`, `Hipotermia, bradikardia, poliuri, alkalosis metabolik`, `Demam tinggi, takipneu, hematuria, hiperkalemia`],
+    jawaban: `Hipotensi, takipneu dan dispneu, oliguri, asidosis`,
+    pembahasan: `Tanda klinis stadium dekompensasi syok adalah: hipotensi, takipneu dan dispneu (kompensasi paru terhadap hipoksia), oliguri (produksi urin <500 cc/hari), dan asidosis (akibat menurunnya fungsi ginjal dan paru).`
+  },
+  {
+    pertanyaan: `Takipneu dan dispneu pada stadium dekompensasi syok terjadi sebagai...`,
+    pilihan: [`Kompensasi paru terhadap hipoksia`, `Tanda awal gagal jantung kongestif`, `Respons langsung terhadap nyeri`, `Efek samping pemberian obat vasopresor`, `Tanda pneumonia bakterial`],
+    jawaban: `Kompensasi paru terhadap hipoksia`,
+    pembahasan: `Takipneu dan dispneu pada stadium dekompensasi syok merupakan kompensasi paru terhadap hipoksia jaringan yang terjadi akibat hipoperfusi.`
+  },
+  {
+    pertanyaan: `Oliguri pada stadium dekompensasi syok didefinisikan sebagai produksi urin...`,
+    pilihan: [`<500 cc/hari`, `<1000 cc/hari`, `<2000 cc/hari`, `<100 cc/hari`, `<250 cc/jam`],
+    jawaban: `<500 cc/hari`,
+    pembahasan: `Oliguri pada stadium dekompensasi syok didefinisikan sebagai produksi urin kurang dari 500 cc/hari.`
+  },
+  {
+    pertanyaan: `Asidosis pada stadium dekompensasi syok terjadi akibat...`,
+    pilihan: [`Menurunnya fungsi ginjal dan paru`, `Peningkatan fungsi ginjal dan paru`, `Peningkatan produksi urin berlebihan`, `Hiperventilasi berkepanjangan`, `Peningkatan curah jantung drastis`],
+    jawaban: `Menurunnya fungsi ginjal dan paru`,
+    pembahasan: `Asidosis pada stadium dekompensasi syok terjadi akibat menurunnya fungsi ginjal (gangguan ekskresi asam) dan paru (gangguan pertukaran gas), sehingga terjadi akumulasi asam dalam tubuh.`
+  },
+  {
+    pertanyaan: `Seorang pasien syok menunjukkan hipotensi, takipneu, produksi urin 300 cc/hari, dan hasil analisis gas darah menunjukkan asidosis. Pasien ini kemungkinan besar berada pada stadium syok...`,
+    pilihan: [`Dekompensasi`, `Kompensasi`, `Ireversibel awal tanpa gejala`, `Pemulihan`, `Remisi`],
+    jawaban: `Dekompensasi`,
+    pembahasan: `Kombinasi hipotensi, takipneu/dispneu, oliguri (produksi urin <500 cc/hari), dan asidosis adalah tanda klasik stadium dekompensasi syok, di mana mekanisme kompensasi tubuh mulai gagal.`
+  }
+];
+
+const pool_ireversibel = [
+  {
+    pertanyaan: `Syok ireversibel ditandai dengan kolaps sirkulasi serta hipoperfusi organ vital, yang menyebabkan...`,
+    pilihan: [`Hilangnya fungsi vital serta kegagalan berbagai organ`, `Pemulihan fungsi organ secara spontan`, `Peningkatan fungsi organ vital`, `Normalisasi tekanan darah tanpa intervensi`, `Peningkatan produksi urin drastis`],
+    jawaban: `Hilangnya fungsi vital serta kegagalan berbagai organ`,
+    pembahasan: `Syok ireversibel ditandai dengan kolaps sirkulasi serta hipoperfusi organ vital, yang menyebabkan hilangnya fungsi vital serta kegagalan berbagai organ (multi-organ failure).`
+  },
+  {
+    pertanyaan: `Berikut adalah tanda klinis syok ireversibel, KECUALI...`,
+    pilihan: [`Poliuria`, `Hipotensi dan takikardi hebat`, `Respiratory distress`, `Menurunnya kesadaran hingga koma`, `Asidosis hebat`],
+    jawaban: `Poliuria`,
+    pembahasan: `Tanda klinis syok ireversibel meliputi hipotensi dan takikardi hebat, respiratory distress, penurunan kesadaran hingga koma, anuria (BUKAN poliuria), dan asidosis hebat — berujung pada kematian.`
+  },
+  {
+    pertanyaan: `Pada stadium dekompensasi terjadi oliguri (produksi urin <500 cc/hari), sedangkan pada syok ireversibel terjadi...`,
+    pilihan: [`Anuria`, `Poliuria`, `Hematuria`, `Glukosuria`, `Proteinuria`],
+    jawaban: `Anuria`,
+    pembahasan: `Progresi gangguan produksi urin pada syok adalah: oliguri (<500 cc/hari) pada stadium dekompensasi, berlanjut menjadi anuria (tidak ada produksi urin sama sekali) pada stadium ireversibel — mencerminkan perburukan fungsi ginjal yang progresif.`
+  },
+  {
+    pertanyaan: `Tingkat kesadaran pada syok ireversibel dapat menurun hingga mencapai...`,
+    pilihan: [`Koma`, `Hanya sedikit mengantuk`, `Kesadaran tetap penuh (compos mentis)`, `Hiperalert`, `Delirium ringan tanpa penurunan kesadaran`],
+    jawaban: `Koma`,
+    pembahasan: `Pada syok ireversibel, tingkat kesadaran dapat menurun secara progresif hingga mencapai koma, mencerminkan hipoperfusi serebral yang berat.`
+  },
+  {
+    pertanyaan: `Stadium akhir dari syok ireversibel, jika tidak tertangani, akan berujung pada...`,
+    pilihan: [`Kematian`, `Pemulihan spontan tanpa gejala sisa`, `Remisi total dalam 24 jam`, `Perbaikan fungsi organ secara bertahap`, `Stabilisasi tanpa intervensi medis`],
+    jawaban: `Kematian`,
+    pembahasan: `Syok ireversibel, sesuai namanya, merupakan tahap akhir syok yang berujung pada kematian, karena kerusakan sel dan organ sudah sedemikian berat sehingga tidak dapat lagi dipulihkan.`
+  },
+  {
+    pertanyaan: `Seorang pasien syok menunjukkan hipotensi dan takikardi hebat, respiratory distress, kesadaran menurun hingga koma, anuria, dan asidosis hebat. Pasien ini berada pada stadium syok...`,
+    pilihan: [`Ireversibel`, `Kompensasi`, `Dekompensasi ringan`, `Pemulihan`, `Fase anabolik`],
+    jawaban: `Ireversibel`,
+    pembahasan: `Kombinasi hipotensi dan takikardi hebat, respiratory distress, koma, anuria, dan asidosis hebat adalah tanda klasik stadium syok ireversibel — tahap paling berat yang berujung pada kematian jika tidak tertangani segera.`
+  }
+];
+
+const pool_organ = [
+  {
+    pertanyaan: `Efek syok pada organ paru adalah...`,
+    pilihan: [`Respiratory distress syndrome`, `Nekrosis tubuler`, `Nekrosis centrilobuler`, `Iskemia seperti stroke`, `Nekrosis korteks dan perdarahan`],
+    jawaban: `Respiratory distress syndrome`,
+    pembahasan: `Efek syok pada organ paru adalah terjadinya respiratory distress syndrome, akibat hipoperfusi dan kerusakan jaringan paru.`
+  },
+  {
+    pertanyaan: `Efek syok pada sistem gastrointestinal adalah...`,
+    pilihan: [`Iskemia mukosa sehingga erosi/ulserasi dan akhirnya perdarahan`, `Respiratory distress syndrome`, `Nekrosis tubuler`, `Nekrosis centrilobuler`, `Nekrosis korteks adrenal`],
+    jawaban: `Iskemia mukosa sehingga erosi/ulserasi dan akhirnya perdarahan`,
+    pembahasan: `Efek syok pada sistem gastrointestinal adalah iskemia mukosa, yang dapat menyebabkan erosi/ulserasi, dan akhirnya dapat menimbulkan perdarahan gastrointestinal.`
+  },
+  {
+    pertanyaan: `Efek syok pada ginjal adalah...`,
+    pilihan: [`Nekrosis tubuler`, `Respiratory distress syndrome`, `Nekrosis centrilobuler`, `Iskemia seperti stroke`, `Nekrosis korteks dan perdarahan`],
+    jawaban: `Nekrosis tubuler`,
+    pembahasan: `Efek syok pada ginjal adalah terjadinya nekrosis tubuler akibat hipoperfusi ginjal yang berkepanjangan (dapat berkembang menjadi acute tubular necrosis/ATN).`
+  },
+  {
+    pertanyaan: `Efek syok pada hati adalah...`,
+    pilihan: [`Nekrosis centrilobuler`, `Nekrosis tubuler`, `Respiratory distress syndrome`, `Iskemia seperti stroke`, `Erosi/ulserasi mukosa`],
+    jawaban: `Nekrosis centrilobuler`,
+    pembahasan: `Efek syok pada hati adalah terjadinya nekrosis centrilobuler, karena area sentrilobuler hati paling rentan terhadap hipoperfusi/iskemia.`
+  },
+  {
+    pertanyaan: `Efek syok pada otak adalah...`,
+    pilihan: [`Iskemia dengan manifestasi klinis seperti stroke`, `Nekrosis tubuler`, `Nekrosis centrilobuler`, `Respiratory distress syndrome`, `Nekrosis korteks dan perdarahan`],
+    jawaban: `Iskemia dengan manifestasi klinis seperti stroke`,
+    pembahasan: `Efek syok pada otak adalah terjadinya iskemia serebral, yang secara klinis dapat bermanifestasi seperti gejala stroke (penurunan kesadaran, defisit neurologis).`
+  },
+  {
+    pertanyaan: `Efek syok pada kelenjar adrenal adalah...`,
+    pilihan: [`Nekrosis korteks dan perdarahan`, `Nekrosis tubuler`, `Nekrosis centrilobuler`, `Respiratory distress syndrome`, `Iskemia seperti stroke`],
+    jawaban: `Nekrosis korteks dan perdarahan`,
+    pembahasan: `Efek syok pada kelenjar adrenal adalah terjadinya nekrosis korteks adrenal disertai perdarahan — kondisi ini dapat semakin memperburuk syok karena gangguan produksi hormon kortisol.`
+  },
+  {
+    pertanyaan: `Pasangan organ dan efek syok berikut yang benar adalah...`,
+    pilihan: [`Ginjal — nekrosis tubuler; Hati — nekrosis centrilobuler`, `Ginjal — nekrosis centrilobuler; Hati — nekrosis tubuler`, `Paru — nekrosis tubuler; Otak — respiratory distress syndrome`, `Otak — nekrosis centrilobuler; Adrenal — iskemia seperti stroke`, `Gastrointestinal — nekrosis korteks; Paru — erosi mukosa`],
+    jawaban: `Ginjal — nekrosis tubuler; Hati — nekrosis centrilobuler`,
+    pembahasan: `Pasangan organ-efek yang benar menurut materi: Ginjal mengalami nekrosis tubuler, sedangkan Hati mengalami nekrosis centrilobuler — keduanya merupakan pola kerusakan khas masing-masing organ akibat hipoperfusi pada syok.`
+  },
+  {
+    pertanyaan: `Mengapa berbagai organ menunjukkan pola kerusakan yang berbeda-beda pada syok lanjut (misalnya nekrosis tubuler pada ginjal vs nekrosis centrilobuler pada hati)?`,
+    pilihan: [`Karena setiap organ memiliki pola kerentanan khas terhadap iskemia sesuai struktur dan suplai darahnya masing-masing`, `Karena syok hanya mempengaruhi satu organ dalam satu waktu`, `Karena semua organ memiliki kerentanan yang identik terhadap iskemia`, `Karena pola kerusakan organ tidak berkaitan dengan hipoperfusi`, `Karena nekrosis organ terjadi secara acak tanpa pola tertentu`],
+    jawaban: `Karena setiap organ memiliki pola kerentanan khas terhadap iskemia sesuai struktur dan suplai darahnya masing-masing`,
+    pembahasan: `Kegagalan multi-organ pada syok lanjut terjadi akibat hipoperfusi berkepanjangan, namun setiap organ memiliki pola kerusakan khas yang mencerminkan kerentanannya masing-masing terhadap iskemia — misalnya area sentrilobuler hati yang paling jauh dari suplai oksigen, atau tubulus ginjal yang sangat bergantung pada aliran darah tinggi untuk fungsi filtrasi.`
+  }
+];
+
+const pool_cases = [
+  {
+    pertanyaan: `Seorang pasien mengalami kecelakaan lalu lintas dengan perdarahan masif. Tekanan darahnya turun drastis dan ia menunjukkan tanda hipoperfusi jaringan. Jenis syok yang paling mungkin dialami pasien ini adalah...`,
+    pilihan: [`Syok hipovolemik`, `Syok kardiogenik`, `Syok septik`, `Syok anafilaktik`, `Syok neurogenik`],
+    jawaban: `Syok hipovolemik`,
+    pembahasan: `Perdarahan masif akibat trauma menyebabkan kehilangan volume darah yang signifikan, mengakibatkan syok hipovolemik — salah satu penyebab utama syok hipovolemik menurut materi.`
+  },
+  {
+    pertanyaan: `Seorang pasien dengan infeksi bakteri berat (sepsis) mengalami penurunan tekanan darah drastis akibat vasodilatasi perifer yang luas. Jenis syok yang dialami pasien ini adalah...`,
+    pilihan: [`Syok vasogenik tipe septik`, `Syok hipovolemik`, `Syok kardiogenik`, `Syok neurogenik`, `Syok vasogenik tipe anafilaktik`],
+    jawaban: `Syok vasogenik tipe septik`,
+    pembahasan: `Infeksi bakteri berat (septikaemia) menyebabkan pelepasan vasodilator substances dari bakteri, menimbulkan syok vasogenik tipe septik, ditandai dengan vasodilatasi perifer yang luas dan penurunan total peripheral resistance.`
+  },
+  {
+    pertanyaan: `Seorang pasien mengalami reaksi alergi berat setelah menerima suntikan antibiotik, disertai penurunan tekanan darah mendadak. Jenis syok yang paling mungkin dialami pasien ini adalah...`,
+    pilihan: [`Syok vasogenik tipe anafilaktik`, `Syok hipovolemik`, `Syok kardiogenik`, `Syok neurogenik`, `Syok vasogenik tipe septik`],
+    jawaban: `Syok vasogenik tipe anafilaktik`,
+    pembahasan: `Reaksi alergi berat (anafilaksis) akibat pemberian obat menyebabkan pelepasan histamin, menimbulkan syok vasogenik tipe anafilaktik, ditandai dengan vasodilatasi luas dan penurunan resistensi perifer secara mendadak.`
+  },
+  {
+    pertanyaan: `Seorang pasien pasca infark miokard luas mengalami penurunan tekanan darah akibat jantung yang tidak mampu memompa darah secara adekuat. Jenis syok yang dialami pasien ini adalah...`,
+    pilihan: [`Syok kardiogenik`, `Syok hipovolemik`, `Syok vasogenik`, `Syok neurogenik`, `Syok septik`],
+    jawaban: `Syok kardiogenik`,
+    pembahasan: `Infark miokard luas menyebabkan kelemahan jantung (weakened heart) yang tidak mampu memompa darah secara adekuat, menyebabkan syok kardiogenik akibat penurunan cardiac output.`
+  },
+  {
+    pertanyaan: `Seorang pasien mengalami nyeri hebat pasca trauma ekstremitas, disertai penurunan tekanan darah mendadak tanpa disertai perdarahan signifikan. Jenis syok yang paling mungkin dialami pasien ini adalah...`,
+    pilihan: [`Syok neurogenik`, `Syok hipovolemik`, `Syok kardiogenik`, `Syok septik`, `Syok anafilaktik`],
+    jawaban: `Syok neurogenik`,
+    pembahasan: `Nyeri hebat yang menghambat aktivitas vasokonstriktor simpatis menyebabkan vasodilatasi berlebihan tanpa kehilangan volume darah signifikan — kondisi ini khas untuk syok neurogenik.`
+  },
+  {
+    pertanyaan: `Seorang pasien syok menunjukkan hipotensi ringan, takikardia kompensatorik, serta masih mampu mempertahankan produksi urin meski sedikit berkurang. Pasien ini berada pada stadium syok...`,
+    pilihan: [`Kompensasi`, `Dekompensasi`, `Ireversibel`, `Pemulihan`, `Remisi`],
+    jawaban: `Kompensasi`,
+    pembahasan: `Hipotensi ringan dengan takikardia kompensatorik dan produksi urin yang masih relatif terjaga (meski berkurang) menunjukkan tubuh masih mampu mengompensasi, sehingga pasien berada pada stadium kompensasi syok.`
+  },
+  {
+    pertanyaan: `Seorang pasien syok mengalami perburukan progresif: awalnya hanya takikardia ringan, kemudian berkembang menjadi hipotensi nyata, takipneu, oliguri, dan asidosis. Perburukan ini menggambarkan transisi dari stadium...`,
+    pilihan: [`Kompensasi menuju Dekompensasi`, `Dekompensasi menuju Kompensasi`, `Ireversibel menuju Dekompensasi`, `Kompensasi menuju Ireversibel secara langsung`, `Dekompensasi menuju Pemulihan`],
+    jawaban: `Kompensasi menuju Dekompensasi`,
+    pembahasan: `Perburukan dari takikardia ringan (tanda kompensasi) menuju hipotensi nyata, takipneu, oliguri, dan asidosis (tanda dekompensasi) menggambarkan transisi progresif dari stadium kompensasi menuju stadium dekompensasi.`
+  },
+  {
+    pertanyaan: `Seorang pasien syok lanjut menunjukkan hematemesis dan melena akibat perdarahan saluran cerna. Mekanisme patofisiologi yang paling mungkin mendasari temuan ini adalah...`,
+    pilihan: [`Iskemia mukosa gastrointestinal yang menyebabkan erosi/ulserasi`, `Nekrosis tubuler ginjal`, `Nekrosis centrilobuler hati`, `Respiratory distress syndrome`, `Nekrosis korteks adrenal`],
+    jawaban: `Iskemia mukosa gastrointestinal yang menyebabkan erosi/ulserasi`,
+    pembahasan: `Hematemesis dan melena pada pasien syok lanjut konsisten dengan efek syok pada sistem gastrointestinal, yaitu iskemia mukosa yang menyebabkan erosi/ulserasi dan akhirnya perdarahan.`
+  },
+  {
+    pertanyaan: `Seorang pasien syok lanjut mengalami penurunan produksi urin drastis disertai peningkatan kreatinin serum yang signifikan. Temuan histopatologi ginjal yang paling mungkin ditemukan adalah...`,
+    pilihan: [`Nekrosis tubuler`, `Nekrosis centrilobuler`, `Nekrosis korteks dan perdarahan`, `Iskemia seperti stroke`, `Respiratory distress syndrome`],
+    jawaban: `Nekrosis tubuler`,
+    pembahasan: `Penurunan produksi urin drastis dengan peningkatan kreatinin pada syok lanjut konsisten dengan nekrosis tubuler ginjal (acute tubular necrosis), efek khas syok pada organ ginjal.`
+  },
+  {
+    pertanyaan: `Pada pasien perdarahan akut, tubuh melakukan kompensasi melalui peningkatan aktivitas simpatis ke arteriol di seluruh tubuh KECUALI otak. Rasionalisasi fisiologis dari pengecualian ini adalah...`,
+    pilihan: [`Untuk melindungi dan mempertahankan aliran darah ke otak meskipun terjadi vasokonstriksi sistemik`, `Karena otak tidak memiliki persarafan simpatis sama sekali`, `Karena otak tidak membutuhkan oksigen dalam jumlah besar`, `Karena vasokonstriksi pada otak akan meningkatkan tekanan darah sistemik`, `Karena otak memiliki cadangan energi yang sangat besar`],
+    jawaban: `Untuk melindungi dan mempertahankan aliran darah ke otak meskipun terjadi vasokonstriksi sistemik`,
+    pembahasan: `Pengecualian vasokonstriksi arteriol pada pembuluh darah otak saat kompensasi hemoragik bertujuan melindungi dan mempertahankan aliran darah ke otak (autoregulasi serebral), mengingat otak sangat sensitif terhadap hipoksia/iskemia dibandingkan organ lain.`
+  }
+];
+
+// ═══ POOL PICKERS ═══
+const usedIdx = {};
+function pick_pool(poolName, poolArr){
+  if(!usedIdx[poolName]) usedIdx[poolName] = [];
+  if(usedIdx[poolName].length >= poolArr.length) usedIdx[poolName] = [];
+  let idx;
+  do { idx = 0 | Math.random()*poolArr.length; } while(usedIdx[poolName].includes(idx) && usedIdx[poolName].length < poolArr.length);
+  usedIdx[poolName].push(idx);
+  return poolArr[idx];
+}
+
+const POOL_MAP = {
+  pool_definisi, pool_klasifikasi, pool_sebab, pool_penyebabcirculatory,
+  pool_kompensasihemoragik, pool_stadium, pool_kompensasi, pool_dekompensasi,
+  pool_ireversibel, pool_organ, pool_cases
+};
+const POOL_LABELS = {
+  pool_definisi:'Definisi & Patofisiologi', pool_klasifikasi:'Klasifikasi Syok',
+  pool_sebab:'Sebab Syok', pool_penyebabcirculatory:'Penyebab Circulatory Shock',
+  pool_kompensasihemoragik:'Kompensasi Hemoragik', pool_stadium:'Stadium Syok',
+  pool_kompensasi:'Stadium Kompensasi', pool_dekompensasi:'Stadium Dekompensasi',
+  pool_ireversibel:'Syok Ireversibel', pool_organ:'Organ yang Terpengaruh',
+  pool_cases:'Studi Kasus Terintegrasi'
+};
+const POOL_COLORS = {
+  pool_definisi:['var(--red)','var(--redbg)'], pool_klasifikasi:['var(--gold)','var(--goldbg)'],
+  pool_sebab:['var(--teal)','var(--tealbg)'], pool_penyebabcirculatory:['var(--blue)','var(--bluebg)'],
+  pool_kompensasihemoragik:['var(--green)','var(--greenbg)'], pool_stadium:['var(--purp)','var(--purpbg)'],
+  pool_kompensasi:['var(--green)','var(--greenbg)'], pool_dekompensasi:['var(--gold)','var(--goldbg)'],
+  pool_ireversibel:['var(--red)','var(--redbg)'], pool_organ:['var(--red)','var(--redbg)'],
+  pool_cases:['var(--purp)','var(--purpbg)']
+};
+
+function makeQ(type){
+  const poolArr = POOL_MAP[type];
+  if(!poolArr) return {type:'dummy', typeName:'End of Pool', tpColor:'gray', tpBg:'lightgray', q:'No more questions', opts:['A'], ans:'A', exp:''};
+  const item = pick_pool(type, poolArr);
+  const [tpColor, tpBg] = POOL_COLORS[type] || ['var(--gold)','var(--goldbg)'];
+  let optsArr = [...item.pilihan];
+  return {
+    type, typeName: POOL_LABELS[type] || type,
+    tpColor, tpBg,
+    scenario: null, rawData: null,
+    q: item.pertanyaan,
+    opts: shuf(optsArr),
+    ans: item.jawaban,
+    exp: item.pembahasan
+  };
+}
+
+// ═══ SESSION ═══
+let typeQueue=[], activeTypes=[], sessIdx=0, sessScore=0, sessLog=[], currentQ=null, typeStats={};
+const TOTAL_Q = 20;
+
+function nextType(){
+  if(!typeQueue.length){
+    const t=[...activeTypes];
+    for(let i=t.length-1;i>0;i--){const j=0|Math.random()*(i+1);[t[i],t[j]]=[t[j],t[i]];}
+    typeQueue=[...t];
+  }
+  return typeQueue.shift();
+}
+
+function startSession(){
+  activeTypes = Array.from(document.querySelectorAll('.cfg-btn.sel')).map(b=>b.dataset.type);
+  if(activeTypes.length===0){ alert('Pilih minimal satu topik.'); return; }
+  sessIdx=0; sessScore=0; sessLog=[]; typeQueue=[]; typeStats={};
+  activeTypes.forEach(t=>typeStats[t]={correct:0,total:0});
+  document.getElementById('qconfig').style.display='none';
+  document.getElementById('qresults').style.display='none';
+  document.getElementById('qactive').style.display='block';
+  renderQ();
+}
+
+function renderQ(){
+  const q=makeQ(nextType()); currentQ=q;
+  document.getElementById('qnum').textContent=sessIdx+1;
+  document.getElementById('qscore').textContent=sessScore;
+  const pill=document.getElementById('qpill');
+  pill.textContent=q.typeName; pill.style.background=q.tpBg; pill.style.color=q.tpColor; pill.style.border=`1px solid ${q.tpColor}44`;
+  const scen=document.getElementById('qscen');
+  if(q.scenario){scen.innerHTML=`<strong>Kasus:</strong> ${q.scenario}`;scen.style.display='block';}else scen.style.display='none';
+  const db=document.getElementById('qdata');
+  if(q.rawData){db.innerHTML=q.rawData;db.style.display='block';}else db.style.display='none';
+  document.getElementById('qtext').innerHTML=q.q;
+  const og=document.getElementById('opts'); og.innerHTML='';
+  q.opts.forEach((opt,i)=>{
+    const btn=document.createElement('button'); btn.className='opt';
+    btn.innerHTML=`<span class="opt-key">${KEYS[i]}</span><span>${opt}</span>`;
+    btn.onclick=()=>selectAns(opt,q,btn); og.appendChild(btn);
+  });
+  const ebox=document.getElementById('expbox'); ebox.classList.remove('show'); ebox.style.display='none';
+  document.getElementById('nextbtn').style.display='none';
+}
+
+function selectAns(chosen,q,clickedBtn){
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  const correct = stripHtml(chosen)===stripHtml(q.ans);
+  if(correct) sessScore++;
+  typeStats[q.type].total++;
+  if(correct) typeStats[q.type].correct++;
+  document.querySelectorAll('.opt').forEach(b=>{
+    const txt = b.querySelector('span:last-child').textContent;
+    if(stripHtml(txt)===stripHtml(q.ans)) b.classList.add('correct');
+    else if(b===clickedBtn) b.classList.add('wrong');
+  });
+  const ebox=document.getElementById('expbox');
+  ebox.innerHTML = `<strong>${correct ? '✓ Benar!' : '✗ Kurang tepat.'}</strong><br>${q.exp}`;
+  ebox.style.display='block'; ebox.classList.add('show');
+  document.getElementById('qscore').textContent=sessScore;
+  sessLog.push({q:stripHtml(q.q).slice(0,80), ans:stripHtml(q.ans), correct});
+  document.getElementById('nextbtn').style.display='block';
+}
+
+function nextQ(){
+  sessIdx++;
+  if(sessIdx>=TOTAL_Q){ endSession(); return; }
+  renderQ();
+}
+
+function endSession(){
+  document.getElementById('qactive').style.display='none';
+  document.getElementById('qresults').style.display='block';
+  const pct = sessLog.length ? Math.round(sessScore/sessLog.length*100) : 0;
+  document.getElementById('res-pct').textContent = pct+'%';
+  document.getElementById('res-sub').textContent = `${sessScore} dari ${sessLog.length} soal benar`;
+  const byType = document.getElementById('res-bytype'); byType.innerHTML='';
+  Object.keys(typeStats).forEach(t=>{
+    if(typeStats[t].total===0) return;
+    const tr=document.createElement('tr');
+    tr.innerHTML = `<td>${POOL_LABELS[t]||t}</td><td>${typeStats[t].total}</td><td>${typeStats[t].correct}</td>`;
+    byType.appendChild(tr);
+  });
+  const detail = document.getElementById('res-detail'); detail.innerHTML='';
+  sessLog.forEach((l,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td>${l.q}...</td><td>${l.ans}</td><td>${l.correct?'✓':'✗'}</td>`;
+    detail.appendChild(tr);
+  });
+}
+
+function restartQuiz(){
+  document.getElementById('qresults').style.display='none';
+  document.getElementById('qconfig').style.display='block';
+}
+</script>
+</body>
+</html>
