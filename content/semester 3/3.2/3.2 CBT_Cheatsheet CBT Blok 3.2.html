@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a2a28">
+<title>Cheatsheet CBT Blok 3.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ebe8de; --ink:#1d1d1b; --muted:#66645c; --charcoal:#2a2a28; --cream:#efece2;
+  --yellow:#f2b705; --tabon-bg:#2a2a28; --tabon-fg:#efece2; --soft:rgba(29,29,27,.07);
+  --noise:.10;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --display:Anton,Impact,"Arial Narrow Bold",sans-serif;
+  --script:Caveat,"Segoe Script","Bradley Hand",cursive;
+}
+:root[data-theme="dark"]{
+  --paper:#1c1c1a; --ink:#e6e3d8; --muted:#a09d92; --charcoal:#33332f; --cream:#efece2;
+  --tabon-bg:#e6e3d8; --tabon-fg:#1c1c1a; --soft:rgba(230,227,216,.08); --noise:.05;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.7 var(--mono);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:var(--noise);mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .18  0 0 0 0 .14  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+:root[data-theme="dark"] body::before{mix-blend-mode:screen}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 90px}
+
+/* ---------- browser chrome (tab strip + toolbar) ---------- */
+.chrome{position:sticky;top:0;z-index:60;background:var(--charcoal)}
+.tabs{display:flex;align-items:flex-end;height:36px;padding:5px 10px 0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain}
+.tabs::-webkit-scrollbar{display:none}
+.tab{position:relative;isolation:isolate;flex:1 1 0;min-width:0;max-width:112px;height:31px;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:0 2px;border:0;border-radius:9px 9px 0 0;background:none;color:var(--cream);font:500 11.5px/1 var(--mono);cursor:pointer;white-space:nowrap;opacity:.8}
+.tab .c{font-weight:600;position:relative}
+.tab.home{flex:0 0 40px}
+.tab.home svg{display:block}
+.tab.done .c::after{content:"";position:absolute;top:-5px;right:-6px;width:5px;height:5px;border-radius:50%;background:var(--yellow)}
+.tab:not(.on)::before{content:"";position:absolute;inset:3px 2px;z-index:-1;border-radius:8px;background:transparent;transition:background .12s}
+.tab:not(.on):hover{opacity:1}
+.tab:not(.on):hover::before{background:rgba(239,236,226,.13)}
+.tab:not(.on)::after{content:"";position:absolute;right:-.5px;top:9px;bottom:9px;width:1px;background:rgba(239,236,226,.22)}
+.tab:has(+ .tab.on)::after,.tab:last-child::after{opacity:0}
+.tab.on{background:var(--paper);color:var(--ink);opacity:1;z-index:2}
+.tab.on::before,.tab.on::after{content:"";position:absolute;bottom:0;width:9px;height:9px}
+.tab.on::before{left:-9px;background:radial-gradient(circle at 0 0,transparent 8.5px,var(--paper) 9px)}
+.tab.on::after{right:-9px;background:radial-gradient(circle at 100% 0,transparent 8.5px,var(--paper) 9px)}
+.tab.dim{opacity:.35}
+.toolbar{display:grid;grid-template-columns:1fr minmax(0,520px) 1fr;align-items:center;gap:12px;height:44px;padding:0 12px;background:var(--paper);border-bottom:1px solid rgba(128,126,116,.45)}
+.brand{justify-self:start;overflow:hidden;display:flex;align-items:baseline;gap:9px;white-space:nowrap;min-width:0}
+.brand b{font:400 19px/1 var(--display);letter-spacing:.03em;text-transform:uppercase}
+.brand b::after{content:"";display:inline-block;width:.3em;height:.3em;border-radius:50%;background:var(--yellow);margin-left:.18em}
+.brand small{font-size:10.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+.addr{display:flex;align-items:center;gap:8px;height:30px;padding:0 6px 0 12px;border-radius:999px;background:var(--soft);border:1px solid transparent;color:var(--muted);min-width:0}
+.addr:focus-within{border-color:var(--yellow);background:transparent}
+.addr svg{flex:none}
+.addr input{all:unset;flex:1;min-width:0;color:var(--ink);font:500 12px/1 var(--mono)}
+.addr input::placeholder{color:var(--muted)}
+.addr input::-webkit-search-cancel-button{display:none}
+.addr kbd{font:500 10px/1 var(--mono);color:var(--muted);border:1px solid rgba(128,126,116,.6);border-radius:5px;padding:3px 6px}
+.addr:focus-within kbd{display:none}
+.sw{justify-self:end;appearance:none;position:relative;width:46px;height:26px;padding:0;border:1px solid var(--ink);border-radius:999px;background:var(--soft);cursor:pointer;flex:none}
+.sw i{position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--yellow);color:#1d1d1b;display:grid;place-items:center;font:400 12px/1 var(--mono);font-style:normal;transition:transform .18s}
+.sw i::after{content:"\2600\FE0E"}
+:root[data-theme="dark"] .sw i{transform:translateX(20px)}
+:root[data-theme="dark"] .sw i::after{content:"\263E"}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+
+/* ---------- folder body ---------- */
+.folder{padding:22px 6px 30px;min-height:360px}
+section.mod{display:none}
+section.mod.active{display:block}
+.searching section.mod{display:block}
+.searching section.mod+section.mod{margin-top:34px;padding-top:28px;border-top:1.5px dashed var(--ink)}
+section.mod>h2{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:0 18px;margin:0 0 18px;padding:0 0 16px;border-bottom:1.5px dashed var(--ink);font:500 15px/1.35 var(--mono);text-transform:lowercase}
+section.mod>h2 .badge{font:400 52px/1 var(--display);color:var(--ink);background:none;padding:0;letter-spacing:.01em;text-transform:uppercase}
+section.mod>h2 .badge::after{content:"";display:inline-block;width:.16em;height:.16em;border-radius:50%;background:var(--yellow);margin-left:.1em}
+.ttl{display:flex;flex-direction:column;gap:3px;min-width:0}
+.markdone{font-size:12px;color:var(--muted);display:flex;gap:7px;align-items:center;cursor:pointer;text-transform:none;white-space:nowrap}
+.markdone input{accent-color:var(--yellow);width:15px;height:15px;margin:0}
+.dosen{font:600 20px/1 var(--script);color:#b07f00;margin:0;text-transform:none}
+:root[data-theme="dark"] .dosen{color:var(--yellow)}
+
+.card{border:1px solid var(--ink);border-radius:12px;padding:14px 18px 12px;margin:14px 0;background:transparent}
+section.mod{counter-reset:c}
+.card>h3{counter-increment:c;margin:0 0 10px;font:600 13px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;display:flex;gap:10px;align-items:baseline}
+.card>h3::before{content:counter(c,decimal-leading-zero);background:var(--yellow);color:#1d1d1b;border-radius:999px;padding:1px 8px;font-size:11px;letter-spacing:0;flex:none}
+.card h4{margin:16px 0 4px;font:600 12.5px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.card p{margin:.4em 0}
+.card ul,.card ol{margin:.3em 0 .3em 1.15em;padding:0}
+.card li{margin:.3em 0}
+.card li::marker{color:var(--muted)}
+b,strong{font-weight:600}
+mark.k{background:linear-gradient(transparent 52%,rgba(242,183,5,.75) 52%);color:inherit;padding:0 2px;font-weight:600}
+.trap{background:var(--charcoal);color:var(--cream);padding:9px 14px;border-radius:10px;margin:.7em 0;font-size:13px}
+.trap::before{content:"jebakan ";font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--yellow);margin-right:6px}
+.trap b{color:var(--cream)}
+.note{border:1.5px dashed var(--ink);padding:8px 14px;border-radius:10px;margin:.7em 0;font-size:13px}
+.note::before{content:"catatan ";font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#b07f00;margin-right:6px}
+:root[data-theme="dark"] .note::before{color:var(--yellow)}
+.tw{overflow-x:auto;margin:.7em 0;border:1px solid var(--ink);border-radius:10px;background:transparent}
+table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:560px;line-height:1.55}
+th,td{padding:8px 11px;border-bottom:1px solid rgba(128,126,116,.45);text-align:left;vertical-align:top}
+th{font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.05em;border-bottom:1.5px solid var(--ink);background:var(--soft)}
+tr:last-child td,tr:last-child th{border-bottom:0}
+td ul{margin:0 0 0 1.05em;padding:0}
+small{font-size:11.5px;color:var(--muted)}
+.hide{display:none!important}
+.hl{background:var(--yellow);color:#1d1d1b;border-radius:2px}
+#empty{display:none;text-align:center;color:var(--muted);padding:44px 0}
+
+/* ---------- prev / next ---------- */
+.pn{display:flex;justify-content:space-between;gap:10px;margin-top:26px;padding-top:16px;border-top:1.5px dashed var(--ink)}
+.searching .pn{display:none}
+.pn button{font:500 12px/1.2 var(--mono);color:var(--ink);background:none;border:1.5px solid var(--ink);border-radius:999px;padding:9px 16px;cursor:pointer}
+.pn button:hover{background:var(--ink);color:var(--paper)}
+.pn span{flex:1}
+
+
+/* ---------- home ---------- */
+section.home{display:none}
+section.home.active{display:block}
+.searching section.home{display:none!important}
+.hm-hero{display:flex;align-items:center;gap:26px;flex-wrap:wrap;padding:0 0 22px;margin:0 0 22px;border-bottom:1.5px dashed var(--ink)}
+.ring{width:150px;height:150px;flex:none}
+.ring .rn{font:400 30px var(--display);fill:var(--ink)}
+.ring .rs{font:500 8.5px var(--mono);fill:var(--muted)}
+.hm-info{flex:1;min-width:230px}
+.hm-t{font:600 28px/1 var(--script);color:#b07f00;margin:0 0 4px}
+:root[data-theme="dark"] .hm-t{color:var(--yellow)}
+.hm-s{margin:0 0 12px;font-size:13px}
+.hm-btns{display:flex;gap:8px;flex-wrap:wrap}
+.hm-btns button,.hm-row button,.hm-reset{font:500 12px/1.2 var(--mono);color:var(--ink);background:none;border:1.5px solid var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+.hm-btns button:hover,.hm-row button:hover,.hm-reset:hover{background:var(--ink);color:var(--paper)}
+.hm-btns button:first-child{background:var(--yellow);color:#1d1d1b}
+.hm-btns button:first-child:hover{background:var(--ink);color:var(--paper)}
+.hm-chips{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px}
+.hm-chips div{display:flex;flex-direction:column;gap:2px}
+.hm-chips b{font:400 26px/1 var(--display)}
+.hm-chips span{font-size:11px;color:var(--muted)}
+.hm-two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hm-box{border:1px solid var(--ink);border-radius:12px;padding:14px 18px 16px;margin:0 0 16px;min-width:0}
+.hm-box>h3{margin:0 0 12px;font:600 13px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.hm-map{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px}
+.cell{font:500 11px/1.2 var(--mono);border:1.5px solid var(--ink);border-radius:9px;background:none;color:var(--ink);padding:7px 8px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px;min-width:0}
+.cell b{font-size:13px;font-weight:600}
+.cell span{font-size:10px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cell:hover{background:var(--soft)}
+.cell.on{background:var(--yellow);color:#1d1d1b}
+.cell.on span{color:#1d1d1b;opacity:.75}
+.hm-donut{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.hm-donut svg{width:130px;height:130px;flex:none}
+.hm-leg{list-style:none;margin:0;padding:0;font-size:12px;display:flex;flex-direction:column;gap:6px;flex:1;min-width:150px}
+.hm-leg li{display:flex;align-items:center;gap:8px}
+.hm-leg i{width:11px;height:11px;border-radius:3px;border:1px solid var(--ink);flex:none}
+.hm-leg small{margin-left:auto;color:var(--muted)}
+.hm-group{margin:0 0 18px}
+.hm-gh{display:flex;justify-content:space-between;align-items:baseline}
+.hm-gh h4{margin:0;font:600 12.5px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.hm-gh small{font-size:12px}
+.pbar{display:block;height:6px;border:1px solid var(--ink);border-radius:99px;overflow:hidden;margin:5px 0 6px}
+.pbar u{display:block;height:100%;background:var(--yellow);text-decoration:none}
+.hm-row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:5px 0;border-bottom:1px solid rgba(128,126,116,.35)}
+.hm-row label{display:flex;gap:10px;align-items:center;cursor:pointer;min-width:0}
+.hm-row input{accent-color:var(--yellow);width:16px;height:16px;margin:0;flex:none}
+.hm-row b{width:34px;flex:none}
+.hm-row label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hm-row.ok label span{opacity:.5}
+.hm-row small{color:var(--muted)}
+.hm-row button{padding:4px 12px;font-size:11px}
+.hm-chart{display:block;width:100%;height:auto}
+.hm-chart .bl{font:600 11px var(--mono);fill:var(--ink)}
+.hm-chart .bv{font:500 11px var(--mono);fill:var(--muted)}
+.hm-note{margin:8px 0 0;font-size:11.5px;color:var(--muted)}
+.hm-foot{display:flex;justify-content:flex-end}
+.hm-reset{font-size:11px;padding:6px 12px;color:var(--muted);border-color:var(--muted)}
+@media (max-width:640px){.hm-two{grid-template-columns:1fr}.ring{width:120px;height:120px}.hm-hero{gap:16px}}
+@media (max-width:640px){
+  .toolbar{grid-template-columns:auto minmax(0,1fr) auto;gap:10px;padding:0 10px}
+  .brand small,.addr kbd{display:none}
+  .tab{padding:0 1px;font-size:10px}
+  .tab.home{flex-basis:34px}
+  .tabs{padding:5px 6px 0}
+  .wrap{padding:0 10px 80px}
+  .folder{padding:18px 2px 24px}
+  section.mod>h2{grid-template-columns:auto minmax(0,1fr);gap:8px 12px}
+  section.mod>h2 .badge{font-size:42px}
+  .markdone{grid-column:1/-1}
+  .card{padding:12px 13px 10px}
+  .pn button{padding:8px 12px;font-size:11px}
+}
+@media print{
+  .chrome,.pn,section.home{display:none!important}
+  body::before{display:none}
+  section.mod{display:block!important;break-after:page}
+  .folder{border:0;padding:0}
+  .card{break-inside:avoid}
+}
+/* ================= v3.2 : chrome rapi + adaptif multi-device ================= */
+:root{--chrome-h:84px;--tabs-h:38px}
+section.mod{scroll-margin-top:calc(var(--chrome-h) + 8px)}
+body{overflow-wrap:break-word}
+.card{overflow-wrap:break-word}
+.chrome{padding-top:env(safe-area-inset-top,0px);transition:transform .22s ease;will-change:transform}
+.chrome.away{transform:translateY(calc(-1 * var(--tabs-h)))}
+
+/* tab strip: lebar minimum, bisa digeser, tepi memudar */
+.tabs{height:38px;padding:6px max(10px,env(safe-area-inset-right)) 0 max(10px,env(safe-area-inset-left));--fl:0px;--fr:0px;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%);
+  -webkit-overflow-scrolling:touch}
+.tab{flex:1 0 54px;min-width:54px;max-width:120px;height:32px;font-size:12px}
+.tab.home{flex:0 0 46px;min-width:46px}
+.tab.on .c{font-weight:600}
+
+/* toolbar: brand | cari | tema */
+.toolbar{grid-template-columns:auto minmax(0,1fr) auto;gap:14px;height:50px;align-content:center;
+  padding:0 max(12px,env(safe-area-inset-right)) 0 max(12px,env(safe-area-inset-left));overflow:visible}
+.addr{width:100%;max-width:560px;justify-self:center;height:34px;position:relative}
+.addr input{font-size:13px}
+.addr .x{display:none;appearance:none;border:0;background:var(--ink);color:var(--paper);width:20px;height:20px;border-radius:50%;
+  font:600 14px/1 var(--mono);padding:0;margin-right:2px;cursor:pointer;flex:none;place-items:center}
+.addr.has .x{display:grid}
+.addr.has kbd{display:none}
+.brand b{font-size:19px}
+
+/* bilah hasil pencarian */
+.sbar{display:none;align-items:center;gap:10px;padding:7px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));
+  background:var(--paper);border-bottom:1px solid rgba(128,126,116,.45);font-size:12px;color:var(--muted)}
+.searching .sbar{display:flex}
+.sbar .n{flex:none;color:var(--ink);font-weight:600}
+.sbar .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;padding:1px 0}
+.sbar .chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:500 11px/1 var(--mono);border:1.5px solid var(--ink);border-radius:999px;padding:5px 9px;background:none;color:var(--ink);cursor:pointer}
+.chip small{color:inherit;opacity:.6;margin-left:5px;font-size:inherit}
+@media (hover:hover){.chip:hover{background:var(--ink);color:var(--paper)}}
+
+/* mode cari: judul modul ringkas + tombol buka */
+.mod-open{display:none;font:500 11px/1 var(--mono);color:var(--ink);background:none;border:1.5px solid var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;white-space:nowrap;text-transform:none}
+.searching .mod-open{display:inline-flex}
+@media (hover:hover){.mod-open:hover{background:var(--ink);color:var(--paper)}}
+.searching section.mod>h2{grid-template-columns:auto minmax(0,1fr) auto;gap:0 12px;padding-bottom:10px;margin-bottom:6px;font-size:13px}
+.searching section.mod>h2 .badge{font-size:30px}
+.searching .markdone,.searching .dosen{display:none}
+#empty{padding:56px 12px;line-height:1.8}
+.searching section.mod.first{border-top:0!important;margin-top:0!important;padding-top:0!important}
+.searching .tab.on.dim{opacity:.6}
+
+/* tabel: petunjuk geser */
+.tw{-webkit-overflow-scrolling:touch;
+  background:
+   linear-gradient(90deg,var(--paper) 30%,transparent) 0 0/26px 100% no-repeat local,
+   linear-gradient(270deg,var(--paper) 30%,transparent) 100% 0/26px 100% no-repeat local,
+   linear-gradient(90deg,rgba(128,126,116,.45),transparent) 0 0/10px 100% no-repeat scroll,
+   linear-gradient(270deg,rgba(128,126,116,.45),transparent) 100% 0/10px 100% no-repeat scroll}
+
+/* layar lebar */
+.wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+@media (min-width:1100px){
+  .wrap{max-width:1060px}
+  body{font-size:14.5px}
+  .card{padding:16px 24px 14px}
+  .tab{max-width:132px}
+}
+/* tablet */
+@media (min-width:641px) and (max-width:900px){.wrap{padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))}}
+@media (max-width:900px){.hm-two{grid-template-columns:1fr}}
+
+/* ponsel */
+@media (max-width:640px){
+  .toolbar{gap:8px;height:50px;padding:0 max(10px,env(safe-area-inset-right)) 0 max(10px,env(safe-area-inset-left))}
+  .brand b{font-size:16px}
+  .brand small{display:none}
+  .addr{height:36px;padding:0 6px 0 11px}
+  .tab{flex-basis:50px;min-width:50px;max-width:none}
+  .wrap{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+  .sbar{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+  .searching section.mod>h2{grid-template-columns:auto minmax(0,1fr) auto;gap:0 10px}
+  .searching section.mod>h2 .badge{font-size:26px}
+  .pn{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .pn button{width:100%;min-height:44px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pn button:last-child{grid-column:2}
+  .pn span{display:none}
+  table{font-size:12px}
+  .hm-info{min-width:0;flex-basis:100%}
+  .hm-hero{justify-content:center;text-align:center}
+  .hm-btns,.hm-chips{justify-content:center}
+}
+@media (max-width:360px){.brand b{font-size:15px}.hm-map{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}}
+
+/* layar sentuh: target jari lebih besar, input 16px (cegah zoom iOS) */
+@media (pointer:coarse){
+  .tabs{height:46px;padding-top:6px}
+  .tab{height:40px;font-size:12.5px}
+  .toolbar{height:54px}
+  .addr{height:42px}
+  .addr input{font-size:16px}
+  .addr .x{width:26px;height:26px;font-size:16px}
+  .sw{width:52px;height:30px}
+  .sw i{width:24px;height:24px}
+  :root[data-theme="dark"] .sw i{transform:translateX(22px)}
+  .chip{padding:8px 12px}
+  .mod-open{padding:9px 14px}
+  .markdone{padding:8px 0;font-size:13px}
+  .markdone input{width:20px;height:20px}
+  .hm-row{padding:9px 0}
+  .hm-row input{width:20px;height:20px}
+  .hm-row button,.hm-btns button,.hm-reset{min-height:40px}
+  .cell{min-height:52px}
+  .pn button{min-height:44px}
+}
+@media (hover:none){
+  .addr kbd{display:none}
+  .tab:not(.on):hover::before{background:transparent}
+  .pn button:hover,.hm-row button:hover,.hm-reset:hover,.hm-btns button:not(:first-child):hover{background:none;color:var(--ink)}
+  .hm-reset:hover{color:var(--muted)}
+  .hm-btns button:first-child:hover{background:var(--yellow);color:#1d1d1b}
+  .cell:not(.on):hover{background:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chrome{transition:none}.sw i{transition:none}}
+@media print{.sbar{display:none!important}.chrome{transform:none}.wrap{zoom:1!important}.szpop{display:none!important}}
+
+/* ukuran tulisan manual */
+.wrap{zoom:var(--z,1)}
+.tools{justify-self:end;display:flex;align-items:center;gap:8px;position:relative}
+.szb{appearance:none;border:1px solid var(--ink);background:var(--soft);color:var(--ink);border-radius:999px;height:26px;min-width:38px;padding:0 9px;font:600 12px/1 var(--mono);cursor:pointer;flex:none}
+.szb[aria-expanded="true"]{background:var(--yellow);color:#1d1d1b}
+.szpop{position:absolute;top:calc(100% + 12px);right:0;z-index:70;display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--paper);color:var(--ink);border:1.5px solid var(--ink);border-radius:12px;box-shadow:0 8px 22px rgba(0,0,0,.2)}
+.szpop[hidden]{display:none}
+.szpop button{appearance:none;border:1.5px solid var(--ink);background:none;color:var(--ink);border-radius:999px;min-width:32px;height:30px;padding:0 9px;font:600 12px/1 var(--mono);cursor:pointer;flex:none}
+.szpop .szreset{font-weight:500;color:var(--muted);border-color:var(--muted)}
+.szpop input[type=range]{width:120px;min-width:0;accent-color:var(--yellow);margin:0}
+.szpop output{min-width:40px;text-align:center;font:600 12px/1 var(--mono)}
+@media (hover:hover){.szpop button:hover{background:var(--ink);color:var(--paper)}}
+@media (pointer:coarse){.szb{height:30px;min-width:44px}.szpop button{min-width:40px;height:40px}.szpop input[type=range]{width:130px}}
+@media (max-width:420px){.szpop{gap:6px;padding:9px 10px;right:-4px}.szpop input[type=range]{width:96px}.szpop .szreset{padding:0 7px}}
+
+</style>
+</head>
+<body>
+<header class="chrome">
+  <nav class="tabs" id="tabs" aria-label="Modul"></nav>
+  <div class="toolbar">
+    <div class="brand"><b>Blok 3.2</b><small>cbt K2-K15</small></div>
+    <label class="addr">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <input id="q" type="search" placeholder="cari istilah..." autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" inputmode="search" aria-label="Cari istilah">
+      <kbd>/</kbd>
+      <button id="qx" class="x" type="button" aria-label="Hapus pencarian">&times;</button>
+    </label>
+    <div class="tools"><button id="szBtn" class="szb" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="szPop" aria-label="Ukuran tulisan">Aa</button><button id="themeBtn" class="sw" type="button" role="switch" aria-checked="false" aria-label="Mode gelap"><i></i></button><div class="szpop" id="szPop" hidden><button type="button" data-sz="-5" aria-label="Perkecil tulisan">A&minus;</button><input id="szR" type="range" min="80" max="170" step="5" value="100" aria-label="Ukuran tulisan"><button type="button" data-sz="5" aria-label="Perbesar tulisan">A+</button><output id="szO" for="szR">100%</output><button type="button" data-sz="0" class="szreset" aria-label="Reset ukuran">reset</button></div></div>
+  </div>
+  <div class="sbar" id="sbar" role="status" aria-live="polite"></div>
+</header>
+
+<div class="wrap">
+
+<div class="folder" id="folder">
+<section class="home" id="home" aria-label="Home"></section>
+
+<section class="mod" id="K2" data-title="K2 Gangguan Embriologi Sistem Kardiovaskuler dan Respirasi">
+<h2><span class="badge">K2</span> Gangguan Embriologi Sistem Kardiovaskuler dan Respirasi</h2>
+<p class="dosen">Prof. Lantip</p>
+
+<div class="card"><h3>Embriologi Kardiovaskular</h3>
+<ul>
+<li><b>Asal lapisan germinal:</b> sistem kardiovaskular dan pembuluh darah berasal dari <mark class="k">lateral mesoderm</mark> (spesifiknya <i>lateral splanchnic mesoderm</i>).</li>
+<li><b>Induksi awal jaringan jantung (<i>heart fields</i>):</b> diatur ekspresi <mark class="k">BMP 2 &amp; 4 dengan inhibisi WNT</mark> di mesoderm anterior, ditandai faktor transkripsi <mark class="k">NKX-2.5</mark> (<i>tinman</i>).</li>
+<li><b>Pelipatan lateral (<i>lateral folding</i>):</b> mendekatkan sepasang primordia jantung ke garis tengah hingga menyatu membentuk <mark class="k">tabung jantung primer</mark> (<i>tubular heart / endocardial heart tube</i>).</li>
+<li><b>Kanal atrioventrikular (<i>AV canal</i>):</b> kegagalan fusi <i>endocardial cushions</i> menyebabkan <mark class="k">Persistent AV canal</mark> (defek sekat atrium dan ventrikel sekaligus), khas pada <mark class="k">Down Syndrome (Trisomi 21)</mark>.</li>
+</ul></div>
+
+<div class="card"><h3>Defek Saluran Keluar (<i>Outflow Tract</i>)</h3>
+<p>Septasi <i>outflow tract</i> melibatkan fusi <i>conotruncal cushions</i> (derivat <i>neural crest</i>). Kegagalan proses ini menyebabkan:</p>
+<ol>
+<li><b>Persistent truncus arteriosus</b></li>
+<li><b>Transposition of the great vessels</b></li>
+<li><b>Stenosis aorta dan/atau stenosis pulmonal</b></li>
+<li><b>Tetralogy of Fallot (TOF)</b></li>
+</ol>
+<div class="trap"><b>Stenosis mitral</b> BUKAN kelainan outflow tract, melainkan defek pembentukan katup AV kiri.</div>
+</div>
+
+<div class="card"><h3>Komponen Tetralogy of Fallot (TOF)</h3>
+<ol>
+<li>Pulmonary stenosis (stenosis pulmonal)</li>
+<li>Overriding aorta</li>
+<li>Intraventricular septal defect (VSD)</li>
+<li>Hypertrophy of right ventricle (hipertrofi ventrikel kanan)</li>
+</ol>
+<div class="trap">Jika disertai Patent Ductus Arteriosus (PDA) disebut "pentalogy". <b>Regresi ductus arteriosus</b> BUKAN komponen TOF.</div>
+</div>
+
+<div class="card"><h3>Embriologi &amp; Pematangan Paru</h3>
+<h4>4 periode pematangan paru (urutan kronologis)</h4>
+<div class="tw"><table>
+<tr><th>Periode</th><th>Waktu</th><th>Ciri</th></tr>
+<tr><td><b>1. Pseudoglandular</b></td><td>5-16 minggu</td><td>Percabangan membentuk <i>terminal bronchioles</i>; belum ada <i>respiratory bronchioles</i> atau alveoli.</td></tr>
+<tr><td><b>2. Canalicular</b></td><td>16-26 minggu</td><td><i>Terminal bronchiole</i> membelah menjadi <i>respiratory bronchioles</i> dan <i>alveolar ducts</i>.</td></tr>
+<tr><td><b>3. Terminal sac</b> (sacus terminalis)</td><td>26 minggu - lahir</td><td>Terbentuk <i>terminal sacs</i> (alveoli primitif) dan jalinan kapiler rapat.</td></tr>
+<tr><td><b>4. Alveolar</b></td><td>8 bulan - masa kanak-kanak</td><td><mark class="k">Periode paling terakhir</mark>; alveoli matur dengan kontak epitel-endotel kapiler sempurna.</td></tr>
+</table></div>
+<h4>Surfaktan &amp; RDS</h4>
+<ul>
+<li><b>Sel epitel alveolar tipe I:</b> menipis membentuk sawar darah-udara (<i>blood-air barrier</i>).</li>
+<li><b>Sel epitel alveolar tipe II:</b> berkembang di akhir bulan ke-6, menghasilkan <mark class="k">surfaktan</mark> untuk menurunkan tegangan permukaan agar alveolus tidak kolaps (atelektasis) saat ekspirasi.</li>
+<li><b>RDS (<i>Hyaline Membrane Disease</i>):</b> pada bayi prematur akibat <mark class="k">kurangnya surfaktan di alveoli tipe 2</mark>. Produksi surfaktan distimulasi <b>tiroksin</b> dan <b>glukokortikoid (betametason)</b>.</li>
+</ul></div>
+</section>
+
+<!-- ============ K3 ============ -->
+<section class="mod" id="K3" data-title="K3 Gangguan Tekanan Darah">
+<h2><span class="badge">K3</span> Gangguan Tekanan Darah</h2>
+<p class="dosen">dr. Susiana Candrawati</p>
+
+<div class="card"><h3>Determinan Tekanan Darah Arteri Rata-Rata (MAP)</h3>
+<p><b>3 faktor utama:</b> <mark class="k">Curah jantung</mark> · <mark class="k">Resistensi perifer total</mark> · <mark class="k">Volume darah</mark></p>
+<div class="trap"><b>Frekuensi napas</b> TIDAK berpengaruh langsung terhadap tekanan darah.</div>
+<div class="tw"><table>
+<tr><th>Determinan</th><th>Dipengaruhi oleh</th></tr>
+<tr><td><b>Curah jantung (<i>cardiac output</i>)</b></td><td><b>Heart rate</b> dan <b>stroke volume</b> (darah yang dikeluarkan per kontraksi). Stroke volume dipengaruhi <b>venous return</b> dan kontraktilitas miokardium.</td></tr>
+<tr><td><b>Total tahanan perifer</b></td><td><b>Jari-jari/diameter arteriol</b> dan <b>kekentalan darah</b> (jumlah eritrosit).</td></tr>
+</table></div>
+<div class="trap">Stroke volume dan frekuensi denyut mempengaruhi curah jantung, BUKAN tahanan perifer.</div>
+</div>
+
+<div class="card"><h3>Regulasi Saraf Otonom &amp; Refleks Baroreseptor</h3>
+<ul>
+<li><b>Lokasi baroreseptor perifer:</b> <mark class="k">sinus karotikus</mark> dan <mark class="k">arkus aorta</mark>, mengirim sinyal ke pusat kontrol kardiovaskuler di <b>medula batang otak</b>.</li>
+<li><b>Refleks jangka pendek (beberapa detik):</b> diperantarai sistem saraf otonom; mengubah curah jantung (<i>stroke volume</i> &amp; <i>heart rate</i>) dan resistensi perifer total.</li>
+<li><b>Refleks jangka panjang (menit - hari):</b> menyesuaikan <b>volume darah total</b> lewat homeostasis cairan ginjal.</li>
+<li><b>Hipertensi jangka panjang:</b> baroreseptor <b>tidak merespon lagi karena telah beradaptasi</b> pada tekanan rata-rata yang lebih tinggi.</li>
+</ul>
+<div class="trap">Refleks jangka pendek terjadi dalam hitungan detik, BUKAN menit-hari.</div>
+<div class="tw"><table>
+<tr><th>Stimulasi</th><th>Saat</th><th>Efek</th></tr>
+<tr><td><b>Parasimpatis</b></td><td>TD naik</td><td>↓ heart rate, ↓ curah jantung → tekanan darah turun.</td></tr>
+<tr><td><b>Simpatis</b></td><td>TD turun</td><td>↑ heart rate, ↑ kontraktilitas (stroke volume), vasokonstriksi arteriol (↑ TPR) dan vena (↑ venous return).</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Klasifikasi Etiologi Hipertensi (≥ 140/90 mmHg)</h3>
+<div class="tw"><table>
+<tr><th>Tipe</th><th>Penyebab</th></tr>
+<tr><td><b>Primer (esensial/idiopatik)</b></td><td>Defek penanganan garam, kelainan membran plasma (<b>gangguan pompa Na⁺-K⁺</b>), zat mirip <b>digitalis endogen</b>, perubahan zat kimia vasoaktif, penekanan fisik pusat kardiovaskuler oleh arteri di atasnya.</td></tr>
+<tr><td><b>Sekunder: kardiovaskuler</b></td><td>Peningkatan kronik resistensi perifer (aterosklerosis).</td></tr>
+<tr><td><b>Sekunder: renal</b></td><td>Lesi aterosklerotik arteri renalis, retensi garam akibat gagal ginjal.</td></tr>
+<tr><td><b>Sekunder: endokrin</b></td><td><b>Sindrom Conn</b> (↑ aldosteron korteks adrenal) dan <b>feokromositoma</b> (↑ epinefrin tumor medula adrenal).</td></tr>
+<tr><td><b>Sekunder: neurogenik</b></td><td>Defek pusat kontrol kardiovaskuler atau baroreseptor.</td></tr>
+</table></div>
+<div class="trap"><b>Sindrom Conn</b> adalah hipertensi <u>sekunder</u>, BUKAN primer.</div>
+</div>
+</section>
+
+<!-- ============ K4 ============ -->
+<section class="mod" id="K4" data-title="K4 Syok">
+<h2><span class="badge">K4</span> Syok</h2>
+<p class="dosen">dr. Susiana Candrawati</p>
+
+<div class="card"><h3>Definisi &amp; Klasifikasi Penyebab</h3>
+<p><b>Definisi:</b> keadaan akibat <mark class="k">hipoperfusi jaringan</mark>; darah yang dialirkan ke jaringan tidak mencukupi kebutuhan metabolismenya.</p>
+<div class="tw"><table>
+<tr><th>Jenis syok</th><th>Penyebab</th></tr>
+<tr><td><b>Kardiogenik</b></td><td>Kegagalan pompa jantung / gagal jantung.</td></tr>
+<tr><td><b>Hipovolemik</b></td><td>Kehilangan volume masif: perdarahan masif, dehidrasi/muntah/diare berat.</td></tr>
+<tr><td><b>Vasogenik: septik</b></td><td>Septikemia / infeksi bakteri sistemik.</td></tr>
+<tr><td><b>Vasogenik: anafilaktik</b></td><td>Reaksi alergi berat / anafilaksis (pelepasan histamin).</td></tr>
+<tr><td><b>Neurogenik</b></td><td>Nyeri hebat menghambat aktivitas vasokonstriktor simpatis → vasodilatasi berlebihan.</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Stadium Klinis Syok</h3>
+<div class="tw"><table>
+<tr><th>Stadium</th><th>Ciri</th></tr>
+<tr><td><b>Kompensasi</b></td><td>Takikardia refleks, vasokonstriksi perifer, penurunan produksi urin untuk mempertahankan tekanan darah.</td></tr>
+<tr><td><b>Dekompensasi</b></td><td><ul><li>Hipotensi</li><li>Takipneu &amp; dispneu</li><li>Oliguria (urin &lt; 500 cc/hari)</li><li>Asidosis</li></ul></td></tr>
+<tr><td><b>Ireversibel</b></td><td><ul><li>Kolaps sirkulasi, kegagalan multiorgan</li><li>Hipotensi dan takikardi hebat</li><li>Respiratory distress</li><li>Penurunan kesadaran hingga <b>koma</b></li><li>Anuria dan asidosis hebat hingga kematian</li></ul></td></tr>
+</table></div>
+<div class="trap"><b>Koma</b> BUKAN tanda stadium dekompensasi, melainkan stadium ireversibel.</div>
+<div class="trap"><b>Poliuria</b> BUKAN manifestasi syok ireversibel.</div>
+</div>
+</section>
+
+<!-- ============ K5 ============ -->
+<section class="mod" id="K5" data-title="K5 Gangguan Pembuluh Darah Vena dan Arteri">
+<h2><span class="badge">K5</span> Gangguan Pembuluh Darah Vena dan Arteri</h2>
+<p class="dosen">dr. Mustofa</p>
+
+<div class="card"><h3>Gangguan Sirkulasi Arterial</h3>
+<ul>
+<li><b>Manifestasi utama:</b> suplai O₂ &amp; nutrisi terhambat → <mark class="k">iskemia hingga infark</mark>, gejala utama <b>nyeri iskemik</b>.</li>
+<li><b>Klaudikasio intermiten:</b> nyeri tungkai saat aktivitas karena <b>arteri yang sempit tidak mampu mencukupi peningkatan kebutuhan O₂ tungkai</b>.</li>
+<li><b>Aneurisma:</b> dilatasi arteri lokal abnormal akibat <mark class="k">kelemahan dinding pembuluh darah</mark> (terkait aterosklerosis; memicu tromboemboli, penekanan jaringan sekitar, dan ruptur).</li>
+</ul></div>
+
+<div class="card"><h3>Aterosklerosis</h3>
+<ul>
+<li>Pembentukan plak <i>fibrofatty</i> di <b>tunika intima</b> arteri besar dan menengah (aorta, koroner, serebral, perifer).</li>
+<li><b>Patogenesis seluler:</b> makrofag memfagosit <b>oxidized LDL</b> → <mark class="k">foam cell</mark> (sel busa).</li>
+<li><b>Biomarker lipid utama:</b> <b>peningkatan LDL</b>. HDL ≥ 60 mg/dL adalah faktor protektif (risiko negatif).</li>
+<li><b>Komplikasi perifer:</b> mekanisme utama aliran darah inadekuat pada <b>DM dengan luka kaki iskemik yang tidak kunjung sembuh</b> (<i>peripheral vascular disease</i>).</li>
+</ul></div>
+
+<div class="card"><h3>Gangguan Sirkulasi Vena</h3>
+<h4>Varicose veins</h4>
+<ul>
+<li>Dilatasi vena berkelok di ekstremitas bawah; patofisiologi utama: <mark class="k">disfungsi/inkompetensi katup vena</mark> (diperberat berdiri lama dan peningkatan tekanan intraabdominal).</li>
+<li><b>Etiologi:</b> herediter, DVT, fistula arteriovenosa kongenital/akuisita, malformasi vena kongenital, kehamilan/tumor abdomen.</li>
+</ul>
+<div class="trap"><b>Inflamasi</b> BUKAN etiologi varicose veins.</div>
+<h4>Chronic Venous Insufficiency (CVI)</h4>
+<ul><li>Kongesti jaringan, <b>edema</b>, <b>stasis dermatitis</b>, deposit hemosiderin (pigmentasi coklat), <b>atrofi kulit</b>, dan <b>ulkus vena</b>.</li></ul>
+<div class="trap"><b>Infark / infark miokard</b> BUKAN dampak insufisiensi vena.</div>
+<h4>Venous thrombosis (DVT) &amp; Trias Virchow</h4>
+<ul><li><b>Stasis vena</b> (imobilisasi, <i>bed rest</i>, <b>duduk lama di pesawat</b> yang menyebabkan edema tungkai), <b>cedera endotel</b>, dan <b>hiperkoagulabilitas</b>.</li></ul>
+</div>
+</section>
+
+<!-- ============ K6 ============ -->
+<section class="mod" id="K6" data-title="K6 Edema">
+<h2><span class="badge">K6</span> Edema</h2>
+<p class="dosen">dr. Susiana Candrawati</p>
+
+<div class="card"><h3>Pergerakan Cairan &amp; Tonisitas</h3>
+<ul>
+<li>Air mengalir dari tekanan hidrostatik <b>tinggi → rendah</b>.</li>
+<li>Air mengalir dari tekanan osmotik <b>rendah → tinggi</b>.</li>
+<li>Larutan <b>isotonik</b>: tidak ada pertukaran cairan neto.</li>
+<li>Larutan <b>hipertonik</b>: air mengalir dari <mark class="k">dalam ke luar sel</mark>.</li>
+</ul>
+<div class="trap">Pernyataan "air mengalir dari luar ke dalam sel pada larutan hipertonik" adalah <b>SALAH</b>.</div></div>
+
+<div class="card"><h3>Hormon Pengendali Keseimbangan Cairan</h3>
+<div class="tw"><table>
+<tr><th>Kondisi</th><th>Hormon</th><th>Efek</th></tr>
+<tr><td><b>Hipovolemia</b> (kurang cairan)</td><td><b>ADH</b> dan <b>Aldosteron</b></td><td>ADH: reabsorpsi air di duktus kolektivus. Aldosteron: reabsorpsi Na⁺ dan sekresi K⁺ di tubulus ginjal.</td></tr>
+<tr><td><b>Hipervolemia</b> / regangan atrium</td><td><b>ANP</b> (<i>Atrial Natriuretic Peptide</i>)</td><td>Menghambat renin, ADH, aldosteron → ↓ reabsorpsi Na⁺ dan air → ↓ volume &amp; tekanan darah.</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Klasifikasi Edema Berdasarkan Patogenesis</h3>
+<div class="tw"><table>
+<tr><th>Mekanisme</th><th>Contoh</th></tr>
+<tr><td>↑ Tekanan hidrostatik intravaskuler</td><td><b>Gagal jantung kanan</b></td></tr>
+<tr><td>↑ Permeabilitas dinding kapiler</td><td><b>Proses radang sistemik</b></td></tr>
+<tr><td>↓ Tekanan osmotik koloid plasma (hipoalbuminemia)</td><td><b>Sindroma nefrotik, penyakit hati kronik, kwashiorkor</b> (protein plasma turun → tekanan osmotik plasma turun → cairan ke interstisial)</td></tr>
+<tr><td>Retensi natrium</td><td><b>Gagal ginjal</b></td></tr>
+<tr><td>Obstruksi aliran limfe</td><td><b>Elephantiasis</b> (sumbatan pembuluh limfe)</td></tr>
+</table></div>
+<div class="trap">Elephantiasis BUKAN disebabkan penurunan tekanan osmotik plasma.</div></div>
+</section>
+
+<!-- ============ K7 ============ -->
+<section class="mod" id="K7" data-title="K7 Nyeri Dada">
+<h2><span class="badge">K7</span> Nyeri Dada</h2>
+<p class="dosen">dr. Mustofa</p>
+
+<div class="card"><h3>Neurofisiologi &amp; Modulasi Nyeri</h3>
+<p><b>4 tahap:</b> Transduksi → Transmisi → Modulasi → Persepsi</p>
+<ul>
+<li><b>Transduksi:</b> pelepasan mediator kimia (prostaglandin, bradikinin, histamin, substansi P, H⁺).</li>
+<li><b>Transmisi:</b> serabut <b>A-delta</b> untuk nyeri tajam; serabut <b>C</b> untuk nyeri tumpul/terbakar.</li>
+<li><b>Persepsi:</b> korteks serebri via talamus.</li>
+<li><b>Modulator penghambat nyeri</b> (jalur desenden, di medula spinalis): <mark class="k">Endorfin (opioid)</mark>, <mark class="k">serotonin</mark>, norepinefrin.</li>
+<li><b>Sistem organ penyebab nyeri dada:</b> kardiovaskular, respirasi, gastrointestinal, muskuloskeletal/neuromuskular, psikogenik.</li>
+</ul>
+<div class="trap"><b>SSP / sistem saraf pusat</b> BUKAN sistem organ penyebab nyeri dada.</div></div>
+
+<div class="card"><h3>Nyeri Dada Kardiak &amp; Iskemik</h3>
+<ul>
+<li><b>Penyebab iskemia miokard:</b> ↓ suplai O₂, ↓ Hb, ↑ kebutuhan O₂, penyempitan vaskuler, disfungsi endotel, vasokonstriksi tidak tepat.</li>
+</ul>
+<div class="trap"><b>Bradikardi</b> dan <b>peningkatan suplai O₂</b> BUKAN penyebab iskemia.</div>
+<ul>
+<li><b>Angina / nyeri viseral jantung:</b> nyeri tumpul/tertekan substernal disertai <mark class="k">"angor animi"</mark> (perasaan takut hebat seperti akan mati).</li>
+<li><b>Respon otonom nyeri viseral akut di dada:</b> diaphoresis (keringat dingin), pucat, mual; takikardi, takipnea, ↑ tekanan darah; hiperglikemia; <b>dilatasi pupil</b>.</li>
+</ul>
+<div class="trap">Bradikardi, bradipnea, hipoglikemia, dan konstriksi pupil adalah <b>SALAH</b>.</div>
+<ul><li><b>Nyeri dada mikrovaskuler</b> (angiogram normal): disebabkan <b>defisiensi estrogen</b>, sindrom metabolik, disfungsi endotel.</li></ul></div>
+
+<div class="card"><h3>Penyebab Mengancam Jiwa vs Non-Kardiak</h3>
+<h4>Life-threatening</h4>
+<p>Sindrom koroner akut · Emboli paru · <i>Tension pneumothorax</i> · Diseksi aorta · Ruptur esofagus (<i>Boerhaave</i>) · Perikarditis dengan tamponade</p>
+<div class="trap"><b>Esofagitis</b> TIDAK mengancam jiwa.</div>
+<div class="tw"><table>
+<tr><th>Kondisi</th><th>Ciri khas</th></tr>
+<tr><td><b>Pneumotoraks spontan</b></td><td>Ruptur <i>bleb</i> → hilang tekanan negatif intrapleura → <b>kolaps paru → iritasi pleura parietal → aktivasi nosiseptor pleura</b>. Nyeri tajam saat bernapas, sesak mendadak.</td></tr>
+<tr><td><b>Precordial catch syndrome</b></td><td>Jinak, remaja/dewasa muda. Nyeri tajam seperti ditusuk jarum/pisau, mendadak saat istirahat, terlokalisasi, singkat (30 detik - 3 menit), memberat saat napas dalam, hilang sempurna tanpa gejala lain.</td></tr>
+<tr><td><b>Fraktur costae &amp; costochondritis</b></td><td>Nyeri muskuloskeletal tajam <b>terlokalisasi (nyeri tunjuk)</b>, memburuk saat ditekan/digerakkan. <b>Fraktur costae</b> khas setelah <b>batuk keras</b>. <b>Tietze</b>: disertai bengkak lokal kartilago iga 2-3; <b>costochondritis</b>: tanpa bengkak.</td></tr>
+<tr><td><b>Herpes zoster thoraks</b></td><td>Nyeri neuropatik terbakar mengikuti <b>distribusi dermatomal unilateral</b>; reaktivasi VZV di ganglion akar dorsalis.</td></tr>
+</table></div></div>
+</section>
+
+<!-- ============ K8 ============ -->
+<section class="mod" id="K8" data-title="K8 Dada Berdebar-debar">
+<h2><span class="badge">K8</span> Dada Berdebar-debar</h2>
+<p class="dosen">dr. Mustofa</p>
+
+<div class="card"><h3>Mekanisme Aritmogenesis</h3>
+<div class="tw"><table>
+<tr><th>Mekanisme</th><th>Penjelasan</th><th>Contoh</th></tr>
+<tr><td><b>Otomatisitas abnormal</b></td><td>Depolarisasi spontan fase 4 di luar SA node.</td><td>PVC, PAC, atrial tachycardia</td></tr>
+<tr><td><b>Sirkuit re-entry</b></td><td>Butuh jalur konduksi ganda, <i>unidirectional block</i>, konduksi lambat.</td><td><b>PSVT</b>, atrial fibrillation, <b>VT akibat scar OMI</b></td></tr>
+<tr><td><b>Triggered activity: EAD</b></td><td>Early afterdepolarization fase 2 atau 3 akibat <i>Long QT</i>.</td><td><b>Torsades de Pointes</b></td></tr>
+<tr><td><b>Triggered activity: DAD</b></td><td>Delayed afterdepolarization fase 4 akibat <b>overload Ca²⁺ intraseluler</b>.</td><td><b>Intoksikasi digoksin</b></td></tr>
+</table></div></div>
+
+<div class="card"><h3>Etiologi &amp; Sindrom Klinis</h3>
+<ul>
+<li><b>Anemia berat (sirkulasi hiperkinetik):</b> ↓ Hb → ↓ suplai O₂ → kompensasi <b>takikardia</b> → palpitasi saat aktivitas ringan.</li>
+<li><b>Stres/kecemasan:</b> stimulasi saraf simpatis dan pelepasan adrenalin walau jantung normal.</li>
+<li><b>Kopi berlebih:</b> <b>kafein</b> meningkatkan aktivitas simpatis dan pelepasan Ca²⁺ di miosit jantung.</li>
+<li><b>PSVT:</b> etiologi <b>Old Myocardial Infarction (OMI)</b> (jaringan parut memicu re-entry), <b>hipertiroidisme</b> (bukan hipotiroid), stimulan (kafein, alkohol, obat).</li>
+<li><b>Sick sinus syndrome</b> (disfungsi nodus SA): sinus bradycardia, sinus arrest, sinoatrial exit block, chronotropic incompetence, bradycardia-tachycardia syndrome, palpitasi sebelum sinkop.</li>
+</ul>
+<div class="trap"><b>Obstructive sleep apnea</b> adalah faktor risiko pemicu, BUKAN kondisi akibat disfungsi SA node.</div>
+<ul><li><b>Brugada syndrome:</b> autosomal dominan, mutasi kanal natrium <mark class="k">SCN5A</mark>; EKG <b>RBBB</b> dan elevasi ST di <b>V1-V3</b>.</li></ul></div>
+
+<div class="card"><h3>Efek &amp; Komplikasi Palpitasi</h3>
+<ol>
+<li><b>Poliuria</b>: khas <b>PSVT</b> akibat pelepasan <b>ANP</b> dan penekanan <b>ADH</b>.</li>
+<li><b>Syncope</b>: penurunan perfusi otak pada takiaritmia atrium atau sick sinus syndrome.</li>
+<li><b>Hemodynamic collapse</b>, cardiac arrest, sudden death (VF).</li>
+</ol>
+<div class="trap"><b>Bradikardia</b> BUKAN efek dari palpitasi.</div>
+<p><b>Hubungan dengan infark miokard:</b> palpitasi dan kolaps hemodinamik pada VT memperberat iskemia/infark miokard melalui peningkatan <b>aktivitas simpatis</b>.</p></div>
+</section>
+
+<!-- ============ K9 ============ -->
+<section class="mod" id="K9" data-title="K9 Patologi Sistem Kardiovaskuler">
+<h2><span class="badge">K9</span> Patologi Sistem Kardiovaskuler</h2>
+<p class="dosen">Robbins Bab 9 (Heart), Bab 3 &amp; 8 (Vaskular &amp; Hemodinamik)</p>
+
+<div class="card"><h3>Gagal Jantung</h3>
+<ul>
+<li><b>Mekanisme dasar:</b> penurunan curah jantung (<i>forward failure</i>) hampir selalu disertai <b>kongesti vena sistemik/paru</b> (<i>backward failure</i>).</li>
+<li><b>Pressure overload</b> (hipertensi, stenosis katup): sarkomer bertambah paralel → <mark class="k">hipertrofi konsentrik</mark> (dinding menebal tanpa pelebaran ruang).</li>
+<li><b>Volume overload</b> (regurgitasi katup, shunt): sarkomer bertambah serial → <mark class="k">dilatasi ventrikel</mark>.</li>
+</ul>
+<div class="tw"><table>
+<tr><th></th><th>Gagal jantung kiri</th><th>Gagal jantung kanan</th></tr>
+<tr><th>Penyebab utama</th><td>Penyakit jantung iskemik, hipertensi sistemik, kelainan katup mitral/aorta</td><td>Umumnya sekunder akibat GJ kiri; bila terisolasi disebut <b>Kor Pulmonale</b> (hipertensi pulmonal/PPOK/emboli paru)</td></tr>
+<tr><th>Dampak utama</th><td><b>Kongesti &amp; edema paru</b> (alveolus basah, efusi pleura, <i>heart failure cells</i> = makrofag berisi hemosiderin)</td><td><b>Kongesti vena sistemik dan portal</b> (minim gejala paru)</td></tr>
+<tr><th>Tanda &amp; gejala</th><td><b>Dispnea</b> (paling awal), <b>ortopnea</b>, <b>PND</b>, ronki basah halus, sputum berbusa</td><td><b>Pitting edema</b> tungkai, <b>distensi vena jugularis</b>, <b>hepatomegali kongestif (nutmeg liver)</b>, splenomegali, asites</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Penyakit Jantung Kongenital</h3>
+<h4>Pirau kiri-ke-kanan (tidak sianotik di awal)</h4>
+<ul>
+<li>Meliputi <b>ASD, VSD, PDA</b>. VSD = PJB paling sering saat lahir; ASD = paling sering pertama kali terdiagnosis saat dewasa.</li>
+<li><b>Sindrom Eisenmenger:</b> paparan sirkulasi paru kronik pada volume/tekanan tinggi → hipertensi pulmonal ireversibel + hipertrofi RV → pirau berbalik jadi kanan-ke-kiri (<b>sianosis lambat</b>).</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Tipe ASD</th><th>Proporsi</th><th>Lokasi</th></tr>
+<tr><td><b>Ostium secundum</b></td><td>80-90% (paling sering)</td><td>Dekat <i>foramen ovale</i></td></tr>
+<tr><td><b>Ostium primum</b></td><td>5%</td><td>Bagian bawah septum; terkait defek kanal AV</td></tr>
+<tr><td><b>Sinus venosus</b></td><td>5%</td><td>Tinggi, dekat muara vena kava superior</td></tr>
+</table></div>
+<h4>Duktus arteriosus &amp; PDA</h4>
+<ul>
+<li>Menghubungkan arteri pulmonalis dengan aorta.</li>
+<li>Menutup <b>fungsional dalam 24-48 jam</b> (↑ O₂, ↓ PGE₂) dan <b>anatomis dalam 2-4 minggu</b> → <i>ligamentum arteriosum</i>.</li>
+<li>Bila tetap terbuka: bising kontinu seperti mesin (<i>machinery murmur</i>).</li>
+</ul>
+<h4>Tetralogi Fallot (PJB sianotik tersering)</h4>
+<ul>
+<li><b>4 komponen:</b> VSD, stenosis pulmonal, overriding aorta, hipertrofi ventrikel kanan.</li>
+<li>Jantung berbentuk sepatu (<i>boot-shaped / coeur en sabot</i>), <b>squatting</b> saat sesak, komplikasi <b>jari tabuh</b> dan <b>polisitemia</b>.</li>
+</ul>
+<div class="note">Murmur VSD pada TOF kadang lemah/tidak terdengar bila tekanan ventrikel kanan dan kiri sama (tidak ada gradien aliran turbulen).</div></div>
+
+<div class="card"><h3>Penyakit Jantung Iskemik &amp; Biomarker IMA</h3>
+<ul>
+<li><b>Stenosis &lt; 70%:</b> umumnya asimtomatik.</li>
+<li><b>Stenosis kritis &gt; 70%:</b> nyeri dada saat aktivitas (<b>angina stabil</b>).</li>
+<li><b>Stenosis ≥ 90%:</b> gejala saat istirahat (<b>angina tidak stabil</b>).</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Biomarker</th><th>Naik</th><th>Puncak</th><th>Normal kembali</th><th>Kunci</th></tr>
+<tr><td><b>Mioglobin</b></td><td>1 jam (&gt; 40 ng/mL)</td><td>-</td><td>-</td><td><b>Paling pertama naik</b>; sensitif, spesifisitas rendah (juga naik pada cedera otot rangka &amp; gagal ginjal)</td></tr>
+<tr><td><b>Troponin (cTnI, cTnT)</b></td><td>2-4 jam</td><td>48 jam</td><td>7-10 hari</td><td><b>Paling spesifik &amp; sensitif</b></td></tr>
+<tr><td><b>CK-MB</b></td><td>2-4 jam</td><td>24-48 jam</td><td>± 72 jam</td><td>Mendeteksi <b>re-infark</b></td></tr>
+<tr><td><b>CRP</b></td><td colspan="4">Penanda <b>inflamasi</b> sistemik yang menyertai nekrosis miokard atau aterosklerosis</td></tr>
+</table></div>
+<div class="note">Angka puncak/normal troponin dan CK-MB di sini (Robbins) sedikit berbeda dengan tabel di K13. Bila soal menyebut sumber, ikuti sumbernya. Poin yang selalu sama: mioglobin paling awal, troponin paling spesifik, CK-MB turun ±3 hari.</div></div>
+
+<div class="card"><h3>Aterosklerosis: Urutan Patogenesis (<i>Response to Injury</i>)</h3>
+<ol>
+<li>Disfungsi/cedera endotel kronik (hiperlipidemia, hipertensi, rokok, turbulensi aliran).</li>
+<li>Akumulasi lipoprotein (terutama <b>LDL</b>) di tunika intima → teroksidasi jadi <b>oxidized LDL</b>.</li>
+<li>Monosit menempel pada endotel, bermigrasi ke intima, berdiferensiasi menjadi <b>makrofag</b>.</li>
+<li><b>Makrofag memfagosit oxidized LDL</b> lewat <i>scavenger receptor</i> → <mark class="k">foam cell</mark> → <i>fatty streak</i>.</li>
+<li>Sel otot polos bermigrasi dari media ke intima, berproliferasi, memproduksi kolagen → <b>fibrous cap</b> plak ateroma.</li>
+</ol></div>
+
+<div class="card"><h3>Aneurisma &amp; Diseksi Aorta</h3>
+<ul>
+<li><b>Aneurisma:</b> dilatasi lokal akibat kelemahan dinding media (aorta abdominalis ← aterosklerosis; aorta torakalis ← hipertensi). Risiko tromboemboli, penekanan jaringan, ruptur.</li>
+<li><b>Diseksi aorta:</b> darah bertekanan tinggi merobek tunika intima (sering 1-10 cm dari katup aorta/pembuluh besar) dan membelah lapisan media.</li>
+<li><b>Pasien muda tanpa hipertensi</b> dengan dilatasi aorta, diseksi, kelainan serat elastik (<i>degenerasi medial kistik</i>) → <mark class="k">Sindrom Marfan</mark> (mutasi <b>fibrilin-1</b> → ↑ aktivitas TGF-β dan hilangnya serat elastik media).</li>
+</ul></div>
+</section>
+
+<!-- ============ K10 ============ -->
+<section class="mod" id="K10" data-title="K10 Patologi Sistem Respirasi">
+<h2><span class="badge">K10</span> Patologi Sistem Respirasi</h2>
+<p class="dosen">Robbins Bab 11 (The Lung)</p>
+
+<div class="card"><h3>PPOK (Emfisema &amp; Bronkitis Kronik)</h3>
+<ul>
+<li>Terkait asap rokok: stres oksidatif, ketidakseimbangan protease-antiprotease (elastase neutrofil vs α₁-antitripsin), rekrutmen <b>neutrofil</b>.</li>
+<li><b>Lab khas:</b> <mark class="k">neutrofilia</mark> (+ ↑ CRP/prokalsitonin saat eksaserbasi), dan ↑ Hb/hematokrit (<mark class="k">polisitemia sekunder</mark>) kompensasi hipoksemia kronik.</li>
+<li><b>Emfisema paraseptal / bulosa:</b> pelebaran asinus distal subpleura membentuk <i>bleb/bula</i> yang mudah ruptur → penyebab utama <b>pneumotoraks spontan</b> pada dewasa muda.</li>
+</ul></div>
+
+<div class="card"><h3>Asma Bronkial (Atopik)</h3>
+<ul>
+<li>Hipersensitivitas <b>tipe I</b> diperantarai <b>IgE</b> dan sel <b>Th2</b>: IL-4 → sel B memproduksi IgE; IL-5 → merekrut eosinofil.</li>
+<li>Alergen → degranulasi sel mast → <b>histamin</b> dan leukotrien → <b>bronkospasme</b> (penyempitan saluran napas kecil), <b>edema mukosa</b>, <b>hipersekresi mukus</b> → <i>wheezing</i>.</li>
+</ul></div>
+
+<div class="card"><h3>Eosinofilia Paru</h3>
+<p><b>Sindrom Loeffler:</b> infiltrat paru transien + <mark class="k">eosinofilia</mark> darah akibat migrasi larva cacing melalui paru: <i>Ascaris lumbricoides</i>, <i>Strongyloides stercoralis</i>, <i>Ancylostoma duodenale</i>, <i>Necator americanus</i>.</p></div>
+
+<div class="card"><h3>Infeksi Saluran Napas</h3>
+<h4>Virus</h4>
+<ul>
+<li><b>Common cold:</b> penyebab tersering <mark class="k">Rhinovirus</mark>.</li>
+<li><b>SARS-CoV-2 / COVID-19:</b> menginfeksi epitel saluran napas dan alveolus lewat reseptor <mark class="k">ACE2</mark>.</li>
+</ul>
+<h4>Pneumonia bakterial</h4>
+<ul>
+<li><b>CAP:</b> tersering <i>Streptococcus pneumoniae</i>; lainnya <i>Haemophilus influenzae</i>, <i>Staphylococcus aureus</i>, <i>Klebsiella pneumoniae</i>. Penanda lab pembeda etiologi bakteri: <b>prokalsitonin</b> (plus kultur; PCR untuk virus).</li>
+<li><b>HAP (nosokomial):</b> didapat di RS (&gt; 48 jam), umumnya Gram-negatif resisten (<b><i>Pseudomonas aeruginosa</i></b>, <i>E. coli</i>, <i>Klebsiella</i>, <i>Enterobacter</i>, <i>Serratia</i>) dan <i>S. aureus</i> (MRSA).</li>
+</ul>
+<h4>Jamur</h4>
+<ul>
+<li><b>Dimorfik endemik:</b> <i>Histoplasma capsulatum</i>, <i>Blastomyces dermatitidis</i>, <i>Coccidioides immitis</i>.</li>
+<li><b>Oportunistik:</b> <i>Candida albicans</i> (ragi + pseudohifa), <i>Aspergillus</i> (hifa bersepta, cabang sudut akut 45°), <b>Zygomycetes/Mukormikosis</b> (hifa lebar tak bersepta, cabang siku 90°), <i>Cryptococcus neoformans</i>, <i>Pneumocystis jirovecii</i>.</li>
+</ul></div>
+</section>
+
+<!-- ============ K11 ============ -->
+<section class="mod" id="K11" data-title="K11 Mikrobiologi pada Sistem Kardiovaskuler">
+<h2><span class="badge">K11</span> Mikrobiologi pada Sistem Kardiovaskuler</h2>
+<p class="dosen">Ibu Rani Afifah</p>
+
+<div class="card"><h3>Perikarditis</h3>
+<p><b>Patofisiologi:</b> multiplikasi virus/mikroba di perikardium → masuk neutrofil dan mediator kimia → ↑ permeabilitas vaskular → inflamasi dan efusi perikardial.</p>
+<div class="tw"><table>
+<tr><th>Jenis</th><th>Agen</th><th>Gejala khas</th></tr>
+<tr><td><b>Viral</b></td><td><i>Enterovirus</i> (<b>Coxsackievirus B</b>), <i>Echovirus</i>, <i>Adenovirus</i> (80-90% kasus)</td><td><b>Nyeri dada substernal tajam</b>, diperparah inspirasi dan posisi telentang</td></tr>
+<tr><td><b>Purulent</b></td><td>Bakteri piogenik (<i>S. aureus</i>, <i>S. pneumoniae</i>, <i>N. meningitidis</i>)</td><td><b>Demam mendadak &amp; sesak napas</b>, nyeri dada</td></tr>
+<tr><td><b>Tuberculous</b></td><td><i>Mycobacterium tuberculosis</i></td><td><b>Nyeri dada tumpul</b>, <b>penurunan BB</b>, <b>keringat malam</b>, batuk &amp; sesak</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Miokarditis</h3>
+<ul>
+<li><b>Virus (tersering):</b> golongan <b>Enterovirus</b>, nomor satu <mark class="k">Coxsackievirus B</mark> (lainnya: Parvovirus, Adenovirus, CMV, EBV).</li>
+<li><b>Bakteri:</b> <i>Legionella</i>, <i>Chlamydia</i>, <i>Borrelia burgdorferi</i>, <i>Corynebacterium diphtheriae</i>.</li>
+<li><b>Fungi:</b> <i>Aspergillus</i>, <i>Candida</i>, <i>Cryptococcus</i>.</li>
+<li><b>Mekanisme kerusakan miosit:</b> infeksi virus → <b>respon imun</b> (infiltrasi <b>sel T sitotoksik</b>, makrofag, sel B, sitokin, radikal bebas) → <b>destruksi sel miosit</b>; dapat berlanjut menjadi <i>dilated cardiomyopathy</i>.</li>
+</ul></div>
+
+<div class="card"><h3>Endokarditis Infektif</h3>
+<div class="tw"><table>
+<tr><th>Kondisi</th><th>Penyebab tersering</th></tr>
+<tr><td><b>Katup asli, dewasa non-IVDU</b></td><td><mark class="k">Streptococcus viridans</mark> (± 50%); flora mulut, masuk lewat luka gusi, cabut gigi, menyikat gigi</td></tr>
+<tr><td><b>Pengguna narkoba suntik (IVDU)</b></td><td><mark class="k">Staphylococcus aureus</mark> (50%), lalu <i>Pseudomonas aeruginosa</i> dan <i>Candida albicans</i></td></tr>
+<tr><td><b>Katup prostetik, awal (&lt; 2 bulan)</b></td><td><i>Staphylococci</i></td></tr>
+<tr><td><b>Katup prostetik, lanjut (&gt; 2 bulan)</b></td><td><i>Viridans streptococci</i></td></tr>
+</table></div>
+<ul>
+<li><b>Vegetasi:</b> gumpalan fibrin + trombosit yang membungkus koloni bakteri. <b>Fungsi:</b> melindungi bakteri dari antibodi, komplemen, leukosit dan <b>menghalangi penetrasi antibiotik</b>.</li>
+</ul>
+<h4>Karakteristik mikroorganisme penting</h4>
+<ul>
+<li><b><i>S. aureus</i>:</b> kokus Gram positif bergerombol, β-hemolitik, katalase (+), <b>koagulase (+)</b>, oksidase (−), <b>Protein A</b> (hindari fagositosis), tumbuh di <i>Mannitol Salt Agar</i>.</li>
+<li><b><i>S. pneumoniae</i> vs Viridans:</b> keduanya kokus Gram (+), α-hemolitik, katalase (−).</li>
+</ul>
+<div class="tw"><table>
+<tr><th></th><th><i>S. pneumoniae</i></th><th>Viridans streptococci</th></tr>
+<tr><th>Empedu</th><td><b>Larut</b></td><td>Tidak larut</td></tr>
+<tr><th>Optochin</th><td><b>Sensitif</b></td><td>Resisten</td></tr>
+</table></div>
+<ul><li><b><i>Candida albicans</i>:</b> ragi + <b>pseudohifa</b>; virulensi: <i>phenotypic switching</i>, <i>bud-hyphae transition</i>, <i>adherence</i>, <i>cell wall mannan</i>, enzim protease dan fosfolipase.</li></ul></div>
+
+<div class="card"><h3>Demam Reumatik</h3>
+<ul>
+<li><b>Penyebab:</b> <mark class="k">Streptococcus pyogenes</mark> (GAS, <i>Group A β-hemolytic</i>); kokus Gram (+) berantai, katalase (−), sensitif basitrasin, PYR (+).</li>
+<li><b>Faktor virulensi kunci:</b> <mark class="k">Protein M</mark>; menghambat fagositosis dan mirip urutan asam amino protein jantung manusia (miosin/sarkolema).</li>
+<li><b>Patogenesis:</b> komplikasi autoimun pasca faringitis akibat <b>mimikri molekuler</b>: reaksi silang antibodi anti-Protein M dengan jaringan katup/otot jantung → inflamasi katup (terutama <b>mitral</b>), nodul subkutan, <b>badan Aschoff</b>.</li>
+<li><b>Konfirmasi infeksi sebelumnya:</b> serologi <b>ASTO</b> (Antistreptolisin O).</li>
+</ul></div>
+</section>
+
+<!-- ============ K12 ============ -->
+<section class="mod" id="K12" data-title="K12 Pemeriksaan Mikrobiologi pada Sistem Respirasi">
+<h2><span class="badge">K12</span> Pemeriksaan Mikrobiologi pada Sistem Respirasi</h2>
+<p class="dosen">Dra. IDSAP Peramiarti</p>
+
+<div class="card"><h3>Pemilihan Spesimen</h3>
+<div class="tw"><table>
+<tr><th>Lokasi / patogen</th><th>Spesimen</th></tr>
+<tr><td><b>ISPA atas</b> (faringitis/tonsilitis; <i>S. pyogenes</i>/GAS)</td><td><b>Swab tenggorok</b> (tonsil/faring posterior). Jangan sputum: mewakili saluran napas bawah dan terkontaminasi flora mulut.</td></tr>
+<tr><td><i>Bordetella pertussis</i>, Influenza, RSV, SARS-CoV-2</td><td><b>Swab nasofaring</b></td></tr>
+<tr><td><b>Saluran napas bawah</b> (pneumonia, TBC paru)</td><td><b>Sputum batuk dalam</b> (bukan saliva)</td></tr>
+</table></div>
+<div class="note"><b>Kriteria Bartlett</b> sputum baik: <b>banyak leukosit/PMN</b> dan <b>sedikit sel epitel skuamosa</b>. Banyak sel epitel skuamosa = spesimen adalah saliva.</div></div>
+
+<div class="card"><h3>Media Kultur &amp; Pengecatan</h3>
+<div class="tw"><table>
+<tr><th>Media</th><th>Untuk</th></tr>
+<tr><td><b>Blood agar</b></td><td>Media umum, melihat pertumbuhan dan hemolisis (mis. <i>S. pneumoniae</i>, reaksi <i>Quellung</i>)</td></tr>
+<tr><td><b>Chocolate agar</b></td><td>Bakteri <i>fastidious</i>: <b><i>Haemophilus influenzae</i></b> (faktor X dan V), <i>Neisseria</i></td></tr>
+<tr><td><b>Kalium tellurite / Tinsdale</b></td><td>Selektif <b><i>Corynebacterium diphtheriae</i></b> (<i>pseudomembran</i>, eksotoksin → miokarditis)</td></tr>
+<tr><td><b>Lowenstein-Jensen (LJ)</b></td><td><b><i>Mycobacterium tuberculosis</i></b> (tumbuh lambat hingga 8 minggu, koloni coklat muda tak berpigmen)</td></tr>
+</table></div>
+<h4>Ziehl-Neelsen (BTA)</h4>
+<ul>
+<li><b>Pewarna utama:</b> karbol fukhsin (dipanaskan).</li>
+<li><b>Peluntur:</b> asam-alkohol (20% H₂SO₄ atau alkohol 95% + 2,5% HNO₃).</li>
+<li><b>Warna penutup:</b> methylene blue.</li>
+<li><b>Hasil:</b> BTA batang lurus <mark class="k">merah terang</mark> dengan latar <mark class="k">biru</mark>.</li>
+</ul></div>
+
+<div class="card"><h3>Virus Saluran Napas</h3>
+<h4>Rhinovirus (<i>Picornaviridae</i>)</h4>
+<ul>
+<li>Penyebab tersering <b>common cold</b>.</li>
+<li>RNA untai tunggal tak berselubung; tumbuh optimal di mukosa hidung (33-34 °C); tidak stabil pada pH asam (&lt; 5-6); penyebab sekitar <b>setengah eksaserbasi asma akut</b>.</li>
+</ul>
+<h4>Coronavirus &amp; SARS-CoV-2</h4>
+<ul>
+<li>RNA untai tunggal berselubung, <b>genom terbesar di antara semua virus RNA</b>.</li>
+<li><b>Masuk sel:</b> glikoprotein <i>Spike</i> diaktifkan protease inang (<b>TMPRSS2</b>) → berikatan dengan <b>ACE2</b> → endositosis.</li>
+</ul>
+<h4>Influenza &amp; Avian influenza (<i>Orthomyxoviridae</i>)</h4>
+<ul>
+<li>RNA untai tunggal <b>bersegmen</b>, berselubung lipid, dengan 2 glikoprotein permukaan:</li>
+<li><b>Hemaglutinin (HA):</b> mengaglutinasi eritrosit, <b>melekat dan menginvasi sel hospes</b>.</li>
+<li><b>Neuraminidase (NA):</b> menurunkan viskositas lendir dan <b>memecah ikatan asam sialat sehingga virion baru lepas (budding)</b>.</li>
+<li><b>Avian influenza</b> sangat patogen pada manusia: <mark class="k">H5N1</mark> (dan H7N7). Influenza manusia umum: H1N1, H1N2, H3N2.</li>
+</ul>
+<h4>RSV &amp; Parainfluenza</h4>
+<ul>
+<li><b>RSV (<i>Pneumovirus</i>):</b> penyebab infeksi napas bawah (<b>bronkiolitis dan pneumonia</b>) paling penting pada <b>bayi</b>; protein G (perlekatan), protein F (fusi → <i>syncytia</i>).</li>
+<li><b>Parainfluenza (tipe 1 &amp; 2):</b> penyebab utama <b>croup</b> (<i>laryngotracheobronchitis</i>, <i>barking cough</i>).</li>
+</ul></div>
+
+<div class="card"><h3>Bakteri &amp; Jamur Spesifik</h3>
+<ul>
+<li><b><i>Bordetella pertussis</i>:</b> kokobasil Gram negatif, penyebab <b>pertusis / batuk rejan</b>. Tropisme pada <b>epitel bronkial bersilia</b>. Virulensi: <b>Pertussis toxin</b>, <i>filamentous hemagglutinin</i>, <i>tracheal cytotoxin</i> → <b>ciliary stasis</b>.</li>
+<li><b><i>Haemophilus influenzae</i>:</b> kokobasil kecil Gram negatif; <b>sinusitis akut</b>, otitis media, epiglotitis akut (tipe b/Hib), eksaserbasi bronkitis kronik (<i>non-typeable</i>/NTHi).</li>
+<li><b>Jamur dimorfik endemik:</b> <i>Histoplasma capsulatum</i> (ragi ovoid kecil dalam makrofag), <i>Blastomyces dermatitidis</i> (ragi besar, <i>broad-based budding</i>), <i>Coccidioides immitis</i> (<i>spherules</i>).</li>
+<li><b>Jamur oportunistik:</b>
+  <ul>
+  <li><i>Candida</i>: ragi + pseudohifa; ke paru umumnya hematogen.</li>
+  <li><i>Aspergillus</i> (<i>A. fumigatus</i>): hifa septata cabang 45°, inhalasi konidia → <b>ABPA</b> (pasien asma), <b>aspergilloma / fungus ball</b> (kavitas bekas TB), <b>Invasive Pulmonary Aspergillosis</b> (neutropenia).</li>
+  <li><b>Zygomycetes</b> (<i>Rhizopus</i>, <i>Mucor</i>).</li>
+  </ul></li>
+</ul></div>
+</section>
+
+<!-- ============ K13 ============ -->
+<section class="mod" id="K13" data-title="K13 Pemeriksaan Laboratorium Sistem Kardiovaskuler">
+<h2><span class="badge">K13</span> Pemeriksaan Laboratorium Sistem Kardiovaskuler</h2>
+<p class="dosen">dr. Wahyu Siswandari</p>
+
+<div class="card"><h3>Biomarker Aterosklerosis</h3>
+<ul>
+<li><b>Profil lipid aterogenik:</b> biomarker paling bermakna = <mark class="k">↑ LDL</mark>, diperberat HDL rendah.</li>
+<li><b>Inflamasi vaskular:</b> ↑ <b>CRP (hs-CRP)</b> = prediktor independen.</li>
+</ul>
+<h4>Pembentukan foam cell</h4>
+<ol>
+<li>Disfungsi/cedera endotel (stres oksidatif: rokok, hipertensi, DM, dislipidemia) → molekul adhesi dan kemokin (MCP-1).</li>
+<li>LDL masuk ke <b>tunika intima</b> (ruang subendotel) → <b>oxidized LDL</b>.</li>
+<li>Monosit menempel, bermigrasi ke intima, jadi <b>makrofag</b>.</li>
+<li><b>Makrofag memfagosit oxidized LDL</b> → <mark class="k">foam cell</mark> → <i>fatty streak</i> dan inti lipid plak.</li>
+</ol></div>
+
+<div class="card"><h3>Kinetika Biomarker Infark Miokard Akut</h3>
+<p>Kematian kardiomiosit melepas <b>mioglobin, CK-MB, cTnI, cTnT</b> ke darah serta memicu inflamasi (↑ <b>CRP</b> dan <b>leukosit</b>).</p>
+<div class="tw"><table>
+<tr><th>Biomarker</th><th>Mulai naik</th><th>Puncak</th><th>Normal kembali</th><th>Kunci untuk soal</th></tr>
+<tr><td><b>Mioglobin</b></td><td>1-3 jam (&gt; 40 ng/mL dalam 1 jam)</td><td>6-9 jam</td><td>24 jam</td><td><b>Paling pertama naik</b>; sensitivitas tinggi, <b>spesifisitas rendah</b> (naik juga pada cedera otot rangka &amp; gagal ginjal)</td></tr>
+<tr><td><b>Troponin I &amp; T</b></td><td>2-4 jam</td><td>12-24 jam</td><td>7-14 hari</td><td><b>Gold standard IMA</b> (paling sensitif &amp; spesifik); <b>cTnI</b> lebih spesifik dan rilis lebih cepat dari cTnT (BM lebih kecil)</td></tr>
+<tr><td><b>CK-MB</b></td><td>3-6 jam (atau 3-8 jam)</td><td>18-24 jam</td><td>48-72 jam (3 hari)</td><td>Isoenzim otot jantung; normal lebih cepat dari troponin → <b>memperkirakan waktu MI</b> dan <b>mendeteksi re-infarction</b></td></tr>
+</table></div></div>
+
+<div class="card"><h3>Gagal Jantung: BNP vs NT-proBNP</h3>
+<p>Peregangan dinding ventrikel (<i>myocardial stretch</i>) → <i>proBNP</i> (108 aa) terpecah jadi <b>BNP</b> aktif (32 aa) dan <b>NT-proBNP</b> inaktif (76 aa).</p>
+<div class="tw"><table>
+<tr><th></th><th>BNP</th><th>NT-proBNP</th></tr>
+<tr><th>Status biologis</th><td><b>Hormon aktif</b> (vasodilatasi, natriuresis, diuresis)</td><td><b>Fragmen tidak aktif</b> (pro-hormon)</td></tr>
+<tr><th>Waktu paruh</th><td>Pendek, ± <b>20 menit</b></td><td>Lebih panjang, <b>60-120 menit</b> (± 90 menit)</td></tr>
+<tr><th>Klirens</th><td><i>Neutral endopeptidase</i> &amp; <i>clearance receptors</i></td><td><b>Lewat ginjal</b> (sangat naik pada gagal ginjal &amp; lansia)</td></tr>
+<tr><th>Stabilitas &amp; pemantauan</th><td>Kurang stabil; pantau hemodinamik tiap <b>2 jam</b></td><td><b>Lebih stabil</b>; pantau tiap <b>12 jam</b></td></tr>
+<tr><th>Cut-off eksklusi (GJ <i>unlikely</i>)</th><td>Akut &lt; 100 pg/mL<br>Non-akut &lt; 35 pg/mL</td><td>Akut &lt; 300 pg/mL<br>Non-akut &lt; 125 pg/mL</td></tr>
+</table></div></div>
+</section>
+
+<!-- ============ K14 ============ -->
+<section class="mod" id="K14" data-title="K14 Pemeriksaan Laboratorium Sistem Respirasi">
+<h2><span class="badge">K14</span> Pemeriksaan Laboratorium Sistem Respirasi</h2>
+<p class="dosen">dr. Vitasari Indriani</p>
+
+<div class="card"><h3>Asma Bronkial (Inflamasi Tipe 2)</h3>
+<p>Alergen mengaktifkan <b>Th2</b> dan <b>ILC2</b> → <b>IL-4, IL-5, IL-13</b>:</p>
+<ul>
+<li><b>IL-4 &amp; IL-13:</b> sel B memproduksi <b>IgE spesifik</b> (berikatan dengan sel mast), hipersekresi mukus, ↑ <b>FeNO</b>.</li>
+<li><b>IL-5:</b> merekrut dan mengaktifkan <b>eosinofil</b>.</li>
+<li><b>Degranulasi sel mast:</b> <b>histamin</b>, leukotrien, prostaglandin → <b>bronkospasme</b>.</li>
+<li><b>Parameter lab:</b> ↑ IgE total/spesifik (atau terapi <b>Anti-IgE</b>), eosinofilia darah, <b>eosinofil sputum &gt; 2-3%</b>, ↑ FeNO, pelepasan histamin.</li>
+</ul></div>
+
+<div class="card"><h3>Pneumonia: Bakteri vs Virus</h3>
+<div class="tw"><table>
+<tr><th>Etiologi</th><th>Temuan lab</th></tr>
+<tr><td><b>Bakteri</b></td><td>↑ <b>Prokalsitonin (PCT)</b>, ↑ <b>CRP</b> (stimulasi IL-6 di hepar), <b>leukositosis dengan neutrofilia dan left shift</b>; konfirmasi dengan kultur bakteriologi.</td></tr>
+<tr><td><b>Virus</b> (termasuk COVID-19)</td><td>PCT rendah/normal di fase awal, leukosit normal/turun dengan <b>limfopenia</b>. COVID-19 sedang-berat: ↑ tajam <b>CRP, ferritin, IL-6, D-dimer</b> (hiperkoagulasi). Deteksi pasti: <b>PCR / RT-PCR</b>.</td></tr>
+</table></div></div>
+
+<div class="card"><h3>PPOK</h3>
+<ul>
+<li><b>Darah lengkap:</b> <b>neutrofilia</b> dan leukositosis (↑ CRP/PCT saat eksaserbasi). Bila ada <b>eosinofilia</b> → respons baik terhadap kortikosteroid.</li>
+<li><b>Hipoksemia kronis:</b> ↓ PaO₂ kronis pada perokok berat → kemoreseptor → ↑ <b>EPO</b> ginjal → ↑ eritrosit/Hb/Ht = <mark class="k">polisitemia sekunder</mark>.</li>
+</ul></div>
+
+<div class="card"><h3>Tuberkulosis (TB Laten &amp; Ekstraparu)</h3>
+<ul>
+<li><b>Infeksi TB laten (LTBI):</b> imun mengendalikan <i>M. tuberculosis</i> dalam granuloma; <b>asimtomatik, BTA sputum negatif, foto toraks normal</b>, tetapi <b>IGRA (+)</b> atau <b>TST (+, indurasi ≥ 10-15 mm)</b>.</li>
+<li><b>Prinsip IGRA:</b> mengukur <b>IFN-γ</b> yang dilepas <b>limfosit T</b> perifer setelah distimulasi antigen MTB (<b>ESAT-6 dan CFP-10</b>).</li>
+<li><b>TB pleuritis (efusi pleura TB):</b> cairan pleura <b>eksudat dominan limfosit</b> dengan <mark class="k">ADA ≥ 40 U/L</mark> (mis. 52 U/L), akibat aktivasi imunitas seluler limfosit T.</li>
+</ul></div>
+
+<div class="card"><h3>Analisis Gas Darah (BGA)</h3>
+<p><b>Nilai normal:</b> pH 7,35-7,45 · PaCO₂ 35-45 mmHg (respiratorik) · HCO₃⁻ 22-26 mmol/L (metabolik/ginjal) · PaO₂ 80-100 mmHg (oksigenasi)</p>
+<div class="tw"><table>
+<tr><th>Kelainan</th><th>Gangguan primer</th><th>Kompensasi / penyeimbangan</th></tr>
+<tr><td><b>Asidosis respiratorik</b><br><small>pneumonia, PPOK, asma berat</small></td><td>Hipoventilasi → <b>PaCO₂ ↑ (&gt; 45), pH ↓ (&lt; 7,35)</b></td><td>Perbaikan ventilasi: PaCO₂ ↓, pH ↑ (balance). <b>Ginjal:</b> ↑ reabsorpsi <b>HCO₃⁻</b>.</td></tr>
+<tr><td><b>Alkalosis respiratorik</b><br><small>hiperventilasi, cemas, awal serangan asma</small></td><td>Hiperventilasi → <b>PaCO₂ ↓ (&lt; 35), pH ↑ (&gt; 7,45)</b></td><td>PaCO₂ ↑, pH ↓ (balance). <b>Ginjal:</b> ↑ ekskresi bikarbonat (<b>HCO₃⁻ ↓</b>).</td></tr>
+<tr><td><b>Asidosis metabolik</b></td><td>↓ primer <b>HCO₃⁻ (&lt; 22)</b>, pH ↓</td><td><b>Paru:</b> hiperventilasi buang CO₂ (<b>PaCO₂ ↓</b>).</td></tr>
+<tr><td><b>Alkalosis metabolik</b></td><td>↑ primer <b>HCO₃⁻ (&gt; 26)</b>, pH ↑</td><td><b>Paru:</b> hipoventilasi tahan CO₂ (<b>PaCO₂ ↑</b>).</td></tr>
+</table></div></div>
+</section>
+
+<!-- ============ K15 ============ -->
+<section class="mod" id="K15" data-title="K15 Farmakologi Obat Antihipertensi">
+<h2><span class="badge">K15</span> Farmakologi Obat Antihipertensi</h2>
+<p class="dosen">dr. Eman Sutrisna</p>
+
+<div class="card"><h3>Mekanisme, Efek Samping Khas, &amp; Kontraindikasi per Golongan</h3>
+<div class="tw"><table>
+<tr><th>Golongan &amp; contoh</th><th>Mekanisme kerja</th><th>Efek samping khas &amp; kontraindikasi</th></tr>
+<tr><td><b>Direct renin inhibitor</b><br>Aliskiren</td><td>Menghambat <b>renin</b> langsung → ↓ Angiotensin I dan II.</td><td><b>Kontraindikasi:</b> kehamilan; jangan dikombinasi dengan ACEI atau ARB.</td></tr>
+<tr><td><b>ACE inhibitor</b><br>Captopril, Lisinopril, Enalapril</td><td>Menghambat Ang I → Ang II (↓ vasokonstriksi &amp; ↓ aldosteron) dan <b>menghambat degradasi bradikinin</b> (↑ bradikinin). <i>Lisinopril = obat aktif; Enalapril = prodrug.</i></td><td><ul><li><b>ESO khas:</b> <mark class="k">batuk kering</mark>, angioedema (↑ bradikinin), <b>hiperkalemia</b>.</li><li><b>Kontra:</b> <b>kehamilan</b>, stenosis arteri renalis bilateral, hiperkalemia berat.</li></ul></td></tr>
+<tr><td><b>ARB</b><br>Losartan, Valsartan, Irbesartan, Candesartan, Telmisartan</td><td><b>Memblok reseptor AT₁</b> selektif tanpa ↑ bradikinin → vasodilatasi, ↓ aldosteron, ↓ reabsorpsi Na⁺. <i>Losartan: metabolit aktif &amp; efek urikosurik ringan (cocok untuk gout).</i></td><td><ul><li><b>Tidak</b> menyebabkan batuk kering.</li><li><b>Kontra mutlak:</b> <b>kehamilan (teratogenik)</b>, ibu menyusui, stenosis arteri renalis bilateral, hiperkalemia.</li></ul></td></tr>
+<tr><td><b>CCB dihidropiridin</b><br>Amlodipin, Nifedipin</td><td><b>Menghambat kanal Ca²⁺ tipe-L</b> terutama otot polos arteriol → ↓ resistensi perifer.</td><td><ul><li><b>Amlodipin</b> (t½ panjang, 1×/hari) = <mark class="k">lini pertama pada lansia</mark> (mis. 60 th) / hipertensi sistolik.</li><li><b>ESO:</b> edema perifer/tungkai, sakit kepala, hiperplasia gingiva.</li></ul></td></tr>
+<tr><td><b>CCB non-dihidropiridin</b><br>Verapamil, Diltiazem</td><td>Menghambat kanal Ca²⁺ tipe-L di jantung &amp; pembuluh → ↓ HR, <b>memperlambat konduksi nodus AV</b>, ↓ kontraktilitas (<b>antiaritmia golongan IV</b>).</td><td><ul><li><b>ESO:</b> bradikardia, blokade AV, konstipasi.</li><li><b>Kontra:</b> <b>gagal jantung (HFrEF)</b>, <b>AV block</b>, bradikardia berat, kombinasi dengan β-blocker.</li></ul></td></tr>
+<tr><td><b>Diuretik thiazide</b><br>HCT, Klortalidon, Indapamid</td><td>Menghambat kotransporter <b>Na⁺/Cl⁻ di tubulus kontortus distal</b>.</td><td><b>ESO:</b> hipokalemia, hiponatremia, <b>hiperurisemia (memicu gout)</b>, hiperglikemia.</td></tr>
+<tr><td><b>Loop diuretic</b><br>Furosemid</td><td>Menghambat <b>Na⁺/K⁺/2Cl⁻ (NKCC2)</b> di <b>ansa Henle asendens tebal</b>.</td><td>Diuresis kuat untuk <b>edema paru/CHF atau gagal ginjal</b>. <b>ESO:</b> hipokalemia, ototoksisitas.</td></tr>
+<tr><td><b>Diuretik hemat kalium</b><br>Spironolakton, Eplerenon, Triamteren, Amilorid</td><td>Spironolakton/Eplerenon memblok <b>reseptor aldosteron (MRA)</b> di duktus kolektivus; Triamteren/Amilorid memblok langsung kanal Na⁺ epitel.</td><td><ul><li><b>Spironolakton</b> = obat tambahan ke-4 pada <b>hipertensi resisten</b>.</li><li><b>ESO:</b> <b>hiperkalemia</b>, ginekomastia.</li></ul></td></tr>
+<tr><td><b>Beta-blocker</b><br>Propranolol, Metoprolol, Atenolol, Bisoprolol</td><td>Memblok <b>reseptor β₁</b> jantung → ↓ HR (kronotropik −), ↓ kontraktilitas (inotropik −), memperlambat konduksi AV, ↓ pelepasan renin.</td><td><ul><li><b>Kontra utama:</b> <mark class="k">riwayat asma / PPOK</mark> (terutama non-selektif seperti <b>Propranolol</b>, blokade β₂ → bronkokonstriksi), bradikardia berat, AV block.</li><li>Menyamarkan takikardia saat hipoglikemia pada DM; <b>wajib tapering off</b>.</li></ul></td></tr>
+<tr><td><b>Simpatolitik lain &amp; vasodilator</b><br>Prazosin, Klonidin, Metildopa, Hidralazin</td><td><ul><li><b>Prazosin/Doksazosin:</b> α₁-blocker (berguna bila ada BPH).</li><li><b>Klonidin &amp; Metildopa:</b> agonis α₂ sentral (↓ simpatis).</li><li><b>Hidralazin:</b> vasodilator arteriol langsung.</li></ul></td><td><ul><li><b>Prazosin:</b> hipotensi ortostatik dosis pertama.</li><li><b>Klonidin:</b> sedasi, <i>rebound hypertension</i> berat bila dihentikan mendadak.</li><li><b>Aman untuk ibu hamil:</b> <mark class="k">Hidralazin, Metildopa, Labetalol, Nifedipin SR</mark>.</li></ul></td></tr>
+</table></div></div>
+
+<div class="card"><h3>Interaksi Obat &amp; Kombinasi yang Sering Diujikan</h3>
+<h4>ACEI/ARB (Lisinopril) + Spironolakton</h4>
+<p>→ <b>hiperkalemia berat</b>, karena <b>kedua obat sama-sama menurunkan ekskresi kalium di ginjal</b>: Lisinopril ↓ aldosteron sehingga ekskresi K⁺ turun; Spironolakton memblok reseptor aldosteron sehingga K⁺ tertahan.</p>
+<h4>Kombinasi</h4>
+<ul>
+<li><b>Rasional &amp; sinergis (lini pertama):</b> <mark class="k">ARB/ACEI + Thiazid</mark> atau <mark class="k">ARB/ACEI + CCB</mark>.</li>
+<li><b>Dilarang:</b> <b>ACEI + ARB</b>, atau + <b>Aliskiren</b>, karena ↑ risiko gagal ginjal dan hiperkalemia.</li>
+<li><b>Triple whammy ginjal:</b> <b>ACEI/ARB + Diuretik + NSAID</b> → perfusi glomerulus turun drastis → <b>AKI</b>.</li>
+</ul></div>
+</section>
+
+<div id="empty">tidak ada kartu yang cocok.<br><small>coba kata kunci lain atau lebih pendek.</small></div>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var LABEL={K2:'embriologi',K3:'tekanan darah',K4:'syok',K5:'vena & arteri',K6:'edema',K7:'nyeri dada',K8:'berdebar',K9:'patologi kv',K10:'patologi resp',K11:'mikrobio kv',K12:'mikrobio resp',K13:'lab kv',K14:'lab resp',K15:'antihipertensi'};
+  var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  var done={};try{done=JSON.parse(store.get('cs33f_done')||'{}')}catch(e){}
+  var mods=[].slice.call(document.querySelectorAll('section.mod'));
+  var tabsEl=document.getElementById('tabs'),folder=document.getElementById('folder');
+  var q=document.getElementById('q'),empty=document.getElementById('empty');
+  var tabs={},cur=null,cbs={};
+  function sm(){return window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}
+  var home=document.getElementById('home');
+
+  /* home tab */
+  var hb=document.createElement('button');hb.className='tab home';hb.type='button';hb.title='Home';hb.setAttribute('aria-label','Home');
+  hb.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-6h4v6"/></svg>';
+  hb.addEventListener('click',function(){if(q.value){q.value='';runSearch()}show('home',true)});
+  tabsEl.appendChild(hb);tabs.home=hb;
+  /* tab rows */
+  mods.forEach(function(m,i){
+    var code=m.id;
+    var b=document.createElement('button');b.className='tab';b.type='button';b.title=code+' '+(LABEL[code]||'');
+    b.innerHTML='<span class="c">'+code+'</span>';
+    b.addEventListener('click',function(){
+      if(q.value){q.value='';runSearch()}
+      show(code,true);
+    });
+    tabsEl.appendChild(b);tabs[code]=b;
+    var h=m.querySelector('h2'),tn=h.lastChild,ttl=document.createElement('span');
+    ttl.className='ttl';ttl.textContent=tn.textContent.trim();h.replaceChild(ttl,tn);
+    var dn=m.querySelector('.dosen');if(dn)ttl.appendChild(dn);
+    /* done checkbox */
+    var lbl=document.createElement('label');lbl.className='markdone';
+    lbl.innerHTML='<input type="checkbox"> sudah hafal';
+    var cb=lbl.firstChild;cb.checked=!!done[code];cbs[code]=cb;
+    cb.addEventListener('change',function(){setDone(code,cb.checked)});
+    m.querySelector('h2').appendChild(lbl);
+    var ob=document.createElement('button');ob.type='button';ob.className='mod-open';ob.setAttribute('data-go',code);ob.textContent='buka modul';m.querySelector('h2').appendChild(ob);
+    /* prev / next */
+    var nav=document.createElement('nav');nav.className='pn';
+    var pv=mods[i-1],nx=mods[i+1];
+    nav.innerHTML=(pv?'<button type="button" data-go="'+pv.id+'">← '+pv.id+' '+LABEL[pv.id]+'</button>':'<span></span>')+(nx?'<button type="button" data-go="'+nx.id+'">'+nx.id+' '+LABEL[nx.id]+' →</button>':'<span></span>');
+    m.appendChild(nav);
+  });
+  folder.addEventListener('click',function(e){var g=e.target.closest('[data-go]');if(g){if(q.value){q.value='';runSearch()}show(g.getAttribute('data-go'),true)}});
+
+  function setDone(c,v){done[c]=v;store.set('cs33f_done',JSON.stringify(done));paint();renderHome()}
+  function paint(){
+    Object.keys(tabs).forEach(function(c){tabs[c].classList.toggle('done',!!done[c])});
+    Object.keys(cbs).forEach(function(c){cbs[c].checked=!!done[c]});
+  }
+  function show(code,scroll){
+    if(!tabs[code])code='home';
+    cur=code;
+    mods.forEach(function(m){m.classList.toggle('active',m.id===code)});
+    home.classList.toggle('active',code==='home');
+    if(code!=='home')store.set('cs33f_lastmod',code);else renderHome();
+    Object.keys(tabs).forEach(function(c){tabs[c].classList.toggle('on',c===code)});
+    if(scroll){try{history.replaceState(null,'','#'+code)}catch(e){}}
+    store.set('cs33f_last',code);
+    var t=tabs[code];tabsEl.scrollTo({left:t.offsetLeft-(tabsEl.clientWidth-t.offsetWidth)/2,behavior:scroll?sm():'auto'});
+    fade();
+    if(scroll){chromeEl.classList.remove('away');window.scrollTo({top:0,behavior:sm()})}
+  }
+  paint();
+
+  /* theme */
+  var root=document.documentElement,saved=store.get('cs33f_theme');
+  if(!saved&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)saved='dark';
+  if(saved)root.setAttribute('data-theme',saved);
+  var tb=document.getElementById('themeBtn');
+  function sync(){tb.setAttribute('aria-checked',root.getAttribute('data-theme')==='dark');var tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content',getComputedStyle(root).getPropertyValue('--charcoal').trim()||'#2a2a28')}
+  sync();
+  tb.onclick=function(){
+    var n=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    root.setAttribute('data-theme',n);store.set('cs33f_theme',n);sync();
+  };
+  tabsEl.addEventListener('wheel',function(e){if(tabsEl.scrollWidth>tabsEl.clientWidth+2&&Math.abs(e.deltaY)>Math.abs(e.deltaX)){tabsEl.scrollLeft+=e.deltaY;e.preventDefault()}},{passive:false});
+
+  /* search */
+  /* ukuran tulisan manual */
+  var szBtn=document.getElementById('szBtn'),szPop=document.getElementById('szPop'),szR=document.getElementById('szR'),szO=document.getElementById('szO');
+  var SZ=parseInt(store.get('cs33f_size'),10);if(!(SZ>=80&&SZ<=170))SZ=100;
+  function setSize(v){
+    SZ=Math.max(80,Math.min(170,Math.round(v/5)*5));
+    root.style.setProperty('--z',SZ/100);szR.value=SZ;szO.textContent=SZ+'%';
+    store.set('cs33f_size',String(SZ));measure();
+  }
+  function szToggle(open){szPop.hidden=!open;szBtn.setAttribute('aria-expanded',open?'true':'false')}
+  szBtn.addEventListener('click',function(e){e.stopPropagation();szToggle(szPop.hidden)});
+  szR.addEventListener('input',function(){setSize(+szR.value)});
+  szPop.addEventListener('click',function(e){
+    e.stopPropagation();var b=e.target.closest('[data-sz]');if(!b)return;
+    var d=+b.getAttribute('data-sz');setSize(d===0?100:SZ+d);
+  });
+  document.addEventListener('click',function(e){if(!szPop.hidden&&!e.target.closest('.tools'))szToggle(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!szPop.hidden){szToggle(false);szBtn.focus()}});
+  setSize(SZ);
+
+  var cards=[].slice.call(document.querySelectorAll('.card'));
+  function clearHl(){[].forEach.call(document.querySelectorAll('span.hl'),function(s){var p=s.parentNode;p.replaceChild(document.createTextNode(s.textContent),s);p.normalize()})}
+  function hl(node,term){
+    var w=document.createTreeWalker(node,NodeFilter.SHOW_TEXT,null),hits=[],n;
+    while(n=w.nextNode()){if(n.nodeValue.toLowerCase().indexOf(term)>-1)hits.push(n)}
+    hits.forEach(function(t){
+      var txt=t.nodeValue,low=txt.toLowerCase(),i=0,f=document.createDocumentFragment(),p;
+      while((p=low.indexOf(term,i))>-1){
+        f.appendChild(document.createTextNode(txt.slice(i,p)));
+        var s=document.createElement('span');s.className='hl';s.textContent=txt.slice(p,p+term.length);f.appendChild(s);i=p+term.length;
+      }
+      f.appendChild(document.createTextNode(txt.slice(i)));t.parentNode.replaceChild(f,t);
+    });
+  }
+  var sbar=document.getElementById('sbar'),addr=q.parentNode,clr=document.getElementById('qx'),wasS=false;
+  function runSearch(){
+    var term=q.value.trim().toLowerCase();clearHl();
+    document.body.classList.toggle('searching',!!term);
+    addr.classList.toggle('has',!!q.value);
+    var shown=0,per={};
+    cards.forEach(function(c){
+      var ok=!term||c.textContent.toLowerCase().indexOf(term)>-1;
+      c.classList.toggle('hide',!ok);
+      if(ok){shown++;if(term.length>1)hl(c,term)}
+    });
+    mods.forEach(function(m){
+      var n=m.querySelectorAll('.card:not(.hide)').length;per[m.id]=n;
+      m.classList.toggle('hide',!!term&&!n);
+      tabs[m.id].classList.toggle('dim',!!term&&!n);
+    });
+    empty.style.display=(term&&!shown)?'block':'none';
+    var fm=null;mods.forEach(function(m){m.classList.remove('first');if(!fm&&!m.classList.contains('hide')){fm=m;if(term)m.classList.add('first')}});
+    if(term){
+      var h='<span class="n">'+shown+' hasil</span><span class="chips">';
+      mods.forEach(function(m){if(per[m.id])h+='<button type="button" class="chip" data-jump="'+m.id+'" title="'+(LABEL[m.id]||'')+'">'+m.id+'<small>'+per[m.id]+'</small></button>'});
+      sbar.innerHTML=h+'</span>';
+      if(!wasS){chromeEl.classList.remove('away');if(window.scrollY>0)window.scrollTo({top:0,behavior:'auto'})}
+    }else{sbar.innerHTML='';show(cur,false)}
+    wasS=!!term;measure();
+  }
+  sbar.addEventListener('click',function(e){
+    var c=e.target.closest('[data-jump]');if(!c)return;
+    var t=document.getElementById(c.getAttribute('data-jump'));if(t)t.scrollIntoView({behavior:sm(),block:'start'});
+  });
+  clr.addEventListener('click',function(e){e.preventDefault();q.value='';runSearch();q.focus()});
+  q.addEventListener('focus',function(){chromeEl.classList.remove('away')});
+  var timer;q.addEventListener('input',function(){addr.classList.toggle('has',!!q.value);clearTimeout(timer);timer=setTimeout(runSearch,160)});
+
+  /* chrome: ukur tinggi, fade tab, sembunyikan tab saat scroll (layar kecil) */
+  var chromeEl=document.querySelector('.chrome');
+  function measure(){if(!chromeEl)return;var r=document.documentElement.style;r.setProperty('--chrome-h',chromeEl.offsetHeight+'px');r.setProperty('--tabs-h',tabsEl.offsetHeight+'px')}
+  function fade(){var l=tabsEl.scrollLeft>2,r=tabsEl.scrollLeft+tabsEl.clientWidth<tabsEl.scrollWidth-2;tabsEl.style.setProperty('--fl',l?'22px':'0px');tabsEl.style.setProperty('--fr',r?'22px':'0px')}
+  tabsEl.addEventListener('scroll',fade,{passive:true});
+  window.addEventListener('resize',function(){measure();fade()});
+  if(window.ResizeObserver)new ResizeObserver(measure).observe(chromeEl);
+  var small=matchMedia('(max-width:760px),(pointer:coarse)'),lastY=window.scrollY;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    if(small.matches&&document.activeElement!==q){
+      if(y>lastY+8&&y>140)chromeEl.classList.add('away');
+      else if(y<lastY-8||y<60)chromeEl.classList.remove('away');
+    }else chromeEl.classList.remove('away');
+    lastY=y;
+  },{passive:true});
+
+  /* swipe kiri/kanan untuk pindah modul (sentuh) */
+  var sx=0,sy=0,st=0,sok=false;
+  document.addEventListener('touchstart',function(e){
+    var t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now();
+    sok=e.touches.length===1&&sx>28&&sx<innerWidth-28&&!e.target.closest('.tw,.tabs,.sbar,input,svg,.hm-map');
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(!sok||document.body.classList.contains('searching'))return;sok=false;
+    var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Date.now()-st<600&&Math.abs(dx)>90&&Math.abs(dy)<45)step(dx<0?1:-1);
+  },{passive:true});
+  function step(d){var order=['home'].concat(mods.map(function(m){return m.id})),i=order.indexOf(cur);if(order[i+d])show(order[i+d],true)}
+
+  /* keyboard */
+  q.addEventListener('keydown',function(e){if(e.key==='Escape'){q.value='';runSearch();q.blur()}else if(e.key==='Enter')q.blur()});
+  document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();q.focus();q.select()}});
+  document.addEventListener('keydown',function(e){
+    if(/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName)||e.metaKey||e.ctrlKey||e.altKey)return;
+    if(e.key==='/'){e.preventDefault();q.focus();return}
+    var order=['home'].concat(mods.map(function(m){return m.id})),i=order.indexOf(cur);
+    if(document.body.classList.contains('searching'))return;
+    if(e.key==='ArrowRight'&&order[i+1])show(order[i+1],true);
+    if(e.key==='ArrowLeft'&&order[i-1])show(order[i-1],true);
+  });
+
+
+  /* ---------- home: progress, checklist, diagrams ---------- */
+  var GROUPS=[['dasar',['K2']],['klinis kardiovaskular',['K3','K4','K5','K6','K7','K8']],['patologi & mikrobiologi',['K9','K10','K11','K12']],['lab & farmakologi',['K13','K14','K15']]];
+  var ST={};
+  mods.forEach(function(m){ST[m.id]={card:m.querySelectorAll('.card').length,trap:m.querySelectorAll('.trap').length,tbl:m.querySelectorAll('table').length,note:m.querySelectorAll('.note').length}});
+  function renderHome(){
+    var ae=document.activeElement,fc=ae&&ae.getAttribute?ae.getAttribute('data-c'):null;
+    var ids=mods.map(function(m){return m.id}),n=ids.length;
+    var d=ids.filter(function(c){return done[c]}).length,pct=Math.round(d/n*100);
+    var sum=function(k){return ids.reduce(function(a,c){return a+ST[c][k]},0)};
+    var next=ids.filter(function(c){return !done[c]})[0],last=store.get('cs33f_lastmod');
+    var C=2*Math.PI*48,h='';
+    /* hero: ring + actions */
+    h+='<div class="hm-hero"><svg class="ring" viewBox="0 0 120 120" role="img" aria-label="Progres '+pct+' persen"><circle cx="60" cy="60" r="48" fill="none" stroke="var(--ink)" stroke-opacity=".15" stroke-width="12"/><circle cx="60" cy="60" r="48" fill="none" stroke="var(--yellow)" stroke-width="12" stroke-dasharray="'+(C*d/n).toFixed(1)+' '+C.toFixed(1)+'" transform="rotate(-90 60 60)"/><text x="60" y="65" text-anchor="middle" class="rn">'+pct+'%</text><text x="60" y="82" text-anchor="middle" class="rs">'+d+'/'+n+' hafal</text></svg>';
+    h+='<div class="hm-info"><p class="hm-t">progres belajar</p><p class="hm-s">'+(d===n?'semua modul sudah hafal':d+' modul hafal, '+(n-d)+' tersisa')+'</p><div class="hm-btns">';
+    if(next)h+='<button type="button" data-go="'+next+'">lanjut ke '+next+' '+LABEL[next]+'</button>';
+    if(last&&last!==next&&tabs[last])h+='<button type="button" data-go="'+last+'">terakhir dibuka: '+last+'</button>';
+    h+='</div><div class="hm-chips"><div><b>'+sum('card')+'</b><span>kartu</span></div><div><b>'+sum('tbl')+'</b><span>tabel</span></div><div><b>'+sum('trap')+'</b><span>jebakan</span></div><div><b>'+sum('note')+'</b><span>catatan</span></div></div></div></div>';
+    /* map + donut */
+    h+='<div class="hm-two"><div class="hm-box"><h3>peta modul</h3><div class="hm-map">';
+    ids.forEach(function(c){h+='<button type="button" data-go="'+c+'" class="cell'+(done[c]?' on':'')+'"><b>'+c+'</b><span>'+LABEL[c]+'</span></button>'});
+    h+='</div><p class="hm-note">kuning = sudah hafal. klik untuk membuka modul.</p></div>';
+    var tones=[.95,.65,.4,.2],tot=sum('card'),acc=0,R=40,CC=2*Math.PI*R,seg='',leg='';
+    GROUPS.forEach(function(g,gi){
+      var cs=g[1].reduce(function(a,c){return a+(ST[c]?ST[c].card:0)},0),gd=g[1].filter(function(c){return done[c]}).length,L=CC*cs/tot;
+      seg+='<circle cx="60" cy="60" r="'+R+'" fill="none" stroke="var(--ink)" stroke-opacity="'+tones[gi]+'" stroke-width="20" stroke-dasharray="'+Math.max(0,L-1.5).toFixed(1)+' '+(CC-Math.max(0,L-1.5)).toFixed(1)+'" stroke-dashoffset="'+(-acc).toFixed(1)+'" transform="rotate(-90 60 60)"/>';
+      acc+=L;
+      leg+='<li><i style="background:var(--ink);opacity:'+tones[gi]+'"></i>'+g[0].replace('&','&amp;')+'<small>'+cs+' kartu, '+gd+'/'+g[1].length+' hafal</small></li>';
+    });
+    h+='<div class="hm-box"><h3>porsi materi per kelompok</h3><div class="hm-donut"><svg viewBox="0 0 120 120" role="img" aria-label="Porsi kartu per kelompok">'+seg+'<text x="60" y="64" text-anchor="middle" style="font:400 18px Anton,Impact,sans-serif;fill:var(--ink)">'+tot+'</text><text x="60" y="76" text-anchor="middle" style="font:500 7px IBM Plex Mono,monospace;fill:var(--muted)">kartu</text></svg><ul class="hm-leg">'+leg+'</ul></div></div></div>';
+    /* checklist */
+    h+='<div class="hm-box"><h3>checklist hafalan</h3>';
+    GROUPS.forEach(function(g){
+      var gd=g[1].filter(function(c){return done[c]}).length,gt=g[1].length;
+      h+='<div class="hm-group"><div class="hm-gh"><h4>'+g[0].replace('&','&amp;')+'</h4><small>'+gd+'/'+gt+'</small></div><i class="pbar"><u style="width:'+(gd/gt*100)+'%"></u></i>';
+      g[1].forEach(function(c){
+        h+='<div class="hm-row'+(done[c]?' ok':'')+'"><label><input type="checkbox" data-c="'+c+'"'+(done[c]?' checked':'')+'><b>'+c+'</b><span>'+LABEL[c]+'</span></label><small>'+ST[c].card+' kartu</small><button type="button" data-go="'+c+'">buka</button></div>';
+      });
+      h+='</div>';
+    });
+    h+='</div>';
+    /* bar chart */
+    var mx=Math.max.apply(null,ids.map(function(c){return ST[c].card})),svg='';
+    ids.forEach(function(c,i){
+      var y=i*24+4,w=Math.max(6,ST[c].card/mx*380),x=44+w;
+      svg+='<text x="0" y="'+(y+14)+'" class="bl">'+c+'</text><rect x="44" y="'+y+'" width="'+w.toFixed(1)+'" height="18" rx="3" fill="'+(done[c]?'var(--yellow)':'var(--ink)')+'" fill-opacity="'+(done[c]?1:.18)+'" stroke="var(--ink)"/><text x="'+(x+8).toFixed(1)+'" y="'+(y+14)+'" class="bv">'+ST[c].card+'</text>';
+      for(var t=0;t<Math.min(ST[c].trap,10);t++)svg+='<circle cx="'+(x+34+t*11).toFixed(1)+'" cy="'+(y+9)+'" r="3.5" fill="var(--ink)"/>';
+    });
+    h+='<div class="hm-box"><h3>beban belajar per modul</h3><svg class="hm-chart" viewBox="0 0 600 '+(n*24+8)+'" role="img" aria-label="Jumlah kartu per modul">'+svg+'</svg><p class="hm-note">batang = jumlah kartu, kuning = sudah hafal, titik hitam = jumlah jebakan.</p></div>';
+    h+='<div class="hm-foot"><button type="button" class="hm-reset" data-reset>reset progres</button></div>';
+    home.innerHTML=h;
+    if(fc){var el=home.querySelector('[data-c="'+fc+'"]');if(el)el.focus()}
+  }
+  home.addEventListener('change',function(e){var c=e.target.getAttribute&&e.target.getAttribute('data-c');if(c)setDone(c,e.target.checked)});
+  home.addEventListener('click',function(e){
+    if(e.target.closest('[data-reset]')&&confirm('Hapus semua progres hafalan?')){done={};store.set('cs33f_done','{}');paint();renderHome()}
+  });
+  renderHome();
+
+  /* start */
+  var start=(location.hash||'').replace('#','')||store.get('cs33f_last')||'home';
+  show(start,false);
+  measure();fade();
+  window.addEventListener('load',function(){window.scrollTo({top:0,behavior:'instant'})});
+})();
+</script>
+</body>
+</html>
