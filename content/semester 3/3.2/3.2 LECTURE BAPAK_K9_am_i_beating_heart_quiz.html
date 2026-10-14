@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Am I Beating? — Patologi Jantung · Blok 3.1 · FK Unsoed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef3fa;--bg2:#dfe8f5;--bg3:#c9d8ee;--bg4:#aec3e3;
+  --border:rgba(20,50,110,.10);--border2:rgba(20,50,110,.22);
+  --text:#0a1630;--text2:#2a4274;--text3:#5a76a8;
+  --red:#c0262c;--redbg:rgba(192,38,44,.09);--redb:rgba(192,38,44,.30);
+  --gold:#8a6200;--green:#1a7a35;
+  --blue:#1a4faa;--bluebg:rgba(26,79,170,.10);--blueb:rgba(26,79,170,.30);
+  --purp:#6a20aa;--teal:#0a6a70;
+  --accent:#d02a3a;
+  --r:10px;--rl:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+.app{max-width:900px;margin:0 auto;padding:0 16px 60px}
+header{padding:40px 0 28px;text-align:center}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--text3);text-transform:uppercase;margin-bottom:10px}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(30px,6vw,54px);letter-spacing:-.03em;line-height:1;margin-bottom:10px}
+h1 span{color:var(--accent);display:inline-block;animation:beat 1.2s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.08)}30%{transform:scale(1)}45%{transform:scale(1.05)}}
+.sub{font-size:13px;color:var(--text2);max-width:540px;margin:0 auto}
+.main-tabs{display:flex;gap:3px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:24px}
+.main-tab{flex:1;padding:9px 6px;border-radius:9px;border:none;background:transparent;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s}
+.main-tab:hover{color:var(--text)}
+.main-tab.active{background:var(--text);color:#fff;font-weight:600}
+.main-panel{display:none}.main-panel.active{display:block;animation:fi .2s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sub-tabs{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:4px;margin-bottom:20px}
+.sub-tab{padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg2);color:var(--text3);font-family:'DM Mono',monospace;font-size:10.5px;cursor:pointer;transition:all .18s;text-align:center;line-height:1.4}
+.sub-tab:hover{background:var(--bg3);color:var(--text2);border-color:var(--border2)}
+.sub-tab.active{background:var(--text);color:#fff;border-color:var(--text);font-weight:600}
+.sub-panel{display:none}.sub-panel.active{display:block;animation:fi .18s ease}
+.sec-h{font-family:'Syne',sans-serif;font-weight:700;font-size:14.5px;color:var(--text);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.sec-h.s{font-size:13px;border:none;margin:14px 0 8px}
+.note{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding:10px 14px;font-size:12.5px;color:var(--text2);line-height:1.65;margin-bottom:10px}
+.note strong{color:var(--text)}
+.note.blue{border-left-color:var(--blue)}.note.red{border-left-color:var(--red)}.note.accent{border-left-color:var(--accent)}.note.purp{border-left-color:var(--purp)}.note.teal{border-left-color:var(--teal)}
+.dtable-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:14px;overflow-x:auto}
+.dtable-wrap table{width:100%;border-collapse:collapse;font-size:12px}
+.dtable-wrap thead tr{background:var(--bg3)}
+.dtable-wrap th{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.05em;color:var(--text3);font-weight:600;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.dtable-wrap td{padding:7px 12px;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);vertical-align:top}
+.dtable-wrap td:first-child{color:var(--text);font-weight:600}
+.dtable-wrap tr:last-child td{border-bottom:none}
+.dtable-wrap tr:nth-child(even){background:rgba(20,50,110,.03)}
+.ind-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:8px}
+.ind-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden}
+.ind-card .stripe{position:absolute;top:0;left:0;width:3px;height:100%}
+.ind-card .ind-name{font-family:'Syne',sans-serif;font-size:12.5px;font-weight:700;margin-bottom:6px}
+.ind-table{width:100%;border-collapse:collapse}
+.ind-table td{font-family:'DM Mono',monospace;font-size:10.5px;padding:3px 0;border-bottom:1px solid var(--border)}
+.ind-table tr:last-child td{border-bottom:none}
+.ind-table td:first-child{color:var(--text3);width:26px;vertical-align:top}
+.ind-table td:last-child{font-weight:500;color:var(--text)}
+.qconfig{text-align:center;padding:28px 0}
+.qconfig-title{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:6px}
+.qconfig-sub{font-size:13px;color:var(--text2);margin-bottom:22px}
+.cfg-grid{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:26px}
+.cfg-btn{padding:8px 16px;border-radius:20px;border:2px solid var(--border2);background:var(--bg2);color:var(--text3);font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;transition:all .18s}
+.cfg-btn.sel{background:var(--text);color:#fff;border-color:var(--text);font-weight:600}
+.start-btn{padding:12px 34px;border-radius:var(--r);border:none;background:var(--text);color:var(--bg);font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .18s}
+.start-btn:hover{background:var(--accent)}
+.qheader{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:10px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum-display{font-family:'DM Mono',monospace;font-size:12px;color:var(--text3)}
+.qnum-display strong{color:var(--text);font-size:15px}
+.qscore-display{margin-left:auto;font-family:'DM Mono',monospace;font-size:12px;color:var(--text3)}
+.qscore-display strong{color:var(--accent);font-size:15px}
+.qtype-pill{display:inline-block;padding:3px 10px;border-radius:10px;font-family:'DM Mono',monospace;font-size:10px;font-weight:600}
+.qcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:20px 22px;margin-bottom:12px}
+.qtext{font-size:14px;font-weight:600;color:var(--text);line-height:1.55}
+.opts{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:var(--r);border:1.5px solid var(--border2);background:var(--bg);color:var(--text);text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.5;transition:all .15s;width:100%}
+.opt:hover:not(:disabled){background:var(--bg3);border-color:rgba(20,50,110,.35)}
+.opt:disabled{cursor:default}
+.opt-key{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;min-width:22px;height:22px;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;color:var(--text3)}
+.opt.correct{background:var(--bluebg);border-color:var(--blueb)}
+.opt.correct .opt-key{background:var(--blue);color:#fff;border-color:var(--blue)}
+.opt.wrong{background:var(--redbg);border-color:var(--redb)}
+.opt.wrong .opt-key{background:var(--red);color:#fff;border-color:var(--red)}
+.opt.reveal{background:var(--bluebg);border-color:var(--blueb);opacity:.75}
+.opt.reveal .opt-key{background:var(--blue);color:#fff;border-color:var(--blue)}
+.expbox{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:12px;font-size:12.5px;color:var(--text2);line-height:1.72;display:none}
+.expbox.show{display:block;animation:fi .2s ease}
+.expbox strong{color:var(--text)}
+.actrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.next-btn{padding:10px 24px;border-radius:var(--r);border:none;background:var(--text);color:var(--bg);font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:none}
+.next-btn:hover{background:var(--accent)}
+.end-btn{padding:10px 18px;border-radius:var(--r);border:1px solid var(--redb);background:transparent;color:var(--red);font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;margin-left:auto}
+.end-btn:hover{background:var(--redbg)}
+.results-wrap{text-align:center;padding:28px 12px}
+.res-big{font-family:'Syne',sans-serif;font-size:64px;font-weight:800;color:var(--text);line-height:1;margin-bottom:4px}
+.res-sub{font-family:'DM Mono',monospace;font-size:13px;color:var(--text3);margin-bottom:18px}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:20px;text-align:left}
+.res-stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:11px 14px}
+.res-stat .rv{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text)}
+.res-stat .rl{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)}
+.retry-btn{padding:12px 32px;border-radius:var(--r);border:none;background:var(--text);color:var(--bg);font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.retry-btn:hover{background:var(--accent)}
+footer{text-align:center;padding-top:36px;font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="eyebrow">Patologi Jantung · Blok 3.1 · FK Unsoed</div>
+  <h1>Am I <span>Beating?</span></h1>
+  <p class="sub">Quiz Robbins &amp; Kumar Basic Pathology 11th ed. Bab 9 Heart: gagal jantung, kongenital, iskemik &amp; infark, katup, kardiomiopati, miokarditis, perikardium, tumor, dan transplantasi.</p>
+</header>
+
+<div class="main-tabs">
+  <button class="main-tab active" onclick="switchMain('materi',this)">📋 Materi</button>
+  <button class="main-tab" onclick="switchMain('quiz',this)">🎯 Quiz</button>
+</div>
+
+<div class="main-panel active" id="mp-materi">
+  <div class="sub-tabs">
+    <button class="sub-tab active" onclick="switchSub('s-gj',this)">💔 Gagal<br>Jantung</button>
+    <button class="sub-tab" onclick="switchSub('s-kong',this)">👶 PJ<br>Kongenital</button>
+    <button class="sub-tab" onclick="switchSub('s-iskemik',this)">🩸 PJ Iskemik<br>&amp; Angina</button>
+    <button class="sub-tab" onclick="switchSub('s-mi',this)">⚡ Infark<br>Miokard</button>
+    <button class="sub-tab" onclick="switchSub('s-aritmia',this)">📈 Aritmia, SCD<br>&amp; Hipertensif</button>
+    <button class="sub-tab" onclick="switchSub('s-katup',this)">🚪 Penyakit<br>Katup</button>
+    <button class="sub-tab" onclick="switchSub('s-kmp',this)">🫀 Kardio-<br>miopati</button>
+    <button class="sub-tab" onclick="switchSub('s-lain',this)">🧩 Miokarditis, Perikard,<br>Tumor, Transplantasi</button>
+  </div>
+
+  <!-- GAGAL JANTUNG -->
+  <div class="sub-panel active" id="s-gj">
+    <div class="sec-h">Gambaran Umum &amp; Gagal Jantung</div>
+    <div class="note accent"><strong>6 mekanisme utama penyakit jantung:</strong> (1) kegagalan pompa (disfungsi sistolik/diastolik), (2) obstruksi aliran (stenosis katup/↑resistensi), (3) aliran regurgitan, (4) aliran pirau (shunt), (5) gangguan konduksi (aritmia), (6) ruptur jantung/pembuluh besar.</div>
+    <div class="note blue"><strong>Definisi gagal jantung:</strong> jantung tidak mampu menghasilkan curah cukup untuk kebutuhan metabolik jaringan, atau hanya pada tekanan pengisian tinggi. Sistolik = kontraktilitas buruk (IHD/hipertensi); diastolik = gagal relaksasi/mengisi (HFpEF, EF ≥50%, ±separuh kasus CHF). <strong>High-output failure:</strong> hipertiroid, anemia.</div>
+    <div class="note teal"><strong>Kompensasi:</strong> mekanisme Frank-Starling, aktivasi neurohumoral (norepinefrin, RAAS, ANP), hipertrofi miokardium. <strong>Dekompensasi:</strong> dilatasi menaikkan tegangan dinding &amp; kebutuhan O₂ miokardium.</div>
+    <div class="ind-grid">
+      <div class="ind-card"><div class="stripe" style="background:var(--red)"></div><div class="ind-name" style="color:var(--red)">Pressure overload</div>
+        <table class="ind-table"><tr><td>•</td><td>Contoh: hipertensi, stenosis katup</td></tr><tr><td>•</td><td>Sarkomer baru ditambah PARALEL</td></tr><tr><td>•</td><td>Hipertrofi KONSENTRIK, ruang normal/menyempit</td></tr></table></div>
+      <div class="ind-card"><div class="stripe" style="background:var(--blue)"></div><div class="ind-name" style="color:var(--blue)">Volume overload</div>
+        <table class="ind-table"><tr><td>•</td><td>Contoh: regurgitasi katup, pirau</td></tr><tr><td>•</td><td>Sarkomer baru ditambah SERIAL</td></tr><tr><td>•</td><td>Ventrikel DILATASI; tebal dinding naik/normal/turun</td></tr></table></div>
+    </div>
+    <div class="note red">⚠️ <strong>Berat jantung</strong> (bukan tebal dinding) adalah ukuran terbaik hipertrofi. Hipertrofi patologis ↑ risiko kematian jantung mendadak; hipertrofi fisiologis (aerobik) bermanfaat.</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Aspek</th><th>Gagal Jantung KIRI</th><th>Gagal Jantung KANAN</th></tr></thead>
+      <tbody>
+        <tr><td>Penyebab</td><td>IHD, hipertensi, penyakit katup mitral/aorta, penyakit miokard</td><td>Umumnya akibat gagal jantung kiri; terisolasi = kor pulmonale</td></tr>
+        <tr><td>Organ khas</td><td>Paru: berat, basah, edema alveolus, efusi pleura; kronis: "sel gagal jantung" (makrofag berisi hemosiderin)</td><td>Hati: nutmeg liver, kronis → sirosis kardiak; limpa: splenomegali kongestif; asites; edema pitting tungkai</td></tr>
+        <tr><td>Klinis</td><td>Dispnea eksersional (paling awal), ortopnea, PND, S3, ronki basah halus; LA dilatasi → AF → trombus/emboli; RAAS → gagal prerenal; ensefalopati hipoksik</td><td>Minim gejala respirasi; kongesti vena sistemik &amp; portal; hepatosplenomegali, edema perifer, efusi</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- KONGENITAL -->
+  <div class="sub-panel" id="s-kong">
+    <div class="sec-h">Penyakit Jantung Kongenital</div>
+    <div class="note accent"><strong>Epidemiologi:</strong> 20–30% cacat lahir; ~1% bayi baru lahir; 12 entitas = 85% kasus (VSD terbanyak, 42%). Kegagalan embriogenesis minggu 3–8; ~90% penyebab tidak diketahui. Faktor risiko: prematuritas, riwayat keluarga, DM/obesitas/PKU ibu, fenitoin, asam retinoat, trisomi 21/18/13, Turner, infeksi in utero (rubela, CMV).</div>
+    <div class="note blue"><strong>3 kelompok klinis:</strong> (1) pirau kiri→kanan (tidak sianotik awal): ASD, VSD, PDA; (2) pirau kanan→kiri (sianotik dini): TOF, TGA; (3) obstruksi: koarktasio aorta.</div>
+    <div class="note red"><strong>Sindrom Eisenmenger:</strong> pirau L→R → sirkulasi paru terpapar tekanan tinggi → resistensi vaskular paru ↑ → hipertrofi RV → gagal kanan → pirau berbalik (R→L) → sianosis lambat. Setelah hipertensi pulmonal bermakna, defek dianggap ireversibel → koreksi dini. (ASD hanya ↑volume; VSD &amp; PDA ↑aliran DAN tekanan.)</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Kelainan</th><th>Poin kunci</th></tr></thead>
+      <tbody>
+        <tr><td>PFO</td><td>±20% individu; septum primum &amp; secundum tidak menyatu; bermakna bila emboli paradoksikal</td></tr>
+        <tr><td>ASD</td><td>Ostium secundum 90% (halus, dekat foramen ovale); primum 5% (+kelainan katup mitral/trikuspid); sinus venosus 5% (+drainase vena pulmonalis anomali). Asimtomatik hingga dewasa; paling sering pertama terdiagnosis pada dewasa</td></tr>
+        <tr><td>VSD</td><td>Kongenital terbanyak saat lahir; ~90% septum membranosa; banyak menutup spontan; reversal pirau lebih cepat dari ASD; jet lesion → endokarditis infektif</td></tr>
+        <tr><td>PDA</td><td>~7% PJK; menutup 1–2 hari pasca lahir (↑O₂, ↓PGE2) → ligamentum arteriosum; murmur "machinery"; tutup sedini mungkin</td></tr>
+        <tr><td>Tetralogi Fallot</td><td>PJK sianotik tersering (~5%). 4 komponen: VSD, obstruksi jalan keluar RV, aorta menunggangi VSD, hipertrofi RV. Boot-shaped; hipertensi pulmonal TIDAK terjadi; sekuele: clubbing, polisitemia</td></tr>
+        <tr><td>TGA</td><td>Aorta dari RV, a. pulmonalis dari LV; sirkulasi terpisah → butuh pirau (VSD 1/3 kasus); RV hipertrofi, LV hipoplastik; tanpa operasi meninggal bulan pertama</td></tr>
+        <tr><td>Koarktasio preduktal</td><td>"Infantil": hipoplasia arkus proksimal dari PDA; sianosis tubuh bawah; neonatus meninggal tanpa intervensi</td></tr>
+        <tr><td>Koarktasio postduktal</td><td>"Dewasa": ridge dekat lig. arteriosum tanpa PDA; hipertensi ekstremitas atas, nadi lemah di tungkai; notching iga (kolateral interkostal); lelaki 2×; >50% katup aorta bikuspid; sindrom Turner</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- ISKEMIK -->
+  <div class="sub-panel" id="s-iskemik">
+    <div class="sec-h">Penyakit Jantung Iskemik &amp; Angina</div>
+    <div class="note accent"><strong>Definisi:</strong> ketidakseimbangan suplai perfusi dan kebutuhan O₂ miokardium. &gt;90% akibat <strong>aterosklerosis koroner</strong>. Penyebab lain: ↑kebutuhan, hipotensi/syok, hipoksemia, anemia, keracunan CO. Sindrom: angina, infark miokard, IHD kronis dengan CHF, kematian jantung mendadak. <strong>Sindrom koroner akut</strong> = angina tidak stabil, MI, SCD.</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Derajat stenosis</th><th>Konsekuensi</th></tr></thead>
+      <tbody>
+        <tr><td>&lt;70%</td><td>Umumnya asimtomatik, bahkan saat aktivitas</td></tr>
+        <tr><td>&gt;70% (kritis)</td><td>Nyeri dada saat kebutuhan meningkat → angina stabil</td></tr>
+        <tr><td>≥90%</td><td>Iskemia saat istirahat (angina tidak stabil)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note blue">Lokasi aterosklerosis: sentimeter awal <strong>LAD &amp; LCX</strong>; sepanjang <strong>RCA</strong>. Penyempitan lambat → kolateral protektif; oklusi akut tidak. Vasokonstriksi: agonis adrenergik, isi trombosit, disfungsi endotel (NO vs endotelin), mediator inflamasi.</div>
+    <div class="sec-h s">Perubahan Plak Akut</div>
+    <div class="note red">Ruptur/erosi/fisura/ulserasi plak → paparan zat trombogenik → trombosis (perdarahan intraplak menambah stenosis). Trombus parsial → infark subendokard; trombus oklusif → infark transmural. <strong>Plak rentan:</strong> inti ateromatosa besar + tudung fibrosa tipis; fisura di batas tudung &amp; segmen normal. Kolagen disintesis sel otot polos, didegradasi metaloprotease makrofag. Statin: ↓kolesterol, pulihkan fungsi endotel, stabilkan plak. <strong>Fakta:</strong> 2/3 plak yang ruptur sebelumnya ≤50% stenosis.</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Angina</th><th>Mekanisme</th><th>Ciri klinis</th></tr></thead>
+      <tbody>
+        <tr><td>Stabil (tipikal)</td><td>Stenosis tetap &gt;70%; kebutuhan meningkat</td><td>Nyeri tertekan substernal, ke lengan kiri/rahang; hilang dengan istirahat/nitrogliserin</td></tr>
+        <tr><td>Prinzmetal (varian)</td><td>Spasme arteri koroner, bisa pada pembuluh sehat</td><td>Saat istirahat; respons cepat vasodilator &amp; penghambat kanal kalsium</td></tr>
+        <tr><td>Tidak stabil</td><td>Disrupsi plak + trombus, embolisasi distal, ± vasospasme</td><td>Makin sering, dipicu aktivitas makin ringan/istirahat; sering cedera miosit → terapi agresif</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- MI -->
+  <div class="sub-panel" id="s-mi">
+    <div class="sec-h">Infark Miokard</div>
+    <div class="note accent"><strong>Urutan oklusi koroner:</strong> (1) plak erosi/disrupsi → (2) trombosit adhesi-agregasi-aktivasi (TXA2, ADP, serotonin) → (3) aktivasi koagulasi via tissue factor → (4) trombus menyumbat lumen dalam menit. Trombosis ~90% angiografi &lt;4 jam. 10% MI transmural tanpa oklusi aterosklerotik (vasospasme, emboli). Infark subendokard: aterosklerosis berat + ↑kebutuhan tanpa trombus.</div>
+    <div class="sec-h s">Respons Miokard terhadap Iskemia</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Waktu</th><th>Kejadian</th></tr></thead>
+      <tbody>
+        <tr><td>Detik</td><td>Metabolisme aerobik berhenti, ATP turun, asam laktat menumpuk</td></tr>
+        <tr><td>Menit</td><td>Hilang kontraktilitas (reversibel)</td></tr>
+        <tr><td>20–40 menit</td><td>Kerusakan ireversibel, nekrosis koagulatif (awal: disrupsi membran sarkolema)</td></tr>
+        <tr><td>3–6 jam</td><td>Infark mencapai ukuran penuh → jendela intervensi. Subendokard paling rentan</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note teal">Stunned myocardium = disfungsi transien pasca reperfusi. Kematian: 80–90% karena fibrilasi ventrikel.</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Arteri</th><th>Frekuensi</th><th>Wilayah infark</th></tr></thead>
+      <tbody>
+        <tr><td>LAD proksimal</td><td>40–50%</td><td>Dinding anterior LV, 2/3 anterior septum, apeks</td></tr>
+        <tr><td>RCA proksimal</td><td>30–40%</td><td>Sebagian besar RV; dominansi kanan (90%): dinding &amp; septum posterior</td></tr>
+        <tr><td>LCX proksimal</td><td>15–20%</td><td>Dinding lateral LV</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-h s">Evolusi Morfologi</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Waktu</th><th>Mikroskopik</th></tr></thead>
+      <tbody>
+        <tr><td>0–½ jam</td><td>Tidak ada (EM: relaksasi miofibril, deplesi glikogen)</td></tr>
+        <tr><td>4–12 jam</td><td>Awal nekrosis koagulatif, edema, perdarahan</td></tr>
+        <tr><td>12–24 jam</td><td>Piknosis, miosit hipereosinofilik, infiltrat neutrofil awal</td></tr>
+        <tr><td>1–3 hari</td><td>Nekrosis koagulatif, hilang inti &amp; striasi; neutrofil ↑</td></tr>
+        <tr><td>3–10 hari</td><td>Fagositosis makrofag; granulasi awal</td></tr>
+        <tr><td>10–14 hari</td><td>Jaringan granulasi matang</td></tr>
+        <tr><td>2–8 minggu</td><td>Kolagen ↑, selularitas ↓ (parut abu-putih)</td></tr>
+        <tr><td>&gt;2 bulan</td><td>Parut kolagen padat</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note red"><strong>Reperfusi:</strong> "time is myocardium". Cedera reperfusi: disfungsi mitokondria, hiperkontraksi miosit (kalsium), radikal bebas, agregasi leukosit (no-reflow). Morfologi: infark hemoragik, <strong>contraction band necrosis</strong>. Menyelamatkan sel cedera reversibel, tetapi mengubah morfologi sel cedera ireversibel.</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Biomarker</th><th>Naik</th><th>Puncak</th><th>Normal kembali</th></tr></thead>
+      <tbody>
+        <tr><td>Troponin I/T</td><td>2–4 jam</td><td>48 jam</td><td>Bertahan 7–10 hari</td></tr>
+        <tr><td>CK-MB</td><td>2–4 jam</td><td>24–48 jam</td><td>±72 jam</td></tr>
+        <tr><td>Mioglobin</td><td colspan="3">Kurang sensitif &amp; spesifik. Reperfusi → puncak lebih awal (washout)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note blue"><strong>Klinis:</strong> nyeri substernal tidak hilang dengan nitrogliserin; ≤25% silent (diabetes, lansia); MI masif (&gt;40% LV) → syok kardiogenik. <strong>STEMI</strong> = oklusi total transmural; <strong>NSTEMI</strong> = tanpa oklusi total. EKG: gelombang Q, perubahan ST, inversi T.</div>
+    <div class="note purp"><strong>Komplikasi:</strong> aritmia (~90%, risiko VF tertinggi jam pertama); ruptur (1–5%, hari 3–7): septum (VSD), otot papilaris (regurgitasi mitral), dinding bebas (tamponade); perikarditis 2–3 hari, <strong>Dressler</strong> minggu kemudian; dilatasi, trombus mural, aneurisma ventrikel (tidak ruptur), gagal jantung progresif. <strong>IHD kronis</strong> = kardiomiopati iskemik (gagal jantung progresif akibat kerusakan miokard iskemik).</div>
+  </div>
+
+  <!-- ARITMIA & HIPERTENSIF -->
+  <div class="sub-panel" id="s-aritmia">
+    <div class="sec-h">Aritmia, Kematian Jantung Mendadak, Penyakit Jantung Hipertensif</div>
+    <div class="note accent"><strong>Aritmia:</strong> penyebab tersering cedera iskemik. Nodus SA rusak → bradikardia (sick sinus); miosit atrium iritabel → fibrilasi atrium; disfungsi nodus AV → blok jantung derajat 1–3. Channelopathy herediter prototipe: <strong>sindrom QT panjang (KCNQ1)</strong>.</div>
+    <div class="note red"><strong>SCD:</strong> kematian tak terduga akibat henti aktivitas listrik jantung; bila diresusitasi = sudden cardiac arrest. 65–70% dengan aterosklerosis koroner/IHD. Usia muda: kelainan konduksi, anomali koroner kongenital, prolaps mitral, miokarditis, DCM/HCM. Pencegahan: pacemaker atau <strong>ICD</strong>.</div>
+    <div class="sec-h s">Penyakit Jantung Hipertensif Sistemik (Kiri)</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Aspek</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Kriteria</td><td>(1) hipertrofi LV tanpa penyebab kardiovaskular lain, (2) bukti hipertensi</td></tr>
+        <tr><td>Makroskopik</td><td>Hipertrofi konsentrik tanpa dilatasi; berat &gt;500 g (normal 320–360 g); dinding &gt;2,0 cm (normal 1,2–1,4 cm)</td></tr>
+        <tr><td>Mikroskopik</td><td>Miosit membesar, inti "boxcar", fibrosis interstisial</td></tr>
+        <tr><td>Klinis</td><td>Kekakuan LV → gangguan pengisian diastolik → dilatasi LA → AF. Kontrol hipertensi dapat meregresi hipertrofi</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-h s">Kor Pulmonale</div>
+    <div class="note teal">Hipertrofi &amp; dilatasi RV (± gagal kanan) akibat hipertensi pulmonal dari penyakit parenkim/vaskular paru (PPOK, fibrosis interstisial, pneumokoniosis, emboli paru berulang, sleep apnea, dll). Akibat gagal kiri atau PJK kongenital dikecualikan. <strong>Akut</strong> (emboli paru): RV hanya dilatasi. <strong>Kronis:</strong> hipertrofi RV/RA.</div>
+  </div>
+
+  <!-- KATUP -->
+  <div class="sub-panel" id="s-katup">
+    <div class="sec-h">Penyakit Katup Jantung</div>
+    <div class="note accent"><strong>Prinsip:</strong> stenosis = gagal terbuka penuh; insufisiensi = gagal menutup. Murmur/thrill = aliran turbulen. <strong>Katup bikuspid aorta</strong> = kelainan kongenital tersering (1–2%), rentan kalsifikasi dini. Stenosis aorta/mitral didapat ±2/3 penyakit katup.</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Penyakit</th><th>Poin kunci</th></tr></thead>
+      <tbody>
+        <tr><td>Stenosis aorta kalsifik</td><td>Penyebab tersering stenosis aorta; usia 70–80an (bikuspid 40–50an). Risiko: lelaki, LDL tinggi, hipertensi, merokok. Kalsifikasi di sisi aliran keluar kuspis, komisura tidak menyatu. LV konsentrik; angina/gagal jantung/sinkop → tanpa operasi 50–80% meninggal 2–3 tahun</td></tr>
+        <tr><td>Prolaps katup mitral</td><td>Daun katup menggelembung ke LA saat sistol; degenerasi miksomatosa (primer); sekunder mis. Marfan. Spongiosa mengembang material miksomatosa. Klik midsistolik ± murmur regurgitasi. Komplikasi: regurgitasi, ruptur korda, endokarditis, SCD</td></tr>
+        <tr><td>Demam reumatik akut</td><td>Pasca Streptococcus β-hemolitikus grup A (1–3% terinfeksi); reaksi silang protein M &amp; antigen jantung; jeda 2–3 minggu. Pankarditis: <strong>badan Aschoff</strong> (patognomonik) dengan <strong>sel Anitschkow</strong> ("caterpillar"); vegetasi verruca 1–2 mm sepanjang garis penutupan</td></tr>
+        <tr><td>Penyakit jantung reumatik kronis</td><td>Parut, fusi komisura &amp; korda; stenosis "fish-mouth/buttonhole". Mitral 70%; mitral + aorta 25%; pulmonal hampir selalu bebas. Komplikasi: AF, trombus mural atrium, emboli</td></tr>
+        <tr><td>Kriteria Jones</td><td>Karditis, poliartritis migratori sendi besar, nodul subkutan, eritema marginatum, korea Sydenham + bukti infeksi streptokokus</td></tr>
+        <tr><td>Endokarditis infektif</td><td>Akut: virulen (S. aureus), merusak katup normal. Predisposisi: prolaps mitral (kini utama), katup bikuspid, prostetik, IVDU (trikuspid), DM. Vegetasi rapuh; abses cincin, infark septik, aneurisma mikotik. Petekie, splinter hemorrhage, Roth spots, Janeway, Osler. ~10% kultur negatif</td></tr>
+        <tr><td>NBTE</td><td>Trombus steril 1–5 mm pada katup normal; hiperkoagulasi; keganasan (adenokarsinoma musinosa) terbanyak; mudah emboli</td></tr>
+        <tr><td>Libman-Sacks</td><td>Vegetasi steril pada SLE (endapan kompleks imun, nekrosis fibrinoid); juga sindrom antibodi antifosfolipid</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- KARDIOMIOPATI -->
+  <div class="sub-panel" id="s-kmp">
+    <div class="sec-h">Kardiomiopati</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Pola</th><th>LVEF</th><th>Mekanisme</th><th>Penyebab</th></tr></thead>
+      <tbody>
+        <tr><td>Dilatasi (90%)</td><td>&lt;40%</td><td>Kontraktilitas ↓ (sistolik)</td><td>Genetik, alkohol, peripartum, miokarditis, hemokromatosis, doksorubisin, sarkoidosis</td></tr>
+        <tr><td>Hipertrofik</td><td>50–80%</td><td>Komplians ↓ (diastolik)</td><td>Genetik, ataksia Friedreich, penyakit simpanan, ibu DM</td></tr>
+        <tr><td>Restriktif</td><td>25–50%</td><td>Komplians ↓ (diastolik)</td><td>Amiloidosis, fibrosis radiasi, idiopatik</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ind-grid">
+      <div class="ind-card"><div class="stripe" style="background:var(--red)"></div><div class="ind-name" style="color:var(--red)">DCM</div>
+        <table class="ind-table"><tr><td>•</td><td>Genetik 20–50%; titin paling sering (~20%); dystrophin (X-linked), desmin, lamin A/C</td></tr><tr><td>•</td><td>Virus: adeno/entero, parvovirus B19, HHV-6, koksakivirus B; alkohol, doksorubisin</td></tr><tr><td>•</td><td>Jantung 2–3× berat, lembek, dilatasi 4 ruang, trombus mural</td></tr><tr><td>•</td><td>EF &lt;25%; terapi definitif transplantasi</td></tr></table></div>
+      <div class="ind-card"><div class="stripe" style="background:var(--purp)"></div><div class="ind-name" style="color:var(--purp)">ARVC</div>
+        <table class="ind-table"><tr><td>•</td><td>Autosomal dominan; protein desmosom (plakoglobin)</td></tr><tr><td>•</td><td>Detasemen desmosom saat olahraga berat → kematian miosit</td></tr><tr><td>•</td><td>Dinding RV sangat tipis, diganti lemak + fibrosis</td></tr><tr><td>•</td><td>~10% kematian mendadak atlet</td></tr></table></div>
+      <div class="ind-card"><div class="stripe" style="background:var(--teal)"></div><div class="ind-name" style="color:var(--teal)">HCM</div>
+        <table class="ind-table"><tr><td>•</td><td>Missense gain-of-function protein sarkomer (β-MHC, MyBP-C, troponin T = 70–80%)</td></tr><tr><td>•</td><td>Hipertrofi masif tanpa dilatasi; septum asimetris (90%); rongga "banana-shaped"</td></tr><tr><td>•</td><td>Disarray miosit; obstruksi jalur keluar 1/3 kasus (SAM katup mitral)</td></tr><tr><td>•</td><td>~1/3 SCD atlet &lt;35 th</td></tr></table></div>
+      <div class="ind-card"><div class="stripe" style="background:var(--gold)"></div><div class="ind-name" style="color:var(--gold)">Restriktif</div>
+        <table class="ind-table"><tr><td>•</td><td>Amiloidosis: transtiretin atau rantai ringan AL</td></tr><tr><td>•</td><td>Fibrosis endomiokard: tropis/Afrika, restriktif tersering di dunia</td></tr><tr><td>•</td><td>Endomiokarditis Löffler: hipereosinofilia, trombus mural</td></tr><tr><td>•</td><td>Ventrikel normal, miokardium keras, kedua atrium dilatasi</td></tr></table></div>
+    </div>
+  </div>
+
+  <!-- LAIN -->
+  <div class="sub-panel" id="s-lain">
+    <div class="sec-h">Miokarditis, Perikardium, Tumor &amp; Transplantasi</div>
+    <div class="note accent"><strong>Miokarditis:</strong> proses inflamasi yang menarget miokardium. Virus terbanyak: koksakivirus A/B &amp; enterovirus. Mekanisme: respons imun terhadap sel terinfeksi/reaksi silang (miosin). Nonviral: <strong>Trypanosoma cruzi (Chagas)</strong>, Toxoplasma, Trichinella, Lyme (gangguan konduksi). Noninfeksi: SLE, hipersensitivitas obat.</div>
+    <div class="dtable-wrap"><table>
+      <thead><tr><th>Tipe</th><th>Morfologi</th></tr></thead>
+      <tbody>
+        <tr><td>Viral</td><td>Edema, infiltrat limfositik interstisial, cedera miosit</td></tr>
+        <tr><td>Hipersensitivitas</td><td>Infiltrat kaya eosinofil</td></tr>
+        <tr><td>Sel raksasa</td><td>Sel raksasa multinuklear, nekrosis; prognosis buruk</td></tr>
+        <tr><td>Chagas</td><td>Miofiber terisi tripanosom + infiltrat campuran</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note red"><strong>Obat kardiotoksik:</strong> antrasiklin (doksorubisin, daunorubisin) → DCM, dosis-dependen (&gt;500 mg/m²), peroksidasi lipid membran. <strong>Katekolamin</strong> (feokromositoma, kokain, efedrin): nekrosis fokal dengan <strong>contraction band</strong>; toksisitas langsung (overload kalsium) atau vasokonstriksi + takikardia.</div>
+    <div class="note blue"><strong>Perikardium:</strong> normal &lt;50 mL cairan jernih. Efusi serosa: CHF, hipoalbuminemia; serosanguinosa: trauma, keganasan, ruptur MI, diseksi aorta; kilus: obstruksi limfatik. Akumulasi cepat (200–300 mL) → <strong>tamponade</strong>. <strong>Perikarditis:</strong> primer umumnya viral; sekunder tersering uremia. Fibrinosa (virus, uremia), fibrinopurulen (bakteri), kaseosa (TB), hemoragik (keganasan). Klinis: nyeri dada memburuk saat berbaring, friction rub; konstriktif (adhesi) mirip restriktif.</div>
+    <div class="note teal"><strong>Tumor jantung:</strong> 5 tersering: miksoma, fibroma, lipoma, fibroelastoma papilar, rabdomioma; <strong>angiosarkoma</strong> = ganas terbanyak. <strong>Miksoma:</strong> tumor primer dewasa tersering; 90% atrium (80% LA), dekat fossa ovalis; bertangkai, gelatin; sindrom konstitusional (IL-6). <strong>Rabdomioma:</strong> tumor primer tersering bayi/anak; terkait sklerosis tuberosa (TSC1/TSC2); "spider cells"; sering regresi spontan. <strong>Penyakit jantung karsinoid:</strong> mediator serotonin; jantung KANAN (paru mendegradasi mediator); plak putih endokardium/katup → insufisiensi trikuspid, stenosis pulmonal; perlu metastasis hepar.</div>
+    <div class="note purp"><strong>Transplantasi:</strong> terapi pilihan gagal jantung intraktabel (terutama DCM &amp; IHD). Rejeksi akut: infiltrat limfositik interstisial mirip miokarditis viral. Imunosupresi → infeksi oportunistik, limfoma terkait EBV. <strong>Arteriopati alograf</strong> = lesi kunci rejeksi kronis (proliferasi intima difus koroner), penyebab utama kehilangan graf. Survival 1 tahun 90%, 5 tahun &gt;70%.</div>
+  </div>
+</div>
+
+<div class="main-panel" id="mp-quiz">
+  <div id="qconfig" class="qconfig">
+    <div class="qconfig-title">Mulai Sesi Quiz</div>
+    <div class="qconfig-sub">Pilih topik (multi-pilih) — soal tanpa batas sampai Akhiri Sesi</div>
+    <div class="cfg-grid" id="cfggrid"></div>
+    <button class="start-btn" onclick="startSession()">Mulai →</button>
+  </div>
+  <div id="qactive" style="display:none">
+    <div class="qheader">
+      <div class="qnum-display">Soal ke-<strong id="qnum">1</strong></div>
+      <div id="qpill" class="qtype-pill"></div>
+      <div class="qscore-display"><strong id="qscore">0</strong> benar</div>
+    </div>
+    <div class="qcard"><div id="qtext" class="qtext"></div></div>
+    <div class="opts" id="opts"></div>
+    <div class="expbox" id="expbox"></div>
+    <div class="actrow">
+      <button class="next-btn" id="nextbtn" onclick="nextQ()">Soal Berikutnya →</button>
+      <button class="end-btn" onclick="endSession()">Akhiri Sesi</button>
+    </div>
+  </div>
+  <div id="qresults" style="display:none">
+    <div class="results-wrap">
+      <div class="res-big" id="res-pct">—</div>
+      <div class="res-sub" id="res-sub">—</div>
+      <div class="res-grid" id="res-grid"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px">
+        <button class="retry-btn" onclick="restartQuiz()">Coba Lagi</button>
+        <button class="retry-btn" style="background:var(--accent)" onclick="downloadCert()">⬇ Unduh Sertifikat</button>
+      </div>
+      <div class="dtable-wrap" style="margin-bottom:14px"><table><thead><tr><th>Topik</th><th>Soal</th><th>Benar</th></tr></thead><tbody id="res-bytype"></tbody></table></div>
+      <div class="dtable-wrap"><table><thead><tr><th>#</th><th>Soal (ringkas)</th><th>Jawaban Benar</th><th>Hasil</th></tr></thead><tbody id="res-tbody"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>am i beating? · Patologi Jantung · Robbins &amp; Kumar Basic Pathology 11th ed. Bab 9 · Blok 3.1 · FK Unsoed</div>
+  <div style="margin-top:5px">crafted by alchemist4real · <a href="https://174-three.vercel.app" target="_blank" style="color:var(--text3);text-decoration:none;border-bottom:1px dashed var(--text3)">check other quizzes → 174 archive ↗</a></div>
+</footer>
+</div>
+
+<script>
+window.switchMain=function(id,b){document.querySelectorAll('.main-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.main-tab').forEach(x=>x.classList.remove('active'));document.getElementById('mp-'+id).classList.add('active');b.classList.add('active');};
+window.switchSub=function(id,b){document.querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.sub-tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');b.classList.add('active');};
+
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuf=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;};
+const KEYS='ABCDE'.split('');
+const strip=s=>s.replace(/<[^>]*>/g,'');
+function makePicker(pool){let used=[];return function(){if(used.length>=pool.length)used=[];const av=pool.map((_,i)=>i).filter(i=>!used.includes(i));const si=rnd(av);used.push(si);return pool[si];};}
+
+const P={};
+P.gj=[
+ {q:'Enam mekanisme utama penyakit jantung meliputi, KECUALI...',opts:['Kegagalan pompa','Obstruksi aliran','Aliran pirau (shunt)','Hiperplasia miokard primer'],ans:'Hiperplasia miokard primer',exp:'Enam mekanisme: <strong>kegagalan pompa, obstruksi aliran, aliran regurgitan, pirau, gangguan konduksi, dan ruptur</strong>. Hiperplasia miokard primer bukan salah satunya.'},
+ {q:'Gagal jantung diastolik dengan EF ≥50% disebut...',opts:['HFrEF','HFpEF','High-output failure','Kor pulmonale'],ans:'HFpEF',exp:'<strong>HFpEF</strong> (preserved EF, EF ≥50%) = gagal relaksasi/mengisi, ±separuh kasus CHF.'},
+ {q:'High-output failure dapat disebabkan oleh...',opts:['Hipertiroid dan anemia','Infark miokard luas','Stenosis aorta','Perikarditis konstriktif'],ans:'Hipertiroid dan anemia',exp:'<strong>High-output failure</strong>: hipertiroid (kebutuhan naik) atau anemia (daya angkut O₂ turun).'},
+ {q:'Pada beban tekanan (pressure overload), sarkomer baru ditambahkan secara...',opts:['Serial, menghasilkan dilatasi','Paralel, menghasilkan hipertrofi konsentrik','Serial, menghasilkan hipertrofi konsentrik','Paralel, menghasilkan dilatasi'],ans:'Paralel, menghasilkan hipertrofi konsentrik',exp:'Pressure overload (hipertensi, stenosis katup) → sarkomer ditambah <strong>paralel</strong> → <strong>hipertrofi konsentrik</strong>. Volume overload → serial → dilatasi.'},
+ {q:'Ukuran terbaik untuk menilai hipertrofi jantung adalah...',opts:['Tebal dinding ventrikel','Berat jantung','Volume ruang ventrikel','Diameter anulus katup'],ans:'Berat jantung',exp:'<strong>Berat jantung</strong>, bukan tebal dinding, adalah ukuran terbaik hipertrofi (pada hipertrofi dilatasi tebal dinding bisa normal).'},
+ {q:'"Sel gagal jantung" adalah...',opts:['Miosit hipereosinofilik','Makrofag berisi hemosiderin di paru','Sel Anitschkow','Sel raksasa multinuklear'],ans:'Makrofag berisi hemosiderin di paru',exp:'Pada gagal jantung kiri kronis, paru memperlihatkan <strong>"sel gagal jantung"</strong> = makrofag berisi hemosiderin.'},
+ {q:'Gejala paling awal gagal jantung kiri adalah...',opts:['Edema pitting tungkai','Dispnea eksersional','Hepatomegali','Asites'],ans:'Dispnea eksersional',exp:'Gagal jantung kiri: <strong>dispnea eksersional</strong> paling awal, lalu ortopnea dan PND.'},
+ {q:'"Nutmeg liver" dan sirosis kardiak terkait dengan...',opts:['Gagal jantung kiri','Gagal jantung kanan','Stenosis aorta','Perikarditis fibrinosa'],ans:'Gagal jantung kanan',exp:'Gagal jantung kanan → kongesti vena sistemik &amp; portal → <strong>hepatomegali kongestif (nutmeg liver)</strong>, kronis → sirosis kardiak.'},
+];
+P.kong=[
+ {q:'Kelainan jantung kongenital terbanyak (~42% dari 12 entitas utama) adalah...',opts:['ASD','VSD','PDA','Tetralogi Fallot'],ans:'VSD',exp:'<strong>VSD</strong> adalah kelainan kongenital terbanyak saat lahir (42%); ~90% di septum membranosa.'},
+ {q:'Sindrom Eisenmenger ditandai dengan...',opts:['Pirau kanan→kiri awal dengan sianosis dini','Pirau kiri→kanan berbalik menjadi kanan→kiri akibat hipertensi pulmonal','Obstruksi aorta distal','Regurgitasi mitral berat'],ans:'Pirau kiri→kanan berbalik menjadi kanan→kiri akibat hipertensi pulmonal',exp:'Pirau L→R → resistensi vaskular paru ↑ → hipertrofi RV → pirau <strong>berbalik R→L</strong> → sianosis lambat (<strong>Eisenmenger</strong>); defek menjadi ireversibel.'},
+ {q:'Tipe ASD tersering (90%) adalah...',opts:['Ostium primum','Ostium secundum','Sinus venosus','Koronarius sinus'],ans:'Ostium secundum',exp:'<strong>Ostium secundum</strong> 90%; ostium primum 5% (disertai kelainan katup AV); sinus venosus 5% (drainase vena pulmonalis anomali).'},
+ {q:'Duktus arteriosus normalnya menutup 1–2 hari pasca lahir akibat...',opts:['↓ O₂ dan ↑ PGE2','↑ O₂ dan ↓ PGE2','↑ NO dan ↑ PGE2','↓ tekanan paru saja'],ans:'↑ O₂ dan ↓ PGE2',exp:'Duktus menutup karena <strong>↑ O₂ dan ↓ PGE2</strong>, lalu menjadi ligamentum arteriosum. PDA menghasilkan murmur "machinery".'},
+ {q:'Empat komponen Tetralogi Fallot adalah...',opts:['VSD, obstruksi jalan keluar RV, aorta menunggangi VSD, hipertrofi RV','ASD, stenosis aorta, hipertrofi LV, PDA','VSD, koarktasio, TGA, hipertrofi LV','PFO, stenosis mitral, dilatasi RA, hipertrofi RV'],ans:'VSD, obstruksi jalan keluar RV, aorta menunggangi VSD, hipertrofi RV',exp:'<strong>TOF</strong>: VSD + obstruksi jalan keluar RV + aorta menunggangi VSD + hipertrofi RV. Jantung "boot-shaped"; hipertensi pulmonal tidak terjadi.'},
+ {q:'Pada transposisi arteri besar (TGA)...',opts:['Aorta keluar dari LV dan a. pulmonalis dari RV','Aorta keluar dari RV dan a. pulmonalis dari LV','Kedua pembuluh dari RV','Kedua pembuluh dari LV'],ans:'Aorta keluar dari RV dan a. pulmonalis dari LV',exp:'<strong>TGA</strong>: aorta dari RV, a. pulmonalis dari LV → sirkulasi sistemik &amp; pulmonal terpisah; hidup hanya jika ada pirau.'},
+ {q:'Koarktasio aorta postduktal ("dewasa") ditandai dengan...',opts:['Sianosis tubuh bagian bawah','Hipertensi ekstremitas atas, nadi tungkai lemah, notching iga','Hipoplasia arkus dengan PDA besar','Selalu fatal pada neonatus'],ans:'Hipertensi ekstremitas atas, nadi tungkai lemah, notching iga',exp:'Postduktal: ridge dekat lig. arteriosum tanpa PDA; <strong>hipertensi ekstremitas atas, nadi lemah di tungkai, notching iga</strong> (kolateral interkostal); sering dengan katup aorta bikuspid &amp; sindrom Turner.'},
+ {q:'Penyebab tersering penyakit jantung kongenital sianotik adalah...',opts:['VSD','Tetralogi Fallot','ASD','PDA'],ans:'Tetralogi Fallot',exp:'<strong>Tetralogi Fallot</strong> (~5% PJK) adalah penyebab tersering PJK sianotik.'},
+ {q:'Patent foramen ovale (PFO) bermakna klinis terutama karena...',opts:['Menyebabkan Eisenmenger','Menyebabkan emboli paradoksikal','Menyebabkan stenosis mitral','Menyebabkan tamponade'],ans:'Menyebabkan emboli paradoksikal',exp:'PFO (±20% individu) bermakna klinis bila terjadi <strong>emboli paradoksikal</strong>.'},
+];
+P.isk=[
+ {q:'Penyebab >90% penyakit jantung iskemik adalah...',opts:['Vasospasme koroner','Aterosklerosis koroner','Emboli mural','Vaskulitis'],ans:'Aterosklerosis koroner',exp:'>90% IHD akibat <strong>aterosklerosis koroner</strong> (IHD ≈ penyakit arteri koroner).'},
+ {q:'Stenosis koroner kritis yang menimbulkan angina stabil adalah...',opts:['<50%','<70%','>70%','Hanya 100%'],ans:'>70%',exp:'Stenosis <strong>&gt;70%</strong> → nyeri dada saat kebutuhan meningkat (angina stabil); ≥90% → iskemia saat istirahat.'},
+ {q:'Angina yang timbul saat istirahat akibat spasme koroner, dapat pada pembuluh sehat, dan responsif terhadap penghambat kanal kalsium adalah...',opts:['Angina stabil','Angina Prinzmetal','Angina tidak stabil','Infark subendokard'],ans:'Angina Prinzmetal',exp:'<strong>Prinzmetal (varian)</strong>: spasme arteri koroner, saat istirahat, respons cepat terhadap vasodilator &amp; penghambat kanal kalsium.'},
+ {q:'Angina tidak stabil terutama disebabkan oleh...',opts:['Stenosis tetap &gt;70% tanpa perubahan','Disrupsi plak + trombus, embolisasi distal, dan/atau vasospasme','Spasme murni tanpa plak','Anemia berat'],ans:'Disrupsi plak + trombus, embolisasi distal, dan/atau vasospasme',exp:'Angina tidak stabil: <strong>disrupsi plak + trombus</strong>, embolisasi distal, ± vasospasme; makin sering, dipicu aktivitas ringan/istirahat.'},
+ {q:'Ciri plak aterosklerotik rentan (vulnerable plaque) adalah...',opts:['Inti ateromatosa kecil, tudung fibrosa tebal','Inti ateromatosa besar, tudung fibrosa tipis','Kalsifikasi padat total','Stenosis selalu &gt;90%'],ans:'Inti ateromatosa besar, tudung fibrosa tipis',exp:'<strong>Plak rentan</strong>: inti ateromatosa besar + tudung fibrosa tipis; fisura di batas tudung dan segmen normal.'},
+ {q:'Sekitar 2/3 plak yang ruptur sebelumnya memiliki derajat stenosis...',opts:['≤50%','70–80%','≥90%','Selalu 100%'],ans:'≤50%',exp:'2/3 plak yang ruptur sebelumnya <strong>≤50% stenosis</strong> → ruptur tidak dapat diprediksi dari derajat stenosis.'},
+ {q:'Lokasi aterosklerosis koroner yang khas adalah...',opts:['Sentimeter awal LAD dan LCX, serta sepanjang RCA','Hanya ujung distal semua arteri','Hanya RCA distal','Hanya LCX distal'],ans:'Sentimeter awal LAD dan LCX, serta sepanjang RCA',exp:'Aterosklerosis koroner: <strong>sentimeter awal LAD &amp; LCX</strong>, dan <strong>sepanjang RCA</strong>.'},
+ {q:'Efek statin pada penyakit koroner meliputi...',opts:['Menurunkan kolesterol, memulihkan fungsi endotel, menstabilkan plak','Hanya menaikkan HDL','Melarutkan trombus akut','Menambah vasokonstriksi'],ans:'Menurunkan kolesterol, memulihkan fungsi endotel, menstabilkan plak',exp:'Statin: <strong>↓kolesterol, pulihkan fungsi endotel, stabilkan plak</strong>.'},
+];
+P.mi=[
+ {q:'Setelah plak koroner erosi/disrupsi, urutan kejadian berikutnya yang benar adalah...',opts:['Aktivasi koagulasi → adhesi trombosit → trombus','Adhesi-agregasi-aktivasi trombosit → aktivasi koagulasi (tissue factor) → trombus oklusif','Trombus → adhesi trombosit → ruptur','Vasodilatasi → trombus → nekrosis'],ans:'Adhesi-agregasi-aktivasi trombosit → aktivasi koagulasi (tissue factor) → trombus oklusif',exp:'Urutan: plak disrupsi → <strong>trombosit adhesi-agregasi-aktivasi</strong> (TXA2, ADP, serotonin) → <strong>koagulasi via tissue factor</strong> → trombus menyumbat lumen dalam menit.'},
+ {q:'Kerusakan miokard ireversibel mulai terjadi setelah iskemia sekitar...',opts:['Beberapa detik','2 menit','20–40 menit','6 jam'],ans:'20–40 menit',exp:'Hilang kontraktilitas dalam menit (reversibel); <strong>20–40 menit</strong> → kerusakan ireversibel, nekrosis koagulatif. Infark penuh dalam 3–6 jam.'},
+ {q:'Zona miokard yang paling dulu rentan terhadap iskemia adalah...',opts:['Epikardium','Subendokard','Midmiokard','Perikardium'],ans:'Subendokard',exp:'<strong>Subendokard</strong> paling jauh dari pembuluh epikardial dan bertekanan intramural tinggi; nekrosis meluas seperti "gelombang".'},
+ {q:'Oklusi LAD proksimal (40–50%) menyebabkan infark pada...',opts:['Dinding lateral LV','Dinding anterior LV, 2/3 anterior septum, apeks','Dinding posterior dan septum posterior','Sebagian besar RV'],ans:'Dinding anterior LV, 2/3 anterior septum, apeks',exp:'<strong>LAD</strong> → anterior LV, 2/3 anterior septum, apeks. LCX (15–20%) → lateral LV. RCA (30–40%) → RV, posterior.'},
+ {q:'Gambaran mikroskopik infark berumur 1–3 hari adalah...',opts:['Tidak ada perubahan','Nekrosis koagulatif, hilang inti &amp; striasi, infiltrat neutrofil ↑','Fagositosis makrofag dan granulasi awal','Parut kolagen padat'],ans:'Nekrosis koagulatif, hilang inti &amp; striasi, infiltrat neutrofil ↑',exp:'1–3 hari: <strong>nekrosis koagulatif, hilang inti &amp; striasi, neutrofil ↑</strong>. 3–10 hari: makrofag &amp; granulasi awal. &gt;2 bulan: parut kolagen padat.'},
+ {q:'Morfologi khas cedera reperfusi pada infark adalah...',opts:['Infark anemik pucat','Infark hemoragik dengan contraction band necrosis','Nekrosis likuefaktif','Kalsifikasi distrofik'],ans:'Infark hemoragik dengan contraction band necrosis',exp:'Reperfusi: infark <strong>hemoragik</strong> dan <strong>contraction band necrosis</strong> (hiperkontraksi miosit akibat kalsium).'},
+ {q:'Biomarker yang naik 2–4 jam, puncak 48 jam, dan bertahan 7–10 hari adalah...',opts:['CK-MB','Mioglobin','Troponin I/T','LDH saja'],ans:'Troponin I/T',exp:'<strong>Troponin I/T</strong>: naik 2–4 jam, puncak 48 jam, bertahan 7–10 hari. CK-MB normal kembali ±72 jam.'},
+ {q:'Ruptur dinding bebas ventrikel pasca infark (hari 3–7) menyebabkan...',opts:['VSD','Regurgitasi mitral','Tamponade jantung','Aneurisma ventrikel'],ans:'Tamponade jantung',exp:'Ruptur 1–5% hari 3–7: <strong>septum → VSD</strong>, <strong>otot papilaris → regurgitasi mitral</strong>, <strong>dinding bebas → tamponade</strong>.'},
+ {q:'Komplikasi pasca-MI yang terjadi beberapa minggu kemudian, berupa perikarditis autoimun, adalah...',opts:['Sindrom Dressler','Sindrom Eisenmenger','Sindrom Libman-Sacks','Sindrom Marfan'],ans:'Sindrom Dressler',exp:'Perikarditis awal 2–3 hari pasca-MI; <strong>Dressler syndrome</strong> muncul minggu kemudian.'},
+ {q:'Penyebab kematian terbanyak (80–90%) pada fase akut infark miokard adalah...',opts:['Ruptur dinding bebas','Fibrilasi ventrikel','Emboli paru','Tamponade'],ans:'Fibrilasi ventrikel',exp:'Kematian awal MI: <strong>80–90% karena fibrilasi ventrikel</strong>; aritmia ~90% pasien, risiko VF tertinggi jam pertama.'},
+];
+P.ar=[
+ {q:'Prototipe channelopathy herediter penyebab aritmia adalah...',opts:['Sindrom Brugada','Sindrom QT panjang (KCNQ1)','Fibrilasi atrium familial','Sick sinus syndrome'],ans:'Sindrom QT panjang (KCNQ1)',exp:'Prototipe channelopathy herediter: <strong>sindrom QT panjang (KCNQ1)</strong>.'},
+ {q:'Penyebab SCD tersering (65–70%) adalah...',opts:['Kardiomiopati hipertrofik','Aterosklerosis koroner/IHD','Prolaps mitral','Miokarditis'],ans:'Aterosklerosis koroner/IHD',exp:'<strong>65–70% SCD</strong> dengan aterosklerosis koroner/IHD. Alat pencegahan: pacemaker atau ICD.'},
+ {q:'Berat jantung pada penyakit jantung hipertensif (hipertrofi LV) umumnya...',opts:['&lt;300 g','320–360 g','&gt;500 g','Tidak berubah'],ans:'&gt;500 g',exp:'Hipertensif: berat &gt;500 g (normal 320–360 g), tebal dinding &gt;2,0 cm (normal 1,2–1,4 cm); hipertrofi konsentrik tanpa dilatasi.'},
+ {q:'Gambaran inti miosit pada hipertrofi hipertensif adalah...',opts:['Inti piknotik','Inti "boxcar"','Inti ganda','Inti tidak ada'],ans:'Inti "boxcar"',exp:'Mikroskopik hipertensif: miosit membesar, <strong>inti "boxcar"</strong>, fibrosis interstisial.'},
+ {q:'Kor pulmonale didefinisikan sebagai...',opts:['Hipertrofi/dilatasi RV akibat hipertensi pulmonal dari penyakit paru/vaskular paru','Hipertrofi LV akibat gagal kiri','Dilatasi RV akibat PJK kongenital','Hipertrofi LA akibat stenosis mitral'],ans:'Hipertrofi/dilatasi RV akibat hipertensi pulmonal dari penyakit paru/vaskular paru',exp:'<strong>Kor pulmonale</strong>: hipertrofi/dilatasi RV akibat hipertensi pulmonal (penyakit parenkim/vaskular paru); akibat gagal kiri atau PJK kongenital dikecualikan.'},
+ {q:'Pada kor pulmonale AKUT akibat emboli paru, RV mengalami...',opts:['Hipertrofi konsentrik','Hanya dilatasi','Atrofi','Fibrosis difus'],ans:'Hanya dilatasi',exp:'Kor pulmonale akut (emboli paru): RV <strong>hanya dilatasi</strong>; kronis: hipertrofi RV/RA.'},
+ {q:'Disfungsi nodus AV menyebabkan...',opts:['Sick sinus syndrome','Blok jantung derajat 1–3','Fibrilasi atrium','Sindrom QT panjang'],ans:'Blok jantung derajat 1–3',exp:'Nodus AV disfungsi → <strong>blok jantung derajat 1–3</strong>; nodus SA rusak → bradikardia (sick sinus).'},
+];
+P.kat=[
+ {q:'Kelainan jantung kongenital tersering pada katup adalah...',opts:['Stenosis mitral kongenital','Katup bikuspid aorta','Atresia pulmonal','Katup trikuspid Ebstein'],ans:'Katup bikuspid aorta',exp:'<strong>Katup bikuspid aorta</strong> (1–2% kelahiran) rentan kalsifikasi dini; stenosis aorta kalsifik pada bikuspid timbul usia 40–50an.'},
+ {q:'Penyebab tersering stenosis aorta adalah...',opts:['Demam reumatik','Kalsifikasi degeneratif','Endokarditis infektif','Sindrom karsinoid'],ans:'Kalsifikasi degeneratif',exp:'<strong>Stenosis aorta kalsifik</strong> penyebab tersering; awal usia 70–80an. Faktor risiko analog aterosklerosis (LDL tinggi, hipertensi, merokok).'},
+ {q:'Prolaps katup mitral primer ditandai dengan...',opts:['Degenerasi miksomatosa, klik midsistolik','Fusi komisura "fish-mouth"','Vegetasi verruca di garis penutupan','Kalsifikasi cincin dengan stenosis'],ans:'Degenerasi miksomatosa, klik midsistolik',exp:'MVP primer: <strong>degenerasi miksomatosa</strong>, daun katup menggelembung ke LA saat sistol; <strong>klik midsistolik</strong> ± murmur regurgitasi.'},
+ {q:'Lesi patognomonik karditis reumatik akut adalah...',opts:['Badan Aschoff','Roth spots','Badan Osler','Sel Reed-Sternberg'],ans:'Badan Aschoff',exp:'<strong>Badan Aschoff</strong> (patognomonik) dengan <strong>sel Anitschkow</strong> ("caterpillar" cells).'},
+ {q:'Katup yang paling sering terkena penyakit jantung reumatik (70%) adalah...',opts:['Aorta','Mitral','Trikuspid','Pulmonal'],ans:'Mitral',exp:'Mitral 70%; mitral + aorta 25%; <strong>pulmonal hampir selalu bebas</strong>. Stenosis kronis berbentuk "fish-mouth/buttonhole".'},
+ {q:'Kriteria Jones untuk demam reumatik meliputi, KECUALI...',opts:['Karditis','Poliartritis migratori sendi besar','Korea Sydenham','Nodus Janeway'],ans:'Nodus Janeway',exp:'Jones: karditis, poliartritis migratori, nodul subkutan, eritema marginatum, korea Sydenham. <strong>Lesi Janeway</strong> adalah tanda endokarditis infektif.'},
+ {q:'Endokarditis infektif akut yang merusak katup normal umumnya disebabkan oleh...',opts:['Streptococcus viridans','Staphylococcus aureus','Candida','HACEK'],ans:'Staphylococcus aureus',exp:'Endokarditis akut: organisme virulen, terutama <strong>S. aureus</strong>, dapat merusak katup normal.'},
+ {q:'Vegetasi steril pada pasien lupus (SLE) disebut...',opts:['NBTE','Endokarditis Libman-Sacks','Endokarditis Löffler','Badan Aschoff'],ans:'Endokarditis Libman-Sacks',exp:'<strong>Libman-Sacks</strong>: vegetasi steril pada SLE (kompleks imun, nekrosis fibrinoid); juga pada sindrom antibodi antifosfolipid. NBTE terkait hiperkoagulasi/keganasan.'},
+ {q:'NBTE (nonbacterial thrombotic endocarditis) paling sering terkait dengan...',opts:['Lupus','Keganasan (adenokarsinoma musinosa) / hiperkoagulasi','Demam reumatik','Penyalahgunaan obat IV'],ans:'Keganasan (adenokarsinoma musinosa) / hiperkoagulasi',exp:'<strong>NBTE</strong>: trombus steril 1–5 mm pada katup normal; kondisi hiperkoagulasi, terbanyak keganasan (adenokarsinoma musinosa); mudah emboli.'},
+];
+P.kmp=[
+ {q:'Pola kardiomiopati tersering (90%) dengan LVEF &lt;40% adalah...',opts:['Hipertrofik','Dilatasi','Restriktif','ARVC'],ans:'Dilatasi',exp:'<strong>DCM</strong> 90% kasus kardiomiopati; LVEF &lt;40%; gangguan kontraktilitas (sistolik).'},
+ {q:'Mutasi gen tersering pada DCM familial adalah...',opts:['Titin','β-myosin heavy chain','Plakoglobin','Transtiretin'],ans:'Titin',exp:'DCM genetik: &gt;50 gen; <strong>titin</strong> paling sering (~20%). Plakoglobin → ARVC; β-MHC → HCM.'},
+ {q:'Kardiomiopati yang terkait kerusakan protein desmosom dan penggantian dinding RV oleh lemak adalah...',opts:['DCM','HCM','ARVC','Restriktif'],ans:'ARVC',exp:'<strong>ARVC</strong>: mutasi desmosom (plakoglobin), detasemen saat olahraga, dinding RV sangat tipis diganti lemak + fibrosis; ~10% kematian mendadak atlet.'},
+ {q:'Kardiomiopati hipertrofik (HCM) disebabkan oleh mutasi...',opts:['Protein sarkomer (β-MHC, MyBP-C, troponin T)','Protein desmosom','Titin saja','Transtiretin'],ans:'Protein sarkomer (β-MHC, MyBP-C, troponin T)',exp:'HCM: mutasi missense gain-of-function <strong>protein sarkomer</strong> (β-MHC, MyBP-C, troponin T = 70–80%), autosomal dominan.'},
+ {q:'Distribusi hipertrofi khas pada HCM adalah...',opts:['Dinding bebas LV difus','Septum asimetris (90%)','Hanya apeks','Hanya RV'],ans:'Septum asimetris (90%)',exp:'HCM: hipertrofi masif <strong>asimetris septum (90%)</strong> tanpa dilatasi; rongga "banana-shaped"; disarray miosit; SAM katup mitral → obstruksi jalur keluar.'},
+ {q:'Kardiomiopati restriktif dapat disebabkan oleh...',opts:['Amiloidosis','Doksorubisin','Alkohol','Mutasi desmosom'],ans:'Amiloidosis',exp:'Restriktif: <strong>amiloidosis</strong> (transtiretin/AL), fibrosis radiasi, fibrosis endomiokard, Löffler. Doksorubisin/alkohol → DCM.'},
+ {q:'Bentuk kardiomiopati restriktif tersering di dunia adalah...',opts:['Amiloidosis AL','Fibrosis endomiokard','Endomiokarditis Löffler','Fibrosis radiasi'],ans:'Fibrosis endomiokard',exp:'<strong>Fibrosis endomiokard</strong> (anak/dewasa muda di Afrika &amp; tropis) = bentuk restriktif tersering di dunia. Löffler: hipereosinofilia + trombus mural.'},
+ {q:'Penyebab hemosiderin pada kardiomiopati dilatasi (Prussian blue) berkaitan dengan...',opts:['Hemokromatosis','Sarkoidosis','Peripartum','Alkohol'],ans:'Hemokromatosis',exp:'Kelebihan zat besi (<strong>hemokromatosis</strong>) menyebabkan DCM dengan deposisi hemosiderin (Prussian blue).'},
+];
+P.lain=[
+ {q:'Penyebab virus tersering miokarditis adalah...',opts:['Koksakivirus A/B dan enterovirus','HIV','Influenza','CMV'],ans:'Koksakivirus A/B dan enterovirus',exp:'Miokarditis viral terbanyak: <strong>koksakivirus A/B dan enterovirus</strong>.'},
+ {q:'Miokarditis Chagas disebabkan oleh...',opts:['Toxoplasma gondii','Trypanosoma cruzi','Trichinella spiralis','Borrelia burgdorferi'],ans:'Trypanosoma cruzi',exp:'<strong>Chagas</strong> = Trypanosoma cruzi (miofiber terisi tripanosom). Lyme (Borrelia) → gangguan konduksi.'},
+ {q:'Tipe miokarditis dengan prognosis buruk adalah...',opts:['Limfositik (viral)','Hipersensitivitas','Sel raksasa','Pasca-vaksin'],ans:'Sel raksasa',exp:'<strong>Miokarditis sel raksasa</strong> (multinuklear + nekrosis) berprognosis buruk.'},
+ {q:'Kardiotoksisitas antrasiklin (doksorubisin) bersifat...',opts:['Dosis-dependen (&gt;500 mg/m²), peroksidasi lipid membran → DCM','Tidak bergantung dosis','Hanya menyebabkan perikarditis','Selalu ireversibel dalam hari pertama'],ans:'Dosis-dependen (&gt;500 mg/m²), peroksidasi lipid membran → DCM',exp:'Antrasiklin: <strong>dosis-dependen (&gt;500 mg/m²)</strong>, peroksidasi lipid membran → DCM &amp; gagal jantung.'},
+ {q:'Cairan perikardium normal berjumlah...',opts:['&lt;50 mL jernih','100–150 mL','200–300 mL','Tidak ada cairan'],ans:'&lt;50 mL jernih',exp:'Normal <strong>&lt;50 mL</strong> cairan jernih. Akumulasi cepat 200–300 mL → tamponade jantung.'},
+ {q:'Penyebab sistemik tersering perikarditis sekunder adalah...',opts:['Uremia','Radiasi','Metastasis','SLE'],ans:'Uremia',exp:'Perikarditis sekunder: MI akut, Dressler, radiasi, <strong>uremia (tersering sistemik)</strong>, reumatik, SLE, metastasis. Uremia → fibrinosa.'},
+ {q:'Tumor primer jantung tersering pada orang dewasa adalah...',opts:['Rabdomioma','Miksoma','Angiosarkoma','Fibroma'],ans:'Miksoma',exp:'<strong>Miksoma</strong>: 90% atrium (80% LA), dekat fossa ovalis, bertangkai &amp; gelatin. Rabdomioma = tersering pada bayi/anak; angiosarkoma = ganas terbanyak.'},
+ {q:'Rabdomioma jantung berkaitan dengan...',opts:['Sklerosis tuberosa (TSC1/TSC2)','Sindrom Marfan','Neurofibromatosis','Sindrom Turner'],ans:'Sklerosis tuberosa (TSC1/TSC2)',exp:'<strong>Rabdomioma</strong>: terkait sklerosis tuberosa (TSC1/TSC2), "spider cells" kaya glikogen, sering regresi spontan.'},
+ {q:'Penyakit jantung karsinoid terutama mengenai sisi kanan jantung karena...',opts:['Paru mendegradasi mediator (serotonin)','Jantung kanan lebih tebal','Serotonin hanya mencapai RV','Katup kiri imun'],ans:'Paru mendegradasi mediator (serotonin)',exp:'Mediator <strong>serotonin</strong> didegradasi paru sehingga jantung kiri terlindung; efek: insufisiensi trikuspid &amp; stenosis pulmonal.'},
+ {q:'Lesi kunci rejeksi kronis pada transplantasi jantung adalah...',opts:['Infiltrat limfositik interstisial','Arteriopati alograf (proliferasi intima koroner)','Limfoma EBV','Endokarditis infektif'],ans:'Arteriopati alograf (proliferasi intima koroner)',exp:'<strong>Arteriopati alograf</strong> = lesi kunci rejeksi kronis, penyebab utama kehilangan graf (proliferasi intima difus koroner → iskemia).'},
+];
+
+const META=[
+ {k:'gj',name:'Gagal Jantung',col:'#c0262c',bg:'rgba(192,38,44,.10)'},
+ {k:'kong',name:'PJ Kongenital',col:'#1a4faa',bg:'rgba(26,79,170,.10)'},
+ {k:'isk',name:'PJ Iskemik & Angina',col:'#8a4010',bg:'rgba(138,64,16,.10)'},
+ {k:'mi',name:'Infark Miokard',col:'#d02a3a',bg:'rgba(208,42,58,.12)'},
+ {k:'ar',name:'Aritmia, SCD & Hipertensif',col:'#6a20aa',bg:'rgba(106,32,170,.10)'},
+ {k:'kat',name:'Penyakit Katup',col:'#0a6a70',bg:'rgba(10,106,112,.10)'},
+ {k:'kmp',name:'Kardiomiopati',col:'#8a6200',bg:'rgba(138,98,0,.12)'},
+ {k:'lain',name:'Miokarditis, Perikardium, Tumor, Transplantasi',col:'#1a7a35',bg:'rgba(26,122,53,.10)'},
+];
+const TMAP={};
+META.forEach(m=>{TMAP[m.k]={fn:makePicker(P[m.k]),typeName:m.name,tpColor:m.col,tpBg:m.bg};});
+const activeTypes=new Set(META.map(m=>m.k));
+const grid=document.getElementById('cfggrid');
+META.forEach(m=>{
+  const b=document.createElement('button');b.className='cfg-btn sel';b.dataset.type=m.k;b.textContent=m.name;
+  b.addEventListener('click',()=>{if(activeTypes.has(m.k)){if(activeTypes.size===1)return;activeTypes.delete(m.k);b.classList.remove('sel');}else{activeTypes.add(m.k);b.classList.add('sel');}});
+  grid.appendChild(b);
+});
+
+function makeQ(type){const m=TMAP[type];const q={...m.fn()};q.type=type;q.typeName=m.typeName;q.tpColor=m.tpColor;q.tpBg=m.tpBg;return q;}
+let typeQueue=[],sessIdx=0,sessScore=0,sessLog=[],currentQ=null;
+function nextType(){if(!typeQueue.length){const t=[...activeTypes];for(let i=t.length-1;i>0;i--){const j=0|Math.random()*(i+1);[t[i],t[j]]=[t[j],t[i]];}typeQueue=[...t];}return typeQueue.shift();}
+function startSession(){sessIdx=0;sessScore=0;sessLog=[];typeQueue=[];document.getElementById('qconfig').style.display='none';document.getElementById('qresults').style.display='none';document.getElementById('qactive').style.display='block';renderQ();}
+function renderQ(){
+  const q=makeQ(nextType());currentQ=q;
+  document.getElementById('qnum').textContent=sessIdx+1;
+  document.getElementById('qscore').textContent=sessScore;
+  const pill=document.getElementById('qpill');
+  pill.textContent=q.typeName;pill.style.background=q.tpBg;pill.style.color=q.tpColor;pill.style.border=`1px solid ${q.tpColor}55`;
+  document.getElementById('qtext').innerHTML=q.q;
+  const og=document.getElementById('opts');og.innerHTML='';
+  shuf(q.opts).forEach((opt,i)=>{
+    const btn=document.createElement('button');btn.className='opt';
+    btn.innerHTML=`<span class="opt-key">${KEYS[i]}</span><span>${opt}</span>`;
+    btn.onclick=()=>selectAns(opt,q,btn);og.appendChild(btn);
+  });
+  const ebox=document.getElementById('expbox');ebox.classList.remove('show');ebox.style.display='none';
+  document.getElementById('nextbtn').style.display='none';
+}
+function selectAns(chosen,q,clickedBtn){
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  const correct=strip(chosen)===strip(q.ans);
+  if(correct)sessScore++;
+  document.querySelectorAll('.opt').forEach(b=>{
+    const lbl=b.querySelector('span:last-child').innerHTML;
+    if(strip(lbl)===strip(q.ans)){if(b===clickedBtn)b.classList.add('correct');else b.classList.add('reveal');}
+    if(b===clickedBtn&&!correct)b.classList.add('wrong');
+  });
+  const ebox=document.getElementById('expbox');
+  ebox.innerHTML=`<div style="margin-bottom:7px;font-weight:700;color:${correct?'var(--blue)':'var(--red)'}">${correct?'✅ Benar!':'❌ Kurang tepat.'} Jawaban: <strong>${q.ans}</strong></div>${q.exp}`;
+  ebox.style.display='block';setTimeout(()=>ebox.classList.add('show'),10);
+  sessLog.push({idx:sessIdx+1,type:q.typeName,q:strip(q.q).slice(0,55)+'…',ans:strip(q.ans),correct});
+  document.getElementById('qscore').textContent=sessScore;
+  document.getElementById('nextbtn').style.display='inline-block';
+}
+function nextQ(){sessIdx++;document.getElementById('expbox').style.display='none';document.getElementById('expbox').classList.remove('show');renderQ();}
+function endSession(){
+  document.getElementById('qactive').style.display='none';document.getElementById('qresults').style.display='block';
+  const total=sessLog.length;if(!total){restartQuiz();return;}
+  const pct=Math.round((sessScore/total)*100);
+  document.getElementById('res-pct').textContent=pct+'%';
+  document.getElementById('res-sub').textContent=`${sessScore} / ${total} soal benar`;
+  const byType={};sessLog.forEach(l=>{if(!byType[l.type])byType[l.type]={total:0,correct:0};byType[l.type].total++;if(l.correct)byType[l.type].correct++;});
+  const rg=document.getElementById('res-grid');rg.innerHTML='';
+  const medal=pct>=80?'🏆':pct>=60?'👍':'📚';
+  [{v:medal,l:'Nilai'},{v:pct+'%',l:'Persentase'},{v:sessScore+'',l:'Benar'},{v:(total-sessScore)+'',l:'Salah'},{v:total+'',l:'Total'}].forEach(s=>{const d=document.createElement('div');d.className='res-stat';d.innerHTML=`<div class="rv">${s.v}</div><div class="rl">${s.l}</div>`;rg.appendChild(d);});
+  document.getElementById('res-bytype').innerHTML=Object.entries(byType).map(([t,v])=>{const p=Math.round((v.correct/v.total)*100);const c=p>=80?'var(--blue)':p>=60?'var(--gold)':'var(--red)';return`<tr><td>${t}</td><td>${v.total}</td><td style="color:${c};font-weight:700">${v.correct} (${p}%)</td></tr>`;}).join('');
+  document.getElementById('res-tbody').innerHTML=sessLog.map(l=>`<tr><td>${l.idx}</td><td>${l.q}</td><td>${l.ans}</td><td style="color:${l.correct?'var(--green)':'var(--red)'}">${l.correct?'✅':'❌'}</td></tr>`).join('');
+}
+function restartQuiz(){typeQueue=[];document.getElementById('qresults').style.display='none';document.getElementById('qconfig').style.display='block';}
+
+function downloadCert(){
+  const total=sessLog.length;const pct=Math.round((sessScore/total)*100);
+  const dateStr=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+  const medal=pct>=80?'LULUS':pct>=60?'CUKUP':'PERLU BELAJAR LAGI';
+  const mc=pct>=80?'#1a8a40':pct>=60?'#8a6200':'#c0262c';
+  const byType={};sessLog.forEach(l=>{if(!byType[l.type])byType[l.type]={total:0,correct:0};byType[l.type].total++;if(l.correct)byType[l.type].correct++;});
+  const rows=Object.entries(byType).map(([t,v])=>{const p=Math.round(v.correct/v.total*100);const bar=Math.round(p*1.4);const bc=p>=80?'#1a8a40':p>=60?'#8a6200':'#c0262c';return`<tr><td style="padding:4px 8px;font-size:11px;color:#2a4274;width:230px">${t}</td><td style="padding:4px 8px"><div style="background:#c9d8ee;border-radius:4px;height:10px;width:140px"><div style="background:${bc};width:${bar}px;height:10px;border-radius:4px"></div></div></td><td style="padding:4px 8px;font-size:11px;font-weight:700;color:${bc}">${v.correct}/${v.total} (${p}%)</td></tr>`;}).join('');
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="680" height="560" font-family="Georgia,serif">
+  <rect width="680" height="560" fill="#eef3fa"/>
+  <rect x="20" y="20" width="640" height="520" rx="12" fill="none" stroke="#c0262c" stroke-width="2"/>
+  <rect x="26" y="26" width="628" height="508" rx="9" fill="none" stroke="#c0262c" stroke-width="0.5" opacity="0.4"/>
+  <text x="340" y="66" text-anchor="middle" font-size="11" letter-spacing="4" fill="#5a76a8">SERTIFIKAT PENYELESAIAN KUIS</text>
+  <text x="340" y="116" text-anchor="middle" font-size="34" font-weight="bold" fill="#0a1630">Am I Beating?</text>
+  <text x="340" y="138" text-anchor="middle" font-size="11" fill="#5a76a8" letter-spacing="2">PATOLOGI JANTUNG · BLOK 3.1 · FK UNSOED</text>
+  <line x1="100" y1="152" x2="580" y2="152" stroke="#aec3e3" stroke-width="1"/>
+  <text x="340" y="185" text-anchor="middle" font-size="13" fill="#2a4274">Telah menyelesaikan sesi quiz dengan hasil</text>
+  <rect x="230" y="196" width="220" height="80" rx="8" fill="none" stroke="${mc}" stroke-width="1.5"/>
+  <text x="340" y="245" text-anchor="middle" font-size="52" font-weight="bold" fill="${mc}">${pct}%</text>
+  <text x="340" y="265" text-anchor="middle" font-size="10" fill="${mc}" letter-spacing="3">${medal}</text>
+  <text x="340" y="300" text-anchor="middle" font-size="12" fill="#2a4274">${sessScore} soal benar dari ${total} soal · ${dateStr}</text>
+  <line x1="100" y1="314" x2="580" y2="314" stroke="#aec3e3" stroke-width="1"/>
+  <text x="340" y="332" text-anchor="middle" font-size="10" fill="#5a76a8" letter-spacing="2">DISTRIBUSI SKOR PER TOPIK</text>
+  <foreignObject x="70" y="340" width="540" height="170"><div xmlns="http://www.w3.org/1999/xhtml"><table style="width:100%;border-collapse:collapse">${rows}</table></div></foreignObject>
+  <line x1="100" y1="516" x2="580" y2="516" stroke="#aec3e3" stroke-width="1"/>
+  <text x="340" y="532" text-anchor="middle" font-size="10" fill="#5a76a8">174 Archive · 174-three.vercel.app</text>
+</svg>`;
+  const blob=new Blob([svg],{type:'image/svg+xml'});const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`am-i-beating-${pct}pct.svg`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+window.downloadCert=downloadCert;window.startSession=startSession;window.nextQ=nextQ;window.endSession=endSession;window.restartQuiz=restartQuiz;
+</script>
+</body>
+</html>
