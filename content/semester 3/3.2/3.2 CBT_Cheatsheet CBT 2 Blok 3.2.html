@@ -1,0 +1,1632 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a2a28">
+<title>Cheatsheet CBT 2 Blok 3.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ebe8de; --ink:#1d1d1b; --muted:#66645c; --charcoal:#2a2a28; --cream:#efece2;
+  --yellow:#f2b705; --tabon-bg:#2a2a28; --tabon-fg:#efece2; --soft:rgba(29,29,27,.07);
+  --noise:.10;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --display:Anton,Impact,"Arial Narrow Bold",sans-serif;
+  --script:Caveat,"Segoe Script","Bradley Hand",cursive;
+}
+:root[data-theme="dark"]{
+  --paper:#1c1c1a; --ink:#e6e3d8; --muted:#a09d92; --charcoal:#33332f; --cream:#efece2;
+  --tabon-bg:#e6e3d8; --tabon-fg:#1c1c1a; --soft:rgba(230,227,216,.08); --noise:.05;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.7 var(--mono);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:var(--noise);mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .18  0 0 0 0 .14  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+:root[data-theme="dark"] body::before{mix-blend-mode:screen}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 90px}
+
+/* ---------- browser chrome (tab strip + toolbar) ---------- */
+.chrome{position:sticky;top:0;z-index:60;background:var(--charcoal)}
+.tabs{display:flex;align-items:flex-end;height:36px;padding:5px 10px 0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain}
+.tabs::-webkit-scrollbar{display:none}
+.tab{position:relative;isolation:isolate;flex:1 1 0;min-width:0;max-width:112px;height:31px;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:0 2px;border:0;border-radius:9px 9px 0 0;background:none;color:var(--cream);font:500 11.5px/1 var(--mono);cursor:pointer;white-space:nowrap;opacity:.8}
+.tab .c{font-weight:600;position:relative}
+.tab.home{flex:0 0 40px}
+.tab.home svg{display:block}
+.tab.done .c::after{content:"";position:absolute;top:-5px;right:-6px;width:5px;height:5px;border-radius:50%;background:var(--yellow)}
+.tab:not(.on)::before{content:"";position:absolute;inset:3px 2px;z-index:-1;border-radius:8px;background:transparent;transition:background .12s}
+.tab:not(.on):hover{opacity:1}
+.tab:not(.on):hover::before{background:rgba(239,236,226,.13)}
+.tab:not(.on)::after{content:"";position:absolute;right:-.5px;top:9px;bottom:9px;width:1px;background:rgba(239,236,226,.22)}
+.tab:has(+ .tab.on)::after,.tab:last-child::after{opacity:0}
+.tab.on{background:var(--paper);color:var(--ink);opacity:1;z-index:2}
+.tab.on::before,.tab.on::after{content:"";position:absolute;bottom:0;width:9px;height:9px}
+.tab.on::before{left:-9px;background:radial-gradient(circle at 0 0,transparent 8.5px,var(--paper) 9px)}
+.tab.on::after{right:-9px;background:radial-gradient(circle at 100% 0,transparent 8.5px,var(--paper) 9px)}
+.tab.dim{opacity:.35}
+.toolbar{display:grid;grid-template-columns:1fr minmax(0,520px) 1fr;align-items:center;gap:12px;height:44px;padding:0 12px;background:var(--paper);border-bottom:1px solid rgba(128,126,116,.45)}
+.brand{justify-self:start;overflow:hidden;display:flex;align-items:baseline;gap:9px;white-space:nowrap;min-width:0}
+.brand b{font:400 19px/1 var(--display);letter-spacing:.03em;text-transform:uppercase}
+.brand b::after{content:"";display:inline-block;width:.3em;height:.3em;border-radius:50%;background:var(--yellow);margin-left:.18em}
+.brand small{font-size:10.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+.addr{display:flex;align-items:center;gap:8px;height:30px;padding:0 6px 0 12px;border-radius:999px;background:var(--soft);border:1px solid transparent;color:var(--muted);min-width:0}
+.addr:focus-within{border-color:var(--yellow);background:transparent}
+.addr svg{flex:none}
+.addr input{all:unset;flex:1;min-width:0;color:var(--ink);font:500 12px/1 var(--mono)}
+.addr input::placeholder{color:var(--muted)}
+.addr input::-webkit-search-cancel-button{display:none}
+.addr kbd{font:500 10px/1 var(--mono);color:var(--muted);border:1px solid rgba(128,126,116,.6);border-radius:5px;padding:3px 6px}
+.addr:focus-within kbd{display:none}
+.sw{justify-self:end;appearance:none;position:relative;width:46px;height:26px;padding:0;border:1px solid var(--ink);border-radius:999px;background:var(--soft);cursor:pointer;flex:none}
+.sw i{position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--yellow);color:#1d1d1b;display:grid;place-items:center;font:400 12px/1 var(--mono);font-style:normal;transition:transform .18s}
+.sw i::after{content:"\2600\FE0E"}
+:root[data-theme="dark"] .sw i{transform:translateX(20px)}
+:root[data-theme="dark"] .sw i::after{content:"\263E"}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+
+/* ---------- folder body ---------- */
+.folder{padding:22px 6px 30px;min-height:360px}
+section.mod{display:none}
+section.mod.active{display:block}
+.searching section.mod{display:block}
+.searching section.mod+section.mod{margin-top:34px;padding-top:28px;border-top:1.5px dashed var(--ink)}
+section.mod>h2{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:0 18px;margin:0 0 18px;padding:0 0 16px;border-bottom:1.5px dashed var(--ink);font:500 15px/1.35 var(--mono);text-transform:lowercase}
+section.mod>h2 .badge{font:400 52px/1 var(--display);color:var(--ink);background:none;padding:0;letter-spacing:.01em;text-transform:uppercase}
+section.mod>h2 .badge::after{content:"";display:inline-block;width:.16em;height:.16em;border-radius:50%;background:var(--yellow);margin-left:.1em}
+.ttl{display:flex;flex-direction:column;gap:3px;min-width:0}
+.markdone{font-size:12px;color:var(--muted);display:flex;gap:7px;align-items:center;cursor:pointer;text-transform:none;white-space:nowrap}
+.markdone input{accent-color:var(--yellow);width:15px;height:15px;margin:0}
+.dosen{font:600 20px/1 var(--script);color:#b07f00;margin:0;text-transform:none}
+:root[data-theme="dark"] .dosen{color:var(--yellow)}
+
+.card{border:1px solid var(--ink);border-radius:12px;padding:14px 18px 12px;margin:14px 0;background:transparent}
+section.mod{counter-reset:c}
+.card>h3{counter-increment:c;margin:0 0 10px;font:600 13px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;display:flex;gap:10px;align-items:baseline}
+.card>h3::before{content:counter(c,decimal-leading-zero);background:var(--yellow);color:#1d1d1b;border-radius:999px;padding:1px 8px;font-size:11px;letter-spacing:0;flex:none}
+.card h4{margin:16px 0 4px;font:600 12.5px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.card p{margin:.4em 0}
+.card ul,.card ol{margin:.3em 0 .3em 1.15em;padding:0}
+.card li{margin:.3em 0}
+.card li::marker{color:var(--muted)}
+b,strong{font-weight:600}
+mark.k{background:linear-gradient(transparent 52%,rgba(242,183,5,.75) 52%);color:inherit;padding:0 2px;font-weight:600}
+.trap{background:var(--charcoal);color:var(--cream);padding:9px 14px;border-radius:10px;margin:.7em 0;font-size:13px}
+.trap::before{content:"jebakan ";font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--yellow);margin-right:6px}
+.trap b{color:var(--cream)}
+.note{border:1.5px dashed var(--ink);padding:8px 14px;border-radius:10px;margin:.7em 0;font-size:13px}
+.note::before{content:"catatan ";font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#b07f00;margin-right:6px}
+:root[data-theme="dark"] .note::before{color:var(--yellow)}
+.tw{overflow-x:auto;margin:.7em 0;border:1px solid var(--ink);border-radius:10px;background:transparent}
+table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:560px;line-height:1.55}
+th,td{padding:8px 11px;border-bottom:1px solid rgba(128,126,116,.45);text-align:left;vertical-align:top}
+th{font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.05em;border-bottom:1.5px solid var(--ink);background:var(--soft)}
+tr:last-child td,tr:last-child th{border-bottom:0}
+td ul{margin:0 0 0 1.05em;padding:0}
+small{font-size:11.5px;color:var(--muted)}
+.hide{display:none!important}
+.hl{background:var(--yellow);color:#1d1d1b;border-radius:2px}
+#empty{display:none;text-align:center;color:var(--muted);padding:44px 0}
+
+/* ---------- prev / next ---------- */
+.pn{display:flex;justify-content:space-between;gap:10px;margin-top:26px;padding-top:16px;border-top:1.5px dashed var(--ink)}
+.searching .pn{display:none}
+.pn button{font:500 12px/1.2 var(--mono);color:var(--ink);background:none;border:1.5px solid var(--ink);border-radius:999px;padding:9px 16px;cursor:pointer}
+.pn button:hover{background:var(--ink);color:var(--paper)}
+.pn span{flex:1}
+
+
+/* ---------- home ---------- */
+section.home{display:none}
+section.home.active{display:block}
+.searching section.home{display:none!important}
+.hm-hero{display:flex;align-items:center;gap:26px;flex-wrap:wrap;padding:0 0 22px;margin:0 0 22px;border-bottom:1.5px dashed var(--ink)}
+.ring{width:150px;height:150px;flex:none}
+.ring .rn{font:400 30px var(--display);fill:var(--ink)}
+.ring .rs{font:500 8.5px var(--mono);fill:var(--muted)}
+.hm-info{flex:1;min-width:230px}
+.hm-t{font:600 28px/1 var(--script);color:#b07f00;margin:0 0 4px}
+:root[data-theme="dark"] .hm-t{color:var(--yellow)}
+.hm-s{margin:0 0 12px;font-size:13px}
+.hm-btns{display:flex;gap:8px;flex-wrap:wrap}
+.hm-btns button,.hm-row button,.hm-reset{font:500 12px/1.2 var(--mono);color:var(--ink);background:none;border:1.5px solid var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+.hm-btns button:hover,.hm-row button:hover,.hm-reset:hover{background:var(--ink);color:var(--paper)}
+.hm-btns button:first-child{background:var(--yellow);color:#1d1d1b}
+.hm-btns button:first-child:hover{background:var(--ink);color:var(--paper)}
+.hm-chips{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px}
+.hm-chips div{display:flex;flex-direction:column;gap:2px}
+.hm-chips b{font:400 26px/1 var(--display)}
+.hm-chips span{font-size:11px;color:var(--muted)}
+.hm-two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hm-box{border:1px solid var(--ink);border-radius:12px;padding:14px 18px 16px;margin:0 0 16px;min-width:0}
+.hm-box>h3{margin:0 0 12px;font:600 13px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.hm-map{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px}
+.cell{font:500 11px/1.2 var(--mono);border:1.5px solid var(--ink);border-radius:9px;background:none;color:var(--ink);padding:7px 8px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px;min-width:0}
+.cell b{font-size:13px;font-weight:600}
+.cell span{font-size:10px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cell:hover{background:var(--soft)}
+.cell.on{background:var(--yellow);color:#1d1d1b}
+.cell.on span{color:#1d1d1b;opacity:.75}
+.hm-donut{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.hm-donut svg{width:130px;height:130px;flex:none}
+.hm-leg{list-style:none;margin:0;padding:0;font-size:12px;display:flex;flex-direction:column;gap:6px;flex:1;min-width:150px}
+.hm-leg li{display:flex;align-items:center;gap:8px}
+.hm-leg i{width:11px;height:11px;border-radius:3px;border:1px solid var(--ink);flex:none}
+.hm-leg small{margin-left:auto;color:var(--muted)}
+.hm-group{margin:0 0 18px}
+.hm-gh{display:flex;justify-content:space-between;align-items:baseline}
+.hm-gh h4{margin:0;font:600 12.5px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.hm-gh small{font-size:12px}
+.pbar{display:block;height:6px;border:1px solid var(--ink);border-radius:99px;overflow:hidden;margin:5px 0 6px}
+.pbar u{display:block;height:100%;background:var(--yellow);text-decoration:none}
+.hm-row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:5px 0;border-bottom:1px solid rgba(128,126,116,.35)}
+.hm-row label{display:flex;gap:10px;align-items:center;cursor:pointer;min-width:0}
+.hm-row input{accent-color:var(--yellow);width:16px;height:16px;margin:0;flex:none}
+.hm-row b{width:34px;flex:none}
+.hm-row label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hm-row.ok label span{opacity:.5}
+.hm-row small{color:var(--muted)}
+.hm-row button{padding:4px 12px;font-size:11px}
+.hm-chart{display:block;width:100%;height:auto}
+.hm-chart .bl{font:600 11px var(--mono);fill:var(--ink)}
+.hm-chart .bv{font:500 11px var(--mono);fill:var(--muted)}
+.hm-note{margin:8px 0 0;font-size:11.5px;color:var(--muted)}
+.hm-foot{display:flex;justify-content:flex-end}
+.hm-reset{font-size:11px;padding:6px 12px;color:var(--muted);border-color:var(--muted)}
+@media (max-width:640px){.hm-two{grid-template-columns:1fr}.ring{width:120px;height:120px}.hm-hero{gap:16px}}
+@media (max-width:640px){
+  .toolbar{grid-template-columns:auto minmax(0,1fr) auto;gap:10px;padding:0 10px}
+  .brand small,.addr kbd{display:none}
+  .tab{padding:0 1px;font-size:10px}
+  .tab.home{flex-basis:34px}
+  .tabs{padding:5px 6px 0}
+  .wrap{padding:0 10px 80px}
+  .folder{padding:18px 2px 24px}
+  section.mod>h2{grid-template-columns:auto minmax(0,1fr);gap:8px 12px}
+  section.mod>h2 .badge{font-size:42px}
+  .markdone{grid-column:1/-1}
+  .card{padding:12px 13px 10px}
+  .pn button{padding:8px 12px;font-size:11px}
+}
+@media print{
+  .chrome,.pn,section.home{display:none!important}
+  body::before{display:none}
+  section.mod{display:block!important;break-after:page}
+  .folder{border:0;padding:0}
+  .card{break-inside:avoid}
+}
+/* ================= v3.2 : chrome rapi + adaptif multi-device ================= */
+:root{--chrome-h:84px;--tabs-h:38px}
+section.mod{scroll-margin-top:calc(var(--chrome-h) + 8px)}
+body{overflow-wrap:break-word}
+.card{overflow-wrap:break-word}
+.chrome{padding-top:env(safe-area-inset-top,0px);transition:transform .22s ease;will-change:transform}
+.chrome.away{transform:translateY(calc(-1 * var(--tabs-h)))}
+
+/* tab strip: lebar minimum, bisa digeser, tepi memudar */
+.tabs{height:38px;padding:6px max(10px,env(safe-area-inset-right)) 0 max(10px,env(safe-area-inset-left));--fl:0px;--fr:0px;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%);
+  -webkit-overflow-scrolling:touch}
+.tab{flex:1 0 54px;min-width:54px;max-width:120px;height:32px;font-size:12px}
+.tab.home{flex:0 0 46px;min-width:46px}
+.tab.on .c{font-weight:600}
+
+/* toolbar: brand | cari | tema */
+.toolbar{grid-template-columns:auto minmax(0,1fr) auto;gap:14px;height:50px;align-content:center;
+  padding:0 max(12px,env(safe-area-inset-right)) 0 max(12px,env(safe-area-inset-left));overflow:visible}
+.addr{width:100%;max-width:560px;justify-self:center;height:34px;position:relative}
+.addr input{font-size:13px}
+.addr .x{display:none;appearance:none;border:0;background:var(--ink);color:var(--paper);width:20px;height:20px;border-radius:50%;
+  font:600 14px/1 var(--mono);padding:0;margin-right:2px;cursor:pointer;flex:none;place-items:center}
+.addr.has .x{display:grid}
+.addr.has kbd{display:none}
+.brand b{font-size:19px}
+
+/* bilah hasil pencarian */
+.sbar{display:none;align-items:center;gap:10px;padding:7px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));
+  background:var(--paper);border-bottom:1px solid rgba(128,126,116,.45);font-size:12px;color:var(--muted)}
+.searching .sbar{display:flex}
+.sbar .n{flex:none;color:var(--ink);font-weight:600}
+.sbar .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;padding:1px 0}
+.sbar .chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:500 11px/1 var(--mono);border:1.5px solid var(--ink);border-radius:999px;padding:5px 9px;background:none;color:var(--ink);cursor:pointer}
+.chip small{color:inherit;opacity:.6;margin-left:5px;font-size:inherit}
+@media (hover:hover){.chip:hover{background:var(--ink);color:var(--paper)}}
+
+/* mode cari: judul modul ringkas + tombol buka */
+.mod-open{display:none;font:500 11px/1 var(--mono);color:var(--ink);background:none;border:1.5px solid var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;white-space:nowrap;text-transform:none}
+.searching .mod-open{display:inline-flex}
+@media (hover:hover){.mod-open:hover{background:var(--ink);color:var(--paper)}}
+.searching section.mod>h2{grid-template-columns:auto minmax(0,1fr) auto;gap:0 12px;padding-bottom:10px;margin-bottom:6px;font-size:13px}
+.searching section.mod>h2 .badge{font-size:30px}
+.searching .markdone,.searching .dosen{display:none}
+#empty{padding:56px 12px;line-height:1.8}
+.searching section.mod.first{border-top:0!important;margin-top:0!important;padding-top:0!important}
+.searching .tab.on.dim{opacity:.6}
+
+/* tabel: petunjuk geser */
+.tw{-webkit-overflow-scrolling:touch;
+  background:
+   linear-gradient(90deg,var(--paper) 30%,transparent) 0 0/26px 100% no-repeat local,
+   linear-gradient(270deg,var(--paper) 30%,transparent) 100% 0/26px 100% no-repeat local,
+   linear-gradient(90deg,rgba(128,126,116,.45),transparent) 0 0/10px 100% no-repeat scroll,
+   linear-gradient(270deg,rgba(128,126,116,.45),transparent) 100% 0/10px 100% no-repeat scroll}
+
+/* layar lebar */
+.wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+@media (min-width:1100px){
+  .wrap{max-width:1060px}
+  body{font-size:14.5px}
+  .card{padding:16px 24px 14px}
+  .tab{max-width:132px}
+}
+/* tablet */
+@media (min-width:641px) and (max-width:900px){.wrap{padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))}}
+@media (max-width:900px){.hm-two{grid-template-columns:1fr}}
+
+/* ponsel */
+@media (max-width:640px){
+  .toolbar{gap:8px;height:50px;padding:0 max(10px,env(safe-area-inset-right)) 0 max(10px,env(safe-area-inset-left))}
+  .brand b{font-size:16px}
+  .brand small{display:none}
+  .addr{height:36px;padding:0 6px 0 11px}
+  .tab{flex-basis:50px;min-width:50px;max-width:none}
+  .wrap{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+  .sbar{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+  .searching section.mod>h2{grid-template-columns:auto minmax(0,1fr) auto;gap:0 10px}
+  .searching section.mod>h2 .badge{font-size:26px}
+  .pn{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .pn button{width:100%;min-height:44px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pn button:last-child{grid-column:2}
+  .pn span{display:none}
+  table{font-size:12px}
+  .hm-info{min-width:0;flex-basis:100%}
+  .hm-hero{justify-content:center;text-align:center}
+  .hm-btns,.hm-chips{justify-content:center}
+}
+@media (max-width:360px){.brand b{font-size:15px}.hm-map{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}}
+
+/* layar sentuh: target jari lebih besar, input 16px (cegah zoom iOS) */
+@media (pointer:coarse){
+  .tabs{height:46px;padding-top:6px}
+  .tab{height:40px;font-size:12.5px}
+  .toolbar{height:54px}
+  .addr{height:42px}
+  .addr input{font-size:16px}
+  .addr .x{width:26px;height:26px;font-size:16px}
+  .sw{width:52px;height:30px}
+  .sw i{width:24px;height:24px}
+  :root[data-theme="dark"] .sw i{transform:translateX(22px)}
+  .chip{padding:8px 12px}
+  .mod-open{padding:9px 14px}
+  .markdone{padding:8px 0;font-size:13px}
+  .markdone input{width:20px;height:20px}
+  .hm-row{padding:9px 0}
+  .hm-row input{width:20px;height:20px}
+  .hm-row button,.hm-btns button,.hm-reset{min-height:40px}
+  .cell{min-height:52px}
+  .pn button{min-height:44px}
+}
+@media (hover:none){
+  .addr kbd{display:none}
+  .tab:not(.on):hover::before{background:transparent}
+  .pn button:hover,.hm-row button:hover,.hm-reset:hover,.hm-btns button:not(:first-child):hover{background:none;color:var(--ink)}
+  .hm-reset:hover{color:var(--muted)}
+  .hm-btns button:first-child:hover{background:var(--yellow);color:#1d1d1b}
+  .cell:not(.on):hover{background:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chrome{transition:none}.sw i{transition:none}}
+@media print{.sbar{display:none!important}.chrome{transform:none}.wrap{zoom:1!important}.szpop{display:none!important}}
+
+/* ukuran tulisan manual */
+.wrap{zoom:var(--z,1)}
+.tools{justify-self:end;display:flex;align-items:center;gap:8px;position:relative}
+.szb{appearance:none;border:1px solid var(--ink);background:var(--soft);color:var(--ink);border-radius:999px;height:26px;min-width:38px;padding:0 9px;font:600 12px/1 var(--mono);cursor:pointer;flex:none}
+.szb[aria-expanded="true"]{background:var(--yellow);color:#1d1d1b}
+.szpop{position:absolute;top:calc(100% + 12px);right:0;z-index:70;display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--paper);color:var(--ink);border:1.5px solid var(--ink);border-radius:12px;box-shadow:0 8px 22px rgba(0,0,0,.2)}
+.szpop[hidden]{display:none}
+.szpop button{appearance:none;border:1.5px solid var(--ink);background:none;color:var(--ink);border-radius:999px;min-width:32px;height:30px;padding:0 9px;font:600 12px/1 var(--mono);cursor:pointer;flex:none}
+.szpop .szreset{font-weight:500;color:var(--muted);border-color:var(--muted)}
+.szpop input[type=range]{width:120px;min-width:0;accent-color:var(--yellow);margin:0}
+.szpop output{min-width:40px;text-align:center;font:600 12px/1 var(--mono)}
+@media (hover:hover){.szpop button:hover{background:var(--ink);color:var(--paper)}}
+@media (pointer:coarse){.szb{height:30px;min-width:44px}.szpop button{min-width:40px;height:40px}.szpop input[type=range]{width:130px}}
+@media (max-width:420px){.szpop{gap:6px;padding:9px 10px;right:-4px}.szpop input[type=range]{width:96px}.szpop .szreset{padding:0 7px}}
+
+.st{font-style:normal;color:#b07f00;font-size:.9em;margin-left:3px;white-space:nowrap}
+:root[data-theme="dark"] .st{color:var(--yellow)}
+h3 .st{font-size:1em;letter-spacing:0}
+</style>
+</head>
+<body>
+<header class="chrome">
+  <nav class="tabs" id="tabs" aria-label="Modul"></nav>
+  <div class="toolbar">
+    <div class="brand"><b>Blok 3.2</b><small>cbt 2 · K16-K30</small></div>
+    <label class="addr">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <input id="q" type="search" placeholder="cari istilah..." autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" inputmode="search" aria-label="Cari istilah">
+      <kbd>/</kbd>
+      <button id="qx" class="x" type="button" aria-label="Hapus pencarian">&times;</button>
+    </label>
+    <div class="tools"><button id="szBtn" class="szb" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="szPop" aria-label="Ukuran tulisan">Aa</button><button id="themeBtn" class="sw" type="button" role="switch" aria-checked="false" aria-label="Mode gelap"><i></i></button><div class="szpop" id="szPop" hidden><button type="button" data-sz="-5" aria-label="Perkecil tulisan">A&minus;</button><input id="szR" type="range" min="80" max="170" step="5" value="100" aria-label="Ukuran tulisan"><button type="button" data-sz="5" aria-label="Perbesar tulisan">A+</button><output id="szO" for="szR">100%</output><button type="button" data-sz="0" class="szreset" aria-label="Reset ukuran">reset</button></div></div>
+  </div>
+  <div class="sbar" id="sbar" role="status" aria-live="polite"></div>
+</header>
+
+<div class="wrap">
+
+<div class="folder" id="folder">
+<section class="home" id="home" aria-label="Home"></section>
+
+<!-- ============ K16 ============ -->
+<section class="mod" id="K16" data-title="K16 Farmakologi Obat Anti Angina">
+<h2><span class="badge">K16</span> Farmakologi Obat Anti Angina</h2>
+
+<div class="card"><h3>Keseimbangan O₂ Miokard</h3>
+<p><b>Angina:</b> kebutuhan O₂ miokard (MVO₂) &gt; suplai → metabolisme anaerob, asam laktat &amp; adenosin merangsang nosiseptor jantung.</p>
+<div class="tw"><table>
+<tr><th>Determinan suplai O₂</th><th>Determinan kebutuhan O₂ (MVO₂)</th></tr>
+<tr><td>Aliran darah koroner · kadar O₂ darah (Hb) · durasi diastol</td><td>Heart rate · kontraktilitas · tegangan dinding ventrikel (preload &amp; afterload)</td></tr>
+</table></div>
+<ul>
+<li><b>Preload</b> = venous return (pembuluh kapasitas / <b>vena</b>) → diturunkan dominan oleh <mark class="k">nitrat</mark>.</li>
+<li><b>Afterload</b> = SVR (pembuluh resistensi / <b>arteriol</b>) → diturunkan dominan oleh <mark class="k">CCB dihidropiridin</mark>.</li>
+</ul>
+<div class="trap"><b>Peningkatan suplai O₂</b> dan <b>bradikardi</b> BUKAN pemicu nyeri dada iskemik.</div>
+</div>
+
+<div class="card"><h3>Tiga Jenis Angina</h3>
+<div class="tw"><table>
+<tr><th>Jenis</th><th>Penyebab</th><th>Ciri &amp; EKG</th></tr>
+<tr><td><b>Stabil</b> (klasik / effort)</td><td>Plak aterosklerotik kronik yang tetap (≥ 70%)</td><td>Dipicu aktivitas/emosi, reda dengan istirahat atau nitrat SL; <b>depresi ST</b> reversibel</td></tr>
+<tr><td><b>Tidak stabil</b> (bagian SKA)</td><td>Ruptur plak + trombus parsial tanpa nekrosis (<b>troponin negatif</b>)</td><td>Saat istirahat (&gt; 20 menit) atau pola <i>crescendo</i></td></tr>
+<tr><td><b>Varian</b> (Prinzmetal / vasospastik)</td><td><b>Spasme fokal</b> arteri koroner epikardial</td><td>Saat istirahat, sering dini hari; <b>elevasi ST transien</b>; lini 1 <mark class="k">CCB</mark></td></tr>
+</table></div>
+<div class="trap"><b>β-blocker KONTRAINDIKASI</b> pada Prinzmetal: blokade β₂ membuat α₁ aktif tanpa lawan (<i>unopposed α</i>) → spasme koroner memberat.</div>
+</div>
+
+<div class="card"><h3>Strategi Obat &amp; Profil Hemodinamik</h3>
+<ul>
+<li><b>↓ kebutuhan + ↑ suplai O₂:</b> <mark class="k">nitrat</mark> dan <mark class="k">CCB</mark> <i class="st" title="pernah keluar di awetan">★</i></li>
+<li><b>Terutama ↓ kebutuhan O₂:</b> <mark class="k">β-blocker</mark> (propranolol, timolol, metoprolol, atenolol, bisoprolol).</li>
+</ul>
+<div class="tw"><table>
+<tr><th></th><th>Nitrat</th><th>β-blocker</th><th>CCB DHP</th><th>CCB non-DHP</th></tr>
+<tr><th>Preload</th><td>↓↓ (venodilatasi)</td><td>↔ / ↑</td><td>↔</td><td>↔</td></tr>
+<tr><th>Afterload</th><td>↓ (dosis tinggi)</td><td>↔</td><td>↓↓ (arteriol)</td><td>↓</td></tr>
+<tr><th>Heart rate</th><td>↑ refleks takikardia</td><td>↓↓</td><td>↑ refleks takikardia</td><td>↓↓</td></tr>
+<tr><th>Kontraktilitas</th><td>↔ (↑ refleks)</td><td>↓↓</td><td>↔ / ↓ ringan</td><td>↓↓</td></tr>
+<tr><th>Dilatasi koroner</th><td>↑↑</td><td>↔</td><td>↑↑</td><td>↑</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Nitrat Organik (NTG, ISDN, ISMN)</h3>
+<ul>
+<li><b>Mekanisme (NO–cGMP):</b> biotransformasi (glutathione S-transferase, ALDH2/ALDH3 mitokondria, gugus <b>−SH</b>) → <b>NO</b> → aktivasi <i>soluble guanylyl cyclase</i> → <mark class="k">↑ cGMP</mark> → PKG → defosforilasi rantai ringan miosin → relaksasi otot polos.</li>
+<li><b>Efek:</b> venodilatasi dominan (↓ preload), ↓ tekanan pulmonal &amp; ukuran jantung, dilatasi koroner epikardial; relaksasi otot polos bronkus, GI/bilier, genitourinari; <b>↓ agregasi trombosit</b>.</li>
+<li><b>Farmakokinetik:</b> NTG <b>sublingual</b> (onset 1-3 menit) = lini 1 serangan akut (oral kena <i>first-pass</i> hepar besar); ISMN bioavailabilitas oral ± 100%.</li>
+<li><b>Toleransi:</b> akibat <b>deplesi −SH</b> → wajib <mark class="k">interval bebas nitrat 8-12 jam</mark>/hari.</li>
+<li><b>ESO:</b> <b>sakit kepala berdenyut</b> (tersering), refleks takikardia, flushing, hipotensi ortostatik, methemoglobinemia (dosis tinggi).</li>
+</ul>
+<div class="trap">KI absolut dengan <b>inhibitor PDE-5</b> (sildenafil, tadalafil, vardenafil): cGMP menumpuk → hipotensi sistemik masif.</div>
+</div>
+
+<div class="card"><h3>β-blocker &amp; CCB</h3>
+<div class="tw"><table>
+<tr><th>Golongan</th><th>Kerja</th><th>Catatan</th></tr>
+<tr><td><b>β-blocker</b><br><small>kardioselektif: metoprolol, atenolol, bisoprolol, esmolol · non-selektif: propranolol, nadolol, timolol</small></td><td>Blok β₁ → ↓ HR, kontraktilitas, konduksi AV, CO, TD → ↓ MVO₂ + diastol lebih panjang (perfusi koroner)</td><td><ul><li><b>KI:</b> asma/PPOK (blokade β₂ → bronkokonstriksi), Prinzmetal, bradikardia berat, AV block.</li><li>Stop mendadak → <i>rebound angina</i> (up-regulation reseptor) → <b>tapering off</b>.</li></ul></td></tr>
+<tr><td><b>CCB DHP</b><br><small>amlodipin, nifedipin, felodipin</small></td><td>Blok kanal Ca²⁺ tipe-L, vasoselektif arteriol → ↓ afterload, dilatasi koroner</td><td><ul><li><b>ESO:</b> edema perifer, flushing, sakit kepala, hiperplasia gingiva (nifedipin).</li><li><b>Nifedipin kerja-pendek dihindari</b> (refleks takikardia).</li></ul></td></tr>
+<tr><td><b>CCB non-DHP</b><br><small>verapamil, diltiazem</small></td><td>Vaskular + jantung: tekan nodus SA &amp; AV → ↓ HR, ↓ kontraktilitas</td><td><b>Verapamil:</b> konstipasi.</td></tr>
+</table></div>
+<div class="trap"><b>Verapamil &amp; diltiazem</b> KI pada <b>HFrEF</b> dan <b>AV block</b> (inotropik &amp; dromotropik negatif).</div>
+</div>
+
+<div class="card"><h3>Antiangina Lini Kedua &amp; Kombinasi</h3>
+<div class="tw"><table>
+<tr><th>Obat</th><th>Mekanisme</th><th>Ciri khas</th></tr>
+<tr><td><b>Ranolazine</b></td><td>Hambat <b>late I<sub>Na</sub></b> → ↓ Na⁺ &amp; Ca²⁺ intrasel saat diastol → ↓ tegangan diastolik, ↑ efisiensi energi</td><td><b>Tanpa mengubah HR &amp; TD</b>; ESO QT memanjang</td></tr>
+<tr><td><b>Trimetazidine</b></td><td>Hambat parsial <b>3-KAT</b> → metabolisme bergeser dari oksidasi asam lemak ke <b>oksidasi glukosa</b> (O₂ lebih sedikit per ATP)</td><td>Modulator metabolik murni, tanpa efek hemodinamik</td></tr>
+<tr><td><b>Ivabradine</b></td><td>Hambat <b>kanal I<sub>f</sub></b> (<i>funny current</i>) nodus SA → ↓ HR murni</td><td>Hanya efektif pada irama sinus; ESO <b>fosfen</b></td></tr>
+<tr><td><b>Nicorandil</b></td><td>Aktivator <b>kanal K⁺-ATP</b> (arteriol) + <b>donor NO</b> (vena)</td><td>ESO <b>ulserasi mukosa</b> oral/perianal</td></tr>
+</table></div>
+<div class="note">Soal "antiangina pemodulasi metabolisme untuk efisiensi energi otot jantung" tanpa opsi trimetazidine → <b>ranolazine</b>. <i class="st" title="pernah keluar di awetan">★</i></div>
+<h4>Kombinasi</h4>
+<ul>
+<li><b>Nitrat + β-blocker (rasional):</b> β-blocker meredam refleks takikardia nitrat; nitrat mengurangi ↑ volume diastolik akhir akibat β-blocker. <i class="st" title="pernah keluar di awetan">★</i></li>
+<li><b>β-blocker + CCB DHP (rasional):</b> β-blocker mencegah refleks takikardia DHP.</li>
+</ul>
+<div class="trap"><b>β-blocker + CCB non-DHP</b> dihindari: sama-sama menekan SA &amp; AV → bradikardia berat, AV block total, gagal jantung.</div>
+</div>
+</section>
+
+<!-- ============ K17 ============ -->
+<section class="mod" id="K17" data-title="K17 Farmakologi Obat Anti Aritmia">
+<h2><span class="badge">K17</span> Farmakologi Obat Anti Aritmia</h2>
+
+<div class="card"><h3>Dasar Elektrofisiologi &amp; Tujuan Terapi</h3>
+<ul>
+<li><b>Sel respons cepat</b> (atrium, ventrikel, Purkinje): fase 0 Na⁺ masuk · fase 1 K⁺ keluar · fase 2 plateau (Ca²⁺ tipe-L masuk vs K⁺ keluar) · fase 3 K⁺ keluar · fase 4 istirahat.</li>
+<li><b>Sel respons lambat</b> (nodus SA &amp; AV): <b>depolarisasi spontan fase 4</b> (penentu otomatisitas/HR di SA); <b>fase 0 nodus AV bergantung Ca²⁺</b>.</li>
+</ul>
+<h4>4 tujuan obat antiaritmia <i class="st" title="pernah keluar di awetan">★</i></h4>
+<ol>
+<li>Mengembalikan &amp; mempertahankan irama sinus (<i>rhythm control</i>).</li>
+<li>Mengendalikan frekuensi ventrikel (<i>rate control</i>).</li>
+<li>Mencegah aritmia yang lebih serius atau kekambuhan.</li>
+<li>Menurunkan risiko komplikasi: stroke, gagal jantung, kematian jantung mendadak.</li>
+</ol></div>
+
+<div class="card"><h3>Klasifikasi Vaughan-Williams</h3>
+<div class="tw"><table>
+<tr><th>Kelas &amp; target</th><th>Efek AP / EKG</th><th>Obat</th><th>Catatan</th></tr>
+<tr><td><b>IA</b> · blok Na⁺ <b>sedang</b> + blok K⁺</td><td>Tekan fase 0, konduksi lambat, <b>↑ APD &amp; ERP</b> (PR, QRS, QT ↑)</td><td>Kuinidin, prokainamid, disopiramid</td><td><ul><li><b>Kuinidin:</b> juga antimalaria; <i>cinchonism</i> (tinitus), torsades.</li><li><b>Prokainamid:</b> <i>lupus-like syndrome</i>, agranulositosis.</li><li><b>Disopiramid:</b> antikolinergik, inotropik negatif kuat.</li></ul></td></tr>
+<tr><td><b>IB</b> · blok Na⁺ <b>ringan</b> (kinetika cepat)</td><td><b>Memperpendek APD</b>; selektif ventrikel iskemik</td><td><b>Lidokain</b> (IV), meksiletin (oral), fenitoin</td><td>Aritmia ventrikel akut (tak efektif untuk atrium); ESO SSP: parestesia, tremor, kejang</td></tr>
+<tr><td><b>IC</b> · blok Na⁺ <b>kuat</b></td><td>Konduksi sangat lambat, <b>APD tetap</b> (PR ↑, QRS lebar)</td><td>Flekainid, propafenon</td><td>Hindari pada jantung struktural/PJK (proaritmia)</td></tr>
+<tr><td><b>II</b> · blok <b>reseptor β</b> (↓ cAMP &amp; arus Ca²⁺)</td><td>Tekan fase 4 SA, konduksi AV lambat, ↓ HR &amp; kontraktilitas</td><td>Propranolol, metoprolol, esmolol, atenolol, bisoprolol, timolol</td><td><i>Rate control</i> AF/SVT; stop mendadak → angina/IMA; hati-hati asma &amp; AV block</td></tr>
+<tr><td><b>III</b> · blok <b>kanal K⁺</b> (↓ efluks fase 3)</td><td><b>↑ APD &amp; ERP</b> tanpa ganggu fase 0 (QT ↑)</td><td><mark class="k">Amiodaron</mark> (prototipe), sotalol, bretilium, dofetilid, ibutilid, dronedaron</td><td><ul><li><b>Amiodaron:</b> <i>multichannel</i> (K⁺, Na⁺, Ca²⁺, β); <b>fibrosis paru</b>, hipo/hipertiroid, hepatotoksik, <b>fotosensitivitas</b>, hipotensi.</li><li>QT ↑ → EAD → <b>torsades de pointes</b>.</li></ul></td></tr>
+<tr><td><b>IV</b> · blok <b>Ca²⁺ tipe-L</b></td><td>Tekan fase 4, <b>konduksi AV lambat</b>, ↑ ERP nodus AV</td><td><mark class="k">Verapamil, diltiazem</mark></td><td>SVT &amp; <i>rate control</i> AF; <b>KI HFrEF &amp; AV block</b></td></tr>
+<tr><td><b>Lain-lain</b></td><td>Adenosin: reseptor A₁ → ↑ efluks K⁺, ↓ Ca²⁺ → blok AV sangat singkat. Digoksin: ↑ vagal → ↓ konduksi AV.</td><td>Adenosin, digoksin, atropin, MgSO₄</td><td><b>Adenosin</b> = lini 1 terminasi SVT <i>narrow-complex</i>; <b>atropin</b> (antimuskarinik) untuk bradikardia simtomatik</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Kunci Soal Kasus <i class="st" title="pernah keluar di awetan">★</i></h3>
+<p>Skenario: berdebar ireguler, HR 110×/menit, Q patologis V1-V4.</p>
+<ul>
+<li>Jenis terapi → <b>antiaritmia</b>.</li>
+<li>Mekanisme golongan II → <b>hambat reseptor β-adrenergik</b>.</li>
+<li>Prototipe golongan III (blok K⁺) → <mark class="k">amiodaron</mark>.</li>
+<li>Prototipe golongan IV (blok Ca²⁺) → <mark class="k">verapamil / diltiazem</mark>.</li>
+</ul>
+<div class="trap"><b>Nifedipin</b> BUKAN antiaritmia golongan IV: tidak bekerja pada nodus konduksi.</div>
+</div>
+</section>
+
+<!-- ============ K18 ============ -->
+<section class="mod" id="K18" data-title="K18 Farmakologi Obat Gagal Jantung">
+<h2><span class="badge">K18</span> Farmakologi Obat Gagal Jantung</h2>
+
+<div class="card"><h3>Patofisiologi &amp; Kompensasi Neurohormonal</h3>
+<p><b>Dasar:</b> kerusakan miokard → <mark class="k">curah jantung turun</mark> + kongesti paru dan/atau sistemik. <small>(kiri vs kanan: lihat K29)</small></p>
+<div class="tw"><table>
+<tr><th>Jalur maladaptif</th><th>Efek</th></tr>
+<tr><td><b>Simpatis</b></td><td>β₁: ↑ HR &amp; kontraktilitas · α₁: vasokonstriksi → ↑ SVR (afterload)</td></tr>
+<tr><td><b>RAAS</b></td><td>Angiotensin II: vasokonstriksi (↑ afterload) · aldosteron: retensi Na⁺ &amp; air (↑ preload) · <b>remodeling</b> (hipertrofi, dilatasi, fibrosis)</td></tr>
+<tr><td><b>ADH (vasopresin)</b></td><td>Reseptor V₂ duktus kolektivus → retensi air (↑ preload &amp; afterload)</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Klasifikasi Berdasarkan LVEF</h3>
+<div class="tw"><table>
+<tr><th>Tipe</th><th>LVEF</th><th>Ciri / fokus terapi</th></tr>
+<tr><td><b>HFrEF</b> (sistolik)</td><td><b>≤ 40%</b></td><td>Kontraksi LV lemah; terapi penurun mortalitas: ARNI/ACEI/ARB, β-blocker, MRA, SGLT2i, diuretik, digoksin</td></tr>
+<tr><td><b>HFmrEF</b></td><td>41-49%</td><td>Penurunan ringan kontraktilitas LV</td></tr>
+<tr><td><b>HFpEF</b> (diastolik)</td><td><b>≥ 50%</b></td><td>Ventrikel kaku → gangguan relaksasi &amp; pengisian; fokus komorbid: HT (ACEI/ARB/CCB), DM (SGLT2i), AF (β-blocker/digoksin/antikoagulan), kongesti (furosemid)</td></tr>
+<tr><td><b>HFimpEF</b></td><td>≤ 40% → naik ≥ 10 poin jadi &gt; 40%</td><td>Fraksi ejeksi membaik</td></tr>
+</table></div></div>
+
+<div class="card"><h3>ARNI &amp; Digoksin</h3>
+<h4>ARNI: sacubitril/valsartan</h4>
+<ul>
+<li>Khusus <b>HFrEF</b>; lebih efektif dari ACEI menurunkan mortalitas.</li>
+<li><b>Sacubitril:</b> hambat <mark class="k">neprilysin</mark> → ↑ ANP, BNP, CNP, bradikinin → vasodilatasi, natriuresis/diuresis, ↓ tekanan pengisian, hambat fibrosis/hipertrofi.</li>
+<li><b>Valsartan:</b> blok AT₁ → ↓ vasokonstriksi, aldosteron, retensi Na⁺/air, remodeling.</li>
+</ul>
+<h4>Digoksin (glikosida jantung)</h4>
+<ul>
+<li><b>Mekanisme:</b> hambat <mark class="k">Na⁺/K⁺-ATPase</mark> → ↑ Na⁺ intrasel → antiporter Na⁺/Ca²⁺ terhambat → <b>↑ Ca²⁺ intrasel</b> → <b>inotropik positif</b>. <i class="st" title="pernah keluar di awetan">★</i></li>
+<li><b>Indikasi:</b> HFrEF + <b>fibrilasi atrium</b>, atau gejala belum terkontrol terapi standar.</li>
+<li><b>Toksisitas</b> (indeks terapi sempit; overdosis/gangguan ginjal): mual, muntah, lelah, <b>penglihatan kuning</b>; paling fatal <b>aritmia ventrikular</b>, makin mudah pada <b>hipokalemia</b>. <i class="st" title="pernah keluar di awetan">★</i></li>
+</ul>
+<div class="tw"><table>
+<tr><th>Obat</th><th>Absorpsi oral</th><th>t½</th><th>Eliminasi / ciri</th></tr>
+<tr><td><b>Digoksin</b></td><td>70-80%</td><td>36-48 jam</td><td><b>Ginjal</b> (bentuk utuh)</td></tr>
+<tr><td><b>Digitoksin</b></td><td>± 100%</td><td>5-7 hari</td><td><b>Hepar/bilier</b></td></tr>
+<tr><td><b>Strophantin / ouabain</b></td><td colspan="3">Glikosida dengan onset &amp; lama kerja <b>singkat</b></td></tr>
+<tr><td><b>Dobutamin</b></td><td>IV</td><td><b>2 menit</b></td><td>Inotropik intravena</td></tr>
+</table></div></div>
+
+<div class="card"><h3>RAAS, Diuretik, Vasodilator, SGLT2i</h3>
+<div class="tw"><table>
+<tr><th>Golongan</th><th>Mekanisme</th><th>Catatan</th></tr>
+<tr><td><b>Aliskiren</b></td><td>Hambat renin langsung (angiotensinogen tak jadi Ang I)</td><td>-</td></tr>
+<tr><td><b>ACEI</b><br><small>captopril, enalapril, lisinopril, ramipril</small></td><td>Hambat Ang I → Ang II: vasodilatasi (↓ pre &amp; afterload), ↓ aldosteron (↓ ekskresi K⁺)</td><td>ESO <b>batuk kering</b>, angioedema (bradikinin), <b>hiperkalemia</b></td></tr>
+<tr><td><b>ARB</b><br><small>losartan, valsartan, candesartan, irbesartan, telmisartan</small></td><td>Blok selektif reseptor AT₁</td><td>Tanpa batuk kering → pengganti bila intoleran ACEI</td></tr>
+<tr><td><b>Loop: furosemid</b></td><td>Hambat <b>Na⁺/K⁺/2Cl⁻</b> luminal ansa Henle asendens tebal</td><td>Diuresis kuat (kongesti/edema paru, krisis HT); ESO <b>hipokalemia</b></td></tr>
+<tr><td><b>Thiazide</b><br><small>HCT, indapamid</small></td><td>Hambat Na⁺/Cl⁻ tubulus distal</td><td><b>ARB + thiazide</b> sinergis</td></tr>
+<tr><td><b>Hemat kalium</b></td><td>Spironolakton/eplerenon: <b>antagonis aldosteron</b> (MRA) duktus kolektivus · amilorid/triamteren: blok kanal Na⁺ epitel</td><td>Mempertahankan K⁺; MRA mencegah fibrosis miokard</td></tr>
+<tr><td><b>Hydralazine + ISDN</b></td><td>Hydralazine: dilatasi <b>arteriol</b> (↓ afterload) · ISDN: dilatasi <b>vena</b> (↓ preload)</td><td>Untuk intoleran ACEI/ARB; <b>hydralazine aman untuk ibu hamil</b></td></tr>
+<tr><td><b>SGLT2i</b><br><small>dapagliflozin, empagliflozin</small></td><td>Tubulus proksimal: ↑ ekskresi glukosa &amp; Na⁺ (diuresis osmotik, natriuresis) + ↑ ATP jantung (lipolisis/ketogenesis)</td><td>Efektif <b>HFrEF &amp; HFpEF</b>, dengan/tanpa DM</td></tr>
+</table></div>
+<div class="trap"><b>ACEI / ARB</b> KI mutlak pada <b>kehamilan</b> (teratogenik) dan stenosis arteri renalis bilateral.</div>
+<div class="trap"><b>ACEI/ARB + spironolakton/triamteren</b> → hiperkalemia berat: keduanya ↓ ekskresi K⁺. <i class="st" title="pernah keluar di awetan">★</i></div>
+</div>
+</section>
+
+<!-- ============ K19 ============ -->
+<section class="mod" id="K19" data-title="K19 Farmakologi Obat Sistem Respirasi: Obat Lokal Saluran Napas">
+<h2><span class="badge">K19</span> Farmakologi Obat Sistem Respirasi: Obat Lokal Saluran Napas</h2>
+
+<div class="card"><h3>Poin dari Awetan</h3>
+<div class="note">PPT K19 belum ada di sumber; poin ini dari awetan. Cek ulang dengan slide.</div>
+<div class="tw"><table>
+<tr><th>Obat</th><th>Kunci</th></tr>
+<tr><td><b>Antihistamin H1</b> (rinitis alergi)</td><td>ESO <mark class="k">sedasi</mark></td></tr>
+<tr><td><b>Kromolin</b></td><td><b>Stabilisasi sel mast</b> (menekan pelepasan mediator)</td></tr>
+<tr><td><b>Dekongestan</b></td><td>Efedrin, fenilefrin, nafazolin, pseudoefedrin</td></tr>
+<tr><td><b>Asma akut</b></td><td><mark class="k">Albuterol / salbutamol</mark> (SABA)</td></tr>
+</table></div>
+<div class="trap"><b>Propranolol</b> (β-blocker non-selektif) KONTRAINDIKASI pada asma: bronkokonstriksi.</div>
+<p><small>Obat batuk (antitusif, ekspektoran, mukolitik, mukokinetik): lihat K24.</small></p>
+</div>
+</section>
+
+<!-- ============ K20 ============ -->
+<section class="mod" id="K20" data-title="K20 Farmakologi Obat TB">
+<h2><span class="badge">K20</span> Farmakologi Obat TB</h2>
+
+<div class="card"><h3>Obat Anti-TB (OAT)</h3>
+<div class="note">PPT K20 belum ada di sumber; dari awetan + pengetahuan umum. Cek ulang dengan slide.</div>
+<div class="tw"><table>
+<tr><th>Obat</th><th>Mekanisme</th><th>ESO khas</th></tr>
+<tr><td><b>Rifampisin</b></td><td>Hambat <b>RNA polimerase</b>; bakterisidal (kuman membelah)</td><td><mark class="k">Cairan tubuh oranye-merah</mark> (urin, keringat, air mata), hepatotoksik, interaksi obat (<b>induksi CYP</b>); jangan monoterapi</td></tr>
+<tr><td><b>Isoniazid (INH)</b></td><td>Hambat sintesis <b>asam mikolat</b>; bakterisidal (kuman membelah)</td><td><mark class="k">Neuropati perifer</mark> (beri vit B6), hepatotoksik</td></tr>
+<tr><td><b>Pirazinamid</b></td><td>Aktif di <b>lingkungan asam</b> (fagolisosom)</td><td>Hepatotoksik, <b>hiperurisemia</b></td></tr>
+<tr><td><b>Etambutol</b></td><td>-</td><td><mark class="k">Neuritis optik</mark> (buram, sulit bedakan hijau-merah)</td></tr>
+<tr><td><b>Streptomisin</b></td><td>-</td><td>Ototoksik, nefrotoksik</td></tr>
+</table></div>
+<ul>
+<li><b>Lini 1:</b> INH, RIF, PZA, EMB, (SM).</li>
+<li><b>MDR-TB</b> = resisten <b>rifampisin + isoniazid</b>.</li>
+<li>Fluorokuinolon aktif thd <i>M. tuberculosis</i> → <b>singkirkan TB</b> sebelum FQ empiris. Laringitis TB → OAT.</li>
+</ul></div>
+
+<div class="card"><h3>TB Laten &amp; TB Pleuritis</h3>
+<ul>
+<li><b>TB laten:</b> <b>IGRA (+)</b> / TST (+) <b>tanpa gejala</b>; yang diperiksa respon imun terhadap antigen TB (bukan pewarnaan Gram).</li>
+<li><b>TST:</b> indurasi ≥ 10 mm = positif (anak batuk kronik: 15 mm = positif).</li>
+<li><b>TB pleuritis:</b> cairan pleura <b>eksudat limfositik</b> + <mark class="k">ADA ≥ 40 U/L</mark>.</li>
+</ul></div>
+</section>
+
+<!-- ============ K21 ============ -->
+<section class="mod" id="K21" data-title="K21 Farmakologi Antibiotik pada Infeksi Saluran Napas">
+<h2><span class="badge">K21</span> Farmakologi Antibiotik pada Infeksi Saluran Napas</h2>
+<p class="dosen">dr. Setiawati</p>
+
+<div class="card"><h3>Konsep Dasar &amp; Spektrum</h3>
+<ul>
+<li>Antibiotik pertama: <b>penisilin</b> (Fleming 1928, <i>Penicillium notatum</i>).</li>
+<li>Mayoritas ISPA (common cold, faringitis, rinosinusitis akut &lt; 10 hari, bronkitis akut) = <b>virus</b> → antibiotik tidak perlu.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Sifat</th><th>Golongan</th></tr>
+<tr><td><b>Bakterisidal</b></td><td>β-laktam (<mark class="k">penisilin</mark> <i class="st" title="pernah keluar di awetan">★</i>, sefalosporin, karbapenem), vankomisin, aminoglikosida, fluorokuinolon, kotrimoksazol (kombinasi), rifampisin/INH (kuman membelah)</td></tr>
+<tr><td><b>Bakteriostatik</b></td><td>Tetrasiklin, makrolida, klindamisin, kloramfenikol, linezolid, sulfonamid &amp; trimetoprim (masing-masing)</td></tr>
+</table></div>
+<div class="tw"><table>
+<tr><th>Spektrum</th><th>Contoh</th></tr>
+<tr><td><b>Sempit</b></td><td>Penisilin G/V (streptokokus, pneumokokus sensitif), kloksasilin (<i>S. aureus</i> penghasil penisilinase), vankomisin (Gram + termasuk MRSA), aminoglikosida (Gram − aerob), polimiksin (Gram −)</td></tr>
+<tr><td><b>Sedang</b></td><td>Aminopenisilin (amoksisilin, ampisilin), sefalosporin gen 1-2, makrolida (Gram + &amp; atipikal; eritromisin = Gram + sempit), klindamisin (Gram + &amp; anaerob)</td></tr>
+<tr><td><b>Luas</b></td><td>Amoksi-klavulanat, sefalosporin gen 3-4, karbapenem, fluorokuinolon, tetrasiklin, kloramfenikol, kotrimoksazol</td></tr>
+</table></div>
+<div class="note">Soal "spektrum sempit hanya Gram positif" (opsi streptomisin, gentamisin, eritromisin, tetrasiklin, polimiksin B) → <b>eritromisin</b>: aminoglikosida &amp; polimiksin = Gram −, tetrasiklin = luas. Kunci awetan ambigu.</div>
+<p><b>Atipikal:</b> <i>Mycoplasma pneumoniae</i> (<b>tanpa dinding sel</b>), <i>Chlamydophila pneumoniae</i> &amp; <i>Legionella</i> (intraseluler) → <b>β-laktam tidak efektif</b>; pakai makrolida, doksisiklin, atau FQ respirasi.</p>
+</div>
+
+<div class="card"><h3>Target Kerja Antibiotik <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th>Target</th><th>Golongan</th></tr>
+<tr><td><b>Dinding sel</b></td><td>β-laktam (ikat <b>PBP</b>), vankomisin (ikat D-Ala-D-Ala)</td></tr>
+<tr><td><b>Membran sel</b></td><td>Polimiksin B, kolistin</td></tr>
+<tr><td><b>Ribosom 30S</b></td><td>Aminoglikosida (salah baca mRNA, bakterisidal), tetrasiklin</td></tr>
+<tr><td><b>Ribosom 50S</b></td><td>Makrolida (hambat translokasi), klindamisin, kloramfenikol (peptidil transferase), linezolid</td></tr>
+<tr><td><b>Asam nukleat</b></td><td><mark class="k">Fluorokuinolon</mark> (DNA girase &amp; topoisomerase IV), rifampisin (RNA polimerase), metronidazol (radikal merusak DNA; anaerob &amp; protozoa)</td></tr>
+<tr><td><b>Metabolisme folat</b></td><td>Sulfonamid, trimetoprim</td></tr>
+</table></div>
+<p><b>Mnemonik:</b> "Buy AT 30, CELL at 50" → <b>A</b>minoglikosida, <b>T</b>etrasiklin (30S) | <b>C</b>hloramphenicol, <b>E</b>rythro/makrolida, c<b>L</b>indamycin, <b>L</b>inezolid (50S).</p>
+<h4>Kotrimoksazol (SMX + TMP, 5:1) <i class="st" title="pernah keluar di awetan">★</i></h4>
+<p>PABA →<small>[dihidropteroat sintase ⊣ <b>sulfametoksazol</b>]</small>→ asam dihidrofolat →<small>[dihidrofolat reduktase ⊣ <b>trimetoprim</b>]</small>→ tetrahidrofolat → purin, timidin → DNA</p>
+<ul>
+<li>Blokade sekuensial → <b>sinergis</b>, bakterisidal. SMX bersaing dengan PABA; TMP hambat DHF → THF.</li>
+<li><b>Indikasi:</b> sinusitis, OMA, ISK, <b>pneumonia &amp; profilaksis <i>Pneumocystis jirovecii</i></b>, Nocardia. Resistensi pneumokokus/<i>H. influenzae</i> tinggi → bukan lini 1 ISPA.</li>
+<li><b>ESO:</b> SJS/TEN, hiperkalemia, hemolisis G6PD. Hindari trimester 1, menjelang persalinan, neonatus (kernikterus).</li>
+</ul></div>
+
+<div class="card"><h3>Farmakokinetik / Farmakodinamik <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th>Pola</th><th>Indeks</th><th>Golongan</th><th>Implikasi</th></tr>
+<tr><td><b>Concentration-dependent</b> (PAE panjang)</td><td>Cmax/MIC</td><td><b>Aminoglikosida</b></td><td>Dosis besar <b>sekali sehari</b> (↑ efikasi, ↓ nefrotoksik)</td></tr>
+<tr><td><b>Concentration-dependent + AUC</b></td><td>AUC24/MIC</td><td><mark class="k">Fluorokuinolon</mark>, azitromisin, doksisiklin/tetrasiklin, vankomisin, linezolid</td><td>Dosis harian total yang menentukan</td></tr>
+<tr><td><b>Time-dependent</b></td><td>%T&gt;MIC (40-70%)</td><td><b>β-laktam</b>, eritromisin, klaritromisin, klindamisin</td><td>Dosis terbagi / interval pendek / infus diperpanjang</td></tr>
+</table></div>
+<div class="trap">Soal "concentration dependent" (opsi azitromisin/penisilin/tetrasiklin/FQ) → <b>fluorokuinolon</b>. Penisilin = time-dependent.</div>
+<p><b>t½:</b> amoksisilin ± 1 jam (2-3×/hari) · azitromisin ± 68 jam (cukup 3-5 hari).</p>
+</div>
+
+<div class="card"><h3>Penisilin &amp; Sefalosporin</h3>
+<div class="tw"><table>
+<tr><th>Penisilin</th><th>Contoh</th><th>Peran</th></tr>
+<tr><td>Alami</td><td>Penisilin G (benzatin, prokain), <b>penisilin V</b> (oral)</td><td><b>Faringitis GAS</b>, difteri (+ ADS), profilaksis demam reumatik</td></tr>
+<tr><td>Antistafilokokus</td><td>Kloksasilin, flukloksasilin</td><td>MSSA</td></tr>
+<tr><td>Aminopenisilin</td><td><b>Amoksisilin</b>, ampisilin</td><td><b>Lini 1 sinusitis, otitis media, CAP rawat jalan</b></td></tr>
+<tr><td>+ inhibitor</td><td><b>Amoksi-klavulanat</b>, ampisilin-sulbaktam</td><td>Gagal amoksisilin, penghasil β-laktamase, aspirasi</td></tr>
+<tr><td>Antipseudomonas</td><td>Piperasilin-tazobaktam</td><td>HAP/VAP</td></tr>
+</table></div>
+<ul>
+<li><b>Penisilin:</b> ikat PBP → dinding sel gagal → lisis (bakterisidal); t½ 0,5-1,5 jam; ESO utama hipersensitivitas.</li>
+<li><b>Klavulanat</b> = <mark class="k">inhibitor β-laktamase</mark> (<i>suicide inhibitor</i>, ireversibel) → lindungi amoksisilin; spektrum meluas ke MSSA, <i>H. influenzae</i>, <i>M. catarrhalis</i> penghasil β-laktamase. <i class="st" title="pernah keluar di awetan">★</i> ESO: diare (tersering), mual, ruam, kandidiasis, <b>hepatitis kolestatik</b>; minum di awal makan; t½ ± 1 jam (memanjang pada gagal ginjal).</li>
+</ul>
+<h4>Mekanisme resistensi β-laktam</h4>
+<ol>
+<li><b>β-laktamase</b> (<i>H. influenzae</i>, <i>M. catarrhalis</i>, <i>S. aureus</i>; ESBL, karbapenemase) → inhibitor β-laktamase / sefalosporin stabil.</li>
+<li><b>Perubahan PBP</b> (PRSP; <b>MRSA = PBP2a, gen mecA</b>) → amoksisilin dosis tinggi untuk PRSP; vankomisin/linezolid/seftarolin untuk MRSA.</li>
+<li><b>Permeabilitas / efluks</b> (<i>P. aeruginosa</i>, <i>Acinetobacter</i>).</li>
+</ol>
+<div class="tw"><table>
+<tr><th>Sefalosporin</th><th>Contoh</th><th>Peran saluran napas</th></tr>
+<tr><td>Gen 1</td><td>Sefaleksin, <b>sefadroksil</b>, sefazolin</td><td><b>Faringitis pada alergi penisilin non-anafilaksis</b>; lemah thd <i>H. influenzae</i></td></tr>
+<tr><td>Gen 2</td><td><b>Sefuroksim</b>, sefaklor, sefprozil</td><td>Sinusitis, OMA (alternatif), CAP; + <i>H. influenzae</i>, <i>M. catarrhalis</i></td></tr>
+<tr><td>Gen 3</td><td><b>Seftriakson</b>, sefotaksim, sefiksim, sefpodoksim, seftazidim</td><td>CAP rawat inap, OMA gagal terapi; seftazidim antipseudomonas</td></tr>
+<tr><td>Gen 4</td><td>Sefepim</td><td>HAP/VAP (termasuk <i>P. aeruginosa</i>)</td></tr>
+<tr><td>Gen 5</td><td><b>Seftarolin</b>, seftobiprol</td><td><b>MRSA</b></td></tr>
+</table></div>
+<p><small>Tidak ada sefalosporin yang aktif thd atipikal &amp; enterokokus; hanya gen 5 yang mencakup MRSA.</small></p>
+</div>
+
+<div class="card"><h3>Karbapenem, Makrolida, Tetrasiklin, Fluorokuinolon</h3>
+<h4>Karbapenem: meropenem, imipenem, ertapenem <i class="st" title="pernah keluar di awetan">★</i></h4>
+<ul>
+<li>Sangat luas (Gram +, Gram −, anaerob), <b>stabil thd β-laktamase termasuk ESBL</b>, aktif thd <i>P. aeruginosa</i> (ertapenem tidak). Parenteral, ekskresi ginjal, tembus CSS.</li>
+<li>Indikasi: <mark class="k">HAP/VAP, ESBL di ICU</mark>, infeksi intra-abdomen kompleks, meningitis, MDR. ESO kejang (imipenem &gt; meropenem), ↓ kadar valproat. Antibiotik cadangan.</li>
+<li><b>Monobaktam (aztreonam):</b> hanya Gram − aerob; boleh pada alergi penisilin.</li>
+</ul>
+<h4>Makrolida</h4>
+<p>Prototipe eritromisin (1952); klaritromisin, azitromisin, roksitromisin, spiramisin. Ikat <b>50S</b>, hambat translokasi (bakteriostatik). Spektrum: streptokokus, <i>S. aureus</i>, <b>atipikal</b>, <b><i>Bordetella</i> (pertusis lini 1)</b>, <i>M. catarrhalis</i>, <i>H. influenzae</i> (azitro/klaritro &gt; eritro).</p>
+<div class="tw"><table>
+<tr><th></th><th>Eritromisin</th><th>Klaritromisin</th><th>Azitromisin</th></tr>
+<tr><th>t½</th><td>1,5-2 jam</td><td>3-7 jam</td><td>± 68 jam</td></tr>
+<tr><th>Frekuensi</th><td>4×/hari</td><td>2×/hari</td><td>1×/hari, 3-5 hari</td></tr>
+<tr><th>Inhibisi CYP3A4</th><td>Kuat</td><td>Kuat</td><td>Minimal</td></tr>
+<tr><th>ESO GI</th><td>Sering (agonis motilin)</td><td>Sedang</td><td>Ringan</td></tr>
+</table></div>
+<ul>
+<li>Semua → <b>QT memanjang</b>. Azitromisin lebih poten thd Gram −, volume distribusi luas.</li>
+<li><b>CYP3A4 (eritro/klaritro):</b> ↑ simvastatin (<b>miopati</b>) <i class="st" title="pernah keluar di awetan">★</i>, warfarin, karbamazepin, siklosporin.</li>
+</ul>
+<h4>Tetrasiklin: doksisiklin, minosiklin <i class="st" title="pernah keluar di awetan">★</i></h4>
+<ul>
+<li>Luas, atipikal, Rickettsia, Chlamydia; lipofilik, t½ &gt; 15 jam. Peran: alternatif CAP rawat jalan, <b>sinusitis pada alergi penisilin</b>, eksaserbasi PPOK.</li>
+<li><mark class="k">Gigi kuning-cokelat permanen</mark> pada anak &lt; 8 th, hamil, menyusui (kelasi <b>kalsium</b> di gigi &amp; tulang).</li>
+<li>Kelasi Ca/Mg/Al/Fe (susu, antasida) → jarak 2-3 jam. ESO fotosensitivitas, esofagitis (banyak air, posisi tegak), vestibular (minosiklin).</li>
+</ul>
+<h4>Fluorokuinolon <i class="st" title="pernah keluar di awetan">★</i></h4>
+<ul>
+<li><b>Levofloksasin</b> (gen 3, "FQ respirasi": + pneumokokus, atipikal), moksifloksasin (+ anaerob, bukan untuk ISK), siprofloksasin (gen 2: Gram − termasuk <i>Pseudomonas</i>, lemah thd pneumokokus).</li>
+<li>Hambat <mark class="k">DNA girase (topo II) &amp; topoisomerase IV</mark> → bakterisidal, concentration-dependent.</li>
+<li><b>ESO:</b> tendinopati/ruptur tendon, QT ↑, aneurisma/diseksi aorta, disglikemia, efek SSP, artropati anak. Siprofloksasin ↑ kadar teofilin. Aktif thd TB → singkirkan TB dulu.</li>
+</ul></div>
+
+<div class="card"><h3>Aminoglikosida &amp; Lain-lain</h3>
+<ul>
+<li><b>Aminoglikosida</b> (gentamisin, amikasin, tobramisin, streptomisin): ikat 30S → salah baca mRNA → bakterisidal; Gram − aerob (termasuk <i>Pseudomonas</i>); sinergis dengan β-laktam. <b>Tidak aktif thd anaerob</b> (transpor butuh O₂), penetrasi paru rendah, aktivitas turun di pH asam → <b>bukan monoterapi pneumonia</b>; kombinasi untuk HAP/VAP. Toksisitas: <b>nefrotoksik</b> (tubulus proksimal, reversibel), <b>ototoksik</b> (sering ireversibel), blokade neuromuskular; hindari saat hamil.</li>
+<li><b>Klindamisin:</b> 50S; Gram + (sebagian MRSA) &amp; <b>anaerob</b> → pneumonia aspirasi/abses paru, faringitis GAS gagal terapi/alergi. ESO diare, <b>kolitis <i>C. difficile</i></b>.</li>
+<li><b>Kloramfenikol:</b> luas; ESO <b>anemia aplastik</b>, <b>grey baby syndrome</b>.</li>
+<li><b>Vankomisin / linezolid:</b> pneumonia MRSA. Vankomisin nefrotoksik, <i>red man</i>; linezolid trombositopenia (&gt; 2 minggu), interaksi serotonergik.</li>
+<li><b>Rifampisin:</b> RNA polimerase; jangan monoterapi.</li>
+</ul></div>
+
+<div class="card"><h3>Infeksi Saluran Napas Atas → Antibiotik</h3>
+<div class="tw"><table>
+<tr><th>Penyakit</th><th>Penyebab</th><th>Lini 1</th><th>Alternatif / khusus</th></tr>
+<tr><td><b>Rinitis</b></td><td>Virus &gt; bakteri</td><td>Simtomatik: paracetamol, dekongestan (pseudoefedrin, fenilefrin)</td><td>AB hanya bila komplikasi: amoksisilin, eritromisin, sefadroksil. <b>Rinitis difteri</b> (sekret berdarah, membran keabuan) → penisilin sistemik + antitoksin</td></tr>
+<tr><td><b>Sinusitis</b></td><td><i>S. pneumoniae, H. influenzae, M. catarrhalis</i>, <i>S. aureus</i></td><td><b>Amoksisilin</b> / amoksi-klav, kotrimoksazol, eritromisin, doksisiklin</td><td>Lini 2: amoksi-klav, sefuroksim, klaritromisin, azitromisin (500 → 250 mg × 4 hari), levofloksasin. <b>Kronik</b>: amoksi-klav, azitro, levo; 10-14 hari</td></tr>
+<tr><td><b>Faringitis</b></td><td><i>S. pyogenes</i> (GAS), strep grup C, <i>C. diphtheriae</i>, <i>N. gonorrhoeae</i>; virus tersering</td><td><b>Penisilin V</b> (anak 2-3×250 mg; dewasa 2-3×500 mg), amoksisilin, <b>benzatin penisilin G 1,2 juta U IM</b> dosis tunggal</td><td>Alergi: <b>eritromisin</b> 4×500 mg, <b>azitromisin 5 hari</b>, klaritromisin, <b>sefadroksil</b>. Gagal terapi: <b>klindamisin 10 hari</b>, amoksi-klav, benzatin ± rifampisin</td></tr>
+<tr><td><b>Laringitis</b></td><td>Virus (influenza, parainfluenza, rhino, adeno) &gt; bakteri</td><td>Paracetamol/ibuprofen</td><td>Penisilin bila GAS/radang meluas ke paru; laringitis TB → OAT</td></tr>
+<tr><td><b>Otitis media</b></td><td>OMA: virus; <i>S. pneumoniae, H. influenzae, M. catarrhalis</i> · OMK: <i>P. aeruginosa, Proteus, S. aureus</i></td><td><b>Amoksisilin</b>: risiko rendah 40 mg/kg/hari ÷3; risiko tinggi 80 mg/kg/hari ÷2</td><td>Amoksi-klav, kotrimoksazol, sefuroksim, <b>seftriakson IM</b> (1 dosis; 3 hari bila resisten), sefprozil, sefiksim. OMK: topikal + oral</td></tr>
+</table></div>
+<p><small>Gejala sinusitis: hidung tersumbat, sekret kental kuning-hijau, nyeri tekan wajah, demam, batuk. Faringitis: demam mendadak, nyeri telan, adenopati servikal, eksudat purulen; terapi oral 10 hari kecuali azitromisin 5 hari.</small></p>
+<h4>Kunci awetan <i class="st" title="pernah keluar di awetan">★</i></h4>
+<ul>
+<li>Sinusitis <i>H. influenzae</i> → <b>amoksisilin</b> (amoksi-klav bila penghasil β-laktamase).</li>
+<li>Sinusitis + alergi penisilin (urtikaria) → <mark class="k">doksisiklin</mark> (sefuroksim berisiko pada alergi tipe I).</li>
+<li>Faringitis + alergi penisilin (opsi ampisilin/metronidazol/siprofloksasin/sefadroksil/SMX) → <mark class="k">sefadroksil</mark>. Bila ada opsi eritromisin/azitromisin → pilih itu.</li>
+<li>Klindamisin pada faringitis gagal terapi = <b>10 hari</b>. Anak 8 th otitis media → <b>amoksisilin</b>.</li>
+</ul>
+<div class="trap"><b>Ampisilin</b> = penisilin → SALAH untuk pasien alergi penisilin.</div>
+<div class="note">Soal "amoksisilin sinusitis berapa hari": slide tak menyebut durasi akut; kunci awetan kemungkinan <b>10 hari</b>.</div>
+</div>
+
+<div class="card"><h3>Bronkitis &amp; Pneumonia</h3>
+<ul>
+<li><b>Bronkitis:</b> radang trakeobronkial (tak sampai alveoli); virus (rhinovirus), <i>C. pneumoniae, M. pneumoniae</i>. Batuk menetap (malam ↑) + sputum, rhinorrhea, ronki, demam. <b>AB tidak dianjurkan</b> kecuali demam + batuk &gt; 6 hari (curiga <i>S. pneumoniae/H. influenzae</i>); batuk &gt; 10 hari curiga atipikal; anak batuk &gt; 4 minggu → evaluasi TB, pertusis, sinusitis. Durasi 5-14 hari; kronik optimal 14 hari.</li>
+<li><b>Pneumonia:</b> infeksi bronkiol terminal &amp; alveoli. Demam, takipnea, takikardia, batuk produktif, sputum berubah, <b>nyeri dada pleuritik</b> (ditusuk pisau), inspirasi tertinggal.</li>
+<li><b>Patogen:</b> CAP → <i>S. pneumoniae, H. influenzae</i>, influenza, RSV (anak: <i>Mycoplasma, C. pneumoniae</i>) · HAP/VAP → <i>E. coli, Klebsiella, Proteus</i>; pasca sefalosporin gen 3 → <i>Citrobacter, Serratia, Enterobacter, <b>P. aeruginosa</b></i>; <i>S. aureus</i> · aspirasi komunitas → anaerob mulut; aspirasi RS → Gram − batang + <i>S. aureus</i> + anaerob.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Kondisi</th><th>Terapi</th></tr>
+<tr><td><b>CAP</b>, sebelumnya sehat</td><td><b>Eritromisin, klaritromisin, azitromisin</b></td></tr>
+<tr><td><b>CAP</b> + komorbid (manula, DM, gagal ginjal/jantung)</td><td><b>Sefuroksim, sefotaksim, seftriakson</b></td></tr>
+<tr><td><b>Nosokomial ringan</b> (onset &lt; 5 hari)</td><td>Sefuroksim/sefotaksim/seftriakson, ampisilin-sulbaktam, tikarsilin-klav, gatifloksasin/<b>levofloksasin</b>, klinda + azitro</td></tr>
+<tr><td><b>Nosokomial berat</b> (onset &gt; 5 hari)</td><td>(Gentamisin/tobramisin atau siprofloksasin) + seftazidim / sefepim / tikarsilin-klav / <b>meropenem</b> / aztreonam</td></tr>
+<tr><td><b>Aspirasi komunitas</b></td><td>Ampi/amoksisilin, klindamisin</td></tr>
+<tr><td><b>Aspirasi rumah sakit</b></td><td>Klindamisin + aminoglikosida</td></tr>
+</table></div>
+<ul>
+<li>ICU + pneumonia + <b>ESBL</b> → <mark class="k">meropenem</mark>. <i class="st" title="pernah keluar di awetan">★</i></li>
+<li>Levofloksasin pada CAP → DNA girase &amp; topo IV · azitromisin pada bronkitis/asma → 50S. <i class="st" title="pernah keluar di awetan">★</i></li>
+<li>Evaluasi <b>48-72 jam → de-eskalasi</b>.</li>
+</ul></div>
+
+<div class="card"><h3>Populasi Khusus &amp; Stewardship</h3>
+<div class="tw"><table>
+<tr><th>Kondisi</th><th>Aman</th><th>Hindari</th></tr>
+<tr><td><b>Hamil</b></td><td>Penisilin, sefalosporin, azitromisin, eritromisin (bukan estolat)</td><td>Tetrasiklin, FQ, aminoglikosida, kotrimoksazol (trimester 1 &amp; jelang lahir)</td></tr>
+<tr><td><b>Anak / neonatus</b></td><td>-</td><td>Anak: tetrasiklin (&lt; 8 th), FQ · neonatus: kloramfenikol (grey baby), sulfonamid (kernikterus)</td></tr>
+<tr><td><b>Alergi penisilin</b></td><td>Ringan → sefalosporin rantai samping berbeda umumnya boleh</td><td>Berat (anafilaksis/urtikaria) → hindari β-laktam serumpun; pakai makrolida, doksisiklin, FQ respirasi, klindamisin</td></tr>
+</table></div>
+<ul>
+<li><b>WHO AWaRe:</b> <i>Access</i> (amoksisilin, amoksi-klav, penisilin V, sefaleksin, doksisiklin, kotrimoksazol, klindamisin, gentamisin) · <i>Watch</i> (azitro, klaritro, sefuroksim, seftriakson, sipro, levo, meropenem, vankomisin) · <i>Reserve</i> (linezolid, seftarolin, polimiksin/kolistin).</li>
+<li><b>Pola terapi:</b> profilaksis (benzatin penisilin G untuk demam reumatik sekunder; kontak pertusis → makrolida), empiris, definitif.</li>
+<li><b>Toksisitas per organ:</b> ginjal (aminoglikosida, vankomisin) · darah (kloramfenikol, linezolid, sulfa-G6PD) · saraf &amp; telinga (aminoglikosida) · hati (amoksi-klav kolestatik, INH, rifampisin) · kulit/SJS (kotrimoksazol) · QT (makrolida, FQ) · tendon (FQ) · gigi (tetrasiklin).</li>
+</ul></div>
+</section>
+
+<!-- ============ K22 ============ -->
+<section class="mod" id="K22" data-title="K22 Parasit pada Sistem Respirasi">
+<h2><span class="badge">K22</span> Parasit pada Sistem Respirasi</h2>
+<p class="dosen">dr. Octavia</p>
+
+<div class="card"><h3>Peta Parasit Paru</h3>
+<div class="tw"><table>
+<tr><th>Hubungan dengan paru</th><th>Parasit</th></tr>
+<tr><td><b>Habitat di paru</b></td><td><mark class="k">Paragonimus westermani</mark> <i class="st" title="pernah keluar di awetan">★</i></td></tr>
+<tr><td><b>Siklus melalui paru</b> (migrasi larva)</td><td><i>Ascaris lumbricoides, Necator americanus, Ancylostoma duodenale, Strongyloides stercoralis</i></td></tr>
+<tr><td><b>Migrasi ke paru</b></td><td><i>Entamoeba histolytica</i></td></tr>
+</table></div></div>
+
+<div class="card"><h3>Paragonimus westermani (Oriental Lung Fluke) <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th>Aspek</th><th>Kunci</th></tr>
+<tr><td><b>Distribusi</b></td><td>Endemik Asia (Jepang, Korea, Taiwan, Cina, Filipina, Thailand, Vietnam, India, Indonesia); <i>P. mexicanus</i> di Amerika Tengah/Selatan</td></tr>
+<tr><td><b>Morfologi</b></td><td>Trematoda: pipih seperti daun, tak bersegmen, batil isap, <b>hermafrodit</b>, tanpa rongga tubuh. Dewasa seperti <b>biji kopi</b>, cokelat kemerahan, 12-18 × 4-6 mm; oral &amp; ventral sucker sama besar; testis 2 (1/3 posterior), ovarium anterior testis</td></tr>
+<tr><td><b>Telur</b></td><td>Lonjong, kuning kecokelatan, dinding tebal 2 lapis, <b>beroperkulum</b>, 80-120 × 45-70 µm; keluar bersama <b>dahak &amp; tinja</b>, belum berembrio</td></tr>
+<tr><td><b>Hospes</b></td><td>Definitif: manusia, mamalia (kucing, luwak, anjing, harimau, serigala) · perantara I: <b>siput air tawar</b> · perantara II: <b>ketam/udang air tawar</b></td></tr>
+<tr><td><b>Stadium infektif</b></td><td><mark class="k">Metaserkaria</mark> dalam ketam/udang mentah (1 ketam ± 3000 metaserkaria)</td></tr>
+<tr><td><b>Rute</b></td><td>Tertelan → larva di duodenum (3-6 jam) → tembus usus → rongga abdomen → tembus diafragma → toraks → <b>dewasa di paru</b> (1-3 bulan); bertahan hingga 20 tahun</td></tr>
+<tr><td><b>Patologi</b></td><td>Kista 1-3 cm di perifer paru, isi cairan cokelat karat, eritrosit, eosinofil, kristal Charcot-Leyden; cacing berpasangan</td></tr>
+<tr><td><b>Klinis</b></td><td>Paru 76-90%, sering asimtomatik; nyeri/sesak dada, <b>batuk dahak cokelat karat / hemoptisis berulang</b> (<i>endemic hemoptysis</i>), efusi pleura ringan, bronkopneumonia; ekstra-paru: kulit, otak, abdomen, kardiovaskular</td></tr>
+<tr><td><b>Diagnosis</b></td><td><b>Telur di sputum/feses/aspirat pleura</b> (definitif); serologi bila tak ditemukan</td></tr>
+<tr><td><b>Terapi</b></td><td><mark class="k">Prazikuantel</mark> 25 mg/kgBB 3×/hari selama 2 hari (atau 40 mg/kg dosis tunggal)</td></tr>
+<tr><td><b>Pencegahan</b></td><td>Jangan makan ketam/udang air tawar mentah, jangan BAB di perairan, obati penderita</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Sindrom Loeffler &amp; Cacing Fase Paru</h3>
+<p><b>Loeffler</b> = <mark class="k">eosinofilia (10-60%) + gejala paru + infiltrat paru</mark> akibat migrasi larva <i>Ascaris, Necator, Ancylostoma, Strongyloides</i>. <i class="st" title="pernah keluar di awetan">★</i></p>
+<div class="tw"><table>
+<tr><th></th><th><i>Ascaris</i></th><th>Cacing tambang (<i>Necator, Ancylostoma</i>)</th><th><i>Strongyloides</i></th></tr>
+<tr><th>Infeksi</th><td>Telur infektif tertelan</td><td><b>Larva filariform tembus kulit</b> (kaki telanjang, tanah)</td><td>Larva filariform tembus kulit + <b>autoinfeksi</b></td></tr>
+<tr><th>Di tinja</th><td><b>Telur bergerigi (mamilata)</b></td><td>Telur oval tipis (tinja segar)</td><td>Larva rabditiform</td></tr>
+<tr><th>Dewasa</th><td>Usus halus (besar)</td><td>Usus halus, <b>hisap darah</b> (± 1 cm)</td><td>Mukosa <b>duodenum-jejunum</b></td></tr>
+<tr><th>Khas</th><td>Loeffler; kadang obstruksi</td><td><b>Anemia mikrositik hipokromik</b>, tinja berdarah</td><td><b>Siklus hidup bebas &amp; pendek</b>, diare, eosinofilia tinggi</td></tr>
+</table></div>
+<div class="trap">Ciri <i>Strongyloides</i> "kecuali": penyebab Loeffler, penetrasi kulit, hidup bebas tanpa inang, betina partenogenetik = <b>benar</b>. "Bertelur cepat di <b>sekum</b>" = <b>SALAH</b> (dewasa di duodenum-jejunum).</div>
+<h4>Kasus awetan <i class="st" title="pernah keluar di awetan">★</i></h4>
+<ul>
+<li>Telur bergerigi di feses anak 8 th → <mark class="k">Ascaris lumbricoides</mark>.</li>
+<li>Anak 8 th, batuk 2 minggu, Hb 8,9, eosinofil 22%, main di sawah tanpa alas kaki → cacing tambang / Loeffler → periksa <b>feses + foto toraks</b>.</li>
+</ul>
+<div class="note">Nyeri dada, diare berdarah, Hb 10,1, eosinofil 42%, parasit ± 1 cm, siklus pendek: persepsi angkatan beda. ± 1 cm + anemia + tinja berdarah → <b>cacing tambang</b>; siklus pendek/autoinfeksi + eosinofil tinggi → <b>Strongyloides</b>. Tentukan dari opsi.</div>
+<ul>
+<li><b>Gejala paru umum:</b> batuk, hemoptisis, nyeri dada, sesak, efusi pleura.</li>
+<li><b>Diagnosis:</b> darah lengkap (eosinofilia, anemia), sputum/bilas bronkus/biopsi paru, foto toraks, feses, endoskopi, CT.</li>
+<li><b>Terapi:</b> benzimidazol (<b>albendazol, mebendazol</b>; hambat polimerisasi mikrotubulus), pirantel pamoat. Pencegahan: cuci tangan, alas kaki, jangan BAB sembarangan, masak makanan.</li>
+</ul></div>
+
+<div class="card"><h3>Amebiasis Paru</h3>
+<ul>
+<li><i>Entamoeba histolytica</i> menyebar dari <b>abses hati amuba</b> ke paru.</li>
+<li>Demam, <b>nyeri kuadran kanan atas</b>, nyeri dada, batuk; elevasi diafragma, hepatomegali, <b>efusi pleura kanan</b>, pneumonia basal.</li>
+<li><b>Trofozoit aktif</b> di sputum &amp; pus pleura.</li>
+<li>Terapi: <mark class="k">metronidazol</mark> 750 mg 3×/hari selama 10 hari.</li>
+</ul></div>
+</section>
+
+<!-- ============ K23 ============ -->
+<section class="mod" id="K23" data-title="K23 Napas Berbunyi">
+<h2><span class="badge">K23</span> Napas Berbunyi</h2>
+<p class="dosen">dr. Indah</p>
+
+<div class="card"><h3>Dasar Bunyi Napas</h3>
+<ul>
+<li>Sumber = <mark class="k">turbulensi aliran udara</mark> (bukan di alveoli; vesikuler dari turbulensi bronkus lobar/segmental). Terjadi pada kecepatan kritis (ekspirasi paksa) atau hambatan fisik (korda vokalis, percabangan).</li>
+<li>Stetoskop: <b>bell = nada rendah</b>, <b>membran = nada tinggi</b>.</li>
+<li>Teknik: ruang tenang, bandingkan kanan-kiri, apeks → basis, depan + mid-aksila + belakang, napas biasa lalu dalam; jangan di atas pakaian/bulu.</li>
+</ul>
+<div class="trap">"Intensitas turun karena aliran udara <b>meningkat</b> / transmisi <b>bertambah</b>" = SALAH. Yang benar: aliran <b>menurun</b> atau transmisi <b>berkurang</b>. <i class="st" title="pernah keluar di awetan">★</i></div>
+</div>
+
+<div class="card"><h3>Suara Napas Dasar <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th>Jenis</th><th>Lokasi normal</th><th>Ciri</th><th>Insp : eksp</th></tr>
+<tr><td><b>Trakeal</b></td><td>Leher / atas incisura jugularis</td><td>Sangat keras, nada tinggi</td><td>Eksp sedikit lebih panjang (± 5:6), ada jeda</td></tr>
+<tr><td><b>Bronkial</b></td><td>Manubrium sterni / parasternal</td><td><mark class="k">Keras, tinggi, kasar, nyaring</mark> (tiupan pipa)</td><td>Eksp lebih panjang &amp; keras, ada gap</td></tr>
+<tr><td><b>Bronkovesikuler</b></td><td>ICS 1-2 anterior, antar skapula</td><td>Campuran</td><td>1:1, tak terputus</td></tr>
+<tr><td><b>Vesikuler</b></td><td>Seluruh perifer paru</td><td><mark class="k">Lembut, nada rendah</mark>, seperti desah</td><td>Insp &gt; eksp (3:1)</td></tr>
+</table></div>
+<ul>
+<li><b>Meningkat abnormal:</b> trakeal/bronkial terdengar di area vesikuler → <b>konsolidasi</b> (pneumonia).</li>
+<li><b>Melemah <i class="st" title="pernah keluar di awetan">★</i>:</b> pneumotoraks, efusi pleura, empiema, obesitas, PPOK/emfisema, atelektasis obstruktif.</li>
+</ul>
+<div class="trap">Orang <b>kurus</b> TIDAK melemahkan bunyi napas (hantaran justru baik).</div>
+</div>
+
+<div class="card"><h3>Bunyi Napas Tambahan</h3>
+<div class="tw"><table>
+<tr><th>Bunyi</th><th>Ciri</th><th>Sumber</th><th>Kasus</th></tr>
+<tr><td><b>Wheezing</b> (mengi) <i class="st" title="pernah keluar di awetan">★</i></td><td>Kontinyu, <b>tinggi, musikal</b> (≥ 400 Hz, &gt; 250 ms), dominan ekspirasi</td><td><b>Bronkus kecil</b> menyempit: bronkospasme, edema mukosa, hipersekresi mukus</td><td>Asma, PPOK eksaserbasi, bronkiolitis, edema paru, emboli paru, benda asing</td></tr>
+<tr><td><b>Ronki</b> (kering)</td><td>Kontinyu, nada rendah, "grok-grok"</td><td><b>Bronkus besar</b> + mukus kental</td><td>Bronkitis akut/kronik</td></tr>
+<tr><td><b>Crackles</b> (ronki basah)</td><td>Terputus, non-musikal, terutama inspirasi</td><td>Udara lewat cairan / pop-open saluran kecil kolaps</td><td><b>Halus</b>: edema paru, fibrosis · <b>kasar</b>: pneumonia, bronkiektasis</td></tr>
+<tr><td><b>Stridor</b> <i class="st" title="pernah keluar di awetan">★</i></td><td><b>Tinggi, kontinyu, keras</b>, tanpa stetoskop; terutama inspirasi (berat: juga ekspirasi)</td><td>Saluran napas <b>atas</b> (orofaring, subglotis, trakea)</td><td>Croup, epiglotitis, benda asing, abses retrofaring, difteri, trauma/tumor laring, edema pasca-ekstubasi</td></tr>
+<tr><td><b>Pleural friction rub</b></td><td>Akhir inspirasi-awal ekspirasi, <b>tak berubah dengan batuk</b></td><td>Gesekan pleura meradang</td><td>Pleuritis</td></tr>
+</table></div>
+<div class="trap"><b>Kelumpuhan pita suara</b> BUKAN penyebab wheezing (itu stridor / saluran napas atas). Lumen kolaps saat inspirasi → obstruksi ekstratoraks.</div>
+<div class="note">Soal "tinggi, kontinyu, terdengar saat inspirasi dan ekspirasi" → <b>stridor</b>.</div>
+<div class="tw"><table>
+<tr><th>Penyebab stridor</th><th>Kunci</th></tr>
+<tr><td>Croup</td><td>Batuk menggonggong, suara serak</td></tr>
+<tr><td>Abses retrofaring</td><td>Demam, sulit menelan, bengkak jaringan lunak</td></tr>
+<tr><td>Benda asing</td><td>Tersedak mendadak</td></tr>
+<tr><td>Difteri</td><td>DPT tak lengkap, <i>bull neck</i>, membran putih-keabuan, sekret hidung berdarah</td></tr>
+<tr><td>Kelainan bawaan</td><td>Mengorok sejak lahir</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Bunyi Hantaran Abnormal &amp; Peta Kasus</h3>
+<div class="tw"><table>
+<tr><th>Bunyi</th><th>Ciri</th><th>Kasus</th></tr>
+<tr><td><b>Bronkofoni (+)</b></td><td>Kata lebih jelas, nada tinggi dihantar lebih baik</td><td>Konsolidasi</td></tr>
+<tr><td><b>Egofoni (+)</b></td><td>"eee" terdengar "aaa" (suara kambing)</td><td>Pneumonia, atelektasis, tumor</td></tr>
+<tr><td><b>Pectoriloquy</b></td><td>Bisikan terdengar jelas</td><td>Konsolidasi</td></tr>
+<tr><td><b>Amforik</b></td><td>Seperti meniup botol kosong, rendah, bergema</td><td><mark class="k">Kavitas TB</mark>, abses paru kosong, pneumotoraks + fistula bronkopleura</td></tr>
+<tr><td><b>Succussio Hippocrates</b></td><td>Kocokan air saat dada digoyang</td><td><mark class="k">Hidro-/piopneumotoraks</mark></td></tr>
+</table></div>
+<div class="tw"><table>
+<tr><th>Kondisi</th><th>Temuan</th></tr>
+<tr><td>Asma / PPOK eksaserbasi</td><td>Wheezing + ekspirasi memanjang</td></tr>
+<tr><td>Bronkitis</td><td>Ronki kering nada rendah</td></tr>
+<tr><td>Pneumonia</td><td>Crackles kasar, bronkial di perifer, egofoni/bronkofoni (+)</td></tr>
+<tr><td>Edema paru</td><td>Crackles halus</td></tr>
+<tr><td>Efusi / pneumotoraks / empiema</td><td>Bunyi napas melemah</td></tr>
+<tr><td>Croup / epiglotitis / benda asing atas</td><td>Stridor</td></tr>
+<tr><td>Pleuritis</td><td>Friction rub</td></tr>
+</table></div></div>
+</section>
+
+<!-- ============ K24 ============ -->
+<section class="mod" id="K24" data-title="K24 Batuk">
+<h2><span class="badge">K24</span> Batuk</h2>
+<p class="dosen">dr. Indah</p>
+
+<div class="card"><h3>Definisi &amp; Jalur Refleks</h3>
+<ul>
+<li>Refleks <b>fisiologis protektif</b>: lindungi paru dari trauma mekanik, kimia, suhu; bersihkan lendir, iritan, partikel, mikroba; jaga jalan napas terbuka.</li>
+<li>Pertahanan lain: filtrasi partikel (hidung), refleks batuk, <b>pembersihan mukosilia</b>, fagositosis &amp; inflamasi, imun humoral/seluler.</li>
+<li><b>Jalur refleks <i class="st" title="pernah keluar di awetan">★</i>:</b> reseptor (mekano/kemo) → aferen (<b>n. vagus</b>; cabang faring n. glosofaringeus) → <mark class="k">pusat batuk di medula</mark> → eferen (parasimpatis &amp; motorik) → otot laring, trakea, bronkus, diafragma, interkosta, abdomen.</li>
+<li>Reseptor batuk juga di faring, esofagus, <b>pleura</b>, <b>saluran telinga luar</b>.</li>
+</ul></div>
+
+<div class="card"><h3>Empat Fase Batuk <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th>Fase</th><th>Kejadian</th></tr>
+<tr><td><b>1. Iritasi</b></td><td>Rangsang saraf sensorik n. vagus di laring/trakea/bronkus besar</td></tr>
+<tr><td><b>2. Inspirasi</b></td><td><b>Glotis terbuka lebar</b> (otot <b>abduktor</b> aritenoid) → inspirasi dalam &amp; cepat</td></tr>
+<tr><td><b>3. Kompresi</b></td><td><mark class="k">Glotis menutup ± 0,2 detik</mark> (otot <b>adduktor</b>); tekanan intratoraks naik hingga <b>± 300 cmH₂O</b>; tekanan pleura tetap tinggi ± 0,5 detik setelah glotis terbuka</td></tr>
+<tr><td><b>4. Ekspirasi / ekspulsi</b></td><td>Glotis terbuka mendadak (otot ekspirasi aktif) → udara keluar cepat bersama sekret/benda asing</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Etiologi, Klasifikasi, Komplikasi</h3>
+<ul>
+<li><b>Etiologi:</b> inflamasi (edema mukosa, sekret banyak) · mekanik (benda asing <b>saluran napas</b>, post-nasal drip, retensi sekret) · suhu/kimia (asap rokok, udara panas/dingin, gas) · psikogenik.</li>
+</ul>
+<div class="trap">Benda asing <b>saluran cerna</b> BUKAN penyebab batuk. <i class="st" title="pernah keluar di awetan">★</i></div>
+<div class="tw"><table>
+<tr><th>Durasi</th><th>Penyebab</th><th>Tersering</th></tr>
+<tr><td><b>Akut</b> &lt; 4 minggu</td><td>ISPA, ISPB, asma, PPOK, pneumonia, bronkiektasis, edema paru, emboli paru, pertusis, benda asing</td><td>Common cold, flu, pneumonia</td></tr>
+<tr><td><b>Subakut</b> 4-8 minggu</td><td>Pneumonia, <b>pertusis</b>, bronkitis, asma, GERD</td><td>-</td></tr>
+<tr><td><b>Kronik</b> &gt; 8 minggu</td><td>Asma, GERD, rinitis alergi, kanker paru, bronkiektasis, bronkitis kronik, TB, penyakit interstisial, lesi mediastinum, rokok</td><td>Asma, GERD, <b>TBC (Indonesia)</b></td></tr>
+</table></div>
+<p><small>Berdasarkan dahak: kering / berdahak / berdarah.</small></p>
+<h4>Komplikasi batuk keras <i class="st" title="pernah keluar di awetan">★</i></h4>
+<p>Pneumotoraks, pneumomediastinum, pneumoperitoneum, sakit kepala/<b>sinkop</b>, <b>emfisema subkutis</b>, herniasi diskus &amp; hernia inguinalis, <b>fraktur iga</b>, <b>perdarahan subkonjungtiva</b>, <b>inkontinensia urin</b>, ruptur otot, bradikardi.</p>
+<div class="trap"><b>Retensi urin</b> BUKAN komplikasi batuk (yang benar inkontinensia).</div>
+<p><b>Diagnosis:</b> anamnesis (jenis, lama, frekuensi, waktu, pencetus); sputum, foto toraks, tes tuberkulin, tes alergen, spirometri. <b>Terapi terbaik = sesuai etiologi</b>; simtomatik bila penyebab tak diketahui atau batuk mengganggu.</p>
+</div>
+
+<div class="card"><h3>Obat Batuk</h3>
+<div class="tw"><table>
+<tr><th>Antitusif non-narkotika</th><th>Obat</th></tr>
+<tr><td><b>Sentral</b> (pusat batuk)</td><td><mark class="k">Dekstrometorfan</mark>, baklofen, noskapin</td></tr>
+<tr><td><b>Perifer</b></td><td>Levopropoksifen, benzonatat, anestesi lokal, demulsen</td></tr>
+</table></div>
+<div class="tw"><table>
+<tr><th>Obat batuk berdahak</th><th>Kerja</th><th>Contoh</th></tr>
+<tr><td><b>Ekspektoran</b></td><td>↑ sekresi musin / hidrasi mukus</td><td><b>Guaifenesin</b>, garam hipertonik</td></tr>
+<tr><td><b>Mukolitik</b></td><td>↓ viskositas mukus</td><td><b>Sistein, N-asetilsistein</b></td></tr>
+<tr><td><b>Mukokinetik</b></td><td>↑ transpor mukus lewat batuk</td><td><b>Ambroksol, bromheksin</b></td></tr>
+<tr><td><b>Mukoregulator</b></td><td>↓ hipersekresi mukus kronik</td><td>Antikolinergik, glukokortikosteroid</td></tr>
+</table></div>
+<ul>
+<li>Bekerja di pusat batuk → <b>dekstrometorfan</b> (bukan penisilin/amoksisilin/ambroksol/bromheksin). <i class="st" title="pernah keluar di awetan">★</i></li>
+<li><mark class="k">Kodein</mark> = antitusif opioid → <b>adiktif</b> (ambroksol, guaifenesin, asetilsistein tidak). <i class="st" title="pernah keluar di awetan">★</i></li>
+<li>Anak dengan dahak kental → <b>mukolitik</b>. <i class="st" title="pernah keluar di awetan">★</i></li>
+</ul>
+<div class="trap"><b>Antitusif</b> = supresi batuk → jangan untuk batuk produktif (jawaban "kecuali" pada terapi batuk berdahak).</div>
+</div>
+</section>
+
+<!-- ============ K25 ============ -->
+<section class="mod" id="K25" data-title="K25 Sesak Napas Pulmonal">
+<h2><span class="badge">K25</span> Sesak Napas Pulmonal</h2>
+<p class="dosen">dr. Indah</p>
+
+<div class="card"><h3>Definisi, Klasifikasi, Frekuensi Napas</h3>
+<ul>
+<li><b>Dispnea</b> (<i>dys</i> + <i>pnoia</i>) = <b>persepsi subjektif</b> tidak nyaman bernapas (napas pendek, dada sesak, butuh usaha lebih); sinonim engap, tercekik, berat, begah, cepat capek.</li>
+<li><b>Klasifikasi Berliner:</b> temporal (akut/kronik, intermiten/permanen, episodik) · situasional (istirahat, gerak, stres, posisi, pajanan) · patogenetik (respirasi, kardiovaskular, campuran, non-kardiorespirasi, mental).</li>
+<li><b>Normal dewasa 15-20×/menit.</b> Batas atas anak: &lt; 2 bln 60 · 2-12 bln 50 · 1-5 th 40 · 6-8 th 30 ×/menit (di atasnya = takipnea).</li>
+</ul></div>
+
+<div class="card"><h3>Pola Napas <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th>Istilah</th><th>Definisi</th></tr>
+<tr><td><b>Eupnea / takipnea / bradipnea</b></td><td>Normal 15-20 / &gt; 20 / &lt; 12 ×/menit (dewasa)</td></tr>
+<tr><td><b>Hiperpnea</b></td><td>Cepat <b>dan dalam</b> tapi wajar (olahraga)</td></tr>
+<tr><td><b>Hipopnea / apnea</b></td><td>↓ aliran udara bermakna saat tidur (O₂ turun) / tak ada aliran udara</td></tr>
+<tr><td><b>Hiperventilasi</b></td><td>Terlalu cepat &amp; dalam → <b>CO₂ turun</b></td></tr>
+<tr><td><b>Hipoventilasi</b></td><td>Terlalu lambat &amp; dangkal → <b>O₂ turun</b></td></tr>
+<tr><td><b>Ortopnea</b></td><td>Sesak saat <b>berbaring</b>, membaik duduk/berdiri</td></tr>
+<tr><td><b>PND</b></td><td>Tiba-tiba <b>terbangun malam</b> karena sesak</td></tr>
+<tr><td><b>Cheyne-Stokes</b></td><td>Siklus <b>teratur</b>: hiperventilasi → apnea/hipopnea</td></tr>
+<tr><td><b>Biot</b></td><td>Siklus <b>tidak teratur</b>: napas normal diselingi apnea</td></tr>
+<tr><td><b>Kussmaul</b></td><td>Dalam &amp; cepat, khas <mark class="k">asidosis metabolik</mark></td></tr>
+</table></div>
+<div class="note">Soal "sesak lebih terasa saat tiduran, membaik saat bangun" = <b>ortopnea</b> (kunci awetan menulis "dispnea &amp; PND"). Pilih opsi yang memuat ortopnea; PND hanya bila sesak membangunkan dari tidur.</div>
+</div>
+
+<div class="card"><h3>Akut vs Kronik &amp; Evaluasi</h3>
+<div class="tw"><table>
+<tr><th>Onset</th><th>Penyebab</th></tr>
+<tr><td><b>Akut</b> (&lt; 1 bulan)</td><td>Anak: ISPA, epiglotitis, laringitis, laringotrakeobronkitis · dewasa: <b>gagal jantung kiri</b>, tromboemboli, pneumonia, pneumotoraks, bronkitis, asma</td></tr>
+<tr><td><b>Kronik</b> (&gt; 1 bulan, progresif: aktivitas → istirahat)</td><td><b>PPOK</b>, gagal jantung kongestif kronik</td></tr>
+</table></div>
+<ul>
+<li><b>Tanda bahaya:</b> sesak saat istirahat, ↓ kesadaran/agitasi/bingung, <b>otot bantu napas</b>, nyeri dada, ronki, ↓ BB, keringat malam.</li>
+<li><b>Penunjang:</b> pulse oximetry, darah lengkap, AGD, rontgen, EKG, spirometri; lanjutan CT toraks, bronkoskopi, angiografi. <b>Skala sesak:</b> Borg, BDI, TDI, VAS.</li>
+<li><b>Algoritme:</b> + nyeri dada kardiak → enzim jantung (abnormal → echo/stress test/angiografi → PJK). Tanpa nyeri dada → <b>BNP</b>: &gt; 400 → echo → penyakit jantung/CHF; &lt; 400 → V/Q scan/spiral CT → emboli/hipertensi pulmonal. Respirasi → <b>spirometri</b>: obstruktif (PPOK/asma) vs restriktif (neuromuskular, interstisial).</li>
+<li>Tata laksana: penyakit dasar + simtomatik.</li>
+</ul></div>
+
+<div class="card"><h3>Kunci Awetan Terkait <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="note">Di luar slide K25; cek dengan PPT lain.</div>
+<ul>
+<li><b>Hipoksemia dideteksi</b> oleh <mark class="k">kemoreseptor perifer (badan karotis &amp; aorta)</mark>; kemoreseptor medula peka CO₂/H⁺.</li>
+<li><b>Asidosis respiratorik</b> (pneumonia, hipoventilasi): pCO₂ ↑, pH ↓ → kompensasi ginjal (↑ HCO₃⁻) → pH menuju normal.</li>
+<li><b>Alkalosis respiratorik:</b> pCO₂ ↓, pH ↑ → pH menuju normal.</li>
+<li>Soal "mekanisme selanjutnya untuk menyeimbangkan" → opsi pCO₂ naik (asidosis) / turun (alkalosis) dengan pH "balans".</li>
+<li>Sesak karena gagal jantung: lihat K29.</li>
+</ul></div>
+</section>
+
+<!-- ============ K26 ============ -->
+<section class="mod" id="K26" data-title="K26 Nyeri Dada Pulmonal">
+<h2><span class="badge">K26</span> Nyeri Dada Pulmonal</h2>
+<p class="dosen">dr. Indah</p>
+
+<div class="card"><h3>Dasar &amp; Patofisiologi Nyeri</h3>
+<ul>
+<li><b>Sumber:</b> rongga dada (jantung, perikardium, paru, pleura), <b>dinding dada</b>, diafragma/lainnya. Klasifikasi: pleuropulmoner, trakeobronkitis, dinding dada, kardiovaskular, aorta, GI, lain (ansietas, keganasan).</li>
+<li><b>IASP:</b> pengalaman sensorik &amp; emosional tak menyenangkan akibat kerusakan jaringan; dipengaruhi budaya, emosi, kognitif, sosek.</li>
+<li><b>Kardiak</b> menjalar ke lengan, bahu, leher kiri vs <b>non-kardiak</b>. Penunjang: lab, echo, kateter jantung, endoskopi, CT, spirometri.</li>
+</ul>
+<h4>4 tahap nyeri <i class="st" title="pernah keluar di awetan">★</i></h4>
+<ol>
+<li><b>Transduksi:</b> ujung saraf mengubah rangsang jadi impuls.</li>
+<li><b>Transmisi:</b> impuls → kornu posterior medula spinalis → traktus sensorik → otak.</li>
+<li><b>Modulasi:</b> meredam atau memperkuat sinyal.</li>
+<li><b>Persepsi:</b> pengalaman subjektif + faktor psikologis.</li>
+</ol>
+<p>Intensitas: VAS, NRS. Penurun transmisi nyeri = <mark class="k">endorfin</mark>; substansi P = meningkatkan.</p>
+</div>
+
+<div class="card"><h3>Nyeri per Sumber <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th>Sumber</th><th>Ciri</th><th>Kasus</th></tr>
+<tr><td><b>Pleura</b></td><td>Dari <mark class="k">pleura parietalis</mark> &amp; fasia endotorasik (<b>pleura viseralis tak peka nyeri</b>); menjalar ke bahu &amp; leher ipsilateral; <b>pleuritik</b> (ikut gerak napas); tajam/terbakar/tumpul</td><td>Pleuritis, pneumotoraks, emboli paru</td></tr>
+<tr><td><b>Emboli paru</b></td><td>Sesak berat + nyeri pleuritik (distensi arteri pulmonalis sentral; infark paru perifer + inflamasi)</td><td>Dx: skan paru, USG tungkai, CT spiral, D-dimer</td></tr>
+<tr><td><b>Pneumotoraks spontan</b></td><td><b>Pleuritik ipsilateral akut</b></td><td>Trauma, pasca operasi, iatrogenik</td></tr>
+<tr><td><b>Trakeobronkitis</b></td><td>Trakea: tengah dada depan (laring-xifoid); bronkus utama: dada depan ipsilateral dekat sternum/leher; ↑ napas dalam &amp; aktivitas, ↓ istirahat</td><td>-</td></tr>
+<tr><td><b>Dinding dada</b></td><td>↑ tarik napas, posisi, peregangan; sering bilateral; <b>nyeri tunjuk &amp; nyeri tekan</b></td><td>Strain, <b>fraktur kosta</b>, fibromialgia, hematoma</td></tr>
+<tr><td><b>GI</b></td><td>Spasme, refluks asam, suhu; menjalar ke tenggorokan, leher, sternal</td><td>Kolesistitis, ulkus peptikum, pankreatitis</td></tr>
+<tr><td><b>Ansietas</b></td><td>Sesak, hiperventilasi, keringat telapak, flushing, takikardi</td><td>-</td></tr>
+<tr><td><b>Keganasan</b></td><td>Campuran inflamasi, neuropatik, iskemik, penekanan; lanjut: metastasis</td><td>-</td></tr>
+</table></div>
+<h4>Kunci kasus</h4>
+<ul>
+<li>Nyeri tajam setelah <b>batuk keras + nyeri tunjuk</b> → <mark class="k">fraktur kosta</mark>.</li>
+<li>Pria 65 th, nyeri tusuk-pisau, perokok, batuk kering, tanpa faktor risiko jantung → <b>pleuritis</b>.</li>
+<li>Pneumotoraks spontan → pleuritik, ipsilateral, dari <b>pleura parietal</b>.</li>
+</ul>
+<div class="note">Nyeri sternum tajam, ↑ aktivitas → pertimbangkan <b>trakeobronkitis</b> vs infark miokard (lihat opsi); kunci awetan "infeksi pleura" diragukan.</div>
+</div>
+</section>
+
+<!-- ============ K27 ============ -->
+<section class="mod" id="K27" data-title="K27 Nyeri Dada Cardiac">
+<h2><span class="badge">K27</span> Nyeri Dada Cardiac</h2>
+
+<div class="card"><h3>Poin dari Awetan <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="note">PPT K27 belum ada di sumber; poin ini dari awetan. Klasifikasi angina: K16 · kriteria elevasi ST: K28.</div>
+<ul>
+<li><b>Nyeri kardiak</b> menjalar ke lengan, bahu, leher kiri.</li>
+<li><b>Angor animi</b> (rasa akan mati) + nyeri viseral hebat → <mark class="k">jantung</mark>.</li>
+<li><b>Respons nyeri viseral akut di dada</b> → <mark class="k">diaforesis</mark> (simpatis ↑).</li>
+<li><b>Nyeri iskemik:</b> ↓ suplai O₂, ↑ kebutuhan O₂, ↓ Hb.</li>
+<li><b>Mengancam nyawa:</b> sindrom koroner akut, emboli paru, diseksi aorta, ruptur esofagus.</li>
+<li><b>Sistem sumber nyeri dada:</b> kardiovaskular, pernapasan, GI, muskuloskeletal/neuromuskular, psikogenik.</li>
+<li>Nyeri mengikuti <b>distribusi saraf spinal</b> → herpes zoster toraks.</li>
+</ul>
+<div class="trap"><b>Bradikardi</b> dan <b>konstriksi pupil</b> BUKAN respons nyeri viseral akut.</div>
+<div class="trap"><b>Peningkatan suplai O₂</b> bukan penyebab iskemia; <b>esofagitis</b> tidak mengancam nyawa.</div>
+</div>
+</section>
+
+<!-- ============ K28 ============ -->
+<section class="mod" id="K28" data-title="K28 Dasar-dasar EKG">
+<h2><span class="badge">K28</span> Dasar-dasar EKG</h2>
+<p class="dosen">dr. Gema Citra D, Sp.JP</p>
+
+<div class="card"><h3>Sistem Konduksi &amp; Tipe Sel</h3>
+<p>"Generator" = nodus SA; "sirkuit" = sistem konduksi intraventrikular.</p>
+<ol>
+<li><b>Nodus SA:</b> pacemaker alami, atas atrium kanan dekat muara VCS.</li>
+<li><b>Atrium</b> (kanan → kiri): hantar ke AV + kontraksi atrium.</li>
+<li><b>Nodus AV:</b> dasar atrium kanan dekat septum; <b>satu-satunya jalur</b> atrium → ventrikel; <mark class="k">decremental property</mark> (perlambat impuls agar pengisian ventrikel optimal).</li>
+<li><b>Berkas His</b> → <b>RBB</b> (panjang, tipis) &amp; <b>LBB</b> (kipas, 3 fasikulus: anterior, midseptal, posterior).</li>
+<li><b>Purkinje:</b> endokardium → epikardium, sinkron.</li>
+</ol>
+<div class="tw"><table>
+<tr><th>Tipe sel <i class="st" title="pernah keluar di awetan">★</i></th><th>Fungsi</th><th>Lokasi</th></tr>
+<tr><td><b>Pacemaking</b></td><td><b>Automaticity</b> (impuls spontan)</td><td>Nodus SA, sebagian His-Purkinje</td></tr>
+<tr><td><b>Conducting</b></td><td>Hantar impuls cepat, teratur, sinkron</td><td>Seluruh His-Purkinje</td></tr>
+<tr><td><b>Muscle</b> (miosit)</td><td>Kontraksi</td><td>Otot atrium &amp; ventrikel</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Potensial Aksi &amp; Periode Refrakter</h3>
+<div class="tw"><table>
+<tr><th>Fase</th><th>Sel ventrikel</th><th>EKG</th><th>Nodus SA</th></tr>
+<tr><td><b>4</b> istirahat</td><td>−90 mV (K⁺ intrasel, pompa Na⁺/K⁺)</td><td>Segmen TQ</td><td>−60 mV, ambang −40 mV, depolarisasi spontan lambat</td></tr>
+<tr><td><b>0</b> depolarisasi</td><td>Na⁺ masuk masif (→ +20 mV)</td><td><b>QRS</b></td><td>Naik lambat, overshoot kecil</td></tr>
+<tr><td><b>1</b> repolarisasi awal</td><td>Na⁺ tutup, K⁺ keluar sementara</td><td><b>Titik J</b></td><td>Tidak jelas</td></tr>
+<tr><td><b>2</b> plateau</td><td>Ca²⁺ tipe-L masuk vs K⁺ keluar</td><td><b>Segmen ST</b></td><td>Tidak ada</td></tr>
+<tr><td><b>3</b> repolarisasi cepat</td><td>Ca²⁺ tutup, K⁺ keluar → −90 mV</td><td><b>Gelombang T</b></td><td>Kembali ke −60 mV</td></tr>
+<tr><td><b>0-3</b> total</td><td>Depolarisasi s/d repolarisasi penuh</td><td><b>Interval QT</b></td><td>-</td></tr>
+</table></div>
+<div class="tw"><table>
+<tr><th>Periode</th><th>Fase</th><th>Makna</th></tr>
+<tr><td><b>Absolut (ARP)</b></td><td>1-2</td><td>Tak merespons stimulus apa pun; cegah tetani &amp; re-entry</td></tr>
+<tr><td><b>Efektif (ERP)</b></td><td>Awal fase 3</td><td>Potensial lokal tak bisa diteruskan; <b>antiaritmia kelas I &amp; III memperpanjang ERP</b></td></tr>
+<tr><td><b>Relatif (RRP)</b></td><td>Tengah fase 3 s/d −70 mV</td><td>Butuh stimulus lebih kuat</td></tr>
+<tr><td><b>Supernormal</b></td><td>Akhir fase 3</td><td>Merespons stimulus lebih lemah</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Sadapan EKG</h3>
+<ul>
+<li>Arus <b>menuju</b> elektroda positif → defleksi positif; <b>menjauhi</b> → negatif.</li>
+<li><b>Limb standar</b> I, II, III (segitiga Einthoven) · <b>augmented</b> aVR (−150°), aVL (−30°), aVF (+90°), memakai Wilson's central terminal (5.000 Ω); melepas koneksi memperbesar amplitudo 50% · <b>prekordial</b> V1-V6 (bidang horizontal). Semua lead efektif bipolar (AHA).</li>
+<li><b>AHA:</b> limb leads di distal bahu &amp; panggul/paha (bukan pergelangan) → kurangi <i>motion artifact</i>.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Lead</th><th>Lokasi</th><th>Melihat</th></tr>
+<tr><td><b>V1</b></td><td>ICS 4 parasternal kanan</td><td>Septum kanan</td></tr>
+<tr><td><b>V2</b></td><td>ICS 4 parasternal kiri</td><td>Septum</td></tr>
+<tr><td><b>V3</b></td><td>Antara V2 &amp; V4</td><td>Transisi septal-anterior</td></tr>
+<tr><td><b>V4</b></td><td>ICS 5 midklavikula kiri</td><td>Anterior LV</td></tr>
+<tr><td><b>V5</b></td><td>Sejajar V4, aksilaris anterior</td><td>Lateral LV</td></tr>
+<tr><td><b>V6</b></td><td>Sejajar V4, aksilaris media</td><td>Lateral jauh LV</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Kertas, Heart Rate, Axis <i class="st" title="pernah keluar di awetan">★</i></h3>
+<p>Standar 25 mm/detik, 1 mV = 10 mm. <b>1 kotak kecil</b> = <mark class="k">0,04 detik</mark> &amp; 0,1 mV · <b>1 kotak besar</b> = <mark class="k">0,20 detik</mark> &amp; 0,5 mV.</p>
+<ul>
+<li><b>Reguler:</b> HR = 300 ÷ kotak besar R-R (1 = 300 · 2 = 150 · 3 = 100 · 4 = 75 · 5 = 60 · 6 = 50).</li>
+<li><b>Ireguler:</b> HR = jumlah QRS dalam 10 detik (30 kotak besar) × 6. Contoh: 7 QRS → <b>42 bpm</b>.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Axis</th><th>Lead I</th><th>aVF</th><th>Sudut</th></tr>
+<tr><td><b>Normal</b></td><td>+</td><td>+</td><td>0° s/d +90° (atau −30° s/d +90°)</td></tr>
+<tr><td><b>LAD</b></td><td>+</td><td>−</td><td>0° s/d −90° (patologis bila &lt; −30°)</td></tr>
+<tr><td><b>RAD</b></td><td>−</td><td>+</td><td>+90° s/d +180°</td></tr>
+<tr><td><b>Extreme</b></td><td>−</td><td>−</td><td>−90° s/d ±180°</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Gelombang P &amp; Interval PR <i class="st" title="pernah keluar di awetan">★</i></h3>
+<ul>
+<li><b>P</b> = depolarisasi atrium (aktivitas SA tak tampak); paruh awal = atrium kanan, paruh akhir = atrium kiri. Irama sinus: P selalu <b>(+) di II</b>, <b>(−) di aVR</b> (V1 boleh bifasik).</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Kelainan</th><th>Kriteria</th><th>Makna</th></tr>
+<tr><td><b>RAE</b> (P pulmonale)</td><td>P tinggi lancip &gt; 2,5 mm di II, III, aVF; &gt; 1,5 mm di V1-V2</td><td>Penyakit paru (asma, emboli, PPOK, kor pulmonale), stenosis pulmonal, ASD, Ebstein</td></tr>
+<tr><td><b>LAE</b> (P mitrale)</td><td>II: P lebar bertakik (huruf M), jarak puncak &gt; 40 ms, durasi &gt; 100 ms · V1: bifasik, terminal negatif &gt; 40 ms &amp; &gt; 1 mm</td><td>Disfungsi LV berat; risiko AF/flutter</td></tr>
+<tr><td><b>Biatrial</b></td><td>II: P bertakik ≥ 2,5 mm &amp; ≥ 120 ms · V1: awal positif ≥ 1,5 mm + terminal negatif ≥ 1 mm (≥ 40 ms)</td><td>RAE + LAE</td></tr>
+</table></div>
+<ul>
+<li><b>Interval PR</b> (awal P → awal QRS) = waktu impuls dari SA melewati atrium &amp; <b>nodus AV</b> sampai ventrikel. Normal <mark class="k">0,12-0,20 detik</mark> (3-5 kotak kecil).</li>
+<li><b>PR &gt; 0,20 detik</b> → AV block / disosiasi AV · <b>PR &lt; 0,12 detik</b> → pre-eksitasi: <b>WPW</b> (ada gelombang delta) atau LGL.</li>
+</ul></div>
+
+<div class="card"><h3>Kompleks QRS &amp; Gelombang Q <i class="st" title="pernah keluar di awetan">★</i></h3>
+<ul>
+<li><b>QRS</b> = depolarisasi ventrikel; kelainan → ventrikel / konduksi intraventrikular.</li>
+<li><b>Durasi:</b> &gt; 0,08 detik blok fasikulus · &gt; 0,12 detik <b>BBB</b> · &gt; 0,20 detik ritme ventrikular.</li>
+<li><b>RBBB:</b> rSR' di V1, S lebar di V6 · <b>LBBB:</b> QS/rS dalam di V1, R bertakik di V6. QRS terfragmentasi → penyakit jantung iskemik.</li>
+<li><b>Q fisiologis negatif</b> karena depolarisasi awal di <b>septum dari kiri ke kanan</b> (menjauhi lead kiri).</li>
+<li><b>Q patologis:</b> dalam ≥ 1/3 (atau &gt; 25%) tinggi R dan lebar ≥ 0,04 detik → <mark class="k">infark miokard lama (OMI)</mark> (&gt; 8-12 jam).</li>
+<li><b>Poor R wave progression:</b> non-spesifik (iskemia/infark anterior, LAFB/LBBB, LVH, PPOK, salah posisi lead).</li>
+<li><b>Low voltage:</b> QRS &lt; 5 mm di semua limb dan/atau &lt; 10 mm di semua prekordial; obesitas, PPOK, efusi perikardial, hipotiroid berat, emfisema subkutan, infark luas, amiloidosis/sarkoidosis.</li>
+</ul></div>
+
+<div class="card"><h3>Hipertrofi Ventrikel <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th>Kondisi</th><th>Kriteria</th></tr>
+<tr><td><b>LVH</b></td><td><ul><li><b>Sokolow-Lyon:</b> R V5/V6 + S V1 &gt; 35 mm</li><li><b>Cornell:</b> S V3 + R aVL &gt; 28 mm (pria) / &gt; 20 mm (wanita)</li><li><b>Peguero-Lo Presti:</b> S terdalam + S V4 ≥ 28 mm (pria) / ≥ 23 mm (wanita)</li></ul></td></tr>
+<tr><td><b>RVH</b></td><td>R V1 ≥ 7 mm, R/S V1 &gt; 1, qR di V1, R/S V5-V6 &lt; 1, S₁Q₃ atau S₁S₂S₃, P pulmonale; <b>hampir selalu disertai RAD</b> (tanpa RAD → RVH tidak mungkin)</td></tr>
+<tr><td><b>Biventrikular</b></td><td><mark class="k">Katz-Wachtel</mark>: QRS bifasik besar (R tinggi + S dalam) total ≥ 50 mm di V2-V4; khas anak dengan <b>VSD</b></td></tr>
+</table></div></div>
+
+<div class="card"><h3>ST, T, QT, U &amp; Gelombang Khas</h3>
+<ul>
+<li><b>Current of injury:</b> iskemia transmural (STEMI) → pompa Na⁺/K⁺ gagal, zona cedera lebih negatif, arus menuju elektroda → <mark class="k">elevasi ST</mark>. Subendokardial (NSTEMI) → arus menjauhi → <b>depresi ST</b>.</li>
+<li><b>Kriteria elevasi ST</b> (titik J, ≥ 2 lead bersebelahan): semua lead ≥ 1 mm · V2-V3: ≥ 2 mm pria ≥ 40 th, ≥ 2,5 mm pria &lt; 40 th, ≥ 1,5 mm wanita · V3R-V4R &amp; V7-V9: ≥ 0,5 mm.</li>
+<li><b>T terbalik</b> normal di III, aVR, V1.</li>
+<li><b>QT</b> = depolarisasi + repolarisasi ventrikel; rate-dependent. Memanjang bila QT &gt; ½ R-R sebelumnya. QTc: Bazett (QT/√RR) atau Fridericia (QT/∛RR); memanjang → torsades, VF.</li>
+<li><b>Gelombang U:</b> setelah T, jelas di V2-V3 (repolarisasi His-Purkinje); U menonjol → <mark class="k">hipokalemia</mark>.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Gelombang</th><th>Ciri</th><th>Kondisi</th></tr>
+<tr><td><b>Delta</b></td><td>Upstroke awal QRS melandai (pre-eksitasi jalur aksesori)</td><td><b>WPW</b></td></tr>
+<tr><td><b>Osborn (J)</b></td><td>Defleksi seperti huruf "h" di akhir QRS</td><td><b>Hipotermia</b>, hiperkalsemia</td></tr>
+<tr><td><b>Epsilon</b></td><td>Takik kecil di akhir QRS V1-V3</td><td><b>ARVD</b> (RV diganti jaringan fibrolipomatosa)</td></tr>
+</table></div></div>
+</section>
+
+<!-- ============ K29 ============ -->
+<section class="mod" id="K29" data-title="K29 Sesak Napas Cardiac">
+<h2><span class="badge">K29</span> Sesak Napas Cardiac</h2>
+<p class="dosen">dr. Abraham Avicenna, Sp.JP</p>
+
+<div class="card"><h3>Dispnea: Definisi &amp; Kontrol Napas</h3>
+<ul>
+<li>Keluhan subjektif sulit bernapas (<i>air hunger</i>): <b>suplai ventilasi &lt; kebutuhan ventilasi</b>. <i>Labored breathing</i> = manifestasi fisik distres napas.</li>
+<li><b>3 faktor:</b> gas darah abnormal (hiperkapnia, hipoksia), beban kerja otot napas, kondisi psikologis.</li>
+<li><b>Pusat napas:</b> pons &amp; medula oblongata; dirangsang ↑ CO₂ / ↓ pH darah &amp; CSF, serta sensor O₂/CO₂ di aorta &amp; badan karotis → diafragma &amp; interkostal.</li>
+<li><b>Akut:</b> edema paru akut, hiperventilasi, emboli paru, pneumotoraks, pneumonia, obstruksi jalan napas · <b>kronik:</b> gagal jantung, PPOK/asma, efusi pleura, obesitas, ansietas, <i>low fitness</i>.</li>
+</ul></div>
+
+<div class="card"><h3>DoE, Ortopnea, PND <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th>Gejala</th><th>Ciri</th><th>Mekanisme</th></tr>
+<tr><td><b>DoE</b></td><td>Sesak saat aktivitas (gagal jantung, PPOK, <i>deconditioning</i>)</td><td>Keparahan yang naik dramatis lebih ke <b>gagal jantung</b> daripada paru</td></tr>
+<tr><td><b>Ortopnea</b></td><td>Muncul/memberat saat <b>berbaring</b>, membaik duduk</td><td>Terlentang → cairan tungkai &amp; abdomen pindah ke toraks → ↑ venous return → LV gagal (atau stenosis/regurgitasi mitral) tak sanggup → ↑ tekanan LA &amp; hidrostatik kapiler paru</td></tr>
+<tr><td><b>PND</b></td><td>Membangunkan pasien <b>2-3 jam setelah tidur</b>, membaik duduk; bisa berlanjut edema paru akut</td><td>Redistribusi cairan (↑ volume sentral → ↑ tekanan LA, ↓ PaO₂) + dominasi <b>parasimpatis</b> saat tidur</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Gagal Jantung Kiri vs Kanan vs Paru</h3>
+<p><b>Prinsip <i class="st" title="pernah keluar di awetan">★</i>:</b> fungsi pompa (sistolik/diastolik) turun → <mark class="k">curah jantung turun</mark> (<i>forward failure</i>) + kongesti paru/sistemik (<i>backward failure</i>).</p>
+<div class="trap">Opsi "cardiac output <b>naik</b>" atau "<b>obstruksi</b> sistemik/paru" = SALAH.</div>
+<div class="tw"><table>
+<tr><th></th><th>Gagal jantung kiri</th><th>Gagal jantung kanan <i class="st" title="pernah keluar di awetan">★</i></th><th>Penyakit paru</th></tr>
+<tr><th>Mekanisme</th><td>LV gagal → <b>kongesti paru</b> + ↓ CO</td><td>RV gagal → <b>kongesti sistemik</b> + ↓ CO</td><td>Obstruksi jalan napas / gangguan parenkim</td></tr>
+<tr><th>Tanda</th><td>Dispnea, ortopnea, PND, <b>ronki basah</b>, sputum berbusa kemerahan, lelah, perfusi turun</td><td><b>Edema perifer</b> (tungkai/pedal/sakral), <b>JVD</b>, <b>hepatomegali</b>, asites</td><td>Lebih muda, riwayat asma, batuk non-produktif, <b>wheezing</b>, otot bantu napas</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Klasifikasi ACC/AHA vs NYHA</h3>
+<div class="tw"><table>
+<tr><th>ACC/AHA (struktural)</th><th>NYHA (fungsional)</th></tr>
+<tr><td><b>A:</b> risiko tinggi, tanpa kelainan struktural &amp; gejala</td><td>-</td></tr>
+<tr><td><b>B:</b> kelainan struktural, tanpa gejala</td><td><b>I:</b> asimtomatik</td></tr>
+<tr><td><b>C:</b> kelainan struktural + riwayat/gejala GJ</td><td><b>II:</b> gejala pada aktivitas sedang · <b>III:</b> gejala pada aktivitas minimal</td></tr>
+<tr><td><b>D:</b> refrakter, butuh intervensi khusus</td><td><b>IV:</b> gejala saat istirahat</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Edema Paru Akut</h3>
+<p>LV gagal berat → ↑↑ tekanan hidrostatik kapiler paru → cairan ke interstisial lalu alveolus → gangguan difusi, penyempitan bronkiolus, ↓ kapasitas vital, hipoksemia berat → <mark class="k">sputum berbusa kemerahan</mark>.</p>
+<div class="tw"><table>
+<tr><th>Lini</th><th>Tata laksana</th></tr>
+<tr><td><b>1</b></td><td><b>Posisi duduk</b> (↓ venous return), oksigen (± ventilasi tekanan positif), <b>nitrat</b> (↓ preload), <b>furosemid</b>, <b>morfin</b></td></tr>
+<tr><td><b>2</b></td><td>TD normal/tinggi → nitrat injeksi · hipotensi/syok → <b>dopamin / dobutamin</b></td></tr>
+<tr><td><b>3</b></td><td>Invasif: arterial line, CVP, Swan-Ganz, IABP, PCI, CABG</td></tr>
+</table></div></div>
+</section>
+
+<!-- ============ K30 ============ -->
+<section class="mod" id="K30" data-title="K30 Sianosis">
+<h2><span class="badge">K30</span> Sianosis</h2>
+<p class="dosen">dr. Windy Oliviany, M.Sc., Sp.A</p>
+
+<div class="card"><h3>Definisi &amp; Pengaruh Kadar Hb <i class="st" title="pernah keluar di awetan">★</i></h3>
+<ul>
+<li>Warna kebiruan/keunguan kulit, mukosa, kuku akibat ↑ <b>deoksihemoglobin</b> di kapiler; tampak bila deoksi-Hb absolut <mark class="k">≥ 5 g/dL</mark>. Pada Hb 15 g/dL tercapai saat SaO₂ ≈ 67%.</li>
+<li><b>Lokasi deteksi terbaik:</b> <mark class="k">ujung lidah</mark> &amp; mukosa oral (tak dipengaruhi pigmen ras, sirkulasi tidak lambat).</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Kondisi</th><th>Kunci</th></tr>
+<tr><td><b>Anemia berat</b></td><td><b>Tidak sianosis</b> walau hipoksemia berat: deoksi-Hb tak mencapai 5 g/dL → tampak <b>pucat</b></td></tr>
+<tr><td><b>Polisitemia kompensatorik</b></td><td>Hipoksemia kronik → ↑ <b>EPO</b> ginjal → Ht &gt; 65% → hiperviskositas, trombosis, stroke</td></tr>
+<tr><td><b>Polisitemia vera</b> (eritrosianosis)</td><td>Hb 20 g/dL: 25% deoksi sudah 5 g/dL → biru-kemerahan (<i>plethoric</i>) walau SaO₂ 75%. Plethora, <b>pruritus akuagenik</b>, splenomegali, Hb &gt; 16,5 (♀) / &gt; 18,5 (♂), <b>JAK2 V617F</b> ± 95%</td></tr>
+</table></div></div>
+
+<div class="card"><h3>Transport O₂ &amp; Kurva Disosiasi</h3>
+<div class="tw"><table>
+<tr><th>Oxygen cascade</th><th>PO₂ (mmHg)</th></tr>
+<tr><td>Atmosfer (permukaan laut)</td><td>± 160</td></tr>
+<tr><td>Trakea (terdilusi uap air)</td><td>± 150</td></tr>
+<tr><td>Alveoli (PAO₂)</td><td>100-110</td></tr>
+<tr><td>Arteri (PaO₂)</td><td>90-100</td></tr>
+<tr><td>Kapiler</td><td>40-50</td></tr>
+<tr><td>Mitokondria</td><td>4-20</td></tr>
+</table></div>
+<ul>
+<li><b>Terikat Hb (98-99%):</b> 1 Hb ikat 4 O₂, 1,34 mL O₂/g Hb · <b>terlarut (1-2%):</b> hukum Henry, 0,003 mL/dL/mmHg.</li>
+<li><b>CaO₂</b> = (Hb × 1,34 × SaO₂) + (0,003 × PaO₂) · <b>DO₂</b> = CO × CaO₂ × 10 (normal dewasa 900-1100 mL/menit; neonatus 400-600 mL/menit/m²).</li>
+<li><b>Kurva sigmoid <i class="st" title="pernah keluar di awetan">★</i>:</b> plateau PO₂ 60-100 (SaO₂ 90-98%, <i>margin of safety</i>); curam PO₂ &lt; 60 (sedikit turun → SaO₂ anjlok, sianosis). <b>P₅₀ = 26-27 mmHg</b>.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Geser kanan (↑ P₅₀, ↓ afinitas, O₂ mudah lepas)</th><th>Geser kiri (↓ P₅₀, ↑ afinitas, O₂ sulit lepas)</th></tr>
+<tr><td>Asidosis, hiperkarbia, hipertermia, ↑ 2,3-DPG</td><td>Alkalosis, hipokarbia, hipotermia, ↓ 2,3-DPG, <b>HbF</b>, <b>keracunan CO</b></td></tr>
+</table></div></div>
+
+<div class="card"><h3>Sentral vs Perifer vs Diferensial <i class="st" title="pernah keluar di awetan">★</i></h3>
+<div class="tw"><table>
+<tr><th></th><th>Sentral</th><th>Perifer / akrosianosis</th><th>Diferensial</th></tr>
+<tr><th>Mekanisme</th><td>SaO₂ &lt; 90% (desaturasi arteri) atau Hb abnormal</td><td>SaO₂ normal; stasis kapiler / vasokonstriksi + ↑ ekstraksi O₂</td><td>Pirau kanan-ke-kiri lewat <b>PDA</b></td></tr>
+<tr><th>Distribusi</th><td>Seluruh tubuh + <b>lidah &amp; bibir biru</b></td><td>Akral saja; <b>lidah tetap pink</b></td><td>Asimetris ekstremitas atas vs bawah</td></tr>
+<tr><th>Dihangatkan</th><td>Tidak membaik</td><td><b>Membaik</b></td><td>Tidak membaik</td></tr>
+<tr><th>Penyebab</th><td><ul><li><b>Kardiak:</b> PJK sianotik (5T), Eisenmenger, GJ kiri (edema paru)</li><li><b>Pulmonal:</b> pneumonia berat, ARDS, PPOK, emboli paru, RDS, hipertensi pulmonal</li><li><b>Neurologik:</b> overdosis opioid (nalokson), stroke batang otak, GBS, miastenia</li><li><b>Hematologik:</b> methemoglobinemia, sulfhemoglobinemia</li><li><b>Ketinggian</b></li></ul></td><td><ul><li>Dingin; akrosianosis neonatus normal (24-48 jam)</li><li>Syok, gagal jantung kanan</li><li>Raynaud</li><li>Obstruksi vena / DVT, polisitemia</li></ul></td><td><ul><li><b>Klasik</b> (tangan pink, kaki biru): PDA + hipertensi pulmonal berat (Eisenmenger) atau koarktasio kritis</li><li><b>Reverse</b> (tangan biru, kaki pink): TGA + PDA + hipertensi pulmonal</li></ul></td></tr>
+</table></div>
+<p><b>Raynaud:</b> vasospasme digital episodik (dingin/stres) trifasik: <b>putih</b> (iskemia) → <b>biru</b> (stasis) → <b>merah</b> (reperfusi, terbakar). Primer (wanita muda, jinak) vs sekunder (SSc, SLE, AR, CREST; risiko ulkus/gangren). Lini 1 <b>CCB (nifedipin)</b>; berat: sildenafil/iloprost.</p>
+</div>
+
+<div class="card"><h3>PJK Sianotik: The 5 T's</h3>
+<div class="tw"><table>
+<tr><th>Lesi</th><th>Kunci</th><th>Klinis / rontgen / EKG</th><th>Tata laksana</th></tr>
+<tr><td><b>Tetralogy of Fallot</b> <i class="st" title="pernah keluar di awetan">★</i><br><small>tersering bayi &gt; 1 bulan &amp; anak</small></td><td>VSD perimembranus besar, <b>stenosis pulmonal</b> infundibular (penentu derajat sianosis), overriding aorta, RVH</td><td><b>Tet spell</b> saat menangis/menyusu; <b>squatting</b> (↑ SVR → ↓ pirau R→L); <i>boot-shaped heart</i>; EKG RVH</td><td>-</td></tr>
+<tr><td><b>TGA</b></td><td>Aorta dari RV, a. pulmonalis dari LV → sirkulasi paralel; hidup bergantung <b>mixing</b> (PDA, ASD, PFO)</td><td>Sianosis berat hari 1-2 <b>tanpa distres napas &amp; tanpa murmur</b>; uji hiperoksia negatif; <mark class="k">egg on a string</mark>, vaskular paru ↑</td><td><b>PGE1 (alprostadil)</b> 0,05-0,1 mcg/kg/menit segera (ESO apnea, hipotensi, demam) → <b>BAS (Rashkind)</b> → <b>arterial switch</b> dalam 2 minggu</td></tr>
+<tr><td><b>Atresia trikuspid</b></td><td>Katup trikuspid tak terbentuk, RV hipoplastik; RA → ASD → LA → LV</td><td>EKG <mark class="k">LAD + LVH</mark> (PJK sianotik lain: RAD + RVH)</td><td>BT shunt (neonatus) → Glenn (4-6 bln) → Fontan (2-4 th)</td></tr>
+<tr><td><b>TAPVR</b></td><td>Semua vena pulmonalis ke RA/vena sistemik: suprakardiak 45%, kardiak 25%, <b>infrakardiak</b> 25% (paling sering obstruksi), campuran 5%</td><td><mark class="k">Snowman sign</mark> (suprakardiak); <i>snowstorm</i> + edema paru masif (obstruktif)</td><td>Tipe obstruktif = kegawatan bedah neonatal</td></tr>
+<tr><td><b>Truncus arteriosus</b></td><td>Satu pembuluh besar di atas VSD subarterial, bercabang jadi aorta &amp; a. pulmonalis (Van Praagh A1-A4)</td><td>-</td><td>Operasi <b>Rastelli</b> minggu pertama</td></tr>
+</table></div>
+<div class="trap"><b>Regresi duktus arteriosus</b> BUKAN komponen ToF.</div>
+<div class="trap">TGA: jangan beri <b>O₂ 100%</b> berlebihan/lama: memicu penutupan PDA yang fatal. Siapkan alat resusitasi napas saat PGE1.</div>
+</div>
+
+<div class="card"><h3>Sianosis Neonatus &amp; Sindrom Eisenmenger</h3>
+<div class="tw"><table>
+<tr><th>Onset</th><th>Penyebab</th></tr>
+<tr><td>Saat lahir / jam pertama</td><td>Asfiksia, <b>PPHN</b> (PVR tetap tinggi → pirau R→L via PFO/PDA; NO inhalasi, sildenafil, ECMO), <b>RDS</b> (prematur, kurang surfaktan) <i class="st" title="pernah keluar di awetan">★</i>, aspirasi mekonium, pneumonia kongenital</td></tr>
+<tr><td>Hari 1-2</td><td>TGA, ToF berat, atresia pulmonal, TAPVR obstruktif (sianosis berat tanpa distres napas → kardiak)</td></tr>
+<tr><td>Hari 3-7</td><td>Penutupan PDA pada lesi duktus-dependen, sepsis, methemoglobinemia</td></tr>
+<tr><td>Minggu 1-4</td><td>HLHS, koarktasio kritis, stenosis aorta kritis (syok kardiogenik + sianosis diferensial)</td></tr>
+</table></div>
+<h4>Sindrom Eisenmenger</h4>
+<ul>
+<li>Pirau kiri-ke-kanan besar (VSD/ASD/PDA) tak dikoreksi → remodeling vaskular paru → ↑ PVR → saat <b>PVR &gt; SVR</b> pirau berbalik kanan-ke-kiri → sianosis sentral permanen + clubbing + polisitemia (Ht &gt; 70%).</li>
+<li>KI operasi penutupan defek; <b>KI absolut kehamilan</b> (WHO kelas IV, mortalitas ibu 30-50%: ↓ SVR fisiologis memperburuk pirau). Persalinan: epidural lebih dipilih daripada spinal. Obat: bosentan, sildenafil, iloprost.</li>
+</ul></div>
+
+<div class="card"><h3>Sianosis pada Penyakit Paru Dewasa</h3>
+<ul>
+<li><b>4 mekanisme hipoksemia:</b> (1) <b>V/Q mismatch</b> (tersering; atelektasis/konsolidasi), (2) shunt intrapulmonal (pneumonia berat/ARDS), (3) hipoventilasi alveolar (↑ PaCO₂, ↓ PaO₂), (4) gangguan difusi (fibrosis/edema paru).</li>
+</ul>
+<div class="tw"><table>
+<tr><th></th><th>Blue bloater (bronkitis kronik)</th><th>Pink puffer (emfisema)</th></tr>
+<tr><th>Sianosis</th><td>Sentral kronik jelas</td><td>Tidak / minimal</td></tr>
+<tr><th>Gas darah</th><td><b>Hiperkapnia</b> + polisitemia sekunder</td><td>Hipoksemia ringan, normokapnia (hiperventilasi)</td></tr>
+<tr><th>Tampilan</th><td>BMI normal/gemuk, batuk sputum banyak, edema (kor pulmonale)</td><td>Kurus, <i>barrel chest</i>, <i>pursed-lip breathing</i></td></tr>
+</table></div>
+<ul>
+<li><b>Emboli paru masif:</b> trombus (tersering DVT tungkai) → ↑ ruang mati (V/Q mismatch) + gagal RV akut (syok obstruktif) → sianosis campuran. Trias: dispnea mendadak + nyeri pleuritik + hemoptisis. EKG <b>S₁Q₃T₃</b>, right heart strain, sinus takikardia; D-dimer sensitif tak spesifik; baku emas <mark class="k">CTPA</mark>.</li>
+<li><b>Hipertensi pulmonal (ESC/ERS 2022):</b> <mark class="k">mPAP ≥ 20 mmHg</mark> saat istirahat (dulu ≥ 25) pada kateterisasi jantung kanan. 5 kelompok WHO; kelompok 1 = PAH (idiopatik, herediter BMPR2, <i>drug-induced</i>, penyakit jaringan ikat, …).</li>
+</ul>
+<div class="note">Sumber terpotong di klasifikasi hipertensi pulmonal; kelompok 2-5 belum ada.</div>
+</div>
+
+<div class="card"><h3>Komplikasi, Uji Hiperoksia, Skrining CCHD <i class="st" title="pernah keluar di awetan">★</i></h3>
+<ul>
+<li><b>Komplikasi hipoksemia kronik:</b> polisitemia (Ht &gt; 65%, hiperviskositas, trombosis, stroke), <b>clubbing</b>, abses otak/komplikasi SSP, ↓ IQ, gangguan perdarahan, hypoxic spell, skoliosis, hiperurisemia/gout.</li>
+<li><b>Clubbing:</b> platelet trapping → PDGF &amp; VEGF → proliferasi bantalan kuku; sudut kuku (Lovibond) ≥ 180° (normal &lt; 160°), <b>Schamroth</b> (diamond window hilang), IPD/DPD &gt; 1.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Uji hiperoksia (FiO₂ 100%, 10 menit, AGD)</th><th>PaO₂</th></tr>
+<tr><td><b>Positif → pulmonal</b></td><td>Naik &gt; 150 mmHg</td></tr>
+<tr><td><b>Negatif → kardiak</b> (PJK sianotik)</td><td>Tetap &lt; 50-100 mmHg (pirau R→L)</td></tr>
+</table></div>
+<h4>Skrining CCHD neonatus (usia 24-48 jam)</h4>
+<p>Pulse oksimeter di <b>tangan kanan (pre-duktal)</b> dan <b>salah satu kaki (post-duktal)</b>.</p>
+<div class="tw"><table>
+<tr><th>Hasil</th><th>Kriteria</th></tr>
+<tr><td><b>Lulus</b></td><td>SpO₂ ≥ 95% di tangan kanan &amp; kaki, selisih ≤ 3%</td></tr>
+<tr><td><b>Gagal → segera ekokardiografi</b></td><td><ul><li>1× pemeriksaan &lt; 90% di tangan kanan atau kaki</li><li>3× berturut-turut 90-94% (ulang tiap 1 jam)</li><li>3× berturut-turut selisih tangan kanan-kaki &gt; 3%</li></ul></td></tr>
+</table></div></div>
+
+<div class="card"><h3>Hemoglobin Abnormal</h3>
+<ul>
+<li><b>Methemoglobinemia:</b> besi heme teroksidasi <b>Fe²⁺ → Fe³⁺</b> → tidak dapat mengikat O₂ (penyebab sianosis sentral hematologik, bersama sulfhemoglobinemia). Nitrat dosis tinggi dapat memicu MetHb (K16).</li>
+<li><b>Keracunan CO:</b> menggeser kurva disosiasi ke kiri.</li>
+</ul>
+<div class="note">Sumber terpotong di bagian ini (warna darah, pembacaan SpO₂, diagnosis &amp; terapi MetHb, SulfHb, CO belum ada).</div>
+</div>
+</section>
+
+
+<div id="empty">tidak ada kartu yang cocok.<br><small>coba kata kunci lain atau lebih pendek.</small></div>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var LABEL={K16:'antiangina',K17:'antiaritmia',K18:'gagal jantung',K19:'obat lokal napas',K20:'obat tb',K21:'antibiotik',K22:'parasit',K23:'napas bunyi',K24:'batuk',K25:'sesak pulmonal',K26:'nyeri dada paru',K27:'nyeri dada jantung',K28:'ekg',K29:'sesak kardiak',K30:'sianosis'};
+  var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  var done={};try{done=JSON.parse(store.get('cs32cbt2_done')||'{}')}catch(e){}
+  var mods=[].slice.call(document.querySelectorAll('section.mod'));
+  var tabsEl=document.getElementById('tabs'),folder=document.getElementById('folder');
+  var q=document.getElementById('q'),empty=document.getElementById('empty');
+  var tabs={},cur=null,cbs={};
+  function sm(){return window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}
+  var home=document.getElementById('home');
+
+  /* home tab */
+  var hb=document.createElement('button');hb.className='tab home';hb.type='button';hb.title='Home';hb.setAttribute('aria-label','Home');
+  hb.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-6h4v6"/></svg>';
+  hb.addEventListener('click',function(){if(q.value){q.value='';runSearch()}show('home',true)});
+  tabsEl.appendChild(hb);tabs.home=hb;
+  /* tab rows */
+  mods.forEach(function(m,i){
+    var code=m.id;
+    var b=document.createElement('button');b.className='tab';b.type='button';b.title=code+' '+(LABEL[code]||'');
+    b.innerHTML='<span class="c">'+code+'</span>';
+    b.addEventListener('click',function(){
+      if(q.value){q.value='';runSearch()}
+      show(code,true);
+    });
+    tabsEl.appendChild(b);tabs[code]=b;
+    var h=m.querySelector('h2'),tn=h.lastChild,ttl=document.createElement('span');
+    ttl.className='ttl';ttl.textContent=tn.textContent.trim();h.replaceChild(ttl,tn);
+    var dn=m.querySelector('.dosen');if(dn)ttl.appendChild(dn);
+    /* done checkbox */
+    var lbl=document.createElement('label');lbl.className='markdone';
+    lbl.innerHTML='<input type="checkbox"> sudah hafal';
+    var cb=lbl.firstChild;cb.checked=!!done[code];cbs[code]=cb;
+    cb.addEventListener('change',function(){setDone(code,cb.checked)});
+    m.querySelector('h2').appendChild(lbl);
+    var ob=document.createElement('button');ob.type='button';ob.className='mod-open';ob.setAttribute('data-go',code);ob.textContent='buka modul';m.querySelector('h2').appendChild(ob);
+    /* prev / next */
+    var nav=document.createElement('nav');nav.className='pn';
+    var pv=mods[i-1],nx=mods[i+1];
+    nav.innerHTML=(pv?'<button type="button" data-go="'+pv.id+'">← '+pv.id+' '+LABEL[pv.id]+'</button>':'<span></span>')+(nx?'<button type="button" data-go="'+nx.id+'">'+nx.id+' '+LABEL[nx.id]+' →</button>':'<span></span>');
+    m.appendChild(nav);
+  });
+  folder.addEventListener('click',function(e){var g=e.target.closest('[data-go]');if(g){if(q.value){q.value='';runSearch()}show(g.getAttribute('data-go'),true)}});
+
+  function setDone(c,v){done[c]=v;store.set('cs32cbt2_done',JSON.stringify(done));paint();renderHome()}
+  function paint(){
+    Object.keys(tabs).forEach(function(c){tabs[c].classList.toggle('done',!!done[c])});
+    Object.keys(cbs).forEach(function(c){cbs[c].checked=!!done[c]});
+  }
+  function show(code,scroll){
+    if(!tabs[code])code='home';
+    cur=code;
+    mods.forEach(function(m){m.classList.toggle('active',m.id===code)});
+    home.classList.toggle('active',code==='home');
+    if(code!=='home')store.set('cs32cbt2_lastmod',code);else renderHome();
+    Object.keys(tabs).forEach(function(c){tabs[c].classList.toggle('on',c===code)});
+    if(scroll){try{history.replaceState(null,'','#'+code)}catch(e){}}
+    store.set('cs32cbt2_last',code);
+    var t=tabs[code];tabsEl.scrollTo({left:t.offsetLeft-(tabsEl.clientWidth-t.offsetWidth)/2,behavior:scroll?sm():'auto'});
+    fade();
+    if(scroll){chromeEl.classList.remove('away');window.scrollTo({top:0,behavior:sm()})}
+  }
+  paint();
+
+  /* theme */
+  var root=document.documentElement,saved=store.get('cs32cbt2_theme');
+  if(!saved&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)saved='dark';
+  if(saved)root.setAttribute('data-theme',saved);
+  var tb=document.getElementById('themeBtn');
+  function sync(){tb.setAttribute('aria-checked',root.getAttribute('data-theme')==='dark');var tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content',getComputedStyle(root).getPropertyValue('--charcoal').trim()||'#2a2a28')}
+  sync();
+  tb.onclick=function(){
+    var n=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    root.setAttribute('data-theme',n);store.set('cs32cbt2_theme',n);sync();
+  };
+  tabsEl.addEventListener('wheel',function(e){if(tabsEl.scrollWidth>tabsEl.clientWidth+2&&Math.abs(e.deltaY)>Math.abs(e.deltaX)){tabsEl.scrollLeft+=e.deltaY;e.preventDefault()}},{passive:false});
+
+  /* search */
+  /* ukuran tulisan manual */
+  var szBtn=document.getElementById('szBtn'),szPop=document.getElementById('szPop'),szR=document.getElementById('szR'),szO=document.getElementById('szO');
+  var SZ=parseInt(store.get('cs32cbt2_size'),10);if(!(SZ>=80&&SZ<=170))SZ=100;
+  function setSize(v){
+    SZ=Math.max(80,Math.min(170,Math.round(v/5)*5));
+    root.style.setProperty('--z',SZ/100);szR.value=SZ;szO.textContent=SZ+'%';
+    store.set('cs32cbt2_size',String(SZ));measure();
+  }
+  function szToggle(open){szPop.hidden=!open;szBtn.setAttribute('aria-expanded',open?'true':'false')}
+  szBtn.addEventListener('click',function(e){e.stopPropagation();szToggle(szPop.hidden)});
+  szR.addEventListener('input',function(){setSize(+szR.value)});
+  szPop.addEventListener('click',function(e){
+    e.stopPropagation();var b=e.target.closest('[data-sz]');if(!b)return;
+    var d=+b.getAttribute('data-sz');setSize(d===0?100:SZ+d);
+  });
+  document.addEventListener('click',function(e){if(!szPop.hidden&&!e.target.closest('.tools'))szToggle(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!szPop.hidden){szToggle(false);szBtn.focus()}});
+  setSize(SZ);
+
+  var cards=[].slice.call(document.querySelectorAll('.card'));
+  function clearHl(){[].forEach.call(document.querySelectorAll('span.hl'),function(s){var p=s.parentNode;p.replaceChild(document.createTextNode(s.textContent),s);p.normalize()})}
+  function hl(node,term){
+    var w=document.createTreeWalker(node,NodeFilter.SHOW_TEXT,null),hits=[],n;
+    while(n=w.nextNode()){if(n.nodeValue.toLowerCase().indexOf(term)>-1)hits.push(n)}
+    hits.forEach(function(t){
+      var txt=t.nodeValue,low=txt.toLowerCase(),i=0,f=document.createDocumentFragment(),p;
+      while((p=low.indexOf(term,i))>-1){
+        f.appendChild(document.createTextNode(txt.slice(i,p)));
+        var s=document.createElement('span');s.className='hl';s.textContent=txt.slice(p,p+term.length);f.appendChild(s);i=p+term.length;
+      }
+      f.appendChild(document.createTextNode(txt.slice(i)));t.parentNode.replaceChild(f,t);
+    });
+  }
+  var sbar=document.getElementById('sbar'),addr=q.parentNode,clr=document.getElementById('qx'),wasS=false;
+  function runSearch(){
+    var term=q.value.trim().toLowerCase();clearHl();
+    document.body.classList.toggle('searching',!!term);
+    addr.classList.toggle('has',!!q.value);
+    var shown=0,per={};
+    cards.forEach(function(c){
+      var ok=!term||c.textContent.toLowerCase().indexOf(term)>-1;
+      c.classList.toggle('hide',!ok);
+      if(ok){shown++;if(term.length>1)hl(c,term)}
+    });
+    mods.forEach(function(m){
+      var n=m.querySelectorAll('.card:not(.hide)').length;per[m.id]=n;
+      m.classList.toggle('hide',!!term&&!n);
+      tabs[m.id].classList.toggle('dim',!!term&&!n);
+    });
+    empty.style.display=(term&&!shown)?'block':'none';
+    var fm=null;mods.forEach(function(m){m.classList.remove('first');if(!fm&&!m.classList.contains('hide')){fm=m;if(term)m.classList.add('first')}});
+    if(term){
+      var h='<span class="n">'+shown+' hasil</span><span class="chips">';
+      mods.forEach(function(m){if(per[m.id])h+='<button type="button" class="chip" data-jump="'+m.id+'" title="'+(LABEL[m.id]||'')+'">'+m.id+'<small>'+per[m.id]+'</small></button>'});
+      sbar.innerHTML=h+'</span>';
+      if(!wasS){chromeEl.classList.remove('away');if(window.scrollY>0)window.scrollTo({top:0,behavior:'auto'})}
+    }else{sbar.innerHTML='';show(cur,false)}
+    wasS=!!term;measure();
+  }
+  sbar.addEventListener('click',function(e){
+    var c=e.target.closest('[data-jump]');if(!c)return;
+    var t=document.getElementById(c.getAttribute('data-jump'));if(t)t.scrollIntoView({behavior:sm(),block:'start'});
+  });
+  clr.addEventListener('click',function(e){e.preventDefault();q.value='';runSearch();q.focus()});
+  q.addEventListener('focus',function(){chromeEl.classList.remove('away')});
+  var timer;q.addEventListener('input',function(){addr.classList.toggle('has',!!q.value);clearTimeout(timer);timer=setTimeout(runSearch,160)});
+
+  /* chrome: ukur tinggi, fade tab, sembunyikan tab saat scroll (layar kecil) */
+  var chromeEl=document.querySelector('.chrome');
+  function measure(){if(!chromeEl)return;var r=document.documentElement.style;r.setProperty('--chrome-h',chromeEl.offsetHeight+'px');r.setProperty('--tabs-h',tabsEl.offsetHeight+'px')}
+  function fade(){var l=tabsEl.scrollLeft>2,r=tabsEl.scrollLeft+tabsEl.clientWidth<tabsEl.scrollWidth-2;tabsEl.style.setProperty('--fl',l?'22px':'0px');tabsEl.style.setProperty('--fr',r?'22px':'0px')}
+  tabsEl.addEventListener('scroll',fade,{passive:true});
+  window.addEventListener('resize',function(){measure();fade()});
+  if(window.ResizeObserver)new ResizeObserver(measure).observe(chromeEl);
+  var small=matchMedia('(max-width:760px),(pointer:coarse)'),lastY=window.scrollY;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    if(small.matches&&document.activeElement!==q){
+      if(y>lastY+8&&y>140)chromeEl.classList.add('away');
+      else if(y<lastY-8||y<60)chromeEl.classList.remove('away');
+    }else chromeEl.classList.remove('away');
+    lastY=y;
+  },{passive:true});
+
+  /* swipe kiri/kanan untuk pindah modul (sentuh) */
+  var sx=0,sy=0,st=0,sok=false;
+  document.addEventListener('touchstart',function(e){
+    var t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now();
+    sok=e.touches.length===1&&sx>28&&sx<innerWidth-28&&!e.target.closest('.tw,.tabs,.sbar,input,svg,.hm-map');
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(!sok||document.body.classList.contains('searching'))return;sok=false;
+    var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Date.now()-st<600&&Math.abs(dx)>90&&Math.abs(dy)<45)step(dx<0?1:-1);
+  },{passive:true});
+  function step(d){var order=['home'].concat(mods.map(function(m){return m.id})),i=order.indexOf(cur);if(order[i+d])show(order[i+d],true)}
+
+  /* keyboard */
+  q.addEventListener('keydown',function(e){if(e.key==='Escape'){q.value='';runSearch();q.blur()}else if(e.key==='Enter')q.blur()});
+  document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();q.focus();q.select()}});
+  document.addEventListener('keydown',function(e){
+    if(/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName)||e.metaKey||e.ctrlKey||e.altKey)return;
+    if(e.key==='/'){e.preventDefault();q.focus();return}
+    var order=['home'].concat(mods.map(function(m){return m.id})),i=order.indexOf(cur);
+    if(document.body.classList.contains('searching'))return;
+    if(e.key==='ArrowRight'&&order[i+1])show(order[i+1],true);
+    if(e.key==='ArrowLeft'&&order[i-1])show(order[i-1],true);
+  });
+
+
+  /* ---------- home: progress, checklist, diagrams ---------- */
+  var GROUPS=[['farmakologi kardiovaskular',['K16','K17','K18']],['farmakologi respirasi',['K19','K20','K21']],['respirasi: parasit & gejala',['K22','K23','K24','K25','K26']],['kardiak, ekg & sianosis',['K27','K28','K29','K30']]];
+  var ST={};
+  mods.forEach(function(m){ST[m.id]={card:m.querySelectorAll('.card').length,trap:m.querySelectorAll('.trap').length,tbl:m.querySelectorAll('table').length,note:m.querySelectorAll('.note').length}});
+  function renderHome(){
+    var ae=document.activeElement,fc=ae&&ae.getAttribute?ae.getAttribute('data-c'):null;
+    var ids=mods.map(function(m){return m.id}),n=ids.length;
+    var d=ids.filter(function(c){return done[c]}).length,pct=Math.round(d/n*100);
+    var sum=function(k){return ids.reduce(function(a,c){return a+ST[c][k]},0)};
+    var next=ids.filter(function(c){return !done[c]})[0],last=store.get('cs32cbt2_lastmod');
+    var C=2*Math.PI*48,h='';
+    /* hero: ring + actions */
+    h+='<div class="hm-hero"><svg class="ring" viewBox="0 0 120 120" role="img" aria-label="Progres '+pct+' persen"><circle cx="60" cy="60" r="48" fill="none" stroke="var(--ink)" stroke-opacity=".15" stroke-width="12"/><circle cx="60" cy="60" r="48" fill="none" stroke="var(--yellow)" stroke-width="12" stroke-dasharray="'+(C*d/n).toFixed(1)+' '+C.toFixed(1)+'" transform="rotate(-90 60 60)"/><text x="60" y="65" text-anchor="middle" class="rn">'+pct+'%</text><text x="60" y="82" text-anchor="middle" class="rs">'+d+'/'+n+' hafal</text></svg>';
+    h+='<div class="hm-info"><p class="hm-t">progres belajar</p><p class="hm-s">'+(d===n?'semua modul sudah hafal':d+' modul hafal, '+(n-d)+' tersisa')+' · <span class="st">★</span> = pernah keluar di awetan</p><div class="hm-btns">';
+    if(next)h+='<button type="button" data-go="'+next+'">lanjut ke '+next+' '+LABEL[next]+'</button>';
+    if(last&&last!==next&&tabs[last])h+='<button type="button" data-go="'+last+'">terakhir dibuka: '+last+'</button>';
+    h+='</div><div class="hm-chips"><div><b>'+sum('card')+'</b><span>kartu</span></div><div><b>'+sum('tbl')+'</b><span>tabel</span></div><div><b>'+sum('trap')+'</b><span>jebakan</span></div><div><b>'+sum('note')+'</b><span>catatan</span></div></div></div></div>';
+    /* map + donut */
+    h+='<div class="hm-two"><div class="hm-box"><h3>peta modul</h3><div class="hm-map">';
+    ids.forEach(function(c){h+='<button type="button" data-go="'+c+'" class="cell'+(done[c]?' on':'')+'"><b>'+c+'</b><span>'+LABEL[c]+'</span></button>'});
+    h+='</div><p class="hm-note">kuning = sudah hafal. klik untuk membuka modul.</p></div>';
+    var tones=[.95,.65,.4,.2],tot=sum('card'),acc=0,R=40,CC=2*Math.PI*R,seg='',leg='';
+    GROUPS.forEach(function(g,gi){
+      var cs=g[1].reduce(function(a,c){return a+(ST[c]?ST[c].card:0)},0),gd=g[1].filter(function(c){return done[c]}).length,L=CC*cs/tot;
+      seg+='<circle cx="60" cy="60" r="'+R+'" fill="none" stroke="var(--ink)" stroke-opacity="'+tones[gi]+'" stroke-width="20" stroke-dasharray="'+Math.max(0,L-1.5).toFixed(1)+' '+(CC-Math.max(0,L-1.5)).toFixed(1)+'" stroke-dashoffset="'+(-acc).toFixed(1)+'" transform="rotate(-90 60 60)"/>';
+      acc+=L;
+      leg+='<li><i style="background:var(--ink);opacity:'+tones[gi]+'"></i>'+g[0].replace('&','&amp;')+'<small>'+cs+' kartu, '+gd+'/'+g[1].length+' hafal</small></li>';
+    });
+    h+='<div class="hm-box"><h3>porsi materi per kelompok</h3><div class="hm-donut"><svg viewBox="0 0 120 120" role="img" aria-label="Porsi kartu per kelompok">'+seg+'<text x="60" y="64" text-anchor="middle" style="font:400 18px Anton,Impact,sans-serif;fill:var(--ink)">'+tot+'</text><text x="60" y="76" text-anchor="middle" style="font:500 7px IBM Plex Mono,monospace;fill:var(--muted)">kartu</text></svg><ul class="hm-leg">'+leg+'</ul></div></div></div>';
+    /* checklist */
+    h+='<div class="hm-box"><h3>checklist hafalan</h3>';
+    GROUPS.forEach(function(g){
+      var gd=g[1].filter(function(c){return done[c]}).length,gt=g[1].length;
+      h+='<div class="hm-group"><div class="hm-gh"><h4>'+g[0].replace('&','&amp;')+'</h4><small>'+gd+'/'+gt+'</small></div><i class="pbar"><u style="width:'+(gd/gt*100)+'%"></u></i>';
+      g[1].forEach(function(c){
+        h+='<div class="hm-row'+(done[c]?' ok':'')+'"><label><input type="checkbox" data-c="'+c+'"'+(done[c]?' checked':'')+'><b>'+c+'</b><span>'+LABEL[c]+'</span></label><small>'+ST[c].card+' kartu</small><button type="button" data-go="'+c+'">buka</button></div>';
+      });
+      h+='</div>';
+    });
+    h+='</div>';
+    /* bar chart */
+    var mx=Math.max.apply(null,ids.map(function(c){return ST[c].card})),svg='';
+    ids.forEach(function(c,i){
+      var y=i*24+4,w=Math.max(6,ST[c].card/mx*380),x=44+w;
+      svg+='<text x="0" y="'+(y+14)+'" class="bl">'+c+'</text><rect x="44" y="'+y+'" width="'+w.toFixed(1)+'" height="18" rx="3" fill="'+(done[c]?'var(--yellow)':'var(--ink)')+'" fill-opacity="'+(done[c]?1:.18)+'" stroke="var(--ink)"/><text x="'+(x+8).toFixed(1)+'" y="'+(y+14)+'" class="bv">'+ST[c].card+'</text>';
+      for(var t=0;t<Math.min(ST[c].trap,10);t++)svg+='<circle cx="'+(x+34+t*11).toFixed(1)+'" cy="'+(y+9)+'" r="3.5" fill="var(--ink)"/>';
+    });
+    h+='<div class="hm-box"><h3>beban belajar per modul</h3><svg class="hm-chart" viewBox="0 0 600 '+(n*24+8)+'" role="img" aria-label="Jumlah kartu per modul">'+svg+'</svg><p class="hm-note">batang = jumlah kartu, kuning = sudah hafal, titik hitam = jumlah jebakan.</p></div>';
+    h+='<div class="hm-foot"><button type="button" class="hm-reset" data-reset>reset progres</button></div>';
+    home.innerHTML=h;
+    if(fc){var el=home.querySelector('[data-c="'+fc+'"]');if(el)el.focus()}
+  }
+  home.addEventListener('change',function(e){var c=e.target.getAttribute&&e.target.getAttribute('data-c');if(c)setDone(c,e.target.checked)});
+  home.addEventListener('click',function(e){
+    if(e.target.closest('[data-reset]')&&confirm('Hapus semua progres hafalan?')){done={};store.set('cs32cbt2_done','{}');paint();renderHome()}
+  });
+  renderHome();
+
+  /* start */
+  var start=(location.hash||'').replace('#','')||store.get('cs32cbt2_last')||'home';
+  show(start,false);
+  measure();fade();
+  window.addEventListener('load',function(){window.scrollTo({top:0,behavior:'instant'})});
+})();
+</script>
+</body>
+</html>
