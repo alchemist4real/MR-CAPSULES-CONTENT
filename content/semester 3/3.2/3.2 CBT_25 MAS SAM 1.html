@@ -1,114 +1,664 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>KAPSUL CARDIOVICTUS 3.2</title><style>
-:root{--bg:#0F1929;--s1:#16243a;--s2:#1d2f4b;--ac:#F5C842;--tx:#e8edf5;--mut:#8b9ab3;--ok:#3ecf8e;--bad:#ff6b6b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
-.w{max-width:760px;margin:0 auto;padding:14px}header{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-h1{font-size:18px;margin:0;letter-spacing:.5px;color:var(--ac);cursor:pointer}.tag{background:var(--s2);border-radius:6px;padding:2px 8px;font-size:12px;margin-left:6px;color:var(--tx)}
-.pill{background:var(--ac);color:#1a1a1a;font-weight:700;border-radius:20px;padding:3px 12px;font-size:13px}
-.bar{height:5px;background:var(--s2);border-radius:4px;margin:12px 0;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#4a5a75,var(--ac));transition:width .3s}
-.modes{display:grid;gap:10px}.mode{background:var(--s1);border:1px solid var(--s2);color:var(--tx);border-radius:12px;padding:14px;text-align:left;cursor:pointer;font:inherit}.mode b{display:block;color:var(--ac);font-size:16px}.mode span{color:var(--mut);font-size:13px}
-.card{background:var(--s1);border:1px solid var(--s2);border-radius:14px;padding:16px;margin:10px 0}.qn{color:var(--mut);font-size:12px;margin-bottom:6px;display:flex;justify-content:space-between}
-.opt{display:flex;gap:10px;width:100%;background:var(--s2);color:var(--tx);border:1.5px solid transparent;border-radius:10px;padding:10px 12px;margin:7px 0;text-align:left;cursor:pointer;font:inherit}
-.opt b{min-width:20px;color:var(--mut)}.opt.sel{border-color:var(--ac)}.opt.ok{border-color:var(--ac);background:#3a3417}.opt.ok b{color:var(--ac)}.opt.bad{border-color:var(--bad);background:#3a1d24}
-.exp{border-left:3px solid var(--ac);background:#1b2b45;border-radius:0 10px 10px 0;padding:10px 14px;margin-top:12px;font-size:14px}.exp b{color:var(--ac)}
-.nav{display:flex;gap:8px;justify-content:space-between;margin:10px 0;flex-wrap:wrap}button.b{background:var(--s2);color:var(--tx);border:0;border-radius:9px;padding:9px 14px;cursor:pointer;font:inherit}button.b.p{background:var(--ac);color:#1a1a1a;font-weight:700}button.b.f.on{outline:2px solid var(--ac)}
-.map{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}.map i{width:22px;height:22px;border-radius:5px;background:var(--s2);font:11px/22px system-ui;text-align:center;cursor:pointer;font-style:normal;color:var(--mut)}.map i.d{background:#3b4d6b;color:var(--tx)}.map i.fl{outline:2px solid var(--ac)}.map i.c{background:var(--ac);color:#111}
-.mut{color:var(--mut);font-size:13px}.big{font-size:42px;color:var(--ac);font-weight:800;margin:0}#t{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ac);color:#111;font-weight:800;padding:9px 18px;border-radius:24px;opacity:0;transition:.25s;pointer-events:none}#t.on{opacity:1}
-footer{text-align:center;color:var(--mut);font-size:12px;padding:22px 0 10px}
-</style></head><body><div class="w"><header><h1 onclick="home()">KAPSUL CARDIOVICTUS 3.2<span class="tag">CBT 1</span></h1><span class="pill" id="sc">0 / 0</span></header><div id="app"></div><footer>Credit by mr capsules</footer></div><div id="t"></div><script>
-const Q=[
-{q:"Pada perkembangan embrio manusia, respiratory diverticulum (lung bud) pertama kali muncul dari dinding ventral foregut pada minggu ke-berapa?",o:["Minggu ke-2","Minggu ke-3","Minggu ke-4","Minggu ke-5","Minggu ke-6"],a:2,e:"Lung bud muncul sebagai tonjolan dari dinding ventral foregut saat embrio berusia <b>±4 minggu</b>, dipandu sinyal FGF dari mesenkim sekitar. Setelah itu tracheoesophageal septum memisahkan esofagus (dorsal) dari trakea dan lung bud (ventral). Minggu 2–3 masih tahap gastrulasi/neurulasi."},
-{q:"Pernyataan yang benar mengenai kompleks troponin adalah ...",o:["Troponin hanya terdiri dari troponin I dan T.","Troponin I merupakan subunit yang mengikat kalsium.","Troponin T berikatan dengan tropomiosin.","Troponin I selalu terdeteksi 2–4 jam setelah serangan infark miokard.","Troponin I selalu lebih sensitif daripada troponin T."],a:2,e:"Kompleks troponin punya 3 subunit: <b>C</b> mengikat Ca²⁺, <b>T</b> mengikat tropomiosin, <b>I</b> mengikat aktin dan menghambat interaksi aktin–miosin. A salah (ada 3 subunit), B salah (yang mengikat Ca²⁺ adalah C). D dan E memakai kata \"selalu\", sehingga salah."},
-{q:"NT-proBNP digunakan sebagai biomarker gagal jantung. Pernyataan yang sesuai adalah ...",o:["NT-proBNP merupakan hormon aktif.","NT-proBNP merupakan molekul aktif dengan efek vasodilatasi langsung.","NT-proBNP memiliki waktu paruh sekitar 60–120 menit.","NT-proBNP dibersihkan hanya melalui degradasi oleh neutral endopeptidase dan receptor clearance.","NT-proBNP hanya meningkat pada perubahan akut fungsi jantung."],a:2,e:"NT-proBNP adalah fragmen <b>tidak aktif</b> dari pro-hormon, waktu paruh <b>60–120 menit</b> (BNP aktif hanya ±20 menit), dibersihkan lewat ginjal, sehingga lebih stabil dan kadarnya naik pada gangguan ginjal. Jalur neutral endopeptidase dan receptor clearance milik BNP. NT-proBNP juga meningkat pada gagal jantung kronis."},
-{q:"Pada pasien dengan infeksi Candida di paru, jalur penyebaran yang dimaksud adalah ...",o:["Droplet dari pasien yang terinfeksi.","Penyebaran hematogen dari sumber infeksi lain.","Kontak dengan permukaan yang terkontaminasi.","Penularan langsung dari unggas yang terinfeksi.","Penularan melalui gigitan vektor."],a:1,e:"Pneumonia Candida (kandidiasis paru invasif) hampir selalu terjadi akibat <b>penyebaran hematogen</b> dari sumber sistemik lain, misalnya kandidemia atau infeksi saluran cerna, terutama pada pasien imunokompromais atau kritis (ventilator, kateter vena sentral, antibiotik spektrum luas)."},
-{q:"Urutan stadium syok yang benar adalah ...",o:["Kompensasi → ireversibel → dekompensasi","Ireversibel → kompensasi → dekompensasi","Kompensasi → dekompensasi → ireversibel","Dekompensasi → kompensasi → ireversibel","Ireversibel → dekompensasi → kompensasi"],a:2,e:"Syok berjalan progresif: <b>kompensasi</b> (tubuh masih mempertahankan perfusi organ vital) → <b>dekompensasi</b> (mekanisme gagal: hipotensi, oliguri, asidosis) → <b>ireversibel</b> (kerusakan organ menetap, berujung kematian)."},
-{q:"Laki-laki 51 tahun didiagnosis non-small cell lung cancer (NSCLC). Pemeriksaan tambahan yang penting untuk menentukan terapi target dan imunoterapi adalah ...",o:["Pemeriksaan kadar glukosa dan HbA1c.","Pemeriksaan elektrolit dan fungsi ginjal saja.","Pemeriksaan kultur sputum saja.","Pemeriksaan mutasi driver dan ekspresi PD-L1.","Pemeriksaan kadar hemoglobin saja."],a:3,e:"Pada NSCLC lanjut, <b>mutasi driver</b> (EGFR, ALK, ROS1, KRAS, BRAF, RET) menentukan terapi target, sedangkan <b>ekspresi PD-L1</b> menentukan strategi imunoterapi. Glukosa, elektrolit, kultur sputum, dan Hb tidak menentukan pilihan terapi tersebut."},
-{q:"Pasien mengalami hipoperfusi jaringan akibat kehilangan cairan yang berat. Jenis syok yang paling mungkin adalah ...",o:["Syok kardiogenik","Syok anafilaktik","Syok septik","Syok hipovolemik","Syok neurogenik"],a:3,e:"Syok <b>hipovolemik</b> disebabkan perdarahan masif atau hilangnya cairan tubuh berlebihan, sehingga volume sirkulasi dan preload turun. Kardiogenik = gagal pompa; anafilaktik, septik, dan neurogenik termasuk syok distributif (vasodilatasi)."},
-{q:"Komponen bakteri Gram-negatif yang berperan dalam septikemia adalah ...",o:["Eksotoksin","Endotoksin","Flagelin","Peptidoglikan sebagai komponen utama endotoksin","Ribosom"],a:1,e:"<b>Endotoksin</b> (lipid A pada LPS dinding sel Gram-negatif) merangsang pelepasan TNF-α, IL-1, IL-6, mengaktifkan komplemen dan koagulasi, lalu menimbulkan demam, DIC, dan syok septik. Peptidoglikan bukan komponen endotoksin."},
-{q:"Pasien miokarditis akibat infeksi virus. Mekanisme yang dapat menyebabkan kerusakan sel miosit adalah ...",o:["Respons inflamasi dan kerusakan jaringan oleh sistem imun.","Akumulasi histamin sebagai satu-satunya penyebab.","Penumpukan LDL di dalam miosit.","Peningkatan sintesis protein kontraktil yang berlebihan.","Peningkatan produksi eritrosit di jaringan miokard."],a:0,e:"Infeksi virus memicu peradangan, lalu mengaktifkan respons imun (sitokin, radikal bebas oksigen, sel T, makrofag, sel B) yang <b>merusak miosit</b>. Pilihan lain tidak menjelaskan patogenesis miokarditis."},
-{q:"Pada respiratory syncytial virus (RSV), fungsi protein G dan protein F secara berurutan adalah ...",o:["Replikasi RNA dan transkripsi RNA","Perlekatan pada sel inang dan fusi membran yang dapat membentuk syncytium","Fusi membran dan perlekatan pada sel inang","Menghambat interferon dan membungkus RNA","Perakitan virus dan sintesis protein"],a:1,e:"Protein <b>G</b> = perlekatan (attachment) virus ke sel inang. Protein <b>F</b> = fusi membran, mendorong pembentukan <b>syncytium</b> (sel-sel menyatu). Urutan pada opsi C terbalik."},
-{q:"Biomarker yang meningkat paling awal setelah infark miokard adalah ...",o:["CK total","Troponin T","Troponin I","Mioglobin","CK-MB"],a:3,e:"<b>Mioglobin</b> naik paling awal (dalam 1–3 jam), sensitivitas tinggi tetapi spesifisitas rendah karena juga berasal dari otot rangka. Troponin dan CK-MB naik lebih lambat tetapi lebih spesifik."},
-{q:"Kegagalan fusi endocardial cushion pada atrioventricular canal dapat menyebabkan kelainan berupa ...",o:["Koarktasio aorta","Persistent truncus arteriosus","Tetralogi Fallot","Persistent atrioventricular canal","Transposisi arteri besar"],a:3,e:"Endocardial cushion yang gagal menyatu menyebabkan <b>persistent AV canal</b> (defek septum atrioventrikular), sering ditemukan pada sindrom Down. Truncus arteriosus, Fallot, dan transposisi berkaitan dengan septasi/rotasi outflow tract."},
-{q:"Peningkatan permeabilitas kapiler yang menyebabkan cairan keluar ke interstisial terutama terjadi pada kondisi ...",o:["Gagal jantung kanan atau kiri saja","Inflamasi sistemik","Hipoalbuminemia saja","Gangguan ginjal saja","Obstruksi limfatik saja"],a:1,e:"Edema akibat <b>permeabilitas dinding pembuluh meningkat</b> disebabkan proses radang sistemik. Gagal jantung → tekanan hidrostatik naik; hipoalbuminemia → tekanan onkotik turun; gagal ginjal → retensi natrium; obstruksi limfe → elephantiasis."},
-{q:"Saat tubuh kekurangan cairan, hormon yang berperan mempertahankan air dan volume cairan tubuh adalah ...",o:["ADH","ANP","Aldosteron","ADH dan ANP","ADH dan aldosteron"],a:4,e:"<b>ADH</b> meningkatkan reabsorpsi air, <b>aldosteron</b> meningkatkan reabsorpsi natrium (air mengikuti), sehingga volume dipertahankan. <b>ANP</b> bekerja pada kelebihan cairan (meningkatkan ekskresi natrium dan air), jadi opsi B dan D salah."},
-{q:"Pada awal perkembangan embrio, kombinasi sinyal yang penting mengarahkan pembentukan jaringan jantung adalah ...",o:["FGF-8 dan aktivasi WNT","BMP-2 dan BMP-4 disertai inhibisi WNT","SHH dan PAX6","VEGF dan TGF-β","Asam retinoat dan TBX1"],a:1,e:"Sinyal <b>BMP-2, BMP-4</b> dengan <b>inhibisi WNT</b> di mesoderm anterior menginduksi ekspresi NKX-2.5 (tinman) dan menentukan mesoderm menjadi jaringan jantung (heart field). Aktivasi WNT justru menghambat pembentukan jantung."},
-{q:"Pasien sindrom nefrotik dengan proteinuria masif. Urutan mekanisme yang paling tepat hingga menyebabkan edema adalah ...",o:["Kerusakan glomerulus → retensi natrium dan air → peningkatan tekanan intravaskular → edema.","Proteinuria masif → hipoalbuminemia → penurunan tekanan osmotik koloid plasma → cairan berpindah ke jaringan interstisial.","Kerusakan filtrasi ginjal → inflamasi sistemik → peningkatan permeabilitas kapiler → edema.","Penurunan fungsi ginjal → obstruksi limfe → elephantiasis.","Hipoalbuminemia → penurunan tekanan hidrostatik kapiler → cairan masuk ke pembuluh darah → edema."],a:1,e:"Albumin hilang lewat urin → <b>hipoalbuminemia</b> → tekanan onkotik plasma turun → cairan keluar ke interstisial → edema. Opsi E salah: cairan masuk pembuluh darah tidak menyebabkan edema, dan yang turun adalah tekanan onkotik, bukan hidrostatik."},
-{q:"Pada pemeriksaan Ziehl–Neelsen, bakteri tahan asam (BTA) seperti Mycobacterium tuberculosis akan tampak ...",o:["Biru dengan latar belakang merah","Merah dengan latar belakang biru","Hijau dengan latar belakang kuning","Hitam dengan latar belakang putih","Cokelat dengan latar belakang hijau"],a:1,e:"BTA mempertahankan zat warna karbol fuchsin meski didekolorisasi asam-alkohol, sehingga tampak <b>merah</b> dengan latar belakang <b>biru</b> (counterstain metilen biru)."},
-{q:"Mekanisme utama terjadinya edema pada elephantiasis adalah ...",o:["Penurunan protein plasma → penurunan tekanan osmotik → cairan berpindah ke intravaskular.","Penurunan protein plasma → penurunan tekanan osmotik → cairan berpindah ke interstisial.","Obstruksi pembuluh limfe → berkurangnya pengangkutan cairan interstisial → penumpukan cairan di jaringan.","Peningkatan retensi natrium → peningkatan tekanan hidrostatik → edema.","Peningkatan permeabilitas vaskular → perpindahan cairan ke interstisial."],a:2,e:"Elephantiasis adalah edema akibat <b>obstruksi aliran limfe</b>: cairan dan protein interstisial tidak terdrainase sehingga menumpuk. B = hipoalbuminemia, D = gagal ginjal, E = inflamasi."},
-{q:"Kondisi berikut dapat menyebabkan edema akibat penurunan tekanan osmotik koloid plasma, kecuali ...",o:["Penyakit hati kronis","Sindrom nefrotik","Elephantiasis","Malnutrisi berat","Hipoalbuminemia"],a:2,e:"Penyebab turunnya tekanan onkotik: penyakit hati (sintesis albumin turun), sindrom nefrotik (albumin hilang), kwashiorkor/malnutrisi, hipoalbuminemia. <b>Elephantiasis</b> disebabkan obstruksi limfe, bukan penurunan tekanan onkotik."},
-{q:"Manakah pernyataan yang TIDAK benar mengenai perpindahan air melalui membran semipermeabel?",o:["Air cenderung bergerak menuju kompartemen dengan tekanan osmotik efektif lebih tinggi.","Air dapat bergerak mengikuti gradien tekanan hidrostatik.","Air bergerak dari dalam sel ke luar ketika sel berada dalam larutan hipertonik.","Air bergerak dari luar ke dalam sel ketika sel berada dalam larutan hipertonik.","Pada larutan isotonik, tidak terjadi perpindahan air netto."],a:3,e:"Larutan <b>hipertonik</b> memiliki konsentrasi zat terlarut lebih tinggi, sehingga air keluar dari sel dan sel mengerut (crenation). Pernyataan D membalik arahnya, jadi D yang salah."}
-,{q:"Kelompok virus yang sering menyebabkan infeksi saluran pernapasan akut meliputi ...",o:["Influenza, parainfluenza, rhinovirus, adenovirus, RSV, dan coronavirus","HIV, HPV, virus hepatitis B, dan virus hepatitis C","Virus rabies, virus dengue, dan virus chikungunya","Rotavirus, norovirus, dan virus hepatitis A","Virus Epstein–Barr dan cytomegalovirus saja"],a:0,e:"Sekitar 80% ISPA disebabkan virus: <b>influenza, parainfluenza, rhinovirus, adenovirus, RSV, coronavirus</b> (masa inkubasi singkat, transmisi droplet atau kontak). B = virus kronik/darah, C = arbovirus/rabies, D = virus enterik, E = herpesvirus."},
-{q:"Laki-laki 45 tahun palpitasi dan pusing. EKG menunjukkan takikardia supraventrikular. Mekanisme yang paling mungkin adalah ...",o:["Hipokalemia","Re-entry pada nodus atrioventrikular (AV nodal re-entry)","Infark miokard sebagai satu-satunya kemungkinan","Hipoglikemia","Peningkatan tekanan osmotik plasma"],a:1,e:"SVT paling sering akibat <b>re-entry</b> di nodus AV. Syaratnya: dua jalur konduksi paralel, blok unidireksional pada satu jalur, dan konduksi lambat hingga jaringan pulih dari refrakter. Opsi lain bukan mekanisme khas SVT."},
-{q:"Baroreseptor yang berperan mendeteksi perubahan tekanan darah terdapat pada ...",o:["Medula oblongata","Arteri radialis","Arteri brakialis","Pons","Sinus karotis dan arkus aorta"],a:4,e:"Baroreseptor arterial berada di <b>sinus karotis</b> dan <b>arkus aorta</b>. Sinyalnya dikirim ke pusat kardiovaskular di medula, yang merupakan pusat kontrol, bukan reseptor."},
-{q:"Hipoperfusi jaringan akibat kegagalan jantung memompa darah secara adekuat merupakan ciri ...",o:["Syok kardiogenik","Syok hipovolemik","Syok anafilaktik","Syok septik","Syok neurogenik"],a:0,e:"<b>Syok kardiogenik</b> disebabkan kegagalan pompa jantung. Hipovolemik = kehilangan volume; anafilaktik, septik, neurogenik = vasodilatasi perifer berlebihan."},
-{q:"Syok merupakan kondisi ketika ...",o:["Tekanan darah meningkat melebihi normal.","Curah jantung selalu meningkat.","Perfusi jaringan tidak mampu memenuhi kebutuhan metabolisme jaringan.","Frekuensi napas menurun tanpa perubahan perfusi.","Volume darah selalu meningkat."],a:2,e:"Syok = keadaan <b>hipoperfusi jaringan</b>: aliran darah tidak mencukupi kebutuhan metabolisme. Opsi lain memakai kata \"selalu\" atau tidak berkaitan dengan perfusi."},
-{q:"Salah satu fungsi atau efek vegetasi pada endokarditis infektif adalah ...",o:["Melindungi mikroorganisme dari sebagian mekanisme pertahanan imun dan antimikroba.","Meningkatkan produksi eritrosit.","Menghambat seluruh respons inflamasi tubuh.","Meningkatkan filtrasi glomerulus.","Menghentikan agregasi trombosit secara langsung."],a:0,e:"Vegetasi (fibrin + trombosit + bakteri) membentuk lapisan yang <b>melindungi bakteri</b> dari sel imun dan antibiotik. Vegetasi juga dapat lepas menjadi emboli. B, D, E tidak berhubungan; C terlalu absolut."},
-{q:"Pada syok stadium dekompensasi, manakah yang BUKAN manifestasi lazim?",o:["Hipotensi","Oliguria","Koma","Takipnea","Asidosis metabolik"],a:2,e:"Dekompensasi: <b>hipotensi, takipneu/dispneu, oliguri (&lt;500 cc/hari), asidosis</b>. <b>Koma</b> baru muncul pada stadium ireversibel."},
-{q:"Faktor utama yang memengaruhi tekanan darah, kecuali ...",o:["Volume darah","Frekuensi napas","Curah jantung","Stroke volume","Resistensi perifer total"],a:1,e:"Tekanan darah = curah jantung × resistensi perifer total. Curah jantung dipengaruhi denyut jantung dan stroke volume, dan volume darah memengaruhi preload. <b>Frekuensi napas</b> bukan penentu utama."},
-{q:"Curah jantung ditentukan secara langsung oleh kombinasi ...",o:["Frekuensi pernapasan dan resistensi perifer","Tekanan darah dan frekuensi pernapasan","Resistensi perifer dan tekanan vena","Denyut jantung dan volume sekuncup","Tekanan osmotik plasma dan volume urine"],a:3,e:"<b>Curah jantung = denyut jantung × volume sekuncup (stroke volume)</b>. Opsi lain bukan komponen langsung."},
-{q:"Protein permukaan virus influenza yang berperan utama dalam perlekatan pada reseptor sel inang adalah ...",o:["Neuraminidase","Hemagglutinin","Matriks protein","Nukleoprotein","RNA polimerase"],a:1,e:"<b>Hemagglutinin (HA)</b> melekat pada reseptor sel inang dan membantu invasi. Neuraminidase memotong ikatan sehingga virus baru dapat lepas. Opsi C–E adalah protein internal."},
-{q:"Biomarker lipid yang paling bermakna menilai risiko aterosklerosis adalah ...",o:["Peningkatan LDL","Peningkatan HDL","Peningkatan kolesterol tanpa fraksi spesifik","Peningkatan trigliserida saja","Penurunan LDL"],a:0,e:"<b>LDL tinggi</b> adalah pendorong utama aterosklerosis (LDL teroksidasi → foam cell → plak). HDL bersifat protektif dan penurunan LDL justru menurunkan risiko."},
-{q:"Infark miokard menyebabkan kerusakan miosit. Biomarker paling spesifik untuk kerusakan miokard adalah ...",o:["Troponin jantung (cTnI atau cTnT)","PCR sebagai penanda inflamasi umum","Glukosa darah","HDL","Hemoglobin"],a:0,e:"<b>Troponin jantung (cTnI/cTnT)</b> paling spesifik untuk nekrosis miokard. Penanda inflamasi umum, glukosa, HDL, dan Hb tidak spesifik."},
-{q:"Pemeriksaan yang membantu pemilihan terapi target dan imunoterapi pada kanker tertentu meliputi ...",o:["Pemeriksaan kadar kalium saja","Pemeriksaan kadar progesteron pada semua kanker","Pemeriksaan mutasi molekuler yang relevan dan ekspresi PD-L1 sesuai indikasi","Pemeriksaan kultur darah saja","Pemeriksaan kadar D-dimer saja"],a:2,e:"Mutasi molekuler (misal EGFR) menentukan <b>terapi target</b>; ekspresi <b>PD-L1</b> menentukan kelayakan <b>imunoterapi</b>. Pemeriksaan lain tidak menentukan pilihan tersebut."},
-{q:"Laki-laki 58 tahun dengan diabetes, PGK G3a, albuminuria, TD 148/88 mmHg masih hipertensi setelah amlodipin. Kalium normal, tidak ada riwayat angioedema. Terapi tambahan yang sesuai adalah ...",o:["Diltiazem tanpa mempertimbangkan risiko gangguan konduksi jantung","ACE inhibitor dengan pemantauan kreatinin dan kalium setelah 2–4 minggu","Klonidin tanpa pemantauan tekanan darah","Doksazosin tanpa memperhatikan hipotensi ortostatik","Hidralazin tanpa mempertimbangkan efek sampingnya"],a:1,e:"Pada PGK dengan diabetes dan albuminuria, <b>ACEi/ARB</b> adalah pilihan karena renoprotektif (menurunkan tekanan intraglomerulus). Pantau kreatinin, eGFR, dan kalium 2–4 minggu setelah mulai. Opsi lain mengabaikan keamanan obat."},
-{q:"Kondisi yang dapat menyebabkan retensi natrium dan air sehingga memicu edema antara lain ...",o:["Gagal ginjal","Elephantiasis sebagai penyebab utama retensi natrium","Penurunan kadar natrium tanpa gangguan regulasi cairan","Penurunan tekanan hidrostatik kapiler","Peningkatan drainase limfatik"],a:0,e:"<b>Gagal ginjal</b> menyebabkan retensi natrium dan air sehingga volume dan tekanan hidrostatik naik. Elephantiasis adalah obstruksi limfe, sedangkan C, D, E justru tidak menimbulkan edema."},
-{q:"Virus yang secara klasik dikenal sebagai salah satu penyebab perikarditis adalah ...",o:["Mycobacterium tuberculosis","Coxsackievirus B","Candida albicans","Aspergillus fumigatus","Bordetella pertussis"],a:1,e:"<b>Coxsackievirus B</b> (enterovirus) penyebab klasik perikarditis viral. A bakteri, C dan D jamur, E bakteri saluran napas."},
-{q:"Pada hipertensi jangka panjang, baroreseptor dapat mengalami resetting. Artinya ...",o:["Baroreseptor selalu meningkatkan respons terhadap tekanan darah normal","Baroreseptor mengalami kerusakan permanen","Baroreseptor berubah menjadi kemoreseptor","Baroreseptor beradaptasi dengan tekanan darah yang lebih tinggi sehingga titik pengaturannya bergeser","Baroreseptor berhenti menerima rangsangan dari perubahan tekanan darah"],a:3,e:"<b>Resetting</b> = adaptasi: set point bergeser ke tekanan lebih tinggi, sehingga tekanan tinggi dianggap \"normal\". Reseptor tidak rusak dan tetap berfungsi."},
-{q:"Pasien sesak napas dan mengi disertai eosinofil darah meningkat. Dokter ingin menilai eosinofil langsung pada saluran pernapasan. Sampel yang dapat diperiksa adalah ...",o:["Urine","Cairan serebrospinal","Serum","Sputum pernapasan","Feses"],a:3,e:"Eosinofil di saluran napas dinilai langsung dari <b>sputum</b>. Urine, CSS, serum, dan feses tidak mencerminkan kondisi saluran napas."},
-{q:"Hipoperfusi jaringan akibat infeksi sistemik dapat menyebabkan jenis syok berupa ...",o:["Syok kardiogenik","Syok hipovolemik","Syok anafilaktik","Syok septik","Syok neurogenik"],a:3,e:"Septikemia/infeksi bakteri sistemik → vasodilatasi perifer → <b>syok septik</b>."},
-{q:"Saat kelebihan cairan, hormon yang meningkatkan ekskresi natrium dan air adalah ...",o:["ADH","Atrial natriuretic peptide (ANP)","Aldosteron","Renin","Angiotensin II"],a:1,e:"Regangan atrium → pelepasan <b>ANP</b> → natriuresis dan diuresis, menekan renin, ADH, dan aldosteron. Opsi lain justru menahan natrium dan air."},
-{q:"Paparan asap rokok kronis dapat menyebabkan inflamasi sistemik. Biomarker yang menunjukkan respons inflamasi tersebut adalah ...",o:["Kreatinin","Sitokin","Bilirubin","Albumin serum","Urea nitrogen darah"],a:1,e:"<b>Sitokin</b> (IL-6, TNF-α, dll.) mencerminkan inflamasi. Kreatinin dan BUN = fungsi ginjal, bilirubin = hati, albumin = status protein."},
-{q:"Pasien HIV lanjut dengan efusi perikardium dan dugaan infeksi oportunistik. Di daerah endemis TB, penyebab penting yang harus dipertimbangkan adalah ...",o:["Staphylococcus epidermidis","Mycobacterium tuberculosis","Bordetella pertussis","Corynebacterium diphtheriae","Clostridium tetani"],a:1,e:"Perikarditis pada HIV di daerah endemis terutama dipikirkan <b>Mycobacterium tuberculosis</b> (perikarditis TB). Opsi lain bukan penyebab khas."},
-{q:"Jamur yang khas memiliki hifa bersepta dengan percabangan sudut akut sekitar 45° adalah ...",o:["Candida spp.","Histoplasma capsulatum","Blastomyces dermatitidis","Aspergillus spp.","Coccidioides immitis"],a:3,e:"<b>Aspergillus</b>: hifa bersepta, bercabang akut ±45°. Candida = ragi/pseudohifa; Histoplasma, Blastomyces, Coccidioides = jamur dimorfik."},
-{q:"Karakteristik refleks baroreseptor jangka pendek, kecuali ...",o:["Memengaruhi curah jantung","Diperantarai sistem saraf otonom","Memengaruhi frekuensi denyut jantung","Memengaruhi resistensi vaskular perifer","Respons utamanya berlangsung selama menit-hari"],a:4,e:"Refleks jangka pendek berlangsung <b>beberapa detik</b> melalui otonom (curah jantung dan resistensi perifer). Penyesuaian menit–hari (volume darah) adalah <b>jangka panjang</b>."},
-{q:"Faktor yang dapat berperan dalam hipertensi primer, kecuali ...",o:["Gangguan penanganan garam","Perubahan zat kimia vasoaktif","Gangguan regulasi tekanan darah","Sindrom Conn","Gangguan mekanisme transpor ion"],a:3,e:"<b>Sindrom Conn</b> (hiperaldosteronisme primer) adalah penyebab hipertensi <b>sekunder/endokrin</b>. Hipertensi primer berkaitan dengan garam, pompa Na-K, vasoaktif, dan regulasi tekanan."},
-{q:"Perempuan palpitasi setelah mengonsumsi kopi berlebihan. Zat yang paling mungkin menyebabkan adalah ...",o:["Nikotin","Kafein","Histamin","Insulin","Albumin"],a:1,e:"<b>Kafein</b> meningkatkan aktivitas simpatis dan pelepasan Ca²⁺ di sel jantung, sehingga kontraksi dan denyut meningkat (palpitasi)."},
-{q:"Vegetasi pada endokarditis infektif umumnya terdiri atas ...",o:["Eritrosit dan leukosit saja","Fibrin, trombosit, mikroorganisme, dan sel inflamasi","Kolagen dan osteosit","Sel adiposa dan fibroblas","Sel epitel dan keratin"],a:1,e:"Vegetasi = massa <b>fibrin, trombosit, mikroorganisme, dan sel inflamasi</b> pada katup. Opsi lain bukan penyusunnya."},
-{q:"Media padat yang digunakan untuk kultur Mycobacterium tuberculosis adalah ...",o:["Agar darah","Sabouraud dextrose agar","Ziehll-Nielsen","Potato dextrose agar","MacConkey agar"],a:2,e:"<b>Catatan:</b> kunci PDF memilih C, tetapi Ziehl–Neelsen sebenarnya <b>pewarnaan BTA</b>, bukan media. Media padat kultur TB yang benar adalah <b>Löwenstein–Jensen</b>. Karena opsi itu tidak ada, C dipilih sebagai paling dekat dengan TB. Agar darah, Sabouraud, PDA, dan MacConkey bukan media TB. Sebaiknya konfirmasi ke penyusun soal."},
-{q:"Pemeriksaan untuk mendeteksi M. tuberculosis sekaligus resistansi rifampisin secara molekuler adalah ...",o:["Kultur darah rutin","Pewarnaan Gram","Tes Cepat Molekuler (TCM)","Pemeriksaan KOH","Uji katalase"],a:2,e:"<b>TCM (Xpert MTB/RIF)</b> mendeteksi DNA M. tuberculosis dan mutasi gen rpoB penanda resistansi rifampisin. Gram, KOH, dan katalase tidak mendeteksi resistansi."},
-{q:"Bakteri penyebab pertusis atau batuk rejan adalah ...",o:["Haemophilus influenzae","Staphylococcus aureus","Bordetella pertussis","Corynebacterium diphtheriae","Mycobacterium tuberculosis"],a:2,e:"<b>Bordetella pertussis</b> melekat pada epitel bronkus bersilia dan menghasilkan toksin pertusis (faktor virulensi utama). C. diphtheriae = difteri; M. tuberculosis = TB."}
-,{q:"Manifestasi yang dapat terjadi pada syok ireversibel, kecuali ...",o:["Hipotensi berat","Takikardia berat","Gangguan kesadaran hingga koma","Anuria dan asidosis berat","Poliuria"],a:4,e:"Syok ireversibel: hipotensi dan takikardia hebat, respiratory distress, penurunan kesadaran hingga koma, <b>anuria</b>, asidosis hebat, berujung kematian. <b>Poliuria</b> tidak sesuai karena ginjal gagal (anuria)."},
-{q:"Edema akibat peningkatan tekanan hidrostatik kapiler dapat terjadi pada ...",o:["Gagal jantung kanan","Sindrom nefrotik akibat hipoalbuminemia","Penyakit hati akibat penurunan albumin","Kwashiorkor","Obstruksi limfatik"],a:0,e:"<b>Gagal jantung kanan</b> meningkatkan tekanan vena dan hidrostatik kapiler sehingga cairan keluar. B, C, D = tekanan onkotik turun; E = hambatan drainase limfe."},
-{q:"Foam cell dalam pembentukan plak aterosklerosis terutama berasal dari ...",o:["Monosit yang berisi LDL tanpa modifikasi","Monosit yang berisi LDL teroksidasi","Makrofag yang berisi LDL tanpa modifikasi","Makrofag yang menelan LDL teroksidasi","Sel busa yang berisi small LDL saja"],a:3,e:"Monosit masuk ke intima dan berdiferensiasi menjadi <b>makrofag</b>, yang memfagosit <b>LDL teroksidasi</b> lalu menjadi <b>foam cell</b>. Monosit belum menelan lipid, dan LDL tanpa modifikasi tidak ditelan reseptor scavenger."},
-{q:"Demam reumatik dapat terjadi setelah infeksi Streptococcus pyogenes. Mekanisme utama kerusakan jaringan jantung adalah ...",o:["Pembentukan vegetasi infektif pada katup jantung","Gangguan metabolisme kolagen akibat toksin bakteri secara langsung","Nekrosis jaringan akibat invasi bakteri ke seluruh miosit","Reaksi autoimun silang antara antigen streptokokus dan jaringan tubuh (molecular mimicry)","Reaksi toksik langsung terhadap jantung oleh bakteri"],a:3,e:"Demam reumatik adalah komplikasi <b>autoimun</b>: antibodi terhadap protein M streptokokus bereaksi silang dengan jaringan jantung (<b>molecular mimicry</b>). Vegetasi infektif ada pada endokarditis infektif, bukan demam reumatik."},
-{q:"Respiratory distress syndrome pada bayi prematur terutama disebabkan oleh ...",o:["Penutupan dini ductus arteriosus","Kekurangan surfaktan yang diproduksi pneumosit tipe II","Infeksi intrauterin sebagai penyebab tunggal","Kelebihan surfaktan pada alveoli","Peningkatan produksi mukus pada bronkus"],a:1,e:"Pneumosit tipe II belum matang pada bayi prematur sehingga <b>surfaktan kurang</b>, tegangan permukaan alveolus tinggi, alveolus kolaps (atelektasis)."},
-{q:"Pasien anemia berat dan palpitasi saat aktivitas ringan. Mekanisme kompensasi yang paling mungkin adalah ...",o:["Penurunan preload ventrikel","Peningkatan denyut jantung untuk mempertahankan pengiriman oksigen ke jaringan","Penurunan curah jantung sebagai respons utama","Penurunan kebutuhan oksigen jaringan","Hipoglikemia akibat disfungsi katup"],a:1,e:"Anemia → Hb turun → kandungan O₂ darah turun → aktivasi simpatis → <b>takikardia dan curah jantung naik</b> untuk mempertahankan pengiriman O₂."},
-{q:"Laki-laki 70 tahun menggunakan verapamil lalu diberi metoprolol. Denyut jantung turun menjadi 42 kali/menit. Mekanisme yang paling mungkin adalah ...",o:["Peningkatan aktivitas simpatis","Efek gabungan yang menekan denyut jantung dan konduksi atrioventrikular","Peningkatan kontraktilitas jantung","Peningkatan pelepasan renin","Peningkatan konduksi nodus AV"],a:1,e:"Verapamil memblokir kanal Ca²⁺ tipe L pada nodus SA dan AV, sedangkan metoprolol memblokir reseptor β₁. Keduanya menekan nodus SA/AV sehingga efek gabungannya berlebihan: <b>bradikardia dan blok AV</b>."},
-{q:"ARNI direkomendasikan pada pasien tertentu dengan HFrEF. Mekanisme kerjanya adalah ...",o:["Inhibisi Na⁺/K⁺-ATPase dan blokade aldosteron","Menurunkan denyut jantung dan meningkatkan kalsium intraseluler","Inhibisi neprilysin dan blokade reseptor angiotensin II","Blokade reseptor angiotensin I dan vasodilatasi vena","Inhibisi SGLT2"],a:2,e:"ARNI (sacubitril/valsartan): sacubitril <b>menghambat neprilysin</b> (peptida natriuretik naik), valsartan <b>memblokir reseptor AT1 angiotensin II</b>. Opsi A = digoksin/spironolakton, E = SGLT2 inhibitor."},
-{q:"Perempuan 32 tahun, TD klinik 159/90 mmHg, tetapi pemantauan rumah tujuh hari berbeda cukup jauh. Tindakan paling tepat adalah ...",o:["Langsung memberikan amlodipin tanpa evaluasi lanjutan","Langsung memberikan captopril tanpa konfirmasi","Langsung memberikan kombinasi dua antihipertensi","Mengulangi evaluasi dan mengonfirmasi diagnosis menggunakan pengukuran tekanan darah yang terstandar","Memberikan furosemid untuk semua pasien dengan tekanan darah tinggi"],a:3,e:"Selisih klinik–rumah menimbulkan dugaan <b>white-coat effect</b>. <b>Konfirmasi dengan HBPM/ABPM</b> sebelum memulai terapi. Obat langsung berisiko hipotensi dan terapi tidak perlu."},
-{q:"Pasien sesak napas dengan pCO₂ 60 mmHg, pH 7,26, pO₂ 55 mmHg, HCO₃⁻ ±27 mEq/L. Gangguan asam-basa primer adalah ...",o:["Asidosis metabolik","Alkalosis respiratorik","Gangguan asam-basa tidak dapat dinilai","Asidosis respiratorik","Alkalosis metabolik"],a:3,e:"pH &lt;7,35 = asidosis. pCO₂ naik (60) menjelaskan penurunan pH, sehingga <b>asidosis respiratorik</b>. HCO₃⁻ sedikit naik = awal kompensasi ginjal, belum cukup menormalkan pH."},
-{q:"Infeksi Corynebacterium diphtheriae. Ciri khas patogenesisnya adalah ...",o:["Membentuk pseudomembran pada faring","Menyebabkan pembentukan syncytium akibat fusi sel epitel","Menginvasi eritrosit dan berkembang biak di dalamnya","Membentuk endospora untuk bertahan hidup","Menginfeksi sel T CD4 dan menyebabkan penurunan imunitas"],a:0,e:"Toksin difteri menghambat sintesis protein sehingga terbentuk <b>pseudomembran</b> faring (plak keabuan). Toksin juga dapat menyebabkan miokarditis. B = RSV, E = HIV."},
-{q:"Virus yang secara klasik dikenal sebagai penyebab penting miokarditis adalah ...",o:["Legionella pneumophila","Coxsackievirus B","Streptococcus pneumoniae","Candida albicans","Bordetella pertussis"],a:1,e:"<b>Coxsackievirus B</b> (enterovirus) adalah penyebab virus tersering miokarditis. Opsi lain bukan virus."},
-{q:"Infark miokard menyebabkan nekrosis dan inflamasi. Pemeriksaan yang terutama menilai respons inflamasi sistemik adalah ...",o:["Cardiac troponin I","Cardiac troponin T","CK-MB","C-reactive protein (CRP)","BNP"],a:3,e:"<b>CRP</b> adalah protein fase akut penanda inflamasi sistemik. Troponin dan CK-MB menilai kerusakan miosit, BNP menilai gagal jantung."},
-{q:"Dalam pembagian klasik berdasarkan waktu setelah operasi, mikroorganisme yang sering dikaitkan dengan endokarditis katup prostetik yang muncul lebih dari dua bulan setelah operasi adalah ...",o:["Staphylococcus aureus","Streptokokus viridans","Streptococcus pneumoniae","Pseudomonas aeruginosa","Haemophilus influenzae"],a:1,e:"Pada endokarditis katup prostetik <b>lambat</b> (&gt;2 bulan) pola mikrobanya mendekati endokarditis katup asli, dengan <b>streptokokus viridans</b> sebagai penyebab tersering (flora mulut). Penyebab dini (&lt;2 bulan) lebih sering stafilokokus dan Gram-negatif."},
-{q:"Hipoperfusi akibat peningkatan permeabilitas pembuluh darah yang menyebabkan kebocoran cairan ke jaringan dapat terjadi pada ...",o:["Syok kardiogenik","Syok hipovolemik akibat perdarahan","Syok anafilaktik","Syok akibat gagal pompa jantung","Syok akibat stenosis katup"],a:2,e:"Pada <b>syok anafilaktik</b>, mediator alergi (histamin) menyebabkan vasodilatasi dan permeabilitas naik sehingga cairan bocor ke jaringan. Opsi lain tidak melibatkan kebocoran kapiler."},
-{q:"Definisi syok yang paling tepat adalah ...",o:["Keadaan hipoperfusi jaringan ketika aliran darah tidak mencukupi kebutuhan metabolik jaringan","Keadaan ketika suplai oksigen ke otak berkurang tanpa memengaruhi organ lain","Keadaan ketika tubuh tidak mampu mempertahankan tekanan darah normal, tetapi perfusi tetap adekuat","Penurunan tekanan darah akibat kehilangan darah akut tanpa dampak pada metabolisme sel","Kelebihan cairan intravaskular yang menurunkan difusi oksigen ke jaringan"],a:0,e:"Syok = <b>hipoperfusi jaringan</b>: aliran darah tidak memenuhi kebutuhan metabolik, melibatkan banyak organ. Opsi lain membatasi pada otak, atau menyebut perfusi tetap adekuat."},
-{q:"Pasangan organ dan perubahan pada syok berat yang TIDAK sesuai adalah ...",o:["Paru — gangguan pernapasan akut","Saluran gastrointestinal — iskemia mukosa dan perdarahan","Ginjal — nekrosis tubular akut","Hati — nekrosis sentrilobular","Otak — hipertrofi sebagai respons khas terhadap hipoperfusi akut"],a:4,e:"Hipoperfusi pada otak menyebabkan <b>iskemia</b> (klinis seperti stroke), bukan hipertrofi. Paru: ARDS; GI: erosi/perdarahan; ginjal: nekrosis tubular; hati: nekrosis sentrilobular."},
-{q:"Struktur berikut yang berasal dari endoderm adalah ...",o:["Epitel alveolus","Otot polos esofagus","Tulang rawan trakea","Pleura visceralis","Pleura parietalis"],a:0,e:"Endoderm foregut membentuk <b>epitel</b> saluran napas (laring, trakea, bronkus, alveolus). Otot, tulang rawan, dan pleura berasal dari mesoderm."},
-{q:"Amlodipin dapat diberikan satu kali sehari. Karakteristik farmakokinetik yang mendukung adalah ...",o:["Bioavailabilitas sangat rendah dan ekskresi ginjal sangat cepat","Efek hanya muncul setelah metabolit terakumulasi selama beberapa minggu","Waktu paruh eliminasi panjang sehingga efeknya dapat bertahan sekitar 24 jam","Absorpsi berlangsung sangat cepat dan efeknya hanya beberapa menit","Obat tidak mengalami metabolisme"],a:2,e:"Amlodipin punya <b>waktu paruh panjang</b>, sehingga cukup diberikan sekali sehari. Nifedipin kerja cepat justru dihindari untuk kontrol rutin."},
-{q:"Ibu hamil dengan hipertensi sebelumnya mengonsumsi captopril. Pilihan pengganti yang sesuai adalah ...",o:["Labetalol atau nifedipin lepas lambat","ACE inhibitor atau ARB","Spironolakton sebagai pilihan rutin","Aliskiren","Kombinasi ACE inhibitor dan ARB"],a:0,e:"Pada kehamilan, penghambat RAAS (ACEi, ARB, aliskiren) <b>dihindari</b> karena teratogenik. Pilihan: <b>labetalol, nifedipin lepas lambat, atau metildopa</b>."},
-{q:"Pasien 65 tahun dengan hipertensi, HFrEF (EF 32%), dan fibrilasi atrium tanpa blok AV. Pilihan pengendalian denyut jantung yang sesuai adalah ...",o:["Verapamil","Diltiazem","Nifedipin kerja cepat","Klonidin tanpa pemantauan","Beta-blocker yang terbukti bermanfaat pada HFrEF, dengan titrasi dan pemantauan yang tepat"],a:4,e:"Pada HFrEF, verapamil dan diltiazem <b>dihindari</b> (menekan kontraktilitas). Pilih <b>beta-blocker</b> yang terbukti memperbaiki luaran, dengan titrasi bertahap."},
-{q:"Feokromositoma dapat menyebabkan hipertensi melalui mekanisme ...",o:["Peningkatan aldosteron dari korteks adrenal sebagai mekanisme utama","Peningkatan sekresi katekolamin, terutama epinefrin dan norepinefrin, oleh tumor medula adrenal","Penurunan aktivitas saraf simpatis","Penurunan resistensi vaskular sistemik secara menetap","Penurunan denyut jantung akibat stimulasi parasimpatis"],a:1,e:"Feokromositoma = tumor medula adrenal yang melepas <b>katekolamin</b>, sehingga vasokonstriksi dan curah jantung naik. Peningkatan aldosteron adalah sindrom Conn."},
-{q:"Wanita 60 tahun, TD klinik 156/96 mmHg, rata-rata rumah tujuh hari 126/76 mmHg. Sebelum meningkatkan dosis, langkah paling tepat adalah ...",o:["Langsung menaikkan dosis beta blocker","Mengevaluasi kemungkinan white-coat hypertension dan mengonfirmasi tekanan darah menggunakan pengukuran rumah atau ABPM","Menambahkan diuretik tanpa pemeriksaan lanjutan","Menghentikan seluruh obat antihipertensi secara langsung","Mengabaikan semua hasil pengukuran klinik"],a:1,e:"TD klinik tinggi namun TD rumah normal → curiga <b>white-coat effect</b>. Konfirmasi dengan <b>HBPM/ABPM</b> sebelum intensifikasi terapi untuk mencegah hipotensi."},
-{q:"Wanita dengan TD 132/84 mmHg duduk dan 108/74 mmHg berbaring setelah obat antihipertensi. Langkah selanjutnya yang paling sesuai adalah ...",o:["Langsung meningkatkan dosis antihipertensi","Menghentikan semua obat tanpa evaluasi","Mengevaluasi gejala dan kemungkinan hipotensi ortostatik serta meninjau kembali terapi dan pengukuran tekanan darah","Menambahkan obat penurun tekanan darah lain","Mengabaikan perubahan tekanan darah tersebut"],a:2,e:"Perbedaan TD antarposisi perlu dinilai sebagai kemungkinan <b>hipotensi ortostatik</b>: evaluasi gejala (pusing), tinjau terapi, dan ukur TD posisi duduk/berbaring/berdiri. Menaikkan atau menambah obat berisiko memperburuk."},
-{q:"Pemberian verapamil bersama metoprolol dapat meningkatkan risiko ...",o:["Takikardia dan peningkatan konduksi atrioventrikular","Bradikardia dan depresi konduksi atrioventrikular","Hipertensi berat akibat aktivasi simpatis","Peningkatan kontraktilitas ventrikel","Peningkatan otomatisitas nodus sinoatrial"],a:1,e:"Interaksi β-blocker + verapamil: risiko <b>bradikardia, blok AV, dan depresi kontraktilitas</b> karena keduanya menekan nodus SA dan AV."},
-{q:"Pria 50 tahun dengan anemia dan jantung berdebar saat aktivitas ringan. Mekanisme yang paling sesuai adalah ...",o:["Penurunan preload sebagai satu-satunya mekanisme","Penurunan kapasitas pengangkutan oksigen yang memicu kompensasi peningkatan denyut jantung","Hipoglikemia sebagai mekanisme utama","Vasokonstriksi sistemik sebagai satu-satunya penyebab","Penurunan kebutuhan oksigen jaringan"],a:1,e:"Anemia menurunkan <b>kapasitas angkut O₂</b>, sehingga tubuh menaikkan denyut jantung (kompensasi) untuk mempertahankan penghantaran O₂. Kebutuhan oksigen jaringan tidak turun."},
-{q:"Jenis syok yang dapat terjadi akibat nyeri hebat adalah ...",o:["Syok kardiogenik","Syok neurogenik","Syok septik","Syok anafilaktik","Syok hipovolemik"],a:1,e:"Nyeri hebat menghambat aktivitas vasokonstriktor simpatis → vasodilatasi berlebihan → <b>syok neurogenik</b>."},
-{q:"Wanita 63 tahun, sakit kepala, TD 158/96 mmHg, riwayat PGK. Dokter ingin obat yang membantu memperlambat progresivitas kerusakan ginjal, terutama bila ada albuminuria. Pilihan obat dan mekanisme paling tepat adalah ...",o:["Amlodipin, menghambat kanal kalsium tipe L pada otot polos pembuluh darah sehingga terjadi vasodilatasi.","Lisinopril, menghambat enzim angiotensin-converting (ACE) sehingga pembentukan angiotensin II berkurang dan tekanan intraglomerulus menurun.","Furosemid, menghambat cotransporter Na⁺-K⁺-2Cl⁻ di ansa Henle sehingga ekskresi natrium dan air meningkat.","Propranolol, menghambat reseptor beta-adrenergik sehingga denyut jantung dan kontraktilitas miokard menurun.","Hidralazin, merelaksasi otot polos arteriol secara langsung sehingga resistensi vaskular perifer berkurang."],a:1,e:"<b>ACE inhibitor (lisinopril)</b> menurunkan angiotensin II, melebarkan arteriol eferen, menurunkan <b>tekanan intraglomerulus</b> dan proteinuria, sehingga renoprotektif. Pantau kreatinin dan kalium. Obat lain menurunkan TD tanpa efek renoprotektif sekuat ini."}
-/*MORE*/];
-const $=s=>document.querySelector(s),L='ABCDE';let mode,i=0,ans={},fl={},rv=0,T=0,tm,fin=0;
-function ls(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem('kc32_'+k));localStorage.setItem('kc32_'+k,JSON.stringify(v))}catch(e){return null}}
-function toast(m){const t=$('#t');t.textContent=m;t.className='on';setTimeout(()=>t.className='',1000)}
-function cor(){return Q.filter((q,k)=>ans[k]===q.a).length}
-function home(){clearInterval(tm);mode=null;const b=ls('best');$('#sc').textContent=Q.length+' soal';$('#app').innerHTML='<h3>Pilih mode belajar</h3><div class="modes">'+[['study','Study','Jawaban dan pembahasan muncul langsung'],['exam','Exam','Timer 90 menit, jawaban disembunyikan sampai selesai'],['drill','Drill','Ulangi sampai benar, otomatis lanjut']].map(m=>`<button class="mode" onclick="start('${m[0]}')"><b>${m[1]}</b><span>${m[2]}</span></button>`).join('')+`</div><p class="mut">Kunci: A–E jawab · ←/→ pindah · F tandai${b!=null?' · Skor terbaik Exam: '+b+'%':''}</p>`}
-function start(m){mode=m;i=0;ans={};fl={};rv=0;fin=0;clearInterval(tm);if(m=='exam'){T=5400;tm=setInterval(()=>{T--;if(T<=0)finish();else{const e=$('#tm');if(e)e.textContent=fmt(T)}},1000)}render()}
-const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
-function pick(k){const q=Q[i];if(fin&&!rv||rv||!mode)return;if(mode=='study'&&ans[i]!=null)return;if(mode=='drill'){if(ans[i]===q.a)return;ans[i]=k;if(k===q.a){toast('Benar! 🔥');setTimeout(()=>{if(i<Q.length-1){i++}render()},1200)}else toast('Belum tepat, coba lagi')}else ans[i]=k;render()}
-function go(n){if(n<0||n>=Q.length)return;i=n;render()}
-function flag(){fl[i]=!fl[i];render()}
-function render(){const q=Q[i],s=ans[i],show=rv||mode=='study'&&s!=null||mode=='drill'&&s===q.a;
-$('#sc').textContent=mode=='exam'&&!rv?Object.keys(ans).length+'/'+Q.length+' dijawab':cor()+' benar';
-$('#app').innerHTML=`<div class="bar"><i style="width:${(i+1)/Q.length*100}%"></i></div><div class="map">${Q.map((x,k)=>`<i class="${k==i?'c':ans[k]!=null?'d':''} ${fl[k]?'fl':''}" onclick="go(${k})">${k+1}</i>`).join('')}</div><div class="card"><div class="qn"><span>Soal ${i+1} / ${Q.length}</span>${mode=='exam'&&!rv?'<span id="tm">'+fmt(T)+'</span>':''}</div><div>${q.q}</div>${q.o.map((t,k)=>{let c='opt';if(show&&k==q.a)c+=' ok';else if(s===k&&(show||mode=='drill'&&s!==q.a))c+=' bad';else if(s===k)c+=' sel';return`<button class="${c}" onclick="pick(${k})"><b>${L[k]}</b><span>${t}</span></button>`}).join('')}${show?`<div class="exp"><b>Jawaban: ${L[q.a]}.</b> ${q.e}</div>`:''}</div><div class="nav"><button class="b" onclick="go(i-1)">← Sebelumnya</button><button class="b f ${fl[i]?'on':''}" onclick="flag()">⚑ Tandai</button>${i<Q.length-1?'<button class="b p" onclick="go(i+1)">Berikutnya →</button>':mode=='exam'&&!rv?'<button class="b p" onclick="finish()">Selesai</button>':'<button class="b p" onclick="home()">Menu</button>'}</div>${mode=='exam'&&!rv?'<div class="nav"><button class="b" onclick="finish()">Selesaikan ujian</button></div>':''}`}
-function finish(){clearInterval(tm);fin=1;const c=cor(),p=Math.round(c/Q.length*100),b=ls('best');if(b==null||p>b)ls('best',p);$('#sc').textContent=c+' benar';$('#app').innerHTML=`<div class="card"><p class="mut">Hasil Exam</p><p class="big">${p}%</p><p>${c} benar dari ${Q.length} soal · ${Object.keys(ans).length} dijawab</p></div><div class="nav"><button class="b p" onclick="rv=1;i=0;render()">Review jawaban</button><button class="b" onclick="home()">Menu</button></div>`}
-document.addEventListener('keydown',e=>{if(!mode||fin&&!rv&&!$('.card .qn'))return;const k=e.key.toUpperCase();if('ABCDE'.includes(k)&&k.length==1)pick(L.indexOf(k));else if(e.key=='ArrowRight')go(i+1);else if(e.key=='ArrowLeft')go(i-1);else if(k=='F')flag()});
-home();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>KAPSUL CARDIOVICTUS 3.2 — 25 MAS SAM 1</title>
+<style>
+:root{
+  --bg:#EFF6FF;--surface:#E0EDFF;--surface-2:#D0E4FF;--surface-3:#BAD4FC;
+  --border:#90B8F0;--border-light:#A8CAFF;
+  --ink:#0F1F3D;--ink-muted:#2D5FA0;--ink-faint:#5B8ACC;
+  --accent:#E8365D;--accent-2:#B01C42;
+  --r:14px;--r-sm:9px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:16px}
+.shell{max-width:760px;margin:0 auto}
+#start-screen{animation:fadeIn .5s ease}
+.logo-row{display:flex;align-items:baseline;gap:14px;padding:36px 0 8px;flex-wrap:wrap}
+.logo-wordmark{font-family:Georgia,serif;font-size:clamp(1.6rem,5vw,2.8rem);letter-spacing:-0.5px;color:var(--ink);line-height:1}
+.logo-wordmark span{color:var(--ink-muted)}
+.logo-tag{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:4px 10px;border-radius:99px;background:rgba(232,54,93,0.08)}
+.divider{height:1px;background:var(--border);margin:20px 0}
+.meta-row{display:flex;gap:20px;flex-wrap:wrap;padding:10px 0}
+.meta-chip{display:flex;align-items:center;gap:7px;font-family:'Courier New',monospace;font-size:11px;color:var(--ink-muted)}
+.meta-chip .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:12px;box-shadow:0 1px 4px rgba(15,31,61,.07)}
+.card-title{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.mode-grid{display:flex;flex-direction:column;gap:9px}
+.mode-btn{display:flex;align-items:center;gap:15px;padding:15px 18px;border:1px solid var(--border-light);border-radius:var(--r-sm);background:var(--surface-2);cursor:pointer;text-align:left;width:100%;font-family:system-ui,sans-serif;transition:all .2s ease}
+.mode-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 12px rgba(232,54,93,.12)}
+.mode-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:13px;font-weight:500;color:var(--ink-muted);flex-shrink:0;background:var(--surface-3)}
+.mode-text h3{font-weight:600;font-size:15px;color:var(--ink);margin-bottom:2px}
+.mode-text p{font-size:12px;color:var(--ink-muted);font-weight:300;line-height:1.4}
+.mode-arr{margin-left:auto;color:var(--ink-faint);font-size:18px;transition:transform .2s}
+.mode-btn:hover .mode-arr{transform:translateX(4px);color:var(--accent)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stat-box{background:var(--surface-2);border:1px solid var(--border-light);border-radius:var(--r-sm);padding:16px 12px;text-align:center}
+.stat-val{font-family:Georgia,serif;font-size:1.9rem;line-height:1;color:var(--ink)}
+.stat-lbl{font-family:'Courier New',monospace;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-muted);margin-top:5px}
+.hist-list{display:flex;flex-direction:column;gap:5px;max-height:140px;overflow-y:auto;margin-top:10px}
+.hist-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg);border:1px solid var(--border-light);border-radius:7px;font-size:12px}
+.hi-mode{font-family:'Courier New',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:99px;background:var(--surface-3);color:var(--ink-muted)}
+.hi-score{font-weight:600;color:var(--ink);margin-left:auto}
+.hi-pct{font-family:'Courier New',monospace;font-size:11px;padding:2px 7px;border-radius:99px;background:var(--surface-3);color:var(--ink-muted)}
+.hi-date{font-size:11px;color:var(--ink-faint)}
+.no-hist{font-size:13px;color:var(--ink-faint);text-align:center;padding:16px 0;font-style:italic}
+.reset-btn{margin-top:10px;background:none;border:1px solid var(--border);border-radius:7px;padding:6px 14px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);cursor:pointer;transition:all .15s}
+.reset-btn:hover{border-color:var(--accent);color:var(--accent)}
+.topic-bar{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.topic-row{display:flex;align-items:center;gap:10px;font-size:12px}
+.topic-name{min-width:160px;color:var(--ink-muted);font-size:11px}
+.topic-track{flex:1;height:5px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.topic-fill{height:100%;border-radius:99px;background:var(--surface-3);transition:width .6s ease}
+.topic-fill.good{background:var(--accent)}
+.topic-fill.mid{background:var(--ink-muted)}
+.topic-fill.low{background:var(--border)}
+.topic-pct{font-family:'Courier New',monospace;font-size:10px;color:var(--ink-muted);min-width:30px;text-align:right}
+#quiz-screen{display:none}
+.quiz-header{display:flex;align-items:center;gap:12px;padding:20px 0 16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.btn-ghost{background:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 14px;font-family:'Courier New',monospace;font-size:11px;color:var(--ink-muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,54,93,.05)}
+.progress-block{flex:1}
+.progress-track{height:4px;background:var(--surface-3);border-radius:99px;overflow:hidden;margin-bottom:5px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--ink-faint),var(--accent));border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.progress-label{font-family:'Courier New',monospace;font-size:10px;color:var(--ink-muted);display:flex;justify-content:space-between}
+.score-pill{font-family:'Courier New',monospace;font-size:12px;padding:6px 14px;border-radius:99px;background:var(--accent);color:#fff;border:1px solid var(--accent);white-space:nowrap}
+.nav-row-top{display:flex;gap:10px;align-items:center;padding:0 0 12px}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:12px;animation:fadeIn .25s ease;box-shadow:0 1px 6px rgba(15,31,61,.07)}
+.q-index{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:14px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.pill-tag{background:var(--surface-3);border:1px solid var(--border);padding:2px 8px;border-radius:99px;color:var(--ink-muted);font-size:9px}
+.pill-tag.accent{background:rgba(232,54,93,.12);border-color:var(--accent);color:var(--accent)}
+.q-text{font-size:clamp(14.5px,2.2vw,16px);line-height:1.75;font-weight:400;color:var(--ink);margin-bottom:22px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{display:flex;align-items:center;gap:12px;padding:12px 15px;border:1px solid var(--border-light);border-radius:var(--r-sm);background:var(--surface-2);cursor:pointer;width:100%;text-align:left;font-family:system-ui,sans-serif;font-size:14px;color:var(--ink-muted);transition:all .15s ease}
+.opt:hover:not(:disabled){border-color:var(--accent);background:rgba(232,54,93,.05);color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt-key{width:26px;height:26px;flex-shrink:0;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:10px;color:var(--ink-faint);background:var(--surface);transition:all .15s}
+.opt-body{flex:1;line-height:1.45}
+.opt.correct{border-color:var(--accent)!important;background:var(--accent)!important;color:#fff!important}
+.opt.correct .opt-key{background:#fff!important;border-color:#fff!important;color:var(--accent)!important}
+.opt.incorrect{border-color:var(--border)!important;background:var(--surface-3)!important;color:var(--ink-faint)!important}
+.opt.incorrect .opt-body{text-decoration:line-through;opacity:.5}
+.opt.selected{border-color:var(--ink-muted)!important;background:var(--surface-2)!important;color:var(--ink)!important}
+.opt.selected .opt-key{background:var(--ink-muted)!important;border-color:var(--ink-muted)!important;color:#fff!important}
+.opt-badge{margin-left:auto;font-size:14px;flex-shrink:0}
+.opt.drill-wrong-shake{animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.exp-box{background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--r-sm);padding:20px 22px;margin-top:12px;display:none;animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
+.exp-box.show{display:block}
+@keyframes slideUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.exp-header{font-family:'Courier New',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.exp-header::after{content:'';flex:1;height:1px;background:var(--border)}
+.exp-answer{font-weight:600;font-size:15px;color:var(--accent);margin-bottom:8px}
+.exp-body{font-size:13.5px;line-height:1.75;color:var(--ink-muted)}
+.exp-body strong, .exp-body b{color:var(--ink);font-weight:600}
+.exp-src{margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);font-family:'Courier New',monospace;font-size:10px;color:var(--ink-faint)}
+.nav-btn{display:flex;align-items:center;gap:6px;padding:11px 20px;border-radius:var(--r-sm);font-family:system-ui,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid}
+.nav-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.nav-btn.primary:hover{background:var(--accent-2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,54,93,.3)}
+.nav-btn.secondary{background:transparent;border-color:var(--border);color:var(--ink-muted)}
+.nav-btn.secondary:hover{border-color:var(--ink-muted);color:var(--ink);background:var(--surface-2)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.nav-spacer{flex:1}
+.flag-btn{background:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 14px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all .15s}
+.flag-btn:hover{border-color:var(--accent);color:var(--accent)}
+.flag-btn.flagged{border-color:var(--accent);color:var(--accent);background:rgba(232,54,93,.08)}
+.q-map-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-top:12px}
+.q-map-title{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:12px}
+.q-map-grid{display:flex;flex-wrap:wrap;gap:5px}
+.q-dot{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:9px;cursor:pointer;transition:all .1s;border:1px solid var(--border-light);background:var(--surface-2);color:var(--ink-faint)}
+.q-dot:hover{border-color:var(--accent);color:var(--accent)}
+.q-dot.current{border-color:var(--accent);color:#fff;background:var(--accent)}
+.q-dot.answered{background:var(--surface-3);color:var(--ink);border-color:var(--ink-muted)}
+.q-dot.wrong{background:var(--surface-2);color:var(--ink-faint);text-decoration:line-through}
+.q-dot.flagged-dot{outline:2px solid var(--accent);outline-offset:1px}
+.timer-badge{font-family:'Courier New',monospace;font-size:12px;color:var(--ink-muted);padding:5px 12px;border-radius:99px;border:1px solid var(--border)}
+.timer-badge.warning{color:var(--accent);border-color:var(--accent);font-weight:500}
+.timer-badge.danger{color:#fff;background:var(--accent);border-color:var(--accent);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+.overlay{position:fixed;inset:0;background:rgba(239,246,255,.85);z-index:100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.overlay.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:var(--r);padding:34px;max-width:400px;width:90%;text-align:center;box-shadow:0 8px 40px rgba(15,31,61,.12)}
+.modal h2{font-family:Georgia,serif;font-size:1.8rem;margin-bottom:8px;color:var(--ink)}
+.modal p{font-size:14px;color:var(--ink-muted);margin-bottom:24px;line-height:1.6}
+.modal .nav-btn{width:100%;justify-content:center;margin-bottom:8px}
+#result-screen{display:none;animation:fadeIn .5s ease}
+.result-hero{padding:40px 0 24px;text-align:center}
+.result-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:12px}
+.result-score{font-family:Georgia,serif;font-size:clamp(3rem,11vw,5rem);line-height:1;color:var(--accent);letter-spacing:-2px}
+.result-score span{color:var(--ink-muted)}
+.result-sub{font-size:14px;color:var(--ink-muted);margin-top:10px}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.result-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;text-align:center}
+.result-card .val{font-family:Georgia,serif;font-size:2rem;line-height:1;margin-bottom:4px;color:var(--accent)}
+.result-card.wrong .val{color:var(--ink-faint)}
+.result-card.skipped .val{color:var(--ink-muted)}
+.result-card .lbl{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-muted)}
+.result-actions{display:flex;gap:8px;flex-wrap:wrap}
+.result-actions .nav-btn{flex:1;justify-content:center}
+.streak-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--accent);border-radius:99px;padding:10px 22px;font-family:'Courier New',monospace;font-size:12px;color:#fff;transition:transform .4s cubic-bezier(.34,1.56,.64,1);z-index:999;white-space:nowrap}
+.streak-toast.show{transform:translateX(-50%) translateY(0)}
+.kbd-hint{font-family:'Courier New',monospace;font-size:10px;color:var(--ink-faint);text-align:center;padding:12px 0 4px}
+kbd{background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:10px;color:var(--ink-muted)}
+.footer{text-align:center;padding:28px 0 12px;border-top:1px solid var(--border);margin-top:8px}
+.footer-wordmark{font-family:Georgia,serif;font-size:13px;color:var(--ink-muted);letter-spacing:.5px;margin-bottom:4px}
+.footer-credit{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-faint)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media(max-width:480px){body{padding:10px}.q-card{padding:18px 14px}.stats-grid{grid-template-columns:repeat(2,1fr)}.topic-name{min-width:110px}}
+
+.scope-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.scope-btn{padding:12px 8px;border:1.5px solid var(--border-light);border-radius:var(--r-sm);background:var(--surface-2);cursor:pointer;font-family:inherit;color:var(--ink);text-align:center;transition:all .18s}
+.scope-btn b{display:block;font-size:14px}.scope-btn small{display:block;font-size:11px;color:var(--ink-muted);margin-top:2px}
+.scope-btn.on{border-color:var(--accent);background:var(--accent);color:#fff}.scope-btn.on small{color:rgba(255,255,255,.85)}
+.scope-btn:focus-visible,.k-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.k-wrap{display:flex;flex-wrap:wrap;gap:6px}
+.k-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--border-light);border-radius:99px;background:var(--surface-2);font-size:12px;color:var(--ink-muted);cursor:pointer;font-family:inherit;transition:all .15s;text-align:left}
+.k-chip .kc{font-family:'Courier New',monospace;font-size:10px;background:var(--surface-3);border-radius:99px;padding:1px 6px;color:var(--ink)}
+.k-chip.on{border-color:var(--accent);color:var(--ink);background:var(--surface);box-shadow:inset 0 0 0 1px var(--accent)}
+.k-chip.on .kc{background:var(--accent);color:#fff}
+.k-chip.off{opacity:.45}
+.k-group-lbl{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);margin:12px 0 6px;width:100%}
+.scope-sum{margin-top:14px;font-size:13px;color:var(--ink-muted);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.scope-sum strong{color:var(--accent);font-size:16px}
+.scope-link{background:none;border:none;color:var(--accent);cursor:pointer;font-size:12px;text-decoration:underline;font-family:inherit}
+.mode-btn:disabled{opacity:.4;cursor:not-allowed}
+</style>
+</head>
+<body>
+<div class="shell">
+<!-- START -->
+<div id="start-screen">
+  <div class="logo-row">
+    <div class="logo-wordmark">KAPSUL <span>CARDIOVICTUS 3.2</span></div>
+    <div class="logo-tag">25 MAS SAM · CBT 1</div>
+  </div>
+  <div class="meta-row">
+    <div class="meta-chip"><span class="dot"></span>Cardiovascular &amp; Respiratory Disorder</div>
+    <div class="meta-chip"><span class="dot"></span>78 Soal · 25 MAS SAM · 2025</div>
+    <div class="meta-chip"><span class="dot"></span>FK Unsoed · mr capsules</div>
+  </div>
+  <div class="divider"></div>
+  <div class="card">
+    <div class="card-title">Cakupan Soal</div>
+    <div class="scope-seg" role="group" aria-label="Pilih cakupan CBT">
+      <button class="scope-btn on" data-scope="all" onclick="setScope('all')"><b>Semua</b><small id="sc-all">78 soal</small></button>
+      <button class="scope-btn" data-scope="cvs" onclick="setScope('cvs')"><b>Kardiovaskular</b><small id="sc-1">58 soal</small></button>
+      <button class="scope-btn" data-scope="resp" onclick="setScope('resp')"><b>Respirasi</b><small id="sc-2">20 soal</small></button>
+    </div>
+    <div class="k-wrap" id="k-wrap"></div>
+    <div class="scope-sum"><span>Soal terpilih: <strong id="sel-count">78</strong></span><span><button class="scope-link" onclick="kAll(true)">Pilih semua</button> · <button class="scope-link" onclick="kAll(false)">Kosongkan</button></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Pilih Mode Belajar</div>
+    <div class="mode-grid">
+      <button class="mode-btn" onclick="startQuiz('study')"><div class="mode-icon">S</div><div class="mode-text"><h3>Study Mode</h3><p>Jawaban &amp; pembahasan muncul langsung setelah pilih</p></div><div class="mode-arr">›</div></button>
+      <button class="mode-btn" onclick="startQuiz('exam')"><div class="mode-icon">E</div><div class="mode-text"><h3>Exam Mode</h3><p>Simulasi ujian — jawaban tersembunyi, ada timer 90 menit</p></div><div class="mode-arr">›</div></button>
+      <button class="mode-btn" onclick="startQuiz('drill')"><div class="mode-icon">D</div><div class="mode-text"><h3>Drill Mode</h3><p>Ulangi soal sampai benar, tanpa skor akhir</p></div><div class="mode-arr">›</div></button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Statistik &amp; Riwayat</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-val" id="stat-best">—</div><div class="stat-lbl">Best Score</div></div>
+      <div class="stat-box"><div class="stat-val" id="stat-avg">—</div><div class="stat-lbl">Avg Score</div></div>
+      <div class="stat-box"><div class="stat-val" id="stat-sessions">0</div><div class="stat-lbl">Sessions</div></div>
+      <div class="stat-box"><div class="stat-val">78</div><div class="stat-lbl">Total Soal</div></div>
+    </div>
+    <div class="hist-list" id="hist-list"><div class="no-hist">Belum ada sesi — yuk mulai!</div></div>
+    <button class="reset-btn" onclick="clearHistory()">Hapus Riwayat</button>
+  </div>
+  <div class="card">
+    <div class="card-title">Akurasi per Topik</div>
+    <div class="topic-bar" id="topic-bar"><div class="no-hist">Selesaikan satu sesi dulu.</div></div>
+  </div>
+  <div class="footer">
+    <div class="footer-wordmark">Kapsul Cardiovictus 3.2 · Blok 3.2 CVS &amp; Respiratory · MAS SAM 1</div>
+    <div class="footer-credit">Credit by mr capsules</div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-screen">
+  <div class="quiz-header">
+    <button class="btn-ghost" onclick="confirmExit()">← Keluar</button>
+    <div class="progress-block">
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="progress-label"><span id="prog-txt">0 / 78</span><span id="mode-badge">—</span></div>
+    </div>
+    <div class="score-pill" id="score-display">0 / 0</div>
+    <div class="timer-badge" id="timer-el" style="display:none">00:00</div>
+  </div>
+  <div class="nav-row-top">
+    <button class="nav-btn secondary" id="btn-prev" onclick="navigate(-1)">‹ Prev</button>
+    <button class="flag-btn" id="btn-flag" onclick="toggleFlag()">⚑</button>
+    <div class="nav-spacer"></div>
+    <button class="nav-btn primary" id="btn-next" onclick="navigate(1)">Next ›</button>
+  </div>
+  <div class="q-card" id="q-card"></div>
+  <div class="exp-box" id="exp-box">
+    <div class="exp-header">Pembahasan</div>
+    <div class="exp-answer" id="exp-answer"></div>
+    <div class="exp-body" id="exp-body"></div>
+    <div class="exp-src" id="exp-src"></div>
+  </div>
+  <div class="q-map-section">
+    <div class="q-map-title">Question Map</div>
+    <div class="q-map-grid" id="q-map"></div>
+  </div>
+  <div class="kbd-hint">Keyboard: <kbd>A</kbd>–<kbd>E</kbd> pilih · <kbd>→</kbd> next · <kbd>←</kbd> prev · <kbd>F</kbd> flag</div>
+</div>
+
+<!-- RESULTS -->
+<div id="result-screen">
+  <div class="result-hero">
+    <div class="result-label">Session Complete</div>
+    <div class="result-score" id="final-score-display"><span>0</span>/78</div>
+    <div class="result-sub" id="final-sub">—</div>
+  </div>
+  <div class="result-grid">
+    <div class="result-card correct"><div class="val" id="r-correct">0</div><div class="lbl">Benar</div></div>
+    <div class="result-card wrong"><div class="val" id="r-wrong">0</div><div class="lbl">Salah</div></div>
+    <div class="result-card skipped"><div class="val" id="r-skip">0</div><div class="lbl">Skip</div></div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">Akurasi per Topik (Sesi Ini)</div>
+    <div class="topic-bar" id="result-topic-bar"></div>
+  </div>
+  <div class="result-actions">
+    <button class="nav-btn secondary" onclick="reviewAnswers()">Review Jawaban</button>
+    <button class="nav-btn primary" onclick="showStart()">↩ Menu Utama</button>
+  </div>
+</div>
+
+<div class="overlay" id="exam-overlay">
+  <div class="modal"><h2>Akhiri Ujian?</h2><p>Semua jawaban akan dinilai dan hasilnya ditampilkan.</p>
+    <button class="nav-btn primary" onclick="submitExam()">Ya, Kumpulkan</button>
+    <button class="nav-btn secondary" onclick="closeOverlay('exam-overlay')">Lanjut Dulu</button>
+  </div>
+</div>
+<div class="overlay" id="exit-overlay">
+  <div class="modal"><h2>Keluar Sesi?</h2><p>Progress sesi ini tidak akan tersimpan.</p>
+    <button class="nav-btn primary" onclick="showStart()">Ya, Keluar</button>
+    <button class="nav-btn secondary" onclick="closeOverlay('exit-overlay')">Batal</button>
+  </div>
+</div>
+<div class="overlay" id="drill-overlay">
+  <div class="modal"><h2>Drill Selesai! 🎉</h2><p>Semua soal sudah dijawab dengan benar. Mantap!</p>
+    <button class="nav-btn primary" onclick="startQuiz('drill')">Drill Lagi</button>
+    <button class="nav-btn secondary" onclick="showStart()">Menu Utama</button>
+  </div>
+</div>
+<div class="streak-toast" id="streak-toast"></div>
+</div>
+
+<script>
+const QALL = [{"n":1,"t":"K2 · Gangguan Embriologi Sistem Kardiovaskuler dan Respirasi","q":"Pada perkembangan embrio manusia, respiratory diverticulum (lung bud) pertama kali muncul dari dinding ventral foregut pada minggu ke-berapa?","o":["Minggu ke-2","Minggu ke-3","Minggu ke-4","Minggu ke-5","Minggu ke-6"],"a":"Minggu ke-4","exp":"Lung bud muncul sebagai tonjolan dari dinding ventral foregut saat embrio berusia <b>±4 minggu</b>, dipandu sinyal FGF dari mesenkim sekitar. Setelah itu tracheoesophageal septum memisahkan esofagus (dorsal) dari trakea dan lung bud (ventral). Minggu 2–3 masih tahap gastrulasi/neurulasi.","src":"PPT Embriologi — K2","k":2,"cbt":"resp"},{"n":2,"t":"K13 · Pemeriksaan Laboratorium Sistem Kardiovaskuler","q":"Pernyataan yang benar mengenai kompleks troponin adalah ...","o":["Troponin hanya terdiri dari troponin I dan T.","Troponin I merupakan subunit yang mengikat kalsium.","Troponin T berikatan dengan tropomiosin.","Troponin I selalu terdeteksi 2–4 jam setelah serangan infark miokard.","Troponin I selalu lebih sensitif daripada troponin T."],"a":"Troponin T berikatan dengan tropomiosin.","exp":"Kompleks troponin punya 3 subunit: <b>C</b> mengikat Ca²⁺, <b>T</b> mengikat tropomiosin, <b>I</b> mengikat aktin dan menghambat interaksi aktin–miosin. A salah (ada 3 subunit), B salah (yang mengikat Ca²⁺ adalah C). D dan E memakai kata \"selalu\", sehingga salah.","src":"PPT Lab Kardiovaskuler — K13","k":13,"cbt":"cvs"},{"n":3,"t":"K13 · Pemeriksaan Laboratorium Sistem Kardiovaskuler","q":"NT-proBNP digunakan sebagai biomarker gagal jantung. Pernyataan yang sesuai adalah ...","o":["NT-proBNP merupakan hormon aktif.","NT-proBNP merupakan molekul aktif dengan efek vasodilatasi langsung.","NT-proBNP memiliki waktu paruh sekitar 60–120 menit.","NT-proBNP dibersihkan hanya melalui degradasi oleh neutral endopeptidase dan receptor clearance.","NT-proBNP hanya meningkat pada perubahan akut fungsi jantung."],"a":"NT-proBNP memiliki waktu paruh sekitar 60–120 menit.","exp":"NT-proBNP adalah fragmen <b>tidak aktif</b> dari pro-hormon, waktu paruh <b>60–120 menit</b> (BNP aktif hanya ±20 menit), dibersihkan lewat ginjal, sehingga lebih stabil dan kadarnya naik pada gangguan ginjal. Jalur neutral endopeptidase dan receptor clearance milik BNP. NT-proBNP juga meningkat pada gagal jantung kronis.","src":"PPT Lab Kardiovaskuler — K13","k":13,"cbt":"cvs"},{"n":4,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Pada pasien dengan infeksi Candida di paru, jalur penyebaran yang dimaksud adalah ...","o":["Droplet dari pasien yang terinfeksi.","Penyebaran hematogen dari sumber infeksi lain.","Kontak dengan permukaan yang terkontaminasi.","Penularan langsung dari unggas yang terinfeksi.","Penularan melalui gigitan vektor."],"a":"Penyebaran hematogen dari sumber infeksi lain.","exp":"Pneumonia Candida (kandidiasis paru invasif) hampir selalu terjadi akibat <b>penyebaran hematogen</b> dari sumber sistemik lain, misalnya kandidemia atau infeksi saluran cerna, terutama pada pasien imunokompromais atau kritis (ventilator, kateter vena sentral, antibiotik spektrum luas).","src":"PPT Mikrobiologi Respirasi — K12","k":12,"cbt":"resp"},{"n":5,"t":"K4 · Syok","q":"Urutan stadium syok yang benar adalah ...","o":["Kompensasi → ireversibel → dekompensasi","Ireversibel → kompensasi → dekompensasi","Kompensasi → dekompensasi → ireversibel","Dekompensasi → kompensasi → ireversibel","Ireversibel → dekompensasi → kompensasi"],"a":"Kompensasi → dekompensasi → ireversibel","exp":"Syok berjalan progresif: <b>kompensasi</b> (tubuh masih mempertahankan perfusi organ vital) → <b>dekompensasi</b> (mekanisme gagal: hipotensi, oliguri, asidosis) → <b>ireversibel</b> (kerusakan organ menetap, berujung kematian).","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":6,"t":"K10 · Patologi Sistem Respirasi","q":"Laki-laki 51 tahun didiagnosis non-small cell lung cancer (NSCLC). Pemeriksaan tambahan yang penting untuk menentukan terapi target dan imunoterapi adalah ...","o":["Pemeriksaan kadar glukosa dan HbA1c.","Pemeriksaan elektrolit dan fungsi ginjal saja.","Pemeriksaan kultur sputum saja.","Pemeriksaan mutasi driver dan ekspresi PD-L1.","Pemeriksaan kadar hemoglobin saja."],"a":"Pemeriksaan mutasi driver dan ekspresi PD-L1.","exp":"Pada NSCLC lanjut, <b>mutasi driver</b> (EGFR, ALK, ROS1, KRAS, BRAF, RET) menentukan terapi target, sedangkan <b>ekspresi PD-L1</b> menentukan strategi imunoterapi. Glukosa, elektrolit, kultur sputum, dan Hb tidak menentukan pilihan terapi tersebut.","src":"PPT Patologi Kanker Paru — K10","k":10,"cbt":"resp"},{"n":7,"t":"K4 · Syok","q":"Pasien mengalami hipoperfusi jaringan akibat kehilangan cairan yang berat. Jenis syok yang paling mungkin adalah ...","o":["Syok kardiogenik","Syok anafilaktik","Syok septik","Syok hipovolemik","Syok neurogenik"],"a":"Syok hipovolemik","exp":"Syok <b>hipovolemik</b> disebabkan perdarahan masif atau hilangnya cairan tubuh berlebihan, sehingga volume sirkulasi dan preload turun. Kardiogenik = gagal pompa; anafilaktik, septik, dan neurogenik termasuk syok distributif (vasodilatasi).","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":8,"t":"K4 · Syok","q":"Komponen bakteri Gram-negatif yang berperan dalam septikemia adalah ...","o":["Eksotoksin","Endotoksin","Flagelin","Peptidoglikan sebagai komponen utama endotoksin","Ribosom"],"a":"Endotoksin","exp":"<b>Endotoksin</b> (lipid A pada LPS dinding sel Gram-negatif) merangsang pelepasan TNF-α, IL-1, IL-6, mengaktifkan komplemen dan koagulasi, lalu menimbulkan demam, DIC, dan syok septik. Peptidoglikan bukan komponen endotoksin.","src":"PPT Syok Septik — K4","k":4,"cbt":"cvs"},{"n":9,"t":"K11 · Mikrobiologi pada Sistem Kardiovaskuler","q":"Pasien miokarditis akibat infeksi virus. Mekanisme yang dapat menyebabkan kerusakan sel miosit adalah ...","o":["Respons inflamasi dan kerusakan jaringan oleh sistem imun.","Akumulasi histamin sebagai satu-satunya penyebab.","Penumpukan LDL di dalam miosit.","Peningkatan sintesis protein kontraktil yang berlebihan.","Peningkatan produksi eritrosit di jaringan miokard."],"a":"Respons inflamasi dan kerusakan jaringan oleh sistem imun.","exp":"Infeksi virus memicu peradangan, lalu mengaktifkan respons imun (sitokin, radikal bebas oksigen, sel T, makrofag, sel B) yang <b>merusak miosit</b>. Pilihan lain tidak menjelaskan patogenesis miokarditis.","src":"PPT Miokarditis Viral — K11","k":11,"cbt":"cvs"},{"n":10,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Pada respiratory syncytial virus (RSV), fungsi protein G dan protein F secara berurutan adalah ...","o":["Replikasi RNA dan transkripsi RNA","Perlekatan pada sel inang dan fusi membran yang dapat membentuk syncytium","Fusi membran dan perlekatan pada sel inang","Menghambat interferon dan membungkus RNA","Perakitan virus dan sintesis protein"],"a":"Perlekatan pada sel inang dan fusi membran yang dapat membentuk syncytium","exp":"Protein <b>G</b> = perlekatan (attachment) virus ke sel inang. Protein <b>F</b> = fusi membran, mendorong pembentukan <b>syncytium</b> (sel-sel menyatu). Urutan pada opsi C terbalik.","src":"PPT Virologi Respirasi — K12","k":12,"cbt":"resp"},{"n":11,"t":"K13 · Pemeriksaan Laboratorium Sistem Kardiovaskuler","q":"Biomarker yang meningkat paling awal setelah infark miokard adalah ...","o":["CK total","Troponin T","Troponin I","Mioglobin","CK-MB"],"a":"Mioglobin","exp":"<b>Mioglobin</b> naik paling awal (dalam 1–3 jam), sensitivitas tinggi tetapi spesifisitas rendah karena juga berasal dari otot rangka. Troponin dan CK-MB naik lebih lambat tetapi lebih spesifik.","src":"PPT Biomarker IMA — K13","k":13,"cbt":"cvs"},{"n":12,"t":"K2 · Gangguan Embriologi Sistem Kardiovaskuler dan Respirasi","q":"Kegagalan fusi endocardial cushion pada atrioventricular canal dapat menyebabkan kelainan berupa ...","o":["Koarktasio aorta","Persistent truncus arteriosus","Tetralogi Fallot","Persistent atrioventricular canal","Transposisi arteri besar"],"a":"Persistent atrioventricular canal","exp":"Endocardial cushion yang gagal menyatu menyebabkan <b>persistent AV canal</b> (defek septum atrioventrikular), sering ditemukan pada sindrom Down. Truncus arteriosus, Fallot, dan transposisi berkaitan dengan septasi/rotasi outflow tract.","src":"PPT Embriologi Jantung — K2","k":2,"cbt":"cvs"},{"n":13,"t":"K6 · Edema","q":"Peningkatan permeabilitas kapiler yang menyebabkan cairan keluar ke interstisial terutama terjadi pada kondisi ...","o":["Gagal jantung kanan atau kiri saja","Inflamasi sistemik","Hipoalbuminemia saja","Gangguan ginjal saja","Obstruksi limfatik saja"],"a":"Inflamasi sistemik","exp":"Edema akibat <b>permeabilitas dinding pembuluh meningkat</b> disebabkan proses radang sistemik. Gagal jantung → tekanan hidrostatik naik; hipoalbuminemia → tekanan onkotik turun; gagal ginjal → retensi natrium; obstruksi limfe → elephantiasis.","src":"PPT Patofisiologi Edema — K6","k":6,"cbt":"cvs"},{"n":14,"t":"K3 · Gangguan Tekanan Darah","q":"Saat tubuh kekurangan cairan, hormon yang berperan mempertahankan air dan volume cairan tubuh adalah ...","o":["ADH","ANP","Aldosteron","ADH dan ANP","ADH dan aldosteron"],"a":"ADH dan aldosteron","exp":"<b>ADH</b> meningkatkan reabsorpsi air, <b>aldosteron</b> meningkatkan reabsorpsi natrium (air mengikuti), sehingga volume dipertahankan. <b>ANP</b> bekerja pada kelebihan cairan (meningkatkan ekskresi natrium dan air), jadi opsi B dan D salah.","src":"PPT Regulasi Cairan & Hemodinamik — K3","k":3,"cbt":"cvs"},{"n":15,"t":"K2 · Gangguan Embriologi Sistem Kardiovaskuler dan Respirasi","q":"Pada awal perkembangan embrio, kombinasi sinyal yang penting mengarahkan pembentukan jaringan jantung adalah ...","o":["FGF-8 dan aktivasi WNT","BMP-2 dan BMP-4 disertai inhibisi WNT","SHH dan PAX6","VEGF dan TGF-β","Asam retinoat dan TBX1"],"a":"BMP-2 dan BMP-4 disertai inhibisi WNT","exp":"Sinyal <b>BMP-2, BMP-4</b> dengan <b>inhibisi WNT</b> di mesoderm anterior menginduksi ekspresi NKX-2.5 (tinman) dan menentukan mesoderm menjadi jaringan jantung (heart field). Aktivasi WNT justru menghambat pembentukan jantung.","src":"PPT Embriologi Jantung — K2","k":2,"cbt":"cvs"},{"n":16,"t":"K6 · Edema","q":"Pasien sindrom nefrotik dengan proteinuria masif. Urutan mekanisme yang paling tepat hingga menyebabkan edema adalah ...","o":["Kerusakan glomerulus → retensi natrium dan air → peningkatan tekanan intravaskular → edema.","Proteinuria masif → hipoalbuminemia → penurunan tekanan osmotik koloid plasma → cairan berpindah ke jaringan interstisial.","Kerusakan filtrasi ginjal → inflamasi sistemik → peningkatan permeabilitas kapiler → edema.","Penurunan fungsi ginjal → obstruksi limfe → elephantiasis.","Hipoalbuminemia → penurunan tekanan hidrostatik kapiler → cairan masuk ke pembuluh darah → edema."],"a":"Proteinuria masif → hipoalbuminemia → penurunan tekanan osmotik koloid plasma → cairan berpindah ke jaringan interstisial.","exp":"Albumin hilang lewat urin → <b>hipoalbuminemia</b> → tekanan onkotik plasma turun → cairan keluar ke interstisial → edema. Opsi E salah: cairan masuk pembuluh darah tidak menyebabkan edema, dan yang turun adalah tekanan onkotik, bukan hidrostatik.","src":"PPT Patofisiologi Edema — K6","k":6,"cbt":"cvs"},{"n":17,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Pada pemeriksaan Ziehl–Neelsen, bakteri tahan asam (BTA) seperti Mycobacterium tuberculosis akan tampak ...","o":["Biru dengan latar belakang merah","Merah dengan latar belakang biru","Hijau dengan latar belakang kuning","Hitam dengan latar belakang putih","Cokelat dengan latar belakang hijau"],"a":"Merah dengan latar belakang biru","exp":"BTA mempertahankan zat warna karbol fuchsin meski didekolorisasi asam-alkohol, sehingga tampak <b>merah</b> dengan latar belakang <b>biru</b> (counterstain metilen biru).","src":"PPT Mikrobiologi TB — K12","k":12,"cbt":"resp"},{"n":18,"t":"K6 · Edema","q":"Mekanisme utama terjadinya edema pada elephantiasis adalah ...","o":["Penurunan protein plasma → penurunan tekanan osmotik → cairan berpindah ke intravaskular.","Penurunan protein plasma → penurunan tekanan osmotik → cairan berpindah ke interstisial.","Obstruksi pembuluh limfe → berkurangnya pengangkutan cairan interstisial → penumpukan cairan di jaringan.","Peningkatan retensi natrium → peningkatan tekanan hidrostatik → edema.","Peningkatan permeabilitas vaskular → perpindahan cairan ke interstisial."],"a":"Obstruksi pembuluh limfe → berkurangnya pengangkutan cairan interstisial → penumpukan cairan di jaringan.","exp":"Elephantiasis adalah edema akibat <b>obstruksi aliran limfe</b>: cairan dan protein interstisial tidak terdrainase sehingga menumpuk. B = hipoalbuminemia, D = gagal ginjal, E = inflamasi.","src":"PPT Patofisiologi Edema — K6","k":6,"cbt":"cvs"},{"n":19,"t":"K6 · Edema","q":"Kondisi berikut dapat menyebabkan edema akibat penurunan tekanan osmotik koloid plasma, kecuali ...","o":["Penyakit hati kronis","Sindrom nefrotik","Elephantiasis","Malnutrisi berat","Hipoalbuminemia"],"a":"Elephantiasis","exp":"Penyebab turunnya tekanan onkotik: penyakit hati (sintesis albumin turun), sindrom nefrotik (albumin hilang), kwashiorkor/malnutrisi, hipoalbuminemia. <b>Elephantiasis</b> disebabkan obstruksi limfe, bukan penurunan tekanan onkotik.","src":"PPT Patofisiologi Edema — K6","k":6,"cbt":"cvs"},{"n":20,"t":"K6 · Edema","q":"Manakah pernyataan yang TIDAK benar mengenai perpindahan air melalui membran semipermeabel?","o":["Air cenderung bergerak menuju kompartemen dengan tekanan osmotik efektif lebih tinggi.","Air dapat bergerak mengikuti gradien tekanan hidrostatik.","Air bergerak dari dalam sel ke luar ketika sel berada dalam larutan hipertonik.","Air bergerak dari luar ke dalam sel ketika sel berada dalam larutan hipertonik.","Pada larutan isotonik, tidak terjadi perpindahan air netto."],"a":"Air bergerak dari luar ke dalam sel ketika sel berada dalam larutan hipertonik.","exp":"Larutan <b>hipertonik</b> memiliki konsentrasi zat terlarut lebih tinggi, sehingga air keluar dari sel dan sel mengerut (crenation). Pernyataan D membalik arahnya, jadi D yang salah.","src":"PPT Fisiologi Cairan — K6","k":6,"cbt":"cvs"},{"n":21,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Kelompok virus yang sering menyebabkan infeksi saluran pernapasan akut meliputi ...","o":["Influenza, parainfluenza, rhinovirus, adenovirus, RSV, dan coronavirus","HIV, HPV, virus hepatitis B, dan virus hepatitis C","Virus rabies, virus dengue, dan virus chikungunya","Rotavirus, norovirus, dan virus hepatitis A","Virus Epstein–Barr dan cytomegalovirus saja"],"a":"Influenza, parainfluenza, rhinovirus, adenovirus, RSV, dan coronavirus","exp":"Sekitar 80% ISPA disebabkan virus: <b>influenza, parainfluenza, rhinovirus, adenovirus, RSV, coronavirus</b> (masa inkubasi singkat, transmisi droplet atau kontak). B = virus kronik/darah, C = arbovirus/rabies, D = virus enterik, E = herpesvirus.","src":"PPT Virologi Respirasi — K12","k":12,"cbt":"resp"},{"n":22,"t":"K8 · Dada Berdebar-debar","q":"Laki-laki 45 tahun palpitasi dan pusing. EKG menunjukkan takikardia supraventrikular. Mekanisme yang paling mungkin adalah ...","o":["Hipokalemia","Re-entry pada nodus atrioventrikular (AV nodal re-entry)","Infark miokard sebagai satu-satunya kemungkinan","Hipoglikemia","Peningkatan tekanan osmotik plasma"],"a":"Re-entry pada nodus atrioventrikular (AV nodal re-entry)","exp":"SVT paling sering akibat <b>re-entry</b> di nodus AV. Syaratnya: dua jalur konduksi paralel, blok unidireksional pada satu jalur, dan konduksi lambat hingga jaringan pulih dari refrakter. Opsi lain bukan mekanisme khas SVT.","src":"PPT Aritmia & Palpitasi — K8","k":8,"cbt":"cvs"},{"n":23,"t":"K3 · Gangguan Tekanan Darah","q":"Baroreseptor yang berperan mendeteksi perubahan tekanan darah terdapat pada ...","o":["Medula oblongata","Arteri radialis","Arteri brakialis","Pons","Sinus karotis dan arkus aorta"],"a":"Sinus karotis dan arkus aorta","exp":"Baroreseptor arterial berada di <b>sinus karotis</b> dan <b>arkus aorta</b>. Sinyalnya dikirim ke pusat kardiovaskular di medula, yang merupakan pusat kontrol, bukan reseptor.","src":"PPT Regulasi Tekanan Darah — K3","k":3,"cbt":"cvs"},{"n":24,"t":"K4 · Syok","q":"Hipoperfusi jaringan akibat kegagalan jantung memompa darah secara adekuat merupakan ciri ...","o":["Syok kardiogenik","Syok hipovolemik","Syok anafilaktik","Syok septik","Syok neurogenik"],"a":"Syok kardiogenik","exp":"<b>Syok kardiogenik</b> disebabkan kegagalan pompa jantung. Hipovolemik = kehilangan volume; anafilaktik, septik, neurogenik = vasodilatasi perifer berlebihan.","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":25,"t":"K4 · Syok","q":"Syok merupakan kondisi ketika ...","o":["Tekanan darah meningkat melebihi normal.","Curah jantung selalu meningkat.","Perfusi jaringan tidak mampu memenuhi kebutuhan metabolisme jaringan.","Frekuensi napas menurun tanpa perubahan perfusi.","Volume darah selalu meningkat."],"a":"Perfusi jaringan tidak mampu memenuhi kebutuhan metabolisme jaringan.","exp":"Syok = keadaan <b>hipoperfusi jaringan</b>: aliran darah tidak mencukupi kebutuhan metabolisme. Opsi lain memakai kata \"selalu\" atau tidak berkaitan dengan perfusi.","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":26,"t":"K11 · Mikrobiologi pada Sistem Kardiovaskuler","q":"Salah satu fungsi atau efek vegetasi pada endokarditis infektif adalah ...","o":["Melindungi mikroorganisme dari sebagian mekanisme pertahanan imun dan antimikroba.","Meningkatkan produksi eritrosit.","Menghambat seluruh respons inflamasi tubuh.","Meningkatkan filtrasi glomerulus.","Menghentikan agregasi trombosit secara langsung."],"a":"Melindungi mikroorganisme dari sebagian mekanisme pertahanan imun dan antimikroba.","exp":"Vegetasi (fibrin + trombosit + bakteri) membentuk lapisan yang <b>melindungi bakteri</b> dari sel imun dan antibiotik. Vegetasi juga dapat lepas menjadi emboli. B, D, E tidak berhubungan; C terlalu absolut.","src":"PPT Endokarditis Infektif — K11","k":11,"cbt":"cvs"},{"n":27,"t":"K4 · Syok","q":"Pada syok stadium dekompensasi, manakah yang BUKAN manifestasi lazim?","o":["Hipotensi","Oliguria","Koma","Takipnea","Asidosis metabolik"],"a":"Koma","exp":"Dekompensasi: <b>hipotensi, takipneu/dispneu, oliguri (&lt;500 cc/hari), asidosis</b>. <b>Koma</b> baru muncul pada stadium ireversibel.","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":28,"t":"K3 · Gangguan Tekanan Darah","q":"Faktor utama yang memengaruhi tekanan darah, kecuali ...","o":["Volume darah","Frekuensi napas","Curah jantung","Stroke volume","Resistensi perifer total"],"a":"Frekuensi napas","exp":"Tekanan darah = curah jantung × resistensi perifer total. Curah jantung dipengaruhi denyut jantung dan stroke volume, dan volume darah memengaruhi preload. <b>Frekuensi napas</b> bukan penentu utama.","src":"PPT Regulasi Tekanan Darah — K3","k":3,"cbt":"cvs"},{"n":29,"t":"K3 · Gangguan Tekanan Darah","q":"Curah jantung ditentukan secara langsung oleh kombinasi ...","o":["Frekuensi pernapasan dan resistensi perifer","Tekanan darah dan frekuensi pernapasan","Resistensi perifer dan tekanan vena","Denyut jantung dan volume sekuncup","Tekanan osmotik plasma dan volume urine"],"a":"Denyut jantung dan volume sekuncup","exp":"<b>Curah jantung = denyut jantung × volume sekuncup (stroke volume)</b>. Opsi lain bukan komponen langsung.","src":"PPT Hemodinamik Kardiovaskuler — K3","k":3,"cbt":"cvs"},{"n":30,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Protein permukaan virus influenza yang berperan utama dalam perlekatan pada reseptor sel inang adalah ...","o":["Neuraminidase","Hemagglutinin","Matriks protein","Nukleoprotein","RNA polimerase"],"a":"Hemagglutinin","exp":"<b>Hemagglutinin (HA)</b> melekat pada reseptor sel inang dan membantu invasi. Neuraminidase memotong ikatan sehingga virus baru dapat lepas. Opsi C–E adalah protein internal.","src":"PPT Virus Influenza — K12","k":12,"cbt":"resp"},{"n":31,"t":"K5 · Gangguan Pembuluh Darah Vena dan Arteri","q":"Biomarker lipid yang paling bermakna menilai risiko aterosklerosis adalah ...","o":["Peningkatan LDL","Peningkatan HDL","Peningkatan kolesterol tanpa fraksi spesifik","Peningkatan trigliserida saja","Penurunan LDL"],"a":"Peningkatan LDL","exp":"<b>LDL tinggi</b> adalah pendorong utama aterosklerosis (LDL teroksidasi → foam cell → plak). HDL bersifat protektif dan penurunan LDL justru menurunkan risiko.","src":"PPT Aterosklerosis & Lipid — K5","k":5,"cbt":"cvs"},{"n":32,"t":"K13 · Pemeriksaan Laboratorium Sistem Kardiovaskuler","q":"Infark miokard menyebabkan kerusakan miosit. Biomarker paling spesifik untuk kerusakan miokard adalah ...","o":["Troponin jantung (cTnI atau cTnT)","PCR sebagai penanda inflamasi umum","Glukosa darah","HDL","Hemoglobin"],"a":"Troponin jantung (cTnI atau cTnT)","exp":"<b>Troponin jantung (cTnI/cTnT)</b> paling spesifik untuk nekrosis miokard. Penanda inflamasi umum, glukosa, HDL, dan Hb tidak spesifik.","src":"PPT Biomarker Kardiovaskuler — K13","k":13,"cbt":"cvs"},{"n":33,"t":"K10 · Patologi Sistem Respirasi","q":"Pemeriksaan yang membantu pemilihan terapi target dan imunoterapi pada kanker tertentu meliputi ...","o":["Pemeriksaan kadar kalium saja","Pemeriksaan kadar progesteron pada semua kanker","Pemeriksaan mutasi molekuler yang relevan dan ekspresi PD-L1 sesuai indikasi","Pemeriksaan kultur darah saja","Pemeriksaan kadar D-dimer saja"],"a":"Pemeriksaan mutasi molekuler yang relevan dan ekspresi PD-L1 sesuai indikasi","exp":"Mutasi molekuler (misal EGFR) menentukan <b>terapi target</b>; ekspresi <b>PD-L1</b> menentukan kelayakan <b>imunoterapi</b>. Pemeriksaan lain tidak menentukan pilihan tersebut.","src":"PPT Patologi Neoplasma — K10","k":10,"cbt":"resp"},{"n":34,"t":"K15 · Farmakologi Obat Antihipertensi","q":"Laki-laki 58 tahun dengan diabetes, PGK G3a, albuminuria, TD 148/88 mmHg masih hipertensi setelah amlodipin. Kalium normal, tidak ada riwayat angioedema. Terapi tambahan yang sesuai adalah ...","o":["Diltiazem tanpa mempertimbangkan risiko gangguan konduksi jantung","ACE inhibitor dengan pemantauan kreatinin dan kalium setelah 2–4 minggu","Klonidin tanpa pemantauan tekanan darah","Doksazosin tanpa memperhatikan hipotensi ortostatik","Hidralazin tanpa mempertimbangkan efek sampingnya"],"a":"ACE inhibitor dengan pemantauan kreatinin dan kalium setelah 2–4 minggu","exp":"Pada PGK dengan diabetes dan albuminuria, <b>ACEi/ARB</b> adalah pilihan karena renoprotektif (menurunkan tekanan intraglomerulus). Pantau kreatinin, eGFR, dan kalium 2–4 minggu setelah mulai. Opsi lain mengabaikan keamanan obat.","src":"PPT Farmakoterapi Hipertensi — K15","k":15,"cbt":"cvs"},{"n":35,"t":"K6 · Edema","q":"Kondisi yang dapat menyebabkan retensi natrium dan air sehingga memicu edema antara lain ...","o":["Gagal ginjal","Elephantiasis sebagai penyebab utama retensi natrium","Penurunan kadar natrium tanpa gangguan regulasi cairan","Penurunan tekanan hidrostatik kapiler","Peningkatan drainase limfatik"],"a":"Gagal ginjal","exp":"<b>Gagal ginjal</b> menyebabkan retensi natrium dan air sehingga volume dan tekanan hidrostatik naik. Elephantiasis adalah obstruksi limfe, sedangkan C, D, E justru tidak menimbulkan edema.","src":"PPT Patofisiologi Edema — K6","k":6,"cbt":"cvs"},{"n":36,"t":"K11 · Mikrobiologi pada Sistem Kardiovaskuler","q":"Virus yang secara klasik dikenal sebagai salah satu penyebab perikarditis adalah ...","o":["Mycobacterium tuberculosis","Coxsackievirus B","Candida albicans","Aspergillus fumigatus","Bordetella pertussis"],"a":"Coxsackievirus B","exp":"<b>Coxsackievirus B</b> (enterovirus) penyebab klasik perikarditis viral. A bakteri, C dan D jamur, E bakteri saluran napas.","src":"PPT Infeksi Kardiovaskuler — K11","k":11,"cbt":"cvs"},{"n":37,"t":"K3 · Gangguan Tekanan Darah","q":"Pada hipertensi jangka panjang, baroreseptor dapat mengalami resetting. Artinya ...","o":["Baroreseptor selalu meningkatkan respons terhadap tekanan darah normal","Baroreseptor mengalami kerusakan permanen","Baroreseptor berubah menjadi kemoreseptor","Baroreseptor beradaptasi dengan tekanan darah yang lebih tinggi sehingga titik pengaturannya bergeser","Baroreseptor berhenti menerima rangsangan dari perubahan tekanan darah"],"a":"Baroreseptor beradaptasi dengan tekanan darah yang lebih tinggi sehingga titik pengaturannya bergeser","exp":"<b>Resetting</b> = adaptasi: set point bergeser ke tekanan lebih tinggi, sehingga tekanan tinggi dianggap \"normal\". Reseptor tidak rusak dan tetap berfungsi.","src":"PPT Regulasi Tekanan Darah — K3","k":3,"cbt":"cvs"},{"n":38,"t":"K14 · Pemeriksaan Laboratorium Sistem Respirasi","q":"Pasien sesak napas dan mengi disertai eosinofil darah meningkat. Dokter ingin menilai eosinofil langsung pada saluran pernapasan. Sampel yang dapat diperiksa adalah ...","o":["Urine","Cairan serebrospinal","Serum","Sputum pernapasan","Feses"],"a":"Sputum pernapasan","exp":"Eosinofil di saluran napas dinilai langsung dari <b>sputum</b>. Urine, CSS, serum, dan feses tidak mencerminkan kondisi saluran napas.","src":"PPT Lab Respirasi — K14","k":14,"cbt":"resp"},{"n":39,"t":"K4 · Syok","q":"Hipoperfusi jaringan akibat infeksi sistemik dapat menyebabkan jenis syok berupa ...","o":["Syok kardiogenik","Syok hipovolemik","Syok anafilaktik","Syok septik","Syok neurogenik"],"a":"Syok septik","exp":"Septikemia/infeksi bakteri sistemik → vasodilatasi perifer → <b>syok septik</b>.","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":40,"t":"K3 · Gangguan Tekanan Darah","q":"Saat kelebihan cairan, hormon yang meningkatkan ekskresi natrium dan air adalah ...","o":["ADH","Atrial natriuretic peptide (ANP)","Aldosteron","Renin","Angiotensin II"],"a":"Atrial natriuretic peptide (ANP)","exp":"Regangan atrium → pelepasan <b>ANP</b> → natriuresis dan diuresis, menekan renin, ADH, dan aldosteron. Opsi lain justru menahan natrium dan air.","src":"PPT Regulasi Cairan — K3","k":3,"cbt":"cvs"},{"n":41,"t":"K14 · Pemeriksaan Laboratorium Sistem Respirasi","q":"Paparan asap rokok kronis dapat menyebabkan inflamasi sistemik. Biomarker yang menunjukkan respons inflamasi tersebut adalah ...","o":["Kreatinin","Sitokin","Bilirubin","Albumin serum","Urea nitrogen darah"],"a":"Sitokin","exp":"<b>Sitokin</b> (IL-6, TNF-α, dll.) mencerminkan inflamasi. Kreatinin dan BUN = fungsi ginjal, bilirubin = hati, albumin = status protein.","src":"PPT Lab Respirasi — K14","k":14,"cbt":"resp"},{"n":42,"t":"K11 · Mikrobiologi pada Sistem Kardiovaskuler","q":"Pasien HIV lanjut dengan efusi perikardium dan dugaan infeksi oportunistik. Di daerah endemis TB, penyebab penting yang harus dipertimbangkan adalah ...","o":["Staphylococcus epidermidis","Mycobacterium tuberculosis","Bordetella pertussis","Corynebacterium diphtheriae","Clostridium tetani"],"a":"Mycobacterium tuberculosis","exp":"Perikarditis pada HIV di daerah endemis terutama dipikirkan <b>Mycobacterium tuberculosis</b> (perikarditis TB). Opsi lain bukan penyebab khas.","src":"PPT Infeksi Kardiovaskuler — K11","k":11,"cbt":"cvs"},{"n":43,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Jamur yang khas memiliki hifa bersepta dengan percabangan sudut akut sekitar 45° adalah ...","o":["Candida spp.","Histoplasma capsulatum","Blastomyces dermatitidis","Aspergillus spp.","Coccidioides immitis"],"a":"Aspergillus spp.","exp":"<b>Aspergillus</b>: hifa bersepta, bercabang akut ±45°. Candida = ragi/pseudohifa; Histoplasma, Blastomyces, Coccidioides = jamur dimorfik.","src":"PPT Mikologi Respirasi — K12","k":12,"cbt":"resp"},{"n":44,"t":"K3 · Gangguan Tekanan Darah","q":"Karakteristik refleks baroreseptor jangka pendek, kecuali ...","o":["Memengaruhi curah jantung","Diperantarai sistem saraf otonom","Memengaruhi frekuensi denyut jantung","Memengaruhi resistensi vaskular perifer","Respons utamanya berlangsung selama menit-hari"],"a":"Respons utamanya berlangsung selama menit-hari","exp":"Refleks jangka pendek berlangsung <b>beberapa detik</b> melalui otonom (curah jantung dan resistensi perifer). Penyesuaian menit–hari (volume darah) adalah <b>jangka panjang</b>.","src":"PPT Regulasi Tekanan Darah — K3","k":3,"cbt":"cvs"},{"n":45,"t":"K3 · Gangguan Tekanan Darah","q":"Faktor yang dapat berperan dalam hipertensi primer, kecuali ...","o":["Gangguan penanganan garam","Perubahan zat kimia vasoaktif","Gangguan regulasi tekanan darah","Sindrom Conn","Gangguan mekanisme transpor ion"],"a":"Sindrom Conn","exp":"<b>Sindrom Conn</b> (hiperaldosteronisme primer) adalah penyebab hipertensi <b>sekunder/endokrin</b>. Hipertensi primer berkaitan dengan garam, pompa Na-K, vasoaktif, dan regulasi tekanan.","src":"PPT Patofisiologi Hipertensi — K3","k":3,"cbt":"cvs"},{"n":46,"t":"K8 · Dada Berdebar-debar","q":"Perempuan palpitasi setelah mengonsumsi kopi berlebihan. Zat yang paling mungkin menyebabkan adalah ...","o":["Nikotin","Kafein","Histamin","Insulin","Albumin"],"a":"Kafein","exp":"<b>Kafein</b> meningkatkan aktivitas simpatis dan pelepasan Ca²⁺ di sel jantung, sehingga kontraksi dan denyut meningkat (palpitasi).","src":"PPT Palpitasi — K8","k":8,"cbt":"cvs"},{"n":47,"t":"K11 · Mikrobiologi pada Sistem Kardiovaskuler","q":"Vegetasi pada endokarditis infektif umumnya terdiri atas ...","o":["Eritrosit dan leukosit saja","Fibrin, trombosit, mikroorganisme, dan sel inflamasi","Kolagen dan osteosit","Sel adiposa dan fibroblas","Sel epitel dan keratin"],"a":"Fibrin, trombosit, mikroorganisme, dan sel inflamasi","exp":"Vegetasi = massa <b>fibrin, trombosit, mikroorganisme, dan sel inflamasi</b> pada katup. Opsi lain bukan penyusunnya.","src":"PPT Endokarditis Infektif — K11","k":11,"cbt":"cvs"},{"n":48,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Media padat yang digunakan untuk kultur Mycobacterium tuberculosis adalah ...","o":["Agar darah","Sabouraud dextrose agar","Ziehll-Nielsen","Potato dextrose agar","MacConkey agar"],"a":"Ziehll-Nielsen","exp":"<b>Catatan:</b> kunci PDF memilih C, tetapi Ziehl–Neelsen sebenarnya <b>pewarnaan BTA</b>, bukan media. Media padat kultur TB yang benar adalah <b>Löwenstein–Jensen</b>. Karena opsi itu tidak ada, C dipilih sebagai paling dekat dengan TB. Agar darah, Sabouraud, PDA, dan MacConkey bukan media TB. Sebaiknya konfirmasi ke penyusun soal.","src":"PPT Mikrobiologi TB — K12","k":12,"cbt":"resp"},{"n":49,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Pemeriksaan untuk mendeteksi M. tuberculosis sekaligus resistansi rifampisin secara molekuler adalah ...","o":["Kultur darah rutin","Pewarnaan Gram","Tes Cepat Molekuler (TCM)","Pemeriksaan KOH","Uji katalase"],"a":"Tes Cepat Molekuler (TCM)","exp":"<b>TCM (Xpert MTB/RIF)</b> mendeteksi DNA M. tuberculosis dan mutasi gen rpoB penanda resistansi rifampisin. Gram, KOH, dan katalase tidak mendeteksi resistansi.","src":"PPT Mikrobiologi TB — K12","k":12,"cbt":"resp"},{"n":50,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Bakteri penyebab pertusis atau batuk rejan adalah ...","o":["Haemophilus influenzae","Staphylococcus aureus","Bordetella pertussis","Corynebacterium diphtheriae","Mycobacterium tuberculosis"],"a":"Bordetella pertussis","exp":"<b>Bordetella pertussis</b> melekat pada epitel bronkus bersilia dan menghasilkan toksin pertusis (faktor virulensi utama). C. diphtheriae = difteri; M. tuberculosis = TB.","src":"PPT Mikrobiologi Respirasi — K12","k":12,"cbt":"resp"},{"n":51,"t":"K4 · Syok","q":"Manifestasi yang dapat terjadi pada syok ireversibel, kecuali ...","o":["Hipotensi berat","Takikardia berat","Gangguan kesadaran hingga koma","Anuria dan asidosis berat","Poliuria"],"a":"Poliuria","exp":"Syok ireversibel: hipotensi dan takikardia hebat, respiratory distress, penurunan kesadaran hingga koma, <b>anuria</b>, asidosis hebat, berujung kematian. <b>Poliuria</b> tidak sesuai karena ginjal gagal (anuria).","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":52,"t":"K6 · Edema","q":"Edema akibat peningkatan tekanan hidrostatik kapiler dapat terjadi pada ...","o":["Gagal jantung kanan","Sindrom nefrotik akibat hipoalbuminemia","Penyakit hati akibat penurunan albumin","Kwashiorkor","Obstruksi limfatik"],"a":"Gagal jantung kanan","exp":"<b>Gagal jantung kanan</b> meningkatkan tekanan vena dan hidrostatik kapiler sehingga cairan keluar. B, C, D = tekanan onkotik turun; E = hambatan drainase limfe.","src":"PPT Patofisiologi Edema — K6","k":6,"cbt":"cvs"},{"n":53,"t":"K5 · Gangguan Pembuluh Darah Vena dan Arteri","q":"Foam cell dalam pembentukan plak aterosklerosis terutama berasal dari ...","o":["Monosit yang berisi LDL tanpa modifikasi","Monosit yang berisi LDL teroksidasi","Makrofag yang berisi LDL tanpa modifikasi","Makrofag yang menelan LDL teroksidasi","Sel busa yang berisi small LDL saja"],"a":"Makrofag yang menelan LDL teroksidasi","exp":"Monosit masuk ke intima dan berdiferensiasi menjadi <b>makrofag</b>, yang memfagosit <b>LDL teroksidasi</b> lalu menjadi <b>foam cell</b>. Monosit belum menelan lipid, dan LDL tanpa modifikasi tidak ditelan reseptor scavenger.","src":"PPT Aterosklerosis — K5","k":5,"cbt":"cvs"},{"n":54,"t":"K11 · Mikrobiologi pada Sistem Kardiovaskuler","q":"Demam reumatik dapat terjadi setelah infeksi Streptococcus pyogenes. Mekanisme utama kerusakan jaringan jantung adalah ...","o":["Pembentukan vegetasi infektif pada katup jantung","Gangguan metabolisme kolagen akibat toksin bakteri secara langsung","Nekrosis jaringan akibat invasi bakteri ke seluruh miosit","Reaksi autoimun silang antara antigen streptokokus dan jaringan tubuh (molecular mimicry)","Reaksi toksik langsung terhadap jantung oleh bakteri"],"a":"Reaksi autoimun silang antara antigen streptokokus dan jaringan tubuh (molecular mimicry)","exp":"Demam reumatik adalah komplikasi <b>autoimun</b>: antibodi terhadap protein M streptokokus bereaksi silang dengan jaringan jantung (<b>molecular mimicry</b>). Vegetasi infektif ada pada endokarditis infektif, bukan demam reumatik.","src":"PPT Demam Reumatik — K11","k":11,"cbt":"cvs"},{"n":55,"t":"K2 · Gangguan Embriologi Sistem Kardiovaskuler dan Respirasi","q":"Respiratory distress syndrome pada bayi prematur terutama disebabkan oleh ...","o":["Penutupan dini ductus arteriosus","Kekurangan surfaktan yang diproduksi pneumosit tipe II","Infeksi intrauterin sebagai penyebab tunggal","Kelebihan surfaktan pada alveoli","Peningkatan produksi mukus pada bronkus"],"a":"Kekurangan surfaktan yang diproduksi pneumosit tipe II","exp":"Pneumosit tipe II belum matang pada bayi prematur sehingga <b>surfaktan kurang</b>, tegangan permukaan alveolus tinggi, alveolus kolaps (atelektasis).","src":"PPT Embriologi Respirasi — K2","k":2,"cbt":"resp"},{"n":56,"t":"K8 · Dada Berdebar-debar","q":"Pasien anemia berat dan palpitasi saat aktivitas ringan. Mekanisme kompensasi yang paling mungkin adalah ...","o":["Penurunan preload ventrikel","Peningkatan denyut jantung untuk mempertahankan pengiriman oksigen ke jaringan","Penurunan curah jantung sebagai respons utama","Penurunan kebutuhan oksigen jaringan","Hipoglikemia akibat disfungsi katup"],"a":"Peningkatan denyut jantung untuk mempertahankan pengiriman oksigen ke jaringan","exp":"Anemia → Hb turun → kandungan O₂ darah turun → aktivasi simpatis → <b>takikardia dan curah jantung naik</b> untuk mempertahankan pengiriman O₂.","src":"PPT Palpitasi & Aritmia — K8","k":8,"cbt":"cvs"},{"n":57,"t":"K15 · Farmakologi Obat Antihipertensi","q":"Laki-laki 70 tahun menggunakan verapamil lalu diberi metoprolol. Denyut jantung turun menjadi 42 kali/menit. Mekanisme yang paling mungkin adalah ...","o":["Peningkatan aktivitas simpatis","Efek gabungan yang menekan denyut jantung dan konduksi atrioventrikular","Peningkatan kontraktilitas jantung","Peningkatan pelepasan renin","Peningkatan konduksi nodus AV"],"a":"Efek gabungan yang menekan denyut jantung dan konduksi atrioventrikular","exp":"Verapamil memblokir kanal Ca²⁺ tipe L pada nodus SA dan AV, sedangkan metoprolol memblokir reseptor β₁. Keduanya menekan nodus SA/AV sehingga efek gabungannya berlebihan: <b>bradikardia dan blok AV</b>.","src":"PPT Interaksi Obat Kardiovaskuler — K15","k":15,"cbt":"cvs"},{"n":58,"t":"K18 · Farmakologi Obat Gagal Jantung","q":"ARNI direkomendasikan pada pasien tertentu dengan HFrEF. Mekanisme kerjanya adalah ...","o":["Inhibisi Na⁺/K⁺-ATPase dan blokade aldosteron","Menurunkan denyut jantung dan meningkatkan kalsium intraseluler","Inhibisi neprilysin dan blokade reseptor angiotensin II","Blokade reseptor angiotensin I dan vasodilatasi vena","Inhibisi SGLT2"],"a":"Inhibisi neprilysin dan blokade reseptor angiotensin II","exp":"ARNI (sacubitril/valsartan): sacubitril <b>menghambat neprilysin</b> (peptida natriuretik naik), valsartan <b>memblokir reseptor AT1 angiotensin II</b>. Opsi A = digoksin/spironolakton, E = SGLT2 inhibitor.","src":"PPT Terapi Gagal Jantung — K18","k":18,"cbt":"cvs"},{"n":59,"t":"K3 · Gangguan Tekanan Darah","q":"Perempuan 32 tahun, TD klinik 159/90 mmHg, tetapi pemantauan rumah tujuh hari berbeda cukup jauh. Tindakan paling tepat adalah ...","o":["Langsung memberikan amlodipin tanpa evaluasi lanjutan","Langsung memberikan captopril tanpa konfirmasi","Langsung memberikan kombinasi dua antihipertensi","Mengulangi evaluasi dan mengonfirmasi diagnosis menggunakan pengukuran tekanan darah yang terstandar","Memberikan furosemid untuk semua pasien dengan tekanan darah tinggi"],"a":"Mengulangi evaluasi dan mengonfirmasi diagnosis menggunakan pengukuran tekanan darah yang terstandar","exp":"Selisih klinik–rumah menimbulkan dugaan <b>white-coat effect</b>. <b>Konfirmasi dengan HBPM/ABPM</b> sebelum memulai terapi. Obat langsung berisiko hipotensi dan terapi tidak perlu.","src":"PPT Diagnosis Hipertensi — K3","k":3,"cbt":"cvs"},{"n":60,"t":"K25 · Sesak Napas Pulmonal","q":"Pasien sesak napas dengan pCO₂ 60 mmHg, pH 7,26, pO₂ 55 mmHg, HCO₃⁻ ±27 mEq/L. Gangguan asam-basa primer adalah ...","o":["Asidosis metabolik","Alkalosis respiratorik","Gangguan asam-basa tidak dapat dinilai","Asidosis respiratorik","Alkalosis metabolik"],"a":"Asidosis respiratorik","exp":"pH &lt;7,35 = asidosis. pCO₂ naik (60) menjelaskan penurunan pH, sehingga <b>asidosis respiratorik</b>. HCO₃⁻ sedikit naik = awal kompensasi ginjal, belum cukup menormalkan pH.","src":"PPT Analisis Gas Darah — K25","k":25,"cbt":"resp"},{"n":61,"t":"K12 · Pemeriksaan Mikrobiologi pada Sistem Respirasi","q":"Infeksi Corynebacterium diphtheriae. Ciri khas patogenesisnya adalah ...","o":["Membentuk pseudomembran pada faring","Menyebabkan pembentukan syncytium akibat fusi sel epitel","Menginvasi eritrosit dan berkembang biak di dalamnya","Membentuk endospora untuk bertahan hidup","Menginfeksi sel T CD4 dan menyebabkan penurunan imunitas"],"a":"Membentuk pseudomembran pada faring","exp":"Toksin difteri menghambat sintesis protein sehingga terbentuk <b>pseudomembran</b> faring (plak keabuan). Toksin juga dapat menyebabkan miokarditis. B = RSV, E = HIV.","src":"PPT Mikrobiologi Difteri — K12","k":12,"cbt":"resp"},{"n":62,"t":"K11 · Mikrobiologi pada Sistem Kardiovaskuler","q":"Virus yang secara klasik dikenal sebagai penyebab penting miokarditis adalah ...","o":["Legionella pneumophila","Coxsackievirus B","Streptococcus pneumoniae","Candida albicans","Bordetella pertussis"],"a":"Coxsackievirus B","exp":"<b>Coxsackievirus B</b> (enterovirus) adalah penyebab virus tersering miokarditis. Opsi lain bukan virus.","src":"PPT Miokarditis Viral — K11","k":11,"cbt":"cvs"},{"n":63,"t":"K13 · Pemeriksaan Laboratorium Sistem Kardiovaskuler","q":"Infark miokard menyebabkan nekrosis dan inflamasi. Pemeriksaan yang terutama menilai respons inflamasi sistemik adalah ...","o":["Cardiac troponin I","Cardiac troponin T","CK-MB","C-reactive protein (CRP)","BNP"],"a":"C-reactive protein (CRP)","exp":"<b>CRP</b> adalah protein fase akut penanda inflamasi sistemik. Troponin dan CK-MB menilai kerusakan miosit, BNP menilai gagal jantung.","src":"PPT Biomarker Kardiovaskuler — K13","k":13,"cbt":"cvs"},{"n":64,"t":"K11 · Mikrobiologi pada Sistem Kardiovaskuler","q":"Dalam pembagian klasik berdasarkan waktu setelah operasi, mikroorganisme yang sering dikaitkan dengan endokarditis katup prostetik yang muncul lebih dari dua bulan setelah operasi adalah ...","o":["Staphylococcus aureus","Streptokokus viridans","Streptococcus pneumoniae","Pseudomonas aeruginosa","Haemophilus influenzae"],"a":"Streptokokus viridans","exp":"Pada endokarditis katup prostetik <b>lambat</b> (&gt;2 bulan) pola mikrobanya mendekati endokarditis katup asli, dengan <b>streptokokus viridans</b> sebagai penyebab tersering (flora mulut). Penyebab dini (&lt;2 bulan) lebih sering stafilokokus dan Gram-negatif.","src":"PPT Endokarditis Infektif — K11","k":11,"cbt":"cvs"},{"n":65,"t":"K4 · Syok","q":"Hipoperfusi akibat peningkatan permeabilitas pembuluh darah yang menyebabkan kebocoran cairan ke jaringan dapat terjadi pada ...","o":["Syok kardiogenik","Syok hipovolemik akibat perdarahan","Syok anafilaktik","Syok akibat gagal pompa jantung","Syok akibat stenosis katup"],"a":"Syok anafilaktik","exp":"Pada <b>syok anafilaktik</b>, mediator alergi (histamin) menyebabkan vasodilatasi dan permeabilitas naik sehingga cairan bocor ke jaringan. Opsi lain tidak melibatkan kebocoran kapiler.","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":66,"t":"K4 · Syok","q":"Definisi syok yang paling tepat adalah ...","o":["Keadaan hipoperfusi jaringan ketika aliran darah tidak mencukupi kebutuhan metabolik jaringan","Keadaan ketika suplai oksigen ke otak berkurang tanpa memengaruhi organ lain","Keadaan ketika tubuh tidak mampu mempertahankan tekanan darah normal, tetapi perfusi tetap adekuat","Penurunan tekanan darah akibat kehilangan darah akut tanpa dampak pada metabolisme sel","Kelebihan cairan intravaskular yang menurunkan difusi oksigen ke jaringan"],"a":"Keadaan hipoperfusi jaringan ketika aliran darah tidak mencukupi kebutuhan metabolik jaringan","exp":"Syok = <b>hipoperfusi jaringan</b>: aliran darah tidak memenuhi kebutuhan metabolik, melibatkan banyak organ. Opsi lain membatasi pada otak, atau menyebut perfusi tetap adekuat.","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":67,"t":"K4 · Syok","q":"Pasangan organ dan perubahan pada syok berat yang TIDAK sesuai adalah ...","o":["Paru — gangguan pernapasan akut","Saluran gastrointestinal — iskemia mukosa dan perdarahan","Ginjal — nekrosis tubular akut","Hati — nekrosis sentrilobular","Otak — hipertrofi sebagai respons khas terhadap hipoperfusi akut"],"a":"Otak — hipertrofi sebagai respons khas terhadap hipoperfusi akut","exp":"Hipoperfusi pada otak menyebabkan <b>iskemia</b> (klinis seperti stroke), bukan hipertrofi. Paru: ARDS; GI: erosi/perdarahan; ginjal: nekrosis tubular; hati: nekrosis sentrilobular.","src":"PPT Patologi Syok — K4","k":4,"cbt":"cvs"},{"n":68,"t":"K2 · Gangguan Embriologi Sistem Kardiovaskuler dan Respirasi","q":"Struktur berikut yang berasal dari endoderm adalah ...","o":["Epitel alveolus","Otot polos esofagus","Tulang rawan trakea","Pleura visceralis","Pleura parietalis"],"a":"Epitel alveolus","exp":"Endoderm foregut membentuk <b>epitel</b> saluran napas (laring, trakea, bronkus, alveolus). Otot, tulang rawan, dan pleura berasal dari mesoderm.","src":"PPT Embriologi Respirasi — K2","k":2,"cbt":"resp"},{"n":69,"t":"K15 · Farmakologi Obat Antihipertensi","q":"Amlodipin dapat diberikan satu kali sehari. Karakteristik farmakokinetik yang mendukung adalah ...","o":["Bioavailabilitas sangat rendah dan ekskresi ginjal sangat cepat","Efek hanya muncul setelah metabolit terakumulasi selama beberapa minggu","Waktu paruh eliminasi panjang sehingga efeknya dapat bertahan sekitar 24 jam","Absorpsi berlangsung sangat cepat dan efeknya hanya beberapa menit","Obat tidak mengalami metabolisme"],"a":"Waktu paruh eliminasi panjang sehingga efeknya dapat bertahan sekitar 24 jam","exp":"Amlodipin punya <b>waktu paruh panjang</b>, sehingga cukup diberikan sekali sehari. Nifedipin kerja cepat justru dihindari untuk kontrol rutin.","src":"PPT Farmakokinetik Antihipertensi — K15","k":15,"cbt":"cvs"},{"n":70,"t":"K15 · Farmakologi Obat Antihipertensi","q":"Ibu hamil dengan hipertensi sebelumnya mengonsumsi captopril. Pilihan pengganti yang sesuai adalah ...","o":["Labetalol atau nifedipin lepas lambat","ACE inhibitor atau ARB","Spironolakton sebagai pilihan rutin","Aliskiren","Kombinasi ACE inhibitor dan ARB"],"a":"Labetalol atau nifedipin lepas lambat","exp":"Pada kehamilan, penghambat RAAS (ACEi, ARB, aliskiren) <b>dihindari</b> karena teratogenik. Pilihan: <b>labetalol, nifedipin lepas lambat, atau metildopa</b>.","src":"PPT Antihipertensi Kehamilan — K15","k":15,"cbt":"cvs"},{"n":71,"t":"K18 · Farmakologi Obat Gagal Jantung","q":"Pasien 65 tahun dengan hipertensi, HFrEF (EF 32%), dan fibrilasi atrium tanpa blok AV. Pilihan pengendalian denyut jantung yang sesuai adalah ...","o":["Verapamil","Diltiazem","Nifedipin kerja cepat","Klonidin tanpa pemantauan","Beta-blocker yang terbukti bermanfaat pada HFrEF, dengan titrasi dan pemantauan yang tepat"],"a":"Beta-blocker yang terbukti bermanfaat pada HFrEF, dengan titrasi dan pemantauan yang tepat","exp":"Pada HFrEF, verapamil dan diltiazem <b>dihindari</b> (menekan kontraktilitas). Pilih <b>beta-blocker</b> yang terbukti memperbaiki luaran, dengan titrasi bertahap.","src":"PPT Terapi HFrEF — K18","k":18,"cbt":"cvs"},{"n":72,"t":"K3 · Gangguan Tekanan Darah","q":"Feokromositoma dapat menyebabkan hipertensi melalui mekanisme ...","o":["Peningkatan aldosteron dari korteks adrenal sebagai mekanisme utama","Peningkatan sekresi katekolamin, terutama epinefrin dan norepinefrin, oleh tumor medula adrenal","Penurunan aktivitas saraf simpatis","Penurunan resistensi vaskular sistemik secara menetap","Penurunan denyut jantung akibat stimulasi parasimpatis"],"a":"Peningkatan sekresi katekolamin, terutama epinefrin dan norepinefrin, oleh tumor medula adrenal","exp":"Feokromositoma = tumor medula adrenal yang melepas <b>katekolamin</b>, sehingga vasokonstriksi dan curah jantung naik. Peningkatan aldosteron adalah sindrom Conn.","src":"PPT Hipertensi Sekunder — K3","k":3,"cbt":"cvs"},{"n":73,"t":"K3 · Gangguan Tekanan Darah","q":"Wanita 60 tahun, TD klinik 156/96 mmHg, rata-rata rumah tujuh hari 126/76 mmHg. Sebelum meningkatkan dosis, langkah paling tepat adalah ...","o":["Langsung menaikkan dosis beta blocker","Mengevaluasi kemungkinan white-coat hypertension dan mengonfirmasi tekanan darah menggunakan pengukuran rumah atau ABPM","Menambahkan diuretik tanpa pemeriksaan lanjutan","Menghentikan seluruh obat antihipertensi secara langsung","Mengabaikan semua hasil pengukuran klinik"],"a":"Mengevaluasi kemungkinan white-coat hypertension dan mengonfirmasi tekanan darah menggunakan pengukuran rumah atau ABPM","exp":"TD klinik tinggi namun TD rumah normal → curiga <b>white-coat effect</b>. Konfirmasi dengan <b>HBPM/ABPM</b> sebelum intensifikasi terapi untuk mencegah hipotensi.","src":"PPT Pengukuran Tekanan Darah — K3","k":3,"cbt":"cvs"},{"n":74,"t":"K3 · Gangguan Tekanan Darah","q":"Wanita dengan TD 132/84 mmHg duduk dan 108/74 mmHg berbaring setelah obat antihipertensi. Langkah selanjutnya yang paling sesuai adalah ...","o":["Langsung meningkatkan dosis antihipertensi","Menghentikan semua obat tanpa evaluasi","Mengevaluasi gejala dan kemungkinan hipotensi ortostatik serta meninjau kembali terapi dan pengukuran tekanan darah","Menambahkan obat penurun tekanan darah lain","Mengabaikan perubahan tekanan darah tersebut"],"a":"Mengevaluasi gejala dan kemungkinan hipotensi ortostatik serta meninjau kembali terapi dan pengukuran tekanan darah","exp":"Perbedaan TD antarposisi perlu dinilai sebagai kemungkinan <b>hipotensi ortostatik</b>: evaluasi gejala (pusing), tinjau terapi, dan ukur TD posisi duduk/berbaring/berdiri. Menaikkan atau menambah obat berisiko memperburuk.","src":"PPT Pemeriksaan Fisik TD — K3","k":3,"cbt":"cvs"},{"n":75,"t":"K15 · Farmakologi Obat Antihipertensi","q":"Pemberian verapamil bersama metoprolol dapat meningkatkan risiko ...","o":["Takikardia dan peningkatan konduksi atrioventrikular","Bradikardia dan depresi konduksi atrioventrikular","Hipertensi berat akibat aktivasi simpatis","Peningkatan kontraktilitas ventrikel","Peningkatan otomatisitas nodus sinoatrial"],"a":"Bradikardia dan depresi konduksi atrioventrikular","exp":"Interaksi β-blocker + verapamil: risiko <b>bradikardia, blok AV, dan depresi kontraktilitas</b> karena keduanya menekan nodus SA dan AV.","src":"PPT Interaksi Obat Antihipertensi — K15","k":15,"cbt":"cvs"},{"n":76,"t":"K8 · Dada Berdebar-debar","q":"Pria 50 tahun dengan anemia dan jantung berdebar saat aktivitas ringan. Mekanisme yang paling sesuai adalah ...","o":["Penurunan preload sebagai satu-satunya mekanisme","Penurunan kapasitas pengangkutan oksigen yang memicu kompensasi peningkatan denyut jantung","Hipoglikemia sebagai mekanisme utama","Vasokonstriksi sistemik sebagai satu-satunya penyebab","Penurunan kebutuhan oksigen jaringan"],"a":"Penurunan kapasitas pengangkutan oksigen yang memicu kompensasi peningkatan denyut jantung","exp":"Anemia menurunkan <b>kapasitas angkut O₂</b>, sehingga tubuh menaikkan denyut jantung (kompensasi) untuk mempertahankan penghantaran O₂. Kebutuhan oksigen jaringan tidak turun.","src":"PPT Palpitasi & Kompensasi — K8","k":8,"cbt":"cvs"},{"n":77,"t":"K4 · Syok","q":"Jenis syok yang dapat terjadi akibat nyeri hebat adalah ...","o":["Syok kardiogenik","Syok neurogenik","Syok septik","Syok anafilaktik","Syok hipovolemik"],"a":"Syok neurogenik","exp":"Nyeri hebat menghambat aktivitas vasokonstriktor simpatis → vasodilatasi berlebihan → <b>syok neurogenik</b>.","src":"PPT Patofisiologi Syok — K4","k":4,"cbt":"cvs"},{"n":78,"t":"K15 · Farmakologi Obat Antihipertensi","q":"Wanita 63 tahun, sakit kepala, TD 158/96 mmHg, riwayat PGK. Dokter ingin obat yang membantu memperlambat progresivitas kerusakan ginjal, terutama bila ada albuminuria. Pilihan obat dan mekanisme paling tepat adalah ...","o":["Amlodipin, menghambat kanal kalsium tipe L pada otot polos pembuluh darah sehingga terjadi vasodilatasi.","Lisinopril, menghambat enzim angiotensin-converting (ACE) sehingga pembentukan angiotensin II berkurang dan tekanan intraglomerulus menurun.","Furosemid, menghambat cotransporter Na⁺-K⁺-2Cl⁻ di ansa Henle sehingga ekskresi natrium dan air meningkat.","Propranolol, menghambat reseptor beta-adrenergik sehingga denyut jantung dan kontraktilitas miokard menurun.","Hidralazin, merelaksasi otot polos arteriol secara langsung sehingga resistensi vaskular perifer berkurang."],"a":"Lisinopril, menghambat enzim angiotensin-converting (ACE) sehingga pembentukan angiotensin II berkurang dan tekanan intraglomerulus menurun.","exp":"<b>ACE inhibitor (lisinopril)</b> menurunkan angiotensin II, melebarkan arteriol eferen, menurunkan <b>tekanan intraglomerulus</b> dan proteinuria, sehingga renoprotektif. Pantau kreatinin dan kalium. Obat lain menurunkan TD tanpa efek renoprotektif sekuat ini.","src":"PPT Renoproteksi Antihipertensi — K15","k":15,"cbt":"cvs"}];
+let Q = QALL;
+
+const TOPICS = [...new Set(QALL.map(q => q.t))];
+const SYL = {"2":"Gangguan Embriologi Sistem Kardiovaskuler dan Respirasi","3":"Gangguan Tekanan Darah","4":"Syok","5":"Gangguan Pembuluh Darah Vena dan Arteri","6":"Edema","7":"Nyeri Dada","8":"Dada Berdebar-debar","9":"Patologi Sistem Kardiovaskuler","10":"Patologi Sistem Respirasi","11":"Mikrobiologi pada Sistem Kardiovaskuler","12":"Pemeriksaan Mikrobiologi pada Sistem Respirasi","13":"Pemeriksaan Laboratorium Sistem Kardiovaskuler","14":"Pemeriksaan Laboratorium Sistem Respirasi","15":"Farmakologi Obat Antihipertensi","16":"Farmakologi Obat Anti Angina","17":"Farmakologi Obat Anti Aritmia","18":"Farmakologi Obat Gagal Jantung","19":"Farmakologi Obat Sistem Respirasi: Obat Lokal Saluran Napas","20":"Farmakologi Obat TB","21":"Farmakologi Antibiotik pada Infeksi Saluran Napas","22":"Parasit pada Sistem Respirasi","23":"Napas Berbunyi","24":"Batuk","25":"Sesak Napas Pulmonal","26":"Nyeri Dada Pulmonal","27":"Nyeri Dada Cardiac","28":"Dasar-dasar EKG","29":"Sesak Napas Cardiac","30":"Sianosis"};
+
+let selK = new Set(QALL.map(q => q.k));
+let scope = 'all';
+
+function scopeOf(k){
+  const item = QALL.find(q => q.k === k);
+  return item ? item.cbt : 'cvs';
+}
+
+function renderScope(){
+  const cnt = {};
+  QALL.forEach(q => cnt[q.k] = (cnt[q.k] || 0) + 1);
+  const n1 = QALL.filter(q => q.cbt === 'cvs').length;
+  const n2 = QALL.filter(q => q.cbt === 'resp').length;
+  document.getElementById('sc-all').textContent = QALL.length + ' soal';
+  document.getElementById('sc-1').textContent = n1 + ' soal';
+  document.getElementById('sc-2').textContent = n2 + ' soal';
+  document.querySelectorAll('.scope-btn').forEach(b => {
+    const on = b.dataset.scope === scope;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', on);
+  });
+  let h = '';
+  [['cvs', 'CBT 1 · KARDIOVASKULAR'], ['resp', 'CBT 1 · RESPIRASI']].forEach(([g, lbl]) => {
+    if (scope !== 'all' && scope !== g) return;
+    h += '<div class="k-group-lbl">' + lbl + '</div>';
+    Object.keys(SYL).map(Number).filter(k => scopeOf(k) === g && cnt[k]).forEach(k => {
+      const c = cnt[k] || 0;
+      const on = selK.has(k);
+      h += '<button class="k-chip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" onclick="toggleK(' + k + ')">K' + k + ' · ' + SYL[k] + ' <span class="kc">' + c + '</span></button>';
+    });
+  });
+  document.getElementById('k-wrap').innerHTML = h;
+  const n = filtered().length;
+  document.getElementById('sel-count').textContent = n;
+  document.querySelectorAll('.mode-btn').forEach(b => b.disabled = n === 0);
+}
+
+function filtered(){
+  return QALL.filter(q => (scope === 'all' || q.cbt === scope) && selK.has(q.k));
+}
+
+function setScope(s){
+  scope = s;
+  selK = new Set(QALL.filter(q => s === 'all' || q.cbt === s).map(q => q.k));
+  renderScope();
+}
+
+function toggleK(k){
+  selK.has(k) ? selK.delete(k) : selK.add(k);
+  renderScope();
+}
+
+function kAll(on){
+  selK = on ? new Set(QALL.filter(q => scope === 'all' || q.cbt === scope).map(q => q.k)) : new Set();
+  renderScope();
+}
+
+document.addEventListener('DOMContentLoaded', renderScope);
+
+let mode = 'study', cur = 0, answered = {}, flagged = new Set(), score = 0, streak = 0, timerInterval = null;
+let sessions = 0, bestScore = 0, allScores = [], topicStats = {};
+const KEY = 'kc32_sam1_';
+
+function loadStats(){
+  try{
+    sessions = parseInt(localStorage.getItem(KEY+'s') || '0');
+    bestScore = parseInt(localStorage.getItem(KEY+'b') || '0');
+    allScores = JSON.parse(localStorage.getItem(KEY+'sc') || '[]');
+    topicStats = JSON.parse(localStorage.getItem(KEY+'t') || '{}');
+  }catch(e){}
+  renderStats();
+}
+
+function renderStats(){
+  document.getElementById('stat-sessions').textContent = sessions || '0';
+  document.getElementById('stat-best').textContent = bestScore ? bestScore + '/' + QALL.length : '—';
+  if(allScores.length > 0){
+    const avg = Math.round(allScores.reduce((a, b) => a + b.score, 0) / allScores.length);
+    document.getElementById('stat-avg').textContent = avg + ' (' + Math.round(avg / QALL.length * 100) + '%)';
+  } else {
+    document.getElementById('stat-avg').textContent = '—';
+  }
+  renderHistList();
+  renderTopicBar('topic-bar', topicStats);
+}
+
+function renderHistList(){
+  const list = document.getElementById('hist-list');
+  if(!allScores.length){
+    list.innerHTML = '<div class="no-hist">Belum ada sesi — yuk mulai!</div>';
+    return;
+  }
+  list.innerHTML = [...allScores].reverse().slice(0, 8).map(s => {
+    const tot = s.total || QALL.length;
+    const pct = Math.round(s.score / tot * 100);
+    return '<div class="hist-item"><span class="hi-mode">' + s.mode + '</span><span class="hi-date">' + s.date + '</span><span class="hi-score">' + s.score + '/' + tot + '</span><span class="hi-pct">' + pct + '%</span></div>';
+  }).join('');
+}
+
+function renderTopicBar(elId, stats){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  const tw = TOPICS.filter(t => stats[t] && (stats[t].correct + stats[t].wrong) > 0);
+  if(!tw.length){
+    el.innerHTML = '<div class="no-hist">Belum ada data topik.</div>';
+    return;
+  }
+  el.innerHTML = tw.map(t => {
+    const d = stats[t], total = d.correct + d.wrong, pct = Math.round(d.correct / total * 100);
+    return '<div class="topic-row"><span class="topic-name">' + t + '</span><div class="topic-track"><div class="topic-fill ' + (pct >= 75 ? 'good' : pct >= 50 ? 'mid' : 'low') + '" style="width:' + pct + '%"></div></div><span class="topic-pct">' + pct + '%</span></div>';
+  }).join('');
+}
+
+function clearHistory(){
+  if(!confirm('Hapus semua riwayat sesi?')) return;
+  [KEY+'s', KEY+'b', KEY+'sc', KEY+'t'].forEach(k => localStorage.removeItem(k));
+  sessions = 0; bestScore = 0; allScores = []; topicStats = {};
+  renderStats();
+}
+
+function startQuiz(m){
+  Q = filtered();
+  if(!Q.length) return;
+  mode = m; cur = 0; answered = {}; flagged = new Set(); score = 0; streak = 0;
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('score-display').style.display = m === 'drill' ? 'none' : '';
+  const te = document.getElementById('timer-el');
+  clearInterval(timerInterval);
+  if(m === 'exam'){
+    te.style.display = '';
+    let t = Math.max(300, Math.round(5400 * Q.length / QALL.length));
+    timerInterval = setInterval(() => {
+      t--;
+      const m2 = Math.floor(t / 60), s = t % 60;
+      te.textContent = (m2 < 10 ? '0' : '') + m2 + ':' + (s < 10 ? '0' : '') + s;
+      te.className = 'timer-badge' + (t < 300 ? ' warning' : '') + (t < 60 ? ' danger' : '');
+      if(t <= 0){
+        clearInterval(timerInterval);
+        submitExam();
+      }
+    }, 1000);
+  } else {
+    te.style.display = 'none';
+  }
+  renderQ();
+}
+
+function renderQ(){
+  const total = Q.length, q = Q[cur];
+  document.getElementById('prog-fill').style.width = ((cur + 1) / total * 100) + '%';
+  document.getElementById('prog-txt').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('mode-badge').textContent = mode.charAt(0).toUpperCase() + mode.slice(1) + ' Mode';
+  const correct = Object.values(answered).filter(v => v === true).length;
+  const attempted = Object.keys(answered).filter(k => !k.includes('-')).length;
+  document.getElementById('score-display').textContent = correct + ' / ' + attempted;
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').textContent = cur === total - 1 ? (mode === 'exam' ? 'Kumpulkan ›' : 'Selesai ›') : 'Next ›';
+  document.getElementById('btn-flag').className = 'flag-btn' + (flagged.has(cur) ? ' flagged' : '');
+  const optsHTML = q.o.map((opt, i) => {
+    const key = String.fromCharCode(65 + i);
+    let cls = 'opt', badge = '';
+    if(answered.hasOwnProperty(cur)){
+      const isC = opt === q.a, wasC = answered[cur + '-choice'] === opt;
+      if(mode === 'exam'){
+        if(wasC) cls += ' selected';
+      } else {
+        if(isC){ cls += ' correct'; badge = '✓'; }
+        else if(wasC && !isC){ cls += ' incorrect'; badge = '✗'; }
+      }
+    }
+    const dis = answered.hasOwnProperty(cur) && mode !== 'drill' ? 'disabled' : '';
+    return '<button class="' + cls + '" ' + dis + ' onclick="selectOpt(this,\'' + opt.replace(/'/g, "&#39;").replace(/"/g, '&quot;') + '\')"><span class="opt-key">' + key + '</span><span class="opt-body">' + opt + '</span><span class="opt-badge">' + badge + '</span></button>';
+  }).join('');
+  document.getElementById('q-card').innerHTML = '<div class="q-index">Soal ' + (cur + 1) + ' dari ' + total + '<span class="pill-tag">' + mode.toUpperCase() + '</span><span class="pill-tag accent">' + q.t + '</span>' + (flagged.has(cur) ? '<span class="pill-tag">Flagged ⚑</span>' : '') + '</div><div class="q-text">' + q.q + '</div><div class="opts">' + optsHTML + '</div>';
+  const expBox = document.getElementById('exp-box');
+  if(answered.hasOwnProperty(cur) && mode === 'study'){
+    document.getElementById('exp-answer').textContent = '✓ Jawaban: ' + q.a;
+    document.getElementById('exp-body').innerHTML = q.exp;
+    document.getElementById('exp-src').textContent = '📚 Sumber: ' + q.src;
+    expBox.className = 'exp-box show';
+  } else {
+    expBox.className = 'exp-box';
+  }
+  renderMap();
+}
+
+function selectOpt(btn, chosen){
+  const q = Q[cur], correct = chosen === q.a;
+  answered[cur + '-choice'] = chosen;
+  if(mode === 'drill'){
+    if(correct){
+      answered[cur] = true;
+      streak++;
+      showToast(streak % 5 === 0 ? '🔥 ' + streak + ' streak!' : '✓ Benar!');
+      setTimeout(() => {
+        if(cur < Q.length - 1) navigate(1);
+        else {
+          clearInterval(timerInterval);
+          document.getElementById('drill-overlay').classList.add('show');
+        }
+      }, 600);
+    } else {
+      btn.classList.add('drill-wrong-shake');
+      delete answered[cur];
+      delete answered[cur + '-choice'];
+      setTimeout(() => btn.classList.remove('drill-wrong-shake'), 400);
+      streak = 0;
+      showToast('✗ Coba lagi!');
+    }
+    renderQ();
+    return;
+  }
+  answered[cur] = correct;
+  if(correct){
+    score++;
+    streak++;
+    showToast(streak % 5 === 0 ? '🔥 ' + streak + ' streak!' : '✓ Benar!');
+  } else {
+    streak = 0;
+    showToast('✗ Salah');
+  }
+  renderQ();
+}
+
+function navigate(dir){
+  if(dir === 1 && cur === Q.length - 1){
+    if(mode === 'exam'){
+      document.getElementById('exam-overlay').classList.add('show');
+      return;
+    }
+    showResults();
+    return;
+  }
+  cur = Math.max(0, Math.min(Q.length - 1, cur + dir));
+  renderQ();
+}
+
+function toggleFlag(){
+  flagged.has(cur) ? flagged.delete(cur) : flagged.add(cur);
+  renderQ();
+}
+
+function renderMap(){
+  document.getElementById('q-map').innerHTML = Q.map((_, i) => {
+    let cls = 'q-dot';
+    if(i === cur) cls += ' current';
+    else if(answered.hasOwnProperty(i)) cls += answered[i] ? ' answered' : ' wrong';
+    if(flagged.has(i)) cls += ' flagged-dot';
+    return '<div class="' + cls + '" onclick="jumpTo(' + i + ')">' + (i + 1) + '</div>';
+  }).join('');
+}
+
+function jumpTo(i){
+  cur = i;
+  renderQ();
+}
+
+function submitExam(){
+  closeOverlay('exam-overlay');
+  clearInterval(timerInterval);
+  Q.forEach((_, i) => {
+    if(!answered.hasOwnProperty(i)) answered[i] = false;
+  });
+  showResults();
+}
+
+function showResults(){
+  clearInterval(timerInterval);
+  const total = Q.length;
+  const correct = Object.values(answered).filter(v => v === true).length;
+  const wrong = Object.values(answered).filter(v => v === false).length;
+  const skip = total - Object.keys(answered).filter(k => !k.includes('-')).length;
+  const pct = Math.round(correct / total * 100);
+  const sT = {};
+  Q.forEach((q, i) => {
+    if(!sT[q.t]) sT[q.t] = { correct: 0, wrong: 0 };
+    if(answered.hasOwnProperty(i)){
+      if(answered[i]) sT[q.t].correct++;
+      else sT[q.t].wrong++;
+    }
+  });
+  Object.keys(sT).forEach(t => {
+    if(!topicStats[t]) topicStats[t] = { correct: 0, wrong: 0 };
+    topicStats[t].correct += sT[t].correct;
+    topicStats[t].wrong += sT[t].wrong;
+  });
+  sessions++;
+  const dateStr = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: '2-digit' });
+  allScores.push({ score: correct, total: Q.length, mode, date: dateStr });
+  if(allScores.length > 20) allScores.shift();
+  if(correct > bestScore) bestScore = correct;
+  try{
+    localStorage.setItem(KEY+'s', sessions);
+    localStorage.setItem(KEY+'b', bestScore);
+    localStorage.setItem(KEY+'sc', JSON.stringify(allScores));
+    localStorage.setItem(KEY+'t', JSON.stringify(topicStats));
+  }catch(e){}
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+  document.getElementById('final-score-display').innerHTML = '<span>' + correct + '</span>/' + Q.length;
+  document.getElementById('final-sub').textContent = pct + '% benar — ' + (pct >= 75 ? 'Lulus CBT! 🎉' : pct >= 60 ? 'Hampir! Gas lagi!' : 'Yuk drill lagi!');
+  document.getElementById('r-correct').textContent = correct;
+  document.getElementById('r-wrong').textContent = wrong;
+  document.getElementById('r-skip').textContent = skip;
+  renderTopicBar('result-topic-bar', sT);
+}
+
+function reviewAnswers(){
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  mode = 'study';
+  cur = 0;
+  renderQ();
+}
+
+function showStart(){
+  clearInterval(timerInterval);
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('start-screen').style.display = 'block';
+  document.querySelectorAll('.overlay').forEach(el => el.classList.remove('show'));
+  loadStats();
+}
+
+function confirmExit(){
+  document.getElementById('exit-overlay').classList.add('show');
+}
+
+function closeOverlay(id){
+  document.getElementById(id).classList.remove('show');
+}
+
+function showToast(msg){
+  const t = document.getElementById('streak-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+document.addEventListener('keydown', e => {
+  if(document.getElementById('quiz-screen').style.display === 'none') return;
+  const k = e.key.toLowerCase();
+  if(k === 'arrowright') navigate(1);
+  else if(k === 'arrowleft') navigate(-1);
+  else if(k === 'f') toggleFlag();
+  else if('abcde'.includes(k)){
+    const idx = 'abcde'.indexOf(k), q = Q[cur];
+    if(idx < q.o.length && !answered.hasOwnProperty(cur)){
+      const btns = document.querySelectorAll('.opts .opt');
+      if(btns[idx]) selectOpt(btns[idx], q.o[idx]);
+    }
+  }
+});
+
+loadStats();
+</script>
+</body>
+</html>

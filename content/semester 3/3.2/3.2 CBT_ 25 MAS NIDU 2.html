@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>KAPSUL CARDIOVICTUS 3.2 — 25 MAS NIDU 2</title>
+<style>
+:root{
+  --bg:#EFF6FF;--surface:#E0EDFF;--surface-2:#D0E4FF;--surface-3:#BAD4FC;
+  --border:#90B8F0;--border-light:#A8CAFF;
+  --ink:#0F1F3D;--ink-muted:#2D5FA0;--ink-faint:#5B8ACC;
+  --accent:#E8365D;--accent-2:#B01C42;
+  --r:14px;--r-sm:9px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:16px}
+.shell{max-width:760px;margin:0 auto}
+#start-screen{animation:fadeIn .5s ease}
+.logo-row{display:flex;align-items:baseline;gap:14px;padding:36px 0 8px;flex-wrap:wrap}
+.logo-wordmark{font-family:Georgia,serif;font-size:clamp(1.6rem,5vw,2.8rem);letter-spacing:-0.5px;color:var(--ink);line-height:1}
+.logo-wordmark span{color:var(--ink-muted)}
+.logo-tag{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:4px 10px;border-radius:99px;background:rgba(232,54,93,0.08)}
+.divider{height:1px;background:var(--border);margin:20px 0}
+.meta-row{display:flex;gap:20px;flex-wrap:wrap;padding:10px 0}
+.meta-chip{display:flex;align-items:center;gap:7px;font-family:'Courier New',monospace;font-size:11px;color:var(--ink-muted)}
+.meta-chip .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:12px;box-shadow:0 1px 4px rgba(15,31,61,.07)}
+.card-title{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.mode-grid{display:flex;flex-direction:column;gap:9px}
+.mode-btn{display:flex;align-items:center;gap:15px;padding:15px 18px;border:1px solid var(--border-light);border-radius:var(--r-sm);background:var(--surface-2);cursor:pointer;text-align:left;width:100%;font-family:system-ui,sans-serif;transition:all .2s ease}
+.mode-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 12px rgba(232,54,93,.12)}
+.mode-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:13px;font-weight:500;color:var(--ink-muted);flex-shrink:0;background:var(--surface-3)}
+.mode-text h3{font-weight:600;font-size:15px;color:var(--ink);margin-bottom:2px}
+.mode-text p{font-size:12px;color:var(--ink-muted);font-weight:300;line-height:1.4}
+.mode-arr{margin-left:auto;color:var(--ink-faint);font-size:18px;transition:transform .2s}
+.mode-btn:hover .mode-arr{transform:translateX(4px);color:var(--accent)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stat-box{background:var(--surface-2);border:1px solid var(--border-light);border-radius:var(--r-sm);padding:16px 12px;text-align:center}
+.stat-val{font-family:Georgia,serif;font-size:1.9rem;line-height:1;color:var(--ink)}
+.stat-lbl{font-family:'Courier New',monospace;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-muted);margin-top:5px}
+.hist-list{display:flex;flex-direction:column;gap:5px;max-height:140px;overflow-y:auto;margin-top:10px}
+.hist-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg);border:1px solid var(--border-light);border-radius:7px;font-size:12px}
+.hi-mode{font-family:'Courier New',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:99px;background:var(--surface-3);color:var(--ink-muted)}
+.hi-score{font-weight:600;color:var(--ink);margin-left:auto}
+.hi-pct{font-family:'Courier New',monospace;font-size:11px;padding:2px 7px;border-radius:99px;background:var(--surface-3);color:var(--ink-muted)}
+.hi-date{font-size:11px;color:var(--ink-faint)}
+.no-hist{font-size:13px;color:var(--ink-faint);text-align:center;padding:16px 0;font-style:italic}
+.reset-btn{margin-top:10px;background:none;border:1px solid var(--border);border-radius:7px;padding:6px 14px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);cursor:pointer;transition:all .15s}
+.reset-btn:hover{border-color:var(--accent);color:var(--accent)}
+.topic-bar{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.topic-row{display:flex;align-items:center;gap:10px;font-size:12px}
+.topic-name{min-width:160px;color:var(--ink-muted);font-size:11px}
+.topic-track{flex:1;height:5px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.topic-fill{height:100%;border-radius:99px;background:var(--surface-3);transition:width .6s ease}
+.topic-fill.good{background:var(--accent)}
+.topic-fill.mid{background:var(--ink-muted)}
+.topic-fill.low{background:var(--border)}
+.topic-pct{font-family:'Courier New',monospace;font-size:10px;color:var(--ink-muted);min-width:30px;text-align:right}
+
+#quiz-screen,#result-screen{display:none}
+.quiz-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;box-shadow:0 1px 4px rgba(15,31,61,.07)}
+.btn-ghost{background:none;border:1px solid var(--border-light);border-radius:var(--r-sm);padding:7px 13px;font-family:'Courier New',monospace;font-size:11px;color:var(--ink-muted);cursor:pointer;transition:all .15s}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.progress-block{flex:1;display:flex;flex-direction:column;gap:5px}
+.progress-track{height:4px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .25s ease}
+.progress-label{display:flex;justify-content:space-between;font-family:'Courier New',monospace;font-size:10px;color:var(--ink-faint)}
+.score-pill{font-family:'Courier New',monospace;font-size:11px;padding:4px 10px;border-radius:99px;background:var(--surface-2);color:var(--ink-muted);border:1px solid var(--border-light)}
+.timer-badge{font-family:'Courier New',monospace;font-size:12px;padding:4px 10px;border-radius:99px;background:var(--surface-2);color:var(--ink);border:1px solid var(--border-light);font-variant-numeric:tabular-nums}
+.timer-badge.warning{border-color:var(--accent);color:var(--accent)}
+.timer-badge.danger{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-row-top{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.nav-spacer{flex:1}
+.flag-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border-light);background:var(--surface-2);color:var(--ink-faint);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s}
+.flag-btn.flagged{border-color:var(--accent);background:var(--accent);color:#fff}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px;margin-bottom:12px;box-shadow:0 1px 4px rgba(15,31,61,.07);animation:fadeIn .2s ease}
+.q-index{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill-tag{font-family:'Courier New',monospace;font-size:9.5px;padding:2px 7px;border-radius:99px;background:var(--surface-2);color:var(--ink-muted);border:1px solid var(--border-light);text-transform:none;letter-spacing:0}
+.pill-tag.accent{border-color:var(--accent);color:var(--accent)}
+.q-text{font-size:15.5px;line-height:1.65;color:var(--ink);margin-bottom:20px;font-weight:400}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border:1px solid var(--border-light);border-radius:var(--r-sm);background:var(--surface-2);cursor:pointer;text-align:left;font-family:inherit;font-size:13.5px;line-height:1.5;color:var(--ink);transition:all .15s;width:100%}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--surface-3)}
+.opt-key{font-family:'Courier New',monospace;font-size:11px;font-weight:600;color:var(--ink-muted);width:18px;flex-shrink:0;margin-top:1px}
+.opt-body{flex:1}
+.opt-badge{font-family:'Courier New',monospace;font-size:11px;font-weight:700;flex-shrink:0;margin-left:auto}
+.opt.selected{border-color:var(--ink-muted);background:var(--surface-3)}
+.opt.correct{border-color:#16A34A;background:rgba(22,163,74,.12);color:#14532D}
+.opt.correct .opt-badge{color:#16A34A}
+.opt.incorrect{border-color:var(--accent);background:rgba(232,54,93,.12);color:var(--accent-2)}
+.opt.incorrect .opt-badge{color:var(--accent)}
+.opt:disabled{cursor:default}
+.drill-wrong-shake{animation:shake .35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}}
+
+.exp-box{background:var(--surface-2);border:1px solid var(--border-light);border-radius:var(--r-sm);padding:18px 20px;margin-bottom:12px;font-size:13px;line-height:1.65;color:var(--ink);display:none}
+.exp-box.show{display:block;animation:fadeIn .2s ease}
+.exp-header{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:8px}
+.exp-answer{font-family:'Courier New',monospace;font-size:12px;font-weight:600;color:#16A34A;margin-bottom:10px;padding:6px 12px;background:rgba(22,163,74,.1);border-radius:6px;border:1px solid rgba(22,163,74,.25)}
+.exp-body{color:var(--ink);margin-bottom:10px}
+.exp-body ul{margin:6px 0 6px 20px}
+.exp-body li{margin-bottom:4px}
+.exp-src{font-family:'Courier New',monospace;font-size:11px;color:var(--ink-muted);border-top:1px dashed var(--border);padding-top:8px;margin-top:8px}
+
+.q-map-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:12px}
+.q-map-title{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:12px}
+.q-map-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(28px,1fr));gap:5px}
+.q-dot{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:6px;font-family:'Courier New',monospace;font-size:10px;font-weight:500;border:1px solid var(--border-light);background:var(--surface-2);color:var(--ink-muted);cursor:pointer;transition:all .15s;position:relative}
+.q-dot:hover{border-color:var(--accent)}
+.q-dot.current{border-color:var(--ink);background:var(--surface-3);color:var(--ink);font-weight:700;box-shadow:0 0 0 1px var(--ink)}
+.q-dot.answered{border-color:#16A34A;background:rgba(22,163,74,.15);color:#14532D}
+.q-dot.wrong{border-color:var(--accent);background:rgba(232,54,93,.15);color:var(--accent-2)}
+.q-dot.flagged-dot::after{content:'';position:absolute;top:2px;right:2px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+
+.nav-btn{padding:10px 20px;border-radius:var(--r-sm);font-family:'Courier New',monospace;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:none;transition:all .15s}
+.nav-btn.primary{background:var(--accent);color:#fff}
+.nav-btn.primary:hover{background:var(--accent-2)}
+.nav-btn.secondary{background:var(--surface-2);color:var(--ink);border:1px solid var(--border-light)}
+.nav-btn.secondary:hover{border-color:var(--accent);color:var(--accent)}
+.nav-btn:disabled{opacity:.4;cursor:default}
+
+.overlay{position:fixed;inset:0;background:rgba(15,31,61,.5);display:flex;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .2s}
+.overlay.show{opacity:1;pointer-events:auto}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;max-width:380px;width:90%;text-align:center;box-shadow:0 8px 32px rgba(15,31,61,.2)}
+.modal h2{font-family:Georgia,serif;font-size:1.4rem;color:var(--ink);margin-bottom:8px}
+.modal p{font-size:13px;color:var(--ink-muted);margin-bottom:20px;line-height:1.5}
+.modal .nav-btn{width:100%;justify-content:center;margin-bottom:8px}
+
+.result-hero{padding:40px 0 24px;text-align:center}
+.result-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:12px}
+.result-score{font-family:Georgia,serif;font-size:clamp(3rem,11vw,5rem);line-height:1;color:var(--accent);letter-spacing:-2px}
+.result-score span{color:var(--ink-muted)}
+.result-sub{font-size:14px;color:var(--ink-muted);margin-top:10px}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.result-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;text-align:center}
+.result-card .val{font-family:Georgia,serif;font-size:2rem;line-height:1;margin-bottom:4px;color:var(--accent)}
+.result-card.wrong .val{color:var(--ink-faint)}
+.result-card.skipped .val{color:var(--ink-muted)}
+.result-card .lbl{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-muted)}
+.result-actions{display:flex;gap:8px;flex-wrap:wrap}
+.result-actions .nav-btn{flex:1;justify-content:center}
+.streak-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--accent);border-radius:99px;padding:10px 22px;font-family:'Courier New',monospace;font-size:12px;color:#fff;transition:transform .4s cubic-bezier(.34,1.56,.64,1);z-index:999;white-space:nowrap}
+.streak-toast.show{transform:translateX(-50%) translateY(0)}
+.kbd-hint{font-family:'Courier New',monospace;font-size:10px;color:var(--ink-faint);text-align:center;padding:12px 0 4px}
+kbd{background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:10px;color:var(--ink-muted)}
+.footer{text-align:center;padding:28px 0 12px;border-top:1px solid var(--border);margin-top:8px}
+.footer-wordmark{font-family:Georgia,serif;font-size:13px;color:var(--ink-muted);letter-spacing:.5px;margin-bottom:4px}
+.footer-credit{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-faint)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media(max-width:480px){body{padding:10px}.q-card{padding:18px 14px}.stats-grid{grid-template-columns:repeat(2,1fr)}.topic-name{min-width:110px}}
+
+.scope-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.scope-btn{padding:12px 8px;border:1.5px solid var(--border-light);border-radius:var(--r-sm);background:var(--surface-2);cursor:pointer;font-family:inherit;color:var(--ink);text-align:center;transition:all .18s}
+.scope-btn b{display:block;font-size:14px}.scope-btn small{display:block;font-size:11px;color:var(--ink-muted);margin-top:2px}
+.scope-btn.on{border-color:var(--accent);background:var(--accent);color:#fff}.scope-btn.on small{color:rgba(255,255,255,.85)}
+.scope-btn:focus-visible,.k-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.k-wrap{display:flex;flex-wrap:wrap;gap:6px}
+.k-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--border-light);border-radius:99px;background:var(--surface-2);font-size:12px;color:var(--ink-muted);cursor:pointer;font-family:inherit;transition:all .15s;text-align:left}
+.k-chip .kc{font-family:'Courier New',monospace;font-size:10px;background:var(--surface-3);border-radius:99px;padding:1px 6px;color:var(--ink)}
+.k-chip.on{border-color:var(--accent);color:var(--ink);background:var(--surface);box-shadow:inset 0 0 0 1px var(--accent)}
+.k-chip.on .kc{background:var(--accent);color:#fff}
+.k-chip.off{opacity:.45}
+.k-group-lbl{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-faint);margin:12px 0 6px;width:100%}
+.scope-sum{margin-top:14px;font-size:13px;color:var(--ink-muted);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.scope-sum strong{color:var(--accent);font-size:16px}
+.scope-link{background:none;border:none;color:var(--accent);cursor:pointer;font-size:12px;text-decoration:underline;font-family:inherit}
+.mode-btn:disabled{opacity:.4;cursor:not-allowed}
+</style>
+</head>
+<body>
+<div class="shell">
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="logo-row">
+    <div class="logo-wordmark">KAPSUL <span>CARDIOVICTUS 3.2</span></div>
+    <div class="logo-tag">25 MAS NIDU · CBT 2</div>
+  </div>
+  <div class="meta-row">
+    <div class="meta-chip"><span class="dot"></span>Cardiovascular &amp; Respiratory Disorder</div>
+    <div class="meta-chip"><span class="dot"></span>85 Soal Lengkap · 25 MAS NIDU 2 · 2025</div>
+    <div class="meta-chip"><span class="dot"></span>FK Unsoed · mr capsules</div>
+    <div class="meta-chip"><span class="dot"></span>Verified &amp; Literature Cited</div>
+  </div>
+  <div class="divider"></div>
+  <div class="card">
+    <div class="card-title">Cakupan Soal (CBT 2)</div>
+    <div class="scope-seg" role="group" aria-label="Pilih cakupan CBT">
+      <button class="scope-btn on" data-scope="all" onclick="setScope('all')"><b>Semua</b><small id="sc-all">85 soal</small></button>
+      <button class="scope-btn" data-scope="cvs" onclick="setScope('cvs')"><b>Kardiovaskular &amp; EKG</b><small id="sc-1">43 soal</small></button>
+      <button class="scope-btn" data-scope="resp" onclick="setScope('resp')"><b>Respirasi &amp; Terapi</b><small id="sc-2">42 soal</small></button>
+    </div>
+    <div class="k-wrap" id="k-wrap"></div>
+    <div class="scope-sum"><span>Soal terpilih: <strong id="sel-count">85</strong></span><span><button class="scope-link" onclick="kAll(true)">Pilih semua</button> · <button class="scope-link" onclick="kAll(false)">Kosongkan</button></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Pilih Mode Belajar</div>
+    <div class="mode-grid">
+      <button class="mode-btn" onclick="startQuiz('study')"><div class="mode-icon">S</div><div class="mode-text"><h3>Study Mode</h3><p>Jawaban &amp; pembahasan komprehensif muncul langsung setelah memilih</p></div><div class="mode-arr">›</div></button>
+      <button class="mode-btn" onclick="startQuiz('exam')"><div class="mode-icon">E</div><div class="mode-text"><h3>Exam Mode</h3><p>Simulasi CBT — 85 soal, timer 90 menit, skor dan review di akhir</p></div><div class="mode-arr">›</div></button>
+      <button class="mode-btn" onclick="startQuiz('drill')"><div class="mode-icon">D</div><div class="mode-text"><h3>Drill Mode</h3><p>Ulangi soal sampai benar sempurna tanpa henti</p></div><div class="mode-arr">›</div></button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Statistik &amp; Riwayat Belajar</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-val" id="stat-best">—</div><div class="stat-lbl">Best Score</div></div>
+      <div class="stat-box"><div class="stat-val" id="stat-avg">—</div><div class="stat-lbl">Avg Score</div></div>
+      <div class="stat-box"><div class="stat-val" id="stat-sessions">0</div><div class="stat-lbl">Sessions</div></div>
+      <div class="stat-box"><div class="stat-val">85</div><div class="stat-lbl">Total Soal</div></div>
+    </div>
+    <div class="hist-list" id="hist-list"><div class="no-hist">Belum ada sesi — yuk mulai sekarang!</div></div>
+    <button class="reset-btn" onclick="clearHistory()">Hapus Riwayat</button>
+  </div>
+  <div class="card">
+    <div class="card-title">Akurasi per Topik</div>
+    <div class="topic-bar" id="topic-bar"><div class="no-hist">Selesaikan satu sesi dulu.</div></div>
+  </div>
+  <div class="footer">
+    <div class="footer-wordmark">Kapsul Cardiovictus 3.2 · Blok 3.2 CVS &amp; Respiratory · MAS NIDU 2 (CBT 2)</div>
+    <div class="footer-credit">Credit by mr capsules</div>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen">
+  <div class="quiz-header">
+    <button class="btn-ghost" onclick="confirmExit()">← Keluar</button>
+    <div class="progress-block">
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="progress-label"><span id="prog-txt">0 / 85</span><span id="mode-badge">—</span></div>
+    </div>
+    <div class="score-pill" id="score-display">0 / 0</div>
+    <div class="timer-badge" id="timer-el" style="display:none">00:00</div>
+  </div>
+  <div class="nav-row-top">
+    <button class="nav-btn secondary" id="btn-prev" onclick="navigate(-1)">‹ Prev</button>
+    <button class="flag-btn" id="btn-flag" onclick="toggleFlag()">⚑</button>
+    <div class="nav-spacer"></div>
+    <button class="nav-btn primary" id="btn-next" onclick="navigate(1)">Next ›</button>
+  </div>
+  <div class="q-card" id="q-card"></div>
+  <div class="exp-box" id="exp-box">
+    <div class="exp-header">Pembahasan Komprehensif</div>
+    <div class="exp-answer" id="exp-answer"></div>
+    <div class="exp-body" id="exp-body"></div>
+    <div class="exp-src" id="exp-src"></div>
+  </div>
+  <div class="q-map-section">
+    <div class="q-map-title">Question Map (1–85)</div>
+    <div class="q-map-grid" id="q-map"></div>
+  </div>
+  <div class="kbd-hint">Pintasan Keyboard: <kbd>A</kbd>–<kbd>E</kbd> pilih opsi · <kbd>→</kbd> next · <kbd>←</kbd> prev · <kbd>F</kbd> flag</div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="result-screen">
+  <div class="result-hero">
+    <div class="result-label">Session Complete</div>
+    <div class="result-score" id="final-score-display"><span>0</span>/85</div>
+    <div class="result-sub" id="final-sub">—</div>
+  </div>
+  <div class="result-grid">
+    <div class="result-card correct"><div class="val" id="r-correct">0</div><div class="lbl">Benar</div></div>
+    <div class="result-card wrong"><div class="val" id="r-wrong">0</div><div class="lbl">Salah</div></div>
+    <div class="result-card skipped"><div class="val" id="r-skip">0</div><div class="lbl">Skip</div></div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">Akurasi per Topik (Sesi Ini)</div>
+    <div class="topic-bar" id="result-topic-bar"></div>
+  </div>
+  <div class="result-actions">
+    <button class="nav-btn secondary" onclick="reviewAnswers()">Review Jawaban</button>
+    <button class="nav-btn primary" onclick="showStart()">↩ Menu Utama</button>
+  </div>
+</div>
+
+<!-- OVERLAYS -->
+<div class="overlay" id="exam-overlay">
+  <div class="modal"><h2>Kumpulkan Ujian?</h2><p>Semua jawaban akan dinilai dan hasil evaluasi lengkap akan ditampilkan.</p>
+    <button class="nav-btn primary" onclick="submitExam()">Ya, Kumpulkan Sekarang</button>
+    <button class="nav-btn secondary" onclick="closeOverlay('exam-overlay')">Lanjut Mengerjakan</button>
+  </div>
+</div>
+<div class="overlay" id="exit-overlay">
+  <div class="modal"><h2>Keluar Sesi?</h2><p>Progres pengerjaan sesi ini tidak akan tersimpan.</p>
+    <button class="nav-btn primary" onclick="showStart()">Ya, Keluar</button>
+    <button class="nav-btn secondary" onclick="closeOverlay('exit-overlay')">Batal</button>
+  </div>
+</div>
+<div class="overlay" id="drill-overlay">
+  <div class="modal"><h2>Drill Selesai! 🎉</h2><p>Hebat! Semua soal dalam sesi ini telah berhasil dijawab dengan benar.</p>
+    <button class="nav-btn primary" onclick="startQuiz('drill')">Drill Lagi</button>
+    <button class="nav-btn secondary" onclick="showStart()">Menu Utama</button>
+  </div>
+</div>
+<div class="streak-toast" id="streak-toast"></div>
+</div>
+
+<script>
+const QALL = [{"n": 1, "t": "K28 · Dasar-dasar EKG", "q": "Sadapan V1–V6 pada pemeriksaan EKG termasuk jenis sadapan apa?", "o": ["Limb leads bipolar", "Augmented limb leads", "Standard limb leads", "Einthoven leads", "Precordial leads (chest leads)"], "a": "Precordial leads (chest leads)", "exp": "<b>Sadapan V1–V6</b> merupakan <b>sadapan prekordial (chest leads)</b> yang bersifat unipolar horizontal. Sadapan ini merekam aktivitas vektor kelistrikan jantung pada bidang horizontal (transversal) dengan menempatkan elektroda eksplorasi positif langsung di dinding dada.<br><br><b>Diferensiasi Sadapan EKG Standar:</b><ul><li><b>Limb leads bipolar (Standard / Einthoven leads):</b> Sadapan I, II, dan III yang merekam beda potensial antara dua ekstremitas pada bidang frontal.</li><li><b>Augmented limb leads:</b> Sadapan aVR, aVL, dan aVF yang merupakan sadapan unipolar ekstremitas pada bidang frontal.</li></ul>", "src": "PPT Dasar EKG (K28) · Guyton & Hall Medical Physiology 14th ed", "k": 28, "cbt": "cvs"}, {"n": 2, "t": "K28 · Dasar-dasar EKG", "q": "Di manakah letak elektroda V6 pada pemeriksaan EKG 12 sadapan?", "o": ["Ruang interkostal keempat, parasternal kanan", "Ruang interkostal keempat, parasternal kiri", "Garis midklavikula kiri, ruang interkostal kelima", "Garis aksilaris anterior kiri sejajar dengan V4", "Garis midaksilaris kiri, sejajar horizontal dengan V4 dan V5"], "a": "Garis midaksilaris kiri, sejajar horizontal dengan V4 dan V5", "exp": "Lokasi anatomis standar pemasangan elektroda <b>V6</b> adalah pada <b>garis midaksilaris kiri (left midaxillary line)</b>, secara horizontal sejajar dengan elektroda V4 dan V5 (setinggi sela iga ke-5).<br><br><b>Lokasi elektroda prekordial standar:</b><ul><li><b>V1:</b> Ruang sela iga (ICS) 4 linea parasternalis kanan.</li><li><b>V2:</b> ICS 4 linea parasternalis kiri.</li><li><b>V3:</b> Pertengahan antara elektroda V2 dan V4.</li><li><b>V4:</b> ICS 5 linea midklavikularis kiri.</li><li><b>V5:</b> Linea aksilaris anterior kiri, horizontal sejajar V4.</li><li><b>V6:</b> Linea midaksilaris kiri, horizontal sejajar V4 & V5.</li></ul>", "src": "PPT Dasar EKG (K28) · AHA/ACC Scientific Statement on Standardization of ECG", "k": 28, "cbt": "cvs"}, {"n": 3, "t": "K28 · Dasar-dasar EKG", "q": "Pada kalibrasi EKG standar, berapakah amplitudo yang diwakili oleh satu kotak kecil (1 mm)?", "o": ["0,1 mV", "0,2 mV", "0,5 mV", "1 mV", "10 mV"], "a": "0,1 mV", "exp": "Pada kalibrasi voltase EKG standar (10 mm = 1 mV):<br>• <b>1 kotak kecil (1 mm vertikal) = 0,1 mV</b>.<br>• <b>1 kotak besar (5 mm vertikal) = 0,5 mV</b>.<br>• <b>2 kotak besar (10 mm vertikal) = 1,0 mV</b> (tanda kalibrasi standar yang tampak pada awal strip EKG).", "src": "PPT Dasar EKG (K28) · Hampton's The ECG Made Easy", "k": 28, "cbt": "cvs"}, {"n": 4, "t": "K28 · Dasar-dasar EKG", "q": "Pada kertas EKG dengan kecepatan 25 mm/detik, berapakah durasi satu kotak kecil?", "o": ["0,04 detik", "0,10 detik", "0,12 detik", "0,20 detik", "0,40 detik"], "a": "0,04 detik", "exp": "Pada kecepatan kertas EKG standar <b>25 mm/detik</b>:<br>• Sumbu horizontal mengukur waktu (durasi). 1 detik terdiri dari 25 kotak kecil (25 mm).<br>• Maka durasi <b>1 kotak kecil (1 mm) = 1 / 25 detik = 0,04 detik (40 ms)</b>.<br>• Durasi <b>1 kotak besar (5 mm) = 5 × 0,04 detik = 0,20 detik (200 ms)</b>.", "src": "PPT Dasar EKG (K28) · Guyton & Hall Medical Physiology", "k": 28, "cbt": "cvs"}, {"n": 5, "t": "K28 · Dasar-dasar EKG", "q": "Gelombang P pada elektrokardiogram menggambarkan proses apa?", "o": ["Depolarisasi ventrikel", "Repolarisasi ventrikel", "Depolarisasi atrium", "Repolarisasi atrium", "Kontraksi ventrikel"], "a": "Depolarisasi atrium", "exp": "<b>Gelombang P</b> merefleksikan <b>depolarisasi atrium</b> kanan dan kiri. Impuls berasal dari nodus SA kemudian menyebar ke atrium kanan (membentuk paruh awal gelombang P) dan atrium kiri melalui berkas Bachmann (membentuk paruh akhir gelombang P).<br><br>Repolarisasi atrium tertanam di dalam kompleks QRS yang beramplitudo jauh lebih besar, sehingga repolarisasi atrium normalnya tidak tampak.", "src": "PPT Dasar EKG (K28) · Harrison's Principles of Internal Medicine", "k": 28, "cbt": "cvs"}, {"n": 6, "t": "K28 · Dasar-dasar EKG", "q": "Kompleks QRS pada EKG terutama menggambarkan proses apa?", "o": ["Depolarisasi atrium", "Depolarisasi ventrikel", "Repolarisasi ventrikel", "Repolarisasi atrium yang terlihat secara terpisah", "Kontraksi atrium"], "a": "Depolarisasi ventrikel", "exp": "<b>Kompleks QRS</b> merepresentasikan <b>depolarisasi ventrikel</b> kanan dan kiri secara simultan melalui sistem His-Purkinje. Karena massa otot ventrikel jauh lebih masif daripada atrium, amplitudo kompleks QRS jauh lebih tinggi dan durasi normalnya sempit (&lt; 0,10–0,12 detik).", "src": "PPT Dasar EKG (K28) · Lilly's Pathophysiology of Heart Disease", "k": 28, "cbt": "cvs"}, {"n": 7, "t": "K28 · Dasar-dasar EKG", "q": "Gelombang T pada EKG menunjukkan proses apa?", "o": ["Depolarisasi atrium", "Repolarisasi atrium", "Depolarisasi ventrikel", "Repolarisasi ventrikel", "Kontraksi atrium"], "a": "Repolarisasi ventrikel", "exp": "<b>Gelombang T</b> mencerminkan <b>repolarisasi ventrikel</b> (pemulihan potensial aksi membran miokard ventrikel ke potensial istirahat negatif). Repolarisasi ventrikel berlangsung dari epikardium menuju endokardium (kebalikan arah depolarisasi), sehingga defleksi gelombang T normal searah dengan defleksi dominan kompleks QRS (bersifat konkordan).", "src": "PPT Dasar EKG (K28) · Hampton's The ECG Made Easy", "k": 28, "cbt": "cvs"}, {"n": 8, "t": "K28 · Dasar-dasar EKG", "q": "Apakah yang dimaksud dengan titik J (J point) pada EKG?", "o": ["Awal kompleks QRS", "Titik pertemuan akhir kompleks QRS dengan awal segmen ST", "Puncak gelombang T", "Akhir interval QT", "Awal gelombang P"], "a": "Titik pertemuan akhir kompleks QRS dengan awal segmen ST", "exp": "<b>Titik J (Junction point)</b> adalah titik persimpangan anatomis tempat <b>berakhirnya kompleks QRS dan dimulainya segmen ST</b>. Titik J menjadi patokan utama praktis klinis untuk mengevaluasi ada atau tidaknya elevasi maupun depresi segmen ST (seperti pada STEMI, NSTEMI, perikarditis, atau repolarisasi dini).", "src": "PPT Dasar EKG (K28) · Fourth Universal Definition of Myocardial Infarction", "k": 28, "cbt": "cvs"}, {"n": 9, "t": "K28 · Dasar-dasar EKG", "q": "Interval PR pada EKG terutama menggambarkan waktu apa?", "o": ["Waktu depolarisasi ventrikel", "Waktu repolarisasi ventrikel", "Waktu depolarisasi atrium saja", "Waktu dari awal depolarisasi atrium hingga awal depolarisasi ventrikel, termasuk perlambatan konduksi di nodus AV", "Waktu kontraksi mekanis ventrikel"], "a": "Waktu dari awal depolarisasi atrium hingga awal depolarisasi ventrikel, termasuk perlambatan konduksi di nodus AV", "exp": "<b>Interval PR</b> diukur dari awal gelombang P hingga awal defleksi pertama kompleks QRS. Interval ini merepresentasikan waktu konduksi atrioventrikular total: inisiasi depolarisasi di atrium, perambatan melalui jalur internodal, <b>penundaan fisiologis di nodus AV</b> (memastikan pengisian ventrikel tuntas sebelum sistol ventrikel), hingga konduksi di berkas His dan sistem Purkinje.", "src": "PPT Dasar EKG (K28) · Guyton & Hall Medical Physiology", "k": 28, "cbt": "cvs"}, {"n": 10, "t": "K28 · Dasar-dasar EKG", "q": "Berapakah rentang normal interval PR pada EKG orang dewasa?", "o": ["0,04–0,08 detik", "0,08–0,12 detik", "0,12–0,20 detik", "0,20–0,28 detik", "1–2 menit"], "a": "0,12–0,20 detik", "exp": "Durasi <b>interval PR normal</b> pada orang dewasa berkisar antara <b>0,12 hingga 0,20 detik (120–200 ms)</b>, setara dengan 3 hingga 5 kotak kecil.<br><br><b>Penting:</b><ul><li>Interval PR &gt; 0,20 detik menandakan keterlambatan konduksi (AV block derajat 1).</li><li>Interval PR &lt; 0,12 detik menandakan konduksi pintas / akselerasi (misalnya pre-eksitasi Wolff-Parkinson-White atau irama junctional).</li></ul>", "src": "PPT Dasar EKG (K28) · AHA/ACC EKG Guidelines", "k": 28, "cbt": "cvs"}, {"n": 11, "t": "K28 · Dasar-dasar EKG", "q": "Mengapa gelombang Q fisiologis pada EKG dapat memiliki defleksi negatif?", "o": ["Depolarisasi ventrikel berjalan dari apeks menuju basis jantung", "Depolarisasi atrium kanan berlangsung lebih lambat daripada atrium kiri", "Depolarisasi septum interventrikular berlangsung dari kanan ke kiri", "Depolarisasi septum interventrikular awalnya berlangsung dari kiri ke kanan", "Repolarisasi ventrikel dimulai dari epikardium menuju endokardium"], "a": "Depolarisasi septum interventrikular awalnya berlangsung dari kiri ke kanan", "exp": "Gelombang Q septal fisiologis (sering terlihat di lead lateral: I, aVL, V5, V6) terjadi karena <b>depolarisasi septum interventrikular berarah dari kiri ke kanan</b> (karena cabang berkas kiri mengaktifkan septum lebih awal). Vektor kelistrikan septum ini bergerak menjauhi elektroda positif sadapan lateral kiri, menghasilkan defleksi negatif awal yang kecil dan sempit (durasi &lt; 0,04 detik dan amplitudo &lt; 25% tinggi gelombang R).", "src": "PPT Dasar EKG (K28) · Marriott's Practical Electrocardiography", "k": 28, "cbt": "cvs"}, {"n": 12, "t": "K28 · Dasar-dasar EKG", "q": "Gelombang Q yang patologis, dalam, dan lebar pada EKG dapat menunjukkan kondisi apa?", "o": ["Infark miokard yang telah terjadi sebelumnya", "Variasi normal pada semua sadapan", "Fibrilasi atrium", "Flutter atrium", "Takikardia sinus"], "a": "Infark miokard yang telah terjadi sebelumnya", "exp": "<b>Gelombang Q patologis</b> (durasi ≥ 0,04 detik / 1 kotak kecil, kedalaman &gt; 25% amplitudo gelombang R berikutnya, atau ditemukan di lead V1–V3) merupakan penanda kardinal <b>infark miokard transmural masa lampau (old myocardial infarction)</b>. Jaringan miokard yang mengalami nekrosis/fibrosis kehilangan aktivitas listriknya (elektrik mati), sehingga sadapan merekam vektor listrik dinding berlawanan yang bergerak menjauh.", "src": "PPT Dasar EKG (K28) · Fourth Universal Definition of Myocardial Infarction", "k": 28, "cbt": "cvs"}, {"n": 13, "t": "K28 · Dasar-dasar EKG", "q": "Bagaimana gambaran EKG yang khas pada pembesaran atrium kanan (right atrial enlargement)?", "o": ["Gelombang P melebar lebih dari 0,12 detik dan berlekuk pada lead II", "Gelombang P tinggi dan runcing dengan amplitudo lebih dari 2,5 mm pada sadapan inferior (II, III, dan aVF)", "Gelombang P selalu terbalik pada lead I dan aVL", "Gelombang P tidak tampak dan digantikan gelombang fibrilasi", "Interval PR memanjang lebih dari 0,20 detik"], "a": "Gelombang P tinggi dan runcing dengan amplitudo lebih dari 2,5 mm pada sadapan inferior (II, III, dan aVF)", "exp": "Pada <b>pembesaran atrium kanan (Right Atrial Enlargement / RAE / P pulmonale)</b>, voltase depolarisasi atrium kanan meningkat tanpa memperpanjang durasi keseluruhan gelombang P. Gambaran khasnya adalah <b>gelombang P yang tinggi dan runcing (tall and peaked) dengan amplitudo &gt; 2,5 mm (0,25 mV)</b> pada sadapan inferior (II, III, dan aVF) atau defleksi awal positif &gt; 1,5 mm di V1.", "src": "PPT Dasar EKG (K28) · Chou's Electrocardiography in Clinical Practice", "k": 28, "cbt": "cvs"}, {"n": 14, "t": "K28 · Dasar-dasar EKG", "q": "Bagaimana gambaran EKG yang khas pada pembesaran atrium kiri (left atrial enlargement)?", "o": ["Gelombang P tinggi dan runcing pada sadapan II", "Gelombang P melebar, umumnya berdurasi lebih dari 120 ms pada sadapan II", "Gelombang P beramplitudo lebih dari 2,5 mm pada sadapan II", "Gelombang P selalu tidak terlihat pada V1", "Gelombang P tidak mengalami perubahan"], "a": "Gelombang P melebar, umumnya berdurasi lebih dari 120 ms pada sadapan II", "exp": "Pada <b>pembesaran atrium kiri (Left Atrial Enlargement / LAE / P mitrale)</b>, terjadi keterlambatan dan perpanjangan waktu depolarisasi atrium kiri. Tanda EKG kardinalnya meliputi:<br>1. <b>Sadapan II:</b> Gelombang P melebar dengan <b>durasi &gt; 120 ms (&gt; 0,12 detik / &gt; 3 kotak kecil)</b> dan sering bertakik (notched / M-shaped, takik terpisah &gt; 0,04 detik).<br>2. <b>Sadapan V1:</b> Gelombang P bifasik dengan <b>komponen terminal negatif yang dalam dan lebar</b> (lebar ≥ 1 mm dan kedalaman ≥ 1 mm, Morris index positif).", "src": "PPT Dasar EKG (K28) · Chou's Electrocardiography in Clinical Practice", "k": 28, "cbt": "cvs"}, {"n": 15, "t": "K28 · Dasar-dasar EKG", "q": "Fenomena Katz–Wachtel pada EKG dapat mengindikasikan kondisi apa?", "o": ["Hipertrofi ventrikel kiri saja", "Hipertrofi ventrikel kanan saja", "Pembesaran atrium kanan", "Pembesaran atrium kiri", "Hipertrofi biventrikular, terutama pada anak"], "a": "Hipertrofi biventrikular, terutama pada anak", "exp": "<b>Fenomena Katz–Wachtel</b> adalah kriteria EKG klasik untuk <b>hipertrofi biventrikular (biventricular hypertrophy)</b>, terutama sering ditemukan pada populasi pediatrik dengan defek septum ventrikel besar (large VSD) atau Patent Ductus Arteriosus (PDA).<br><br><b>Karakteristik EKG Katz–Wachtel:</b> Adanya kompleks QRS bifasik (isodifasik) beramplitudo sangat besar di sadapan prekordial tengah (V2, V3, atau V4), di mana kombinasi gelombang R tinggi dan gelombang S dalam mencapai amplitudo total <b>≥ 50 mm (5 mV)</b>.", "src": "PPT Dasar EKG (K28) · Park's Pediatric Cardiology · PMID: 38766457", "k": 28, "cbt": "cvs"}, {"n": 16, "t": "K28 · Dasar-dasar EKG", "q": "Bagaimana cara menghitung laju jantung pada irama irreguler pada rekaman EKG?", "o": ["Jumlah gelombang P dikalikan 10", "Jumlah kompleks QRS selama 10 detik dikalikan 6", "Jumlah kotak kecil di antara dua gelombang R dibagi 300", "Jumlah gelombang T dikalikan 6", "Jumlah kompleks QRS selama 5 detik dibagi 6"], "a": "Jumlah kompleks QRS selama 10 detik dikalikan 6", "exp": "Pada irama yang ireguler (misalnya Atrial Fibrillation), metode kotak kecil (1500/R-R) atau kotak besar (300/R-R) tidak dapat digunakan karena jarak antar R-R bervariasi.<br><br><b>Metode Standar Irama Ireguler:</b> Hitung total kompleks QRS dalam suatu rentang waktu tertentu, lalu konversikan ke 60 detik (1 menit):<br>• Hitung jumlah kompleks QRS dalam <b>strip 6 detik (30 kotak besar) lalu dikalikan 10</b>, ATAU<br>• Hitung jumlah kompleks QRS dalam <b>strip 10 detik (50 kotak besar) lalu dikalikan 6</b> (10 detik × 6 = 60 detik). Pilihan B secara matematis dan klinis tepat.", "src": "PPT Dasar EKG (K28) · Hampton's The ECG Made Easy", "k": 28, "cbt": "cvs"}, {"n": 17, "t": "K28 · Dasar-dasar EKG", "q": "Manakah urutan sistem konduksi listrik jantung yang benar?", "o": ["Nodus AV → nodus SA → berkas His → serat Purkinje", "Nodus SA → nodus AV → serat Purkinje → berkas His", "Nodus SA → berkas His → nodus AV → cabang berkas", "Nodus SA → atrium → nodus AV → berkas His → cabang berkas kanan dan kiri → serat Purkinje", "Nodus SA → ventrikel → nodus AV → serat Purkinje"], "a": "Nodus SA → atrium → nodus AV → berkas His → cabang berkas kanan dan kiri → serat Purkinje", "exp": "Urutan jalur hantaran impuls listrik fisiologis jantung adalah:<br>1. <b>Nodus Sinoatrial (SA node)</b> (pacemaker alami di atrium kanan).<br>2. <b>Miokardium atrium</b> (traktus internodal).<br>3. <b>Nodus Atrioventrikular (AV node)</b> (mengalami perlambatan fisiologis).<br>4. <b>Berkas His (Bundle of His)</b>.<br>5. <b>Cabang berkas kanan dan kiri (Right & Left Bundle Branches)</b>.<br>6. <b>Serat Purkinje</b> (menyebarkan impuls cepat ke miokardium ventrikel dari endokardium ke epikardium).", "src": "PPT Dasar EKG (K28) · Guyton & Hall Medical Physiology", "k": 28, "cbt": "cvs"}, {"n": 18, "t": "K28 · Dasar-dasar EKG", "q": "Manakah urutan 10 langkah yang paling sesuai untuk membaca EKG secara sistematis?", "o": ["Rate → rhythm → axis → P wave → interval PR → durasi QRS → morfologi QRS → segmen ST → gelombang T → interval QT", "Rhythm → gelombang T → rate → segmen ST → gelombang P → axis", "Rhythm → gelombang P → segmen ST → interval QT → rate", "Rhythm → axis → gelombang T → interval PR → gelombang P", "Rate → gelombang T → interval QT → gelombang P → rhythm"], "a": "Rate → rhythm → axis → P wave → interval PR → durasi QRS → morfologi QRS → segmen ST → gelombang T → interval QT", "exp": "Pendekatan sistematis 10 langkah membaca elektrokardiogram bertujuan mencegah kesalahan diagnosis (overlooking abnormalities):<br>1. <b>Rate (Laju denyut jantung)</b><br>2. <b>Rhythm (Irama jantung)</b><br>3. <b>Axis (Aksis frontal QRS)</b><br>4. <b>P wave (Morfologi dan durasi gelombang P)</b><br>5. <b>PR interval (Interval konduksi AV)</b><br>6. <b>QRS duration (Lebar kompleks depolarisasi ventrikel)</b><br>7. <b>QRS morphology (Tanda hipertrofi, infark Q wave, blok cabang)</b><br>8. <b>ST segment (Iskemia/infark akut: elevasi/depresi)</b><br>9. <b>T wave (Inversi, tall T, hiperkalemia)</b><br>10. <b>QT interval (Koreksi QTc: risiko aritmia fatal torsades de pointes)</b>.", "src": "PPT Dasar EKG (K28) · ACC/AHA Systematic ECG Interpretation Guide", "k": 28, "cbt": "cvs"}, {"n": 19, "t": "K28 · Dasar-dasar EKG", "q": "Pada potensial aksi sel otot jantung ventrikel, mekanisme utama pada fase 0 (depolarisasi cepat) adalah apa?", "o": ["Penurunan permeabilitas membran terhadap ion natrium", "Pembukaan kanal natrium cepat bergantung tegangan sehingga ion Na⁺ masuk ke dalam sel", "Masuknya ion Ca²⁺ melalui kanal tipe-L untuk mempertahankan fase plateau", "Pengeluaran ion Na⁺ melalui pompa Na⁺/K⁺-ATPase", "Keluarnya ion K⁺ secara besar-besaran dari dalam sel"], "a": "Pembukaan kanal natrium cepat bergantung tegangan sehingga ion Na⁺ masuk ke dalam sel", "exp": "Pada sel miokardium ventrikel (tipe respons cepat):<br>• <b>Fase 0 (Depolarisasi cepat):</b> Terjadi akibat pembukaan terkoordinasi <b>kanal natrium cepat bergantung tegangan (voltage-gated fast Na⁺ channels / Nav1.5)</b>, menyebabkan arus influks ion Na⁺ yang sangat deras ke intraseluler (inward $I_{Na}$), membalik potensial membran dari -90 mV hingga mencapai sekitar +20 mV.", "src": "PPT Elektrofisiologi & EKG (K28) · Katzung Basic & Clinical Pharmacology", "k": 28, "cbt": "cvs"}, {"n": 20, "t": "K28 · Dasar-dasar EKG", "q": "Pada potensial aksi sel miokard ventrikel, fase plateau ditandai oleh keseimbangan relatif antara masuknya ion Ca²⁺ dan keluarnya ion K⁺. Fase berapakah yang dimaksud?", "o": ["Fase 0", "Fase 1", "Fase 2", "Fase 3", "Fase 4"], "a": "Fase 2", "exp": "<b>Fase 2 (Fase Plateau)</b> pada sel miokardium kontraktil ventrikel ditandai oleh perpanjangan durasi depolarisasi. Fenomena ini dimediasi oleh keseimbangan dinamis antara <b>arus masuk kalsium lambat ($I_{Ca-L}$ melalui kanal Ca²⁺ tipe-L / DHPR)</b> dengan <b>arus keluar kalium ($I_{Ks}$, $I_{Kr}$ melalui delayed rectifier K⁺ channels)</b>. Fase ini mencegah tetanus miokard dan memastikan sistol berlangsung efektif.", "src": "PPT Elektrofisiologi Miokard (K28) · Guyton & Hall Medical Physiology", "k": 28, "cbt": "cvs"}, {"n": 21, "t": "K28 · Dasar-dasar EKG", "q": "Pada sel nodus AV, fase 0 potensial aksi terutama disebabkan oleh pergerakan ion apa?", "o": ["Keluarnya ion K⁺", "Masuknya ion Ca²⁺ melalui kanal kalsium tipe-L", "Masuknya ion Cl⁻", "Keluarnya ion Ca²⁺", "Masuknya ion K⁺"], "a": "Masuknya ion Ca²⁺ melalui kanal kalsium tipe-L", "exp": "Sel perintis/nodal (Nodus SA dan Nodus AV) memiliki potensial aksi <b>respons lambat (slow-response action potential)</b> yang tidak bergantung pada arus natrium cepat. Fase 0 depolarisasi pada nodus AV dipicu secara eksklusif oleh <b>arus masuk kalsium ke intraseluler ($I_{Ca-L}$) melalui kanal kalsium tipe-L</b>. Inilah dasar farmakologis mengapa obat penyekat kanal kalsium non-dihidropiridin (seperti verapamil dan diltiazem) sangat poten memperlambat konduksi nodus AV.", "src": "PPT Elektrofisiologi & Antiaritmia (K28/K17) · Katzung Pharmacology", "k": 28, "cbt": "cvs"}, {"n": 22, "t": "K23 · Napas Berbunyi", "q": "Seorang anak berusia 10 tahun datang ke IGD dengan keluhan sesak napas dan batuk sejak semalam. Tidak terdapat demam maupun penurunan berat badan. Pada auskultasi ditemukan wheezing bilateral. Apakah diagnosis yang paling mungkin?", "o": ["Emboli paru", "Pneumotoraks", "Eksaserbasi asma", "Bronkitis akut", "Tumor paru"], "a": "Eksaserbasi asma", "exp": "Kombinasi klinis sesak napas akut, batuk episodik nocturnal/pagi hari, <b>wheezing ekspirasi difus bilateral</b> pada anak usia sekolah, serta tanpa tanda infeksi demam mengarah kuat pada <b>eksaserbasi asma bronkial</b> (penyempitan jalan napas reversibel akibat inflamasi bronkus dan hiperresponsivitas).<br><br><b>Pilihan Lain:</b> Emboli paru dan tumor paru sangat langka pada anak tanpa faktor risiko; pneumotoraks memberi asimetri suara napas dan hilangnya suara napas unilateral; bronkitis akut umumnya didahului batuk berdahak febris akibat infeksi virus.", "src": "PPT Wheezing & Asma (K23) · GINA Pediatric Asthma Guidelines", "k": 23, "cbt": "resp"}, {"n": 23, "t": "K7 · Nyeri Dada", "q": "Seorang anak berusia 10 tahun mengalami sesak napas dan nyeri dada. Skala nyeri manakah yang paling sesuai jika anak belum mampu memberikan penilaian angka secara konsisten?", "o": ["C-reactive protein (CRP)", "Visual Analog Scale (VAS)", "Faces Pain Scale–Revised (FPS-R)", "Apgar score", "Skala Wells"], "a": "Faces Pain Scale–Revised (FPS-R)", "exp": "<b>Faces Pain Scale–Revised (FPS-R)</b> adalah instrumen pengukuran nyeri tervalidasi internasional untuk populasi anak (usia 4–12 tahun) yang <b>belum mampu mengukur intensitas nyeri menggunakan angka secara konsisten (angka abstrak)</b>. FPS-R menggunakan 6 ekspresi wajah terstandar (skor 0-2-4-6-8-10) yang mudah dipahami anak tanpa bias senyum/air mata.<br><br><b>Analisis Pilihan Lain:</b><ul><li><b>Visual Analog Scale (VAS):</b> Memerlukan kemampuan kognitif abstrak untuk menandai garis 10 cm, sulit pada anak yang belum konsisten berhitung.</li><li><b>CRP:</b> Biomarker inflamasi darah, bukan skala nyeri.</li><li><b>Apgar score:</b> Penilaian vitalitas neonatus saat baru lahir (1 & 5 menit).</li><li><b>Skala Wells:</b> Stratifikasi probabilitas emboli paru atau DVT.</li></ul>", "src": "PPT Penilaian Nyeri Dada Anak (K7) · WHO Guidelines on the Pharmacological Treatment of Persisting Pain in Children · FPS-R International Validation", "k": 7, "cbt": "resp"}, {"n": 24, "t": "K26 · Nyeri Dada Pulmonal", "q": "Seorang pasien mengalami nyeri dada tajam yang bertambah saat inspirasi, disertai demam dan batuk produktif. Pada pemeriksaan fisik ditemukan suara gesekan pleura (pleural friction rub). Apakah penyebab suara tersebut?", "o": ["Bronkokonstriksi akibat kontraksi otot polos bronkus", "Peradangan pleura yang menyebabkan permukaan pleura bergesekan saat bernapas", "Penumpukan sekret di bronkus", "Penyempitan saluran napas atas", "Penumpukan udara di rongga pleura"], "a": "Peradangan pleura yang menyebabkan permukaan pleura bergesekan saat bernapas", "exp": "<b>Pleural friction rub</b> adalah bunyi adventisius kasar bernada rendah yang terdengar pada fase inspirasi dan ekspirasi, menyerupai gesekan dua lembar kulit kering. Bunyi ini dihasilkan oleh <b>peradangan pada pleura parietalis dan viseralis (pleuritis)</b> yang membuat permukaan pleura yang biasanya licin menjadi kasar akibat eksudat fibrin. Saat dinding dada bergerak selama siklus bernapas, kedua lapisan pleura yang meradang saling bergesekan.", "src": "PPT Nyeri Dada Pulmonal (K26) · Bates' Guide to Physical Examination", "k": 26, "cbt": "resp"}, {"n": 25, "t": "K10 · Patologi Sistem Respirasi", "q": "Pada pemeriksaan fisik paru ditemukan suara napas amforik. Kondisi patologis manakah yang paling mungkin menyebabkan temuan tersebut?", "o": ["Pneumonia lobaris tanpa kavitas", "Efusi pleura", "Tuberkulosis paru dengan kavitas yang berhubungan dengan bronkus", "Pneumotoraks tanpa komplikasi", "Asma bronkial"], "a": "Tuberkulosis paru dengan kavitas yang berhubungan dengan bronkus", "exp": "<b>Suara napas amforik (amphoric breath sound)</b> adalah modifikasi suara napas bernada tinggi dengan resonansi khas seperti tiupan di mulut botol kosong. Karakteristik akustik ini terbentuk apabila terdapat <b>kavitas berdinding kaku, berukuran besar (&gt; 4 cm), terletak superficial di paru, dan memiliki saluran paten yang berhubungan langsung dengan bronkus</b>, kondisi klasik pada <b>tuberkulosis paru kavitas lanjut</b> atau abses paru yang telah terdrainase sebagian.", "src": "PPT Patologi Paru (K10) · Harrison's Principles of Internal Medicine", "k": 10, "cbt": "resp"}, {"n": 26, "t": "K29 · Sesak Napas Cardiac", "q": "Seorang laki-laki berusia 60 tahun mengeluh sesak napas yang bertambah ketika berbaring dan membaik ketika duduk tegak. Apakah kondisi yang paling mungkin menyebabkan keluhan tersebut?", "o": ["Eksaserbasi asma", "Bronkitis akut", "Emfisema", "Gagal jantung kongestif", "Pneumonia"], "a": "Gagal jantung kongestif", "exp": "Keluhan sesak napas yang memberat saat berbaring telentang dan membaik dengan posisi duduk/berdiri tegak adalah <b>ortopnea</b>, tanda kardinal dari <b>gagal jantung kongestif (Heart Failure)</b>.<br><br><b>Patofisiologi:</b> Pada posisi berbaring, gravitasi tidak lagi menahan darah di ekstremitas bawah sehingga terjadi redistribusi cairan intravaskular (peningkatan venous return) sekitar 500 mL kembali ke sirkulasi sentral. Ventrikel kiri yang mengalami gagal fungsi tidak mampu memompa volume ekstra ini, memicu lonjakan tekanan kapiler baji paru (PCWP &gt; 18–20 mmHg), transudasi cairan interstitial paru, dan sensasi sesak hebat.", "src": "PPT Sesak Napas Kardiak (K29) · Braunwald's Heart Disease 12th ed · PERKI Gagal Jantung", "k": 29, "cbt": "cvs"}, {"n": 27, "t": "K25 · Sesak Napas Pulmonal", "q": "Seorang pasien diabetes melitus mengalami pernapasan dalam dan cepat seperti pada pola Kussmaul. Gangguan asam-basa apakah yang paling mungkin mendasarinya?", "o": ["Alkalosis metabolik", "Asidosis metabolik", "Asidosis respiratorik", "Alkalosis respiratorik", "Gangguan asam-basa campuran pada semua kasus"], "a": "Asidosis metabolik", "exp": "<b>Pernapasan Kussmaul</b> adalah pola pernapasan dengan kedalaman (hiperpnea) dan frekuensi (takipnea) yang meningkat secara konstan dan teratur. Pola ini merupakan mekanisme kompensasi respiratorik primer terhadap <b>asidosis metabolik berat (terutama Ketoasidosis Diabetik / KAD)</b>.<br><br>Peningkatan ion H⁺ bebas darah merangsang kemoreseptor perifer di badan karotis dan kemoreseptor sentral di medula oblongata untuk memacu ventilasi alveolar, dengan tujuan \"meniup keluar\" (wash out) $CO_2$ ($PCO_2$ turun) demi mengembalikan pH darah menuju rentang fisiologis.", "src": "PPT Sesak Napas Pulmonal (K25) · Harrison's Principles of Internal Medicine", "k": 25, "cbt": "resp"}, {"n": 28, "t": "K25 · Sesak Napas Pulmonal", "q": "Pola pernapasan yang ditandai peningkatan dan penurunan kedalaman napas secara bertahap, diselingi periode apnea, disebut apa?", "o": ["Pernapasan Kussmaul", "Pernapasan Biot", "Pernapasan apneustik", "Pernapasan Cheyne–Stokes", "Pernapasan paradoksal"], "a": "Pernapasan Cheyne–Stokes", "exp": "<b>Pernapasan Cheyne–Stokes</b> adalah pola respirasi periodik yang memiliki karakteristik siklus berulang berupa <b>crescendo-decrescendo ventilasi</b> (kedalaman napas bertahap meningkat lalu menurun), diselingi oleh periode henti napas (apnea) selama 15–30 detik.<br><br>Pola ini diakibatkan oleh keterlambatan waktu sirkulasi darah (prolonged circulation time) antara paru dan kemoreseptor sentral batang otak, sering dijumpai pada gagal jantung lanjut (HFrEF berat), stroke serebral bilateral, atau ensefalopati uremik.", "src": "PPT Pola Napas Patologis (K25) · Guyton & Hall Medical Physiology", "k": 25, "cbt": "resp"}, {"n": 29, "t": "K25 · Sesak Napas Pulmonal", "q": "Seorang laki-laki mengalami pola napas tidak teratur, dengan periode napas relatif normal yang diselingi episode apnea secara tidak teratur. Pola napas apakah yang paling sesuai?", "o": ["Pernapasan Cheyne–Stokes", "Pernapasan Biot", "Pernapasan Kussmaul", "Hiperventilasi", "Pernapasan apneustik"], "a": "Pernapasan Biot", "exp": "<b>Pernapasan Biot (Ataxic Breathing)</b> ditandai dengan siklus pernapasan yang <b>ireguler dan acak seutuhnya</b>: beberapa tarikan napas dengan kedalaman bervariasi yang tiba-tiba diselingi oleh periode apnea total tanpa pola teratur (tidak ada pola crescendo-decrescendo yang halus seperti Cheyne-Stokes).<br><br>Pola Biot mengindikasikan <b>kerusakan struktural parah pada pusat pernapasan di medula oblongata atau pons bagian bawah</b>, sering dijumpai pada peningkatan tekanan intrakranial masif (TIK), trauma kepala berat, atau meningitis lanjut.", "src": "PPT Pola Napas Patologis (K25) · Plum & Posner's Diagnosis of Stupor and Coma", "k": 25, "cbt": "resp"}, {"n": 30, "t": "K25 · Sesak Napas Pulmonal", "q": "Pernyataan manakah yang paling tepat mengenai penyebab sesak napas (dyspnea)?", "o": ["Hanya disebabkan oleh abnormalitas tekanan darah", "Dapat disebabkan oleh ketidaksesuaian antara kebutuhan ventilasi dan kemampuan sistem pernapasan, termasuk abnormalitas gas darah dan peningkatan beban kerja pernapasan", "Selalu disebabkan oleh penyakit jantung", "Hanya terjadi pada gangguan saluran napas", "Tidak berhubungan dengan respons sistem saraf"], "a": "Dapat disebabkan oleh ketidaksesuaian antara kebutuhan ventilasi dan kemampuan sistem pernapasan, termasuk abnormalitas gas darah dan peningkatan beban kerja pernapasan", "exp": "<b>Dispnea (sesak napas)</b> secara neurofisiologis didefinisikan sebagai sensasi subjektif ketidaknyamanan bernapas akibat <b>ketidaksesuaian (neuro-ventilatory mismatch / dissociation)</b> antara dorongan ventilasi motorik sentral di otak (neural respiratory drive) dengan umpan balik mekanis dari paru dan dinding dada.<br><br>Etiologinya sangat multifaktorial: abnormalitas gas darah (hipoksemia, hiperkapnia, asidosis), peningkatan beban resistif jalan napas (asma, PPOK), penurunan compliance paru (edema paru, fibrosis), penurunan elastisitas dinding dada, serta anemia atau gangguan kardiogenik.", "src": "PPT Patofisiologi Dispnea (K25) · American Thoracic Society (ATS) Statement on Dyspnea", "k": 25, "cbt": "resp"}, {"n": 31, "t": "K29 · Sesak Napas Cardiac", "q": "Seorang pasien mengalami sesak napas akibat gagal jantung kiri. Mekanisme manakah yang paling berkaitan dengan terjadinya sesak napas?", "o": ["Penurunan tekanan hidrostatik kapiler paru", "Peningkatan tekanan atrium kiri yang diteruskan ke pembuluh darah paru sehingga meningkatkan risiko edema paru", "Peningkatan kapasitas difusi oksigen secara berlebihan", "Penurunan tekanan vena pulmonalis", "Peningkatan aliran limfatik yang selalu mampu mencegah edema paru"], "a": "Peningkatan tekanan atrium kiri yang diteruskan ke pembuluh darah paru sehingga meningkatkan risiko edema paru", "exp": "Pada <b>gagal jantung kiri</b> (Left Heart Failure), kegagalan pengosongan ventrikel kiri meningkatkan tekanan akhir diastolik ventrikel kiri (LVEDP). Tekanan tinggi ini ditransmisikan secara retrograd ke <b>atrium kiri ($P_{LA}$) → vena pulmonalis → kapiler paru</b>.<br><br>Lonjakan <b>tekanan hidrostatik kapiler paru ($P_c$)</b> yang melebihi tekanan onkotik plasma (&gt; 25 mmHg) menyebabkan perembesan cairan transudat ke ruang interstitial dan rongga alveolus (edema paru kardiogenik), merangsang reseptor J (juxtacapillary) paru, menurunkan compliance paru, dan memicu dispnea hebat.", "src": "PPT Gagal Jantung Kiri (K29) · Guyton & Hall Medical Physiology · Harrison's", "k": 29, "cbt": "cvs"}, {"n": 32, "t": "K29 · Sesak Napas Cardiac", "q": "Edema paru dapat menyebabkan manifestasi atau komplikasi berikut, yaitu ....", "o": ["Hipoksia", "Pneumotoraks", "Hemoptisis", "A dan B benar", "A dan C benar"], "a": "A dan C benar", "exp": "Edema paru menyebabkan:<br>1. <b>Hipoksia (A benar):</b> Cairan yang membanjiri ruang alveolar menciptakan hambatan difusi gas yang masif serta mismatch ventilasi-perfusi (V/Q shunt fisiologis), sehingga oksigen tidak dapat berdifusi ke dalam darah kapiler.<br>2. <b>Hemoptisis / Sputum Pink Frothy (C benar):</b> Peningkatan tekanan mikrovaskular kapiler paru yang ekstrem dapat merusak membran alveolar-kapiler, menyebabkan ekstravasasi sel darah merah ke dalam alveolus dan bercampur dengan cairan surfaktan berbusa, menghasilkan batuk darah atau dahak merah muda berbusa.<br><br>Pneumotoraks (B) adalah akumulasi udara di rongga pleura akibat ruptur pleura/bula, bukan manifestasi langsung edema paru. Oleh karena itu, <b>A dan C benar</b>.", "src": "PPT Edema Paru (K29) · Harrison's Principles of Internal Medicine", "k": 29, "cbt": "cvs"}, {"n": 33, "t": "K24 · Batuk", "q": "Seorang pasien berusia 28 tahun mengalami batuk darah berupa sputum merah segar tanpa bercampur makanan. Manakah yang bukan merupakan penyebab hemoptisis?", "o": ["Kanker paru", "Tuberkulosis paru", "Pneumonia", "Bronkiektasis", "Gastroesophageal reflux disease (GERD)"], "a": "Gastroesophageal reflux disease (GERD)", "exp": "<b>Hemoptisis</b> didefinisikan secara tegas sebagai ekspektorasi darah atau sputum bercampur darah yang <b>berasal dari saluran napas bawah (subglotis / parenkim paru)</b>, ditandai dengan warna merah segar, berbuih, pH basa, dan tidak bercampur sisa makanan.<br><br><b>Analisis Pilihan:</b><ul><li><b>GERD (Gastroesophageal Reflux Disease):</b> Merupakan kelainan saluran cerna atas. Jika terjadi perdarahan dari esofagus/lambung, manifestasinya adalah <i>hematemesis</i> (muntah darah, warna cokelat/kehitaman, pH asam, bercampur makanan), bukan hemoptisis saluran napas.</li><li><b>Kanker paru, TB paru, pneumonia, bronkiektasis:</b> Semuanya merupakan etiologi umum hemoptisis respiratorik (ruptur arteri bronkialis atau erosi pembuluh darah parenkim paru).</li></ul>", "src": "PPT Batuk & Hemoptisis (K24) · Murray & Nadel's Textbook of Respiratory Medicine", "k": 24, "cbt": "resp"}, {"n": 34, "t": "K24 · Batuk", "q": "Refleks batuk terutama dapat dipicu oleh stimulasi reseptor apa pada saluran napas?", "o": ["Proprioseptor otot rangka saja", "Reseptor peregangan alveolus saja", "Reseptor iritan pada saluran napas", "Reseptor visual", "Reseptor osmotik ginjal"], "a": "Reseptor iritan pada saluran napas", "exp": "<b>Refleks batuk</b> adalah mekanisme pertahanan saluran napas yang diinisiasi oleh aktivasi <b>reseptor batuk / reseptor iritan (rapidly adapting receptors / RARs dan C-fiber sensory receptors)</b> yang tersebar padat di laring, trakea, dan karina percabangan bronkus.<br><br>Rangsangan mekanis (debu, benda asing, mukus) maupun kimiawi (asap rokok, asam, mediator inflamasi) mengaktivasi serat sensorik aferen <b>nervus vagus (N. X)</b> menuju pusat batuk di nukleus traktus solitarius medula oblongata.", "src": "PPT Fisiologi Batuk (K24) · Guyton & Hall Medical Physiology", "k": 24, "cbt": "resp"}, {"n": 35, "t": "K19 · Farmakologi Obat Sistem Respirasi", "q": "Seorang pasien mengalami batuk produktif dengan dahak kental yang sulit dikeluarkan. Dokter memberikan obat mukolitik. Apakah mekanisme kerja utama obat tersebut?", "o": ["Menekan pusat batuk di medula oblongata", "Menghambat reseptor α₁-adrenergik", "Mengurangi viskositas mukus agar sekret lebih mudah dikeluarkan", "Menghambat pelepasan histamin sebagai mekanisme utama", "Menghambat reseptor β₂-adrenergik"], "a": "Mengurangi viskositas mukus agar sekret lebih mudah dikeluarkan", "exp": "<b>Obat mukolitik</b> (seperti N-asetilsistein, erdostein, atau ambroksol) bekerja secara spesifik dengan <b>menurunkan viskositas (kekentalan) dan elastisitas mukus</b>.<br><br>Sebagai contoh, gugus sulfhidril (-SH) bebas pada N-asetilsistein memecah <b>ikatan disulfida</b> kompleks glikoprotein mukus, mencairkan dahak kental menjadi lebih cair sehingga klirens mukosiliar dan efisiensi batuk meningkat.<br><br><i>Menekan pusat batuk di medula</i> adalah mekanisme antitusif sentral (seperti dekstrometorfan atau kodein).", "src": "PPT Farmakologi Obat Respirasi (K19) · Katzung Basic & Clinical Pharmacology 15th ed", "k": 19, "cbt": "resp"}, {"n": 36, "t": "K19 · Farmakologi Obat Sistem Respirasi", "q": "Mengapa obat antitusif umumnya dihindari pada pasien dengan batuk produktif dan sekret saluran napas yang banyak?", "o": ["Menyebabkan peningkatan produksi mukus secara langsung", "Menyebabkan bronkodilatasi berlebihan", "Meningkatkan aktivitas silia secara berlebihan", "Menekan refleks batuk sehingga sekret dapat tertahan dan menumpuk di saluran napas", "Menghambat seluruh metabolisme antibiotik"], "a": "Menekan refleks batuk sehingga sekret dapat tertahan dan menumpuk di saluran napas", "exp": "Batuk pada kondisi hipersekresi sputum merupakan mekanisme pembersihan fisiologis penting. Pemberian antitusif (penekan batuk) akan <b>menghambat refleks batuk sentral/perifer</b>, mengakibatkan <b>retensi sputum purulen di percabangan bronkial</b>.<br><br>Retensi sputum ini dapat memicu sumbatan mukus (mucus plugging), atelektasis paru, memburuknya hipoksia, serta meningkatkan risiko superinfeksi bakteri berat (pneumonia sekunder).", "src": "PPT Farmakologi Obat Respirasi (K19) · Goodman & Gilman's The Pharmacological Basis of Therapeutics", "k": 19, "cbt": "resp"}, {"n": 37, "t": "K19 · Farmakologi Obat Sistem Respirasi", "q": "Obat antitusif terutama digunakan untuk mengatasi kondisi apa?", "o": ["Batuk kering atau nonproduktif yang mengganggu", "Batuk produktif dengan sputum berlebihan", "Sekret saluran napas yang sangat kental sebagai terapi utama", "Bronkospasme akut sebagai terapi utama", "Infeksi bakteri sebagai terapi antimikroba"], "a": "Batuk kering atau nonproduktif yang mengganggu", "exp": "Indikasi klinis utama <b>obat antitusif (seperti dekstrometorfan, kodein, noskapin)</b> adalah untuk terapi simtomatik <b>batuk kering (non-produktif) yang mengganggu</b>, melelahkan, menimbulkan nyeri dada, atau memicu insomnia pada pasien.<br><br>Antitusif tidak memiliki peran dalam melunakkan dahak kental (peran mukolitik), melebarkan bronkospasme (peran bronkodilator SABA), maupun membunuh kuman (peran antibiotik).", "src": "PPT Farmakologi Obat Respirasi (K19) · Katzung Basic & Clinical Pharmacology", "k": 19, "cbt": "resp"}, {"n": 38, "t": "K19 · Farmakologi Obat Sistem Respirasi", "q": "Kortikosteroid intranasal yang digunakan untuk mengatasi rinitis alergi adalah ....", "o": ["Guaifenesin", "Kodein", "Dekstrometorfan", "Asetilsistein", "Flutikason"], "a": "Flutikason", "exp": "<b>Flutikason (Fluticasone propionate / Fluticasone furoate)</b> adalah sediaan <b>kortikosteroid intranasal (INCS)</b> poten yang menjadi terapi lini pertama (gold standard) untuk rinitis alergi sedang-berat persisten.<br><br><b>Pilihan Lain:</b><ul><li><b>Guaifenesin:</b> Ekspektoran.</li><li><b>Kodein & Dekstrometorfan:</b> Antitusif sentral.</li><li><b>Asetilsistein:</b> Mukolitik.</li></ul>", "src": "PPT Obat Lokal Saluran Napas (K19) · ARIA Guidelines for Allergic Rhinitis", "k": 19, "cbt": "resp"}, {"n": 39, "t": "K15 · Farmakologi Obat Antihipertensi", "q": "Seorang pasien mengalami batuk kering persisten setelah menggunakan enalapril. Apakah mekanisme yang paling mungkin menyebabkan efek samping tersebut?", "o": ["Penurunan kadar angiotensin II secara langsung merangsang pusat batuk", "Akumulasi bradikinin akibat penghambatan ACE", "Peningkatan produksi aldosteron", "Aktivasi reseptor beta-2 pada bronkus", "Penghambatan reseptor muskarinik"], "a": "Akumulasi bradikinin akibat penghambatan ACE", "exp": "Enzim Angiotensin-Converting Enzyme (ACE) identik dengan enzim <b>Kininase II</b> yang bertanggung jawab mendegradasi peptida inflamasi bradikinin dan substansi P.<br><br>Pemberian obat penghambat ACE (seperti enalapril, kaptopril, ramipril) menghambat degradasi kinin ini, menyebabkan <b>akumulasi bradikinin dan substansi P di parenkim paru dan mukosa bronkus</b>. Mediator ini memicu iritasi serat saraf sensorik C-fiber dan pelepasan prostaglandin lokal yang merangsang refleks batuk kering persisten (terjadi pada 5–20% pasien). Solusinya adalah mengganti obat ke golongan ARB (Angiotensin Receptor Blocker).", "src": "PPT Efek Samping Antihipertensi (K15) · Katzung Pharmacology · Harrison's", "k": 15, "cbt": "cvs"}, {"n": 40, "t": "K14 · Pemeriksaan Laboratorium Sistem Respirasi", "q": "Seorang perempuan berada semalaman di ruangan tertutup bersama generator berbahan bakar yang menghasilkan gas buang. Ia mengeluh mual dan pusing tanpa sianosis. SpO₂ menunjukkan 99%. Pemeriksaan lanjutan apakah yang paling tepat untuk mendeteksi keracunan karbon monoksida?", "o": ["Pemeriksaan kadar methemoglobin saja", "Analisis sputum", "Pemeriksaan D-dimer", "Ko-oksimetri untuk mengukur kadar karboksihemoglobin (COHb)", "Pemeriksaan kadar bilirubin"], "a": "Ko-oksimetri untuk mengukur kadar karboksihemoglobin (COHb)", "exp": "<b>Gas karbon monoksida (CO)</b> berikatan dengan hemoglobin membentuk <b>karboksihemoglobin (COHb)</b> dengan afinitas 200–250 kali lebih kuat daripada oksigen.<br><br><b>Perangkap Klinis:</b> Pulse oximeter konvensional 2-panjang gelombang (660 nm dan 940 nm) <i>tidak dapat membedakan</i> oksihemoglobin ($HbO_2$) dari karboksihemoglobin ($COHb$). Akibatnya, pulse oximeter membaca sinyal COHb sebagai HbO2 sehingga menampilkan SpO₂ normal palsu (99–100%) meskipun pasien mengalami hipoksia seluler berat.<br><br>Baku emas pemeriksaannya adalah <b>analisis gas darah arteri dengan ko-oksimetri (multi-wavelength co-oximetry)</b> untuk mengukur fraksi COHb secara langsung.", "src": "PPT Lab Respirasi (K14) · Goldfrank's Toxicologic Emergencies · Tintinalli Emergency Medicine", "k": 14, "cbt": "resp"}, {"n": 41, "t": "K30 · Sianosis", "q": "Dua pasien memiliki saturasi oksigen arteri sebesar 75%. Pasien X mengalami anemia berat dengan Hb 6 g/dL, sedangkan pasien Y mengalami polisitemia dengan Hb 22 g/dL. Pernyataan manakah yang paling tepat mengenai sianosis?", "o": ["Keduanya pasti tampak sianosis karena SaO₂ sama", "Pasien X memiliki perkiraan deoksihemoglobin 1,5 g/dL dan mungkin tidak tampak sianosis; pasien Y memiliki perkiraan deoksihemoglobin 5,5 g/dL dan lebih mungkin tampak sianosis", "Pasien X memiliki deoksihemoglobin 4,5 g/dL, sedangkan pasien Y 16,5 g/dL", "Pasien X pasti lebih sianotik karena mengalami anemia", "Keduanya tidak mungkin mengalami sianosis karena SaO₂ masih di atas 70%"], "a": "Pasien X memiliki perkiraan deoksihemoglobin 1,5 g/dL dan mungkin tidak tampak sianosis; pasien Y memiliki perkiraan deoksihemoglobin 5,5 g/dL dan lebih mungkin tampak sianosis", "exp": "Sianosis secara klinis ditentukan oleh <b>konsentrasi absolut hemoglobin tereduksi (deoksihemoglobin)</b> dalam darah kapiler, yaitu ambang batas minimal <b>sekitar 5,0 g/dL (atau &gt; 4,0 g/dL deoksi-Hb)</b>, BUKAN persentase saturasi semata.<br><br><b>Perhitungan Matematika Fisiologis:</b><br>• SaO₂ = 75% artinya fraksi deoksigenasi = 100% - 75% = 25% (0,25).<br>• <b>Pasien X (Hb 6 g/dL):</b> Deoksi-Hb = 25% × 6 g/dL = <b>1,5 g/dL</b>. Karena 1,5 g/dL jauh di bawah ambang 5 g/dL, pasien anemia berat <b>tidak tampak sianotik</b> meskipun jaringan sangat hipoksik.<br>• <b>Pasien Y (Hb 22 g/dL):</b> Deoksi-Hb = 25% × 22 g/dL = <b>5,5 g/dL</b>. Karena 5,5 g/dL melampaui ambang 5 g/dL, pasien polisitemia akan <b>tampak sangat sianotik nyata</b>.", "src": "PPT Sianosis (K30) · Harrison's Principles of Internal Medicine · Guyton & Hall", "k": 30, "cbt": "cvs"}, {"n": 42, "t": "K30 · Sianosis", "q": "Pada bayi ditemukan sianosis yang tidak membaik setelah bayi dihangatkan. Jenis sianosis manakah yang perlu dicurigai?", "o": ["Sianosis sentral", "Sianosis perifer", "Akrosianosis fisiologis", "Sianosis diferensial", "Eritema fisiologis"], "a": "Sianosis sentral", "exp": "<b>Sianosis yang menetap dan tidak membaik setelah penghangatan</b> adalah karakteristik khas <b>sianosis sentral</b>. Sianosis sentral melibatkan mukosa mulut, lidah, dan bibir akibat desaturasi darah arteri sistemik (disebabkan pirau kanan-ke-kiri jantung bawaan sianotik seperti Tetralogy of Fallot atau penyakit parenkim paru berat).<br><br>Sebaliknya, <b>sianosis perifer (atau akrosianosis fisiologis neonatus)</b> terjadi hanya pada ujung jari tangan/kaki akibat vasokonstriksi perifer suhu dingin dan aliran darah kapiler yang lambat; sianosis perifer akan <b>segera menghilang atau membaik signifikan setelah tubuh bayi dihangatkan</b> dan tidak melibatkan membran mukosa hangat.", "src": "PPT Sianosis (K30) · Park's Pediatric Cardiology · Nelson Textbook of Pediatrics", "k": 30, "cbt": "cvs"}, {"n": 43, "t": "K24 · Batuk", "q": "Seorang pasien berusia 60 tahun dengan hipertensi mengalami mata merah setelah episode batuk. Mekanisme fisiologis yang paling mungkin adalah ....", "o": ["Perdarahan subkonjungtiva akibat peningkatan tekanan vena saat batuk", "Vasodilatasi arteri retina sebagai mekanisme utama", "Peningkatan produksi aqueous humor", "Penurunan tekanan vena sentral secara mendadak", "Penurunan tekanan intraokular akibat batuk"], "a": "Perdarahan subkonjungtiva akibat peningkatan tekanan vena saat batuk", "exp": "Episode batuk paroksismal yang kuat menimbulkan <b>lonjakan tekanan intratorakal dan intraabdominal yang mendadak (efek manuver Valsalva)</b>.<br><br>Karena sistem vena kepala dan leher tidak memiliki katup (valveless veins), lonjakan tekanan ini ditransmisikan secara retrograd langsung ke vena jugularis, vena orbita, hingga pleksus kapiler subkonjungtiva yang rapuh. Pembuluh darah kapiler mikro tersebut mengalami ruptur mekanis, menimbulkan ekstravasasi darah yang tampak sebagai <b>perdarahan subkonjungtiva (subconjunctival hemorrhage)</b>.", "src": "PPT Komplikasi Batuk (K24) · Vaughan & Asbury's General Ophthalmology", "k": 24, "cbt": "resp"}, {"n": 44, "t": "K18 · Farmakologi Obat Gagal Jantung", "q": "Sacubitril dalam kombinasi ARNI bekerja melalui mekanisme apa?", "o": ["Menghambat pompa Na⁺/K⁺-ATPase", "Mendegradasi neprilisin", "Menghambat neprilisin sehingga meningkatkan kadar peptida natriuretik", "Memblokade reseptor angiotensin I", "Menghambat SGLT2 di ginjal"], "a": "Menghambat neprilisin sehingga meningkatkan kadar peptida natriuretik", "exp": "<b>Sacubitril</b> (bagian dari ARNI: Sacubitril/Valsartan) adalah prodrug yang diubah menjadi metabolit aktif LBQ657 yang <b>menghambat enzim neprilisin (neutral endopeptidase)</b>.<br><br>Inhibisi neprilisin mencegah pemecahan dan degradasi peptida natriuretik endogen (ANP, BNP, CNP, adrenomedulin). Akibatnya, kadar peptida natriuretik meningkat drastis, memfasilitasi <b>vasodilatasi sistemik, natriuresis, diuresis, serta penghambatan fibrosis miokard dan remodeling ventrikel</b>.<br><br>Valsartan ditambahkan untuk memblokade reseptor AT1 dari angiotensin II yang juga terakumulasi akibat inhibisi neprilisin.", "src": "PPT Farmakologi Gagal Jantung (K18) · PARADIGM-HF Trial · Katzung Pharmacology 15th ed", "k": 18, "cbt": "cvs"}, {"n": 45, "t": "K17 · Farmakologi Obat Anti Aritmia", "q": "Obat antiaritmia yang termasuk golongan III menurut klasifikasi Vaughan–Williams adalah ....", "o": ["Lidokain", "Verapamil", "Amiodaron", "Adenosin", "Propafenon"], "a": "Amiodaron", "exp": "Berdasarkan sistem klasifikasi Vaughan–Williams:<br>• <b>Kelas I (Penyekat Kanal Na⁺):</b> IA (Kuinidin, Prokainamid), IB (Lidokain, Meksiletin), IC (Flekainid, Propafenon).<br>• <b>Kelas II (Beta-Blocker):</b> Bisoprolol, Metoprolol, Esmolol.<br>• <b>Kelas III (Penyekat Kanal K⁺):</b> <b>Amiodaron</b>, Dronedaron, Sotalol, Dofetilid. Bekerja memperpanjang durasi potensial aksi miokard dan masa refrakter efektif.<br>• <b>Kelas IV (Penyekat Kanal Ca²⁺ Non-DHP):</b> Verapamil, Diltiazem.", "src": "PPT Antiaritmia (K17) · Katzung Basic & Clinical Pharmacology 15th ed", "k": 17, "cbt": "cvs"}, {"n": 46, "t": "K17 · Farmakologi Obat Anti Aritmia", "q": "Bagaimana mekanisme kerja obat antiaritmia golongan IA menurut klasifikasi Vaughan–Williams?", "o": ["Memblok kanal Na⁺ secara lemah dan memperpendek durasi potensial aksi", "Memblok kanal Na⁺ dengan intensitas sedang dan memperpanjang durasi potensial aksi", "Memblok kanal Na⁺ secara kuat tanpa perubahan durasi potensial aksi yang bermakna", "Memblok kanal K⁺ dan memperpendek durasi potensial aksi", "Memblok kanal Ca²⁺ dan memperpanjang durasi potensial aksi"], "a": "Memblok kanal Na⁺ dengan intensitas sedang dan memperpanjang durasi potensial aksi", "exp": "<b>Antiaritmia Kelas IA (Kuinidin, Prokainamid, Disopiramid):</b><br>1. Memblok kanal natrium cepat ($I_{Na}$) dengan <b>intensitas sedang (moderate Na⁺ channel blockade)</b>, memperlambat kecepatan konduksi fase 0 ($V_{max}$).<br>2. Secara bersamaan memblok kanal kalium keluar ($I_{Kr}$), sehingga <b>memperpanjang durasi potensial aksi (Action Potential Duration / APD)</b> dan memperpanjang masa refrakter efektif (ERP), yang pada EKG tercermin sebagai pelebaran kompleks QRS dan pemanjangan interval QT.", "src": "PPT Antiaritmia (K17) · Goodman & Gilman's The Pharmacological Basis of Therapeutics", "k": 17, "cbt": "cvs"}, {"n": 47, "t": "K17 · Farmakologi Obat Anti Aritmia", "q": "Bagaimana mekanisme kerja obat antiaritmia golongan IB menurut klasifikasi Vaughan–Williams?", "o": ["Memblok kanal Na⁺ secara sedang dan memperpanjang durasi potensial aksi", "Memblok kanal Na⁺ secara lemah dan cenderung memperpendek durasi potensial aksi", "Memblok kanal Na⁺ secara kuat dan sangat memperpanjang durasi potensial aksi", "Memblok kanal K⁺ dan memperpanjang durasi potensial aksi", "Memblok kanal Ca²⁺ sehingga memperlambat konduksi nodus AV"], "a": "Memblok kanal Na⁺ secara lemah dan cenderung memperpendek durasi potensial aksi", "exp": "<b>Antiaritmia Kelas IB (Lidokain, Meksiletin):</b><br>1. Memblok kanal natrium ($I_{Na}$) dengan <b>kinetika cepat lepas (fast on-off) atau intensitas ringan/lemah</b>, terutama berikatan pada kanal dalam keadaan inaktif pada jaringan iskemia/depolarisasi parsial.<br>2. Memblok arus masuk natrium lambat fase plateau ($I_{Na-late}$), yang justru <b>mempersingkat durasi potensial aksi (shortens APD)</b> dan memperpendek interval QT.", "src": "PPT Antiaritmia (K17) · Katzung Basic & Clinical Pharmacology", "k": 17, "cbt": "cvs"}, {"n": 48, "t": "K17 · Farmakologi Obat Anti Aritmia", "q": "Obat antiaritmia golongan IB yang dapat menimbulkan efek samping neurologis adalah....", "o": ["Kuinidin", "Lidokain", "Metoprolol", "Flekainid", "Prokainamid"], "a": "Lidokain", "exp": "<b>Lidokain</b> (antiaritmia kelas IB) memiliki kelarutan lemak tinggi sehingga dengan mudah menembus sawar darah otak (blood-brain barrier). Efek samping toksisitas utamanya bersifat <b>neurologis / sistem saraf pusat (SSP)</b> sesuai kadar dalam darah:<br>• Dosis ringan-sedang: Pusing (dizziness), mengantuk, parestesia lidah/perioral, telinga berdenging (tinnitus), disartria.<br>• Dosis tinggi/toksik: Nistagmus, konfusi, tremor otot, kejang epileptik generalisata, hingga depresi pernapasan.", "src": "PPT Antiaritmia (K17) · Katzung Pharmacology 15th ed", "k": 17, "cbt": "cvs"}, {"n": 49, "t": "K18 · Farmakologi Obat Gagal Jantung", "q": "Seorang pasien yang mengonsumsi digoksin mengalami mual, gangguan penglihatan berupa halo kuning, dan aritmia. Apakah kondisi yang paling mungkin?", "o": ["Cinchonism akibat kuinidin", "Toksisitas paru akibat amiodaron", "Sindrom mirip lupus akibat prokainamid", "Intoksikasi digoksin", "Hipokalemia akibat penghambatan kanal K⁺ oleh digoksin"], "a": "Intoksikasi digoksin", "exp": "Kombinasi gejala gastrointestinal (anoreksia, mual, muntah), kelainan neuro-oftalmik khas berupa penglihatan bernuansa kuning kehijauan atau melihat lingkaran halo di sekitar cahaya (<b>xanthopsia</b>), serta berbagai aritmia kardiak (PVC bigemini, paroxysmal atrial tachycardia dengan AV block) adalah tanda patognomonik <b>intoksikasi digitalis / digoksin</b>.<br><br>Digoksin memiliki indeks terapi yang sangat sempit (therapeutic window 0,5–0,9 ng/mL). Kondisi hipokalemia mempermudah terjadinya toksisitas ini karena kalium berkompetisi dengan digoksin pada reseptor Na⁺/K⁺-ATPase.", "src": "PPT Farmakologi Gagal Jantung (K18) · Harrison's Principles of Internal Medicine", "k": 18, "cbt": "cvs"}, {"n": 50, "t": "K18 · Farmakologi Obat Gagal Jantung", "q": "Bagaimana mekanisme kerja digoksin dalam meningkatkan kontraktilitas miokard?", "o": ["Menghambat kotransporter Na⁺/K⁺/2Cl⁻ di ansa Henle", "Menghambat pompa Na⁺/K⁺-ATPase sehingga meningkatkan Ca²⁺ intrasel melalui pertukaran Na⁺/Ca²⁺", "Memblokade reseptor β-adrenergik secara selektif", "Menghambat reabsorpsi NaCl di tubulus distal", "Menghambat konversi angiotensin I menjadi angiotensin II"], "a": "Menghambat pompa Na⁺/K⁺-ATPase sehingga meningkatkan Ca²⁺ intrasel melalui pertukaran Na⁺/Ca²⁺", "exp": "<b>Mekanisme Inotropik Positif Digoksin:</b><br>1. Digoksin berikatan dan <b>menghambat pompa $Na^+/K^+$-ATPase</b> pada sarkolema miosit jantung.<br>2. Penghambatan pompa ini meningkatkan konsentrasi ion $Na^+$ intraseluler.<br>3. Peningkatan $Na^+$ intraseluler menurunkan gradien konsentrasi natrium transmembran, sehingga <b>menghambat kerja penukar natrium-kalsium ($Na^+/Ca^{2+}$ exchanger / NCX)</b> yang biasanya membuang kalsium keluar sel.<br>4. Akibatnya, ion $Ca^{2+}$ tertahan di intrasel dan disimpan lebih banyak ke retikulum sarkoplasma (SERCA), menghasilkan pelepasan kalsium yang lebih besar saat eksitasi-kontraksi miokard berikutnya (peningkatan inotropik).", "src": "PPT Farmakologi Gagal Jantung (K18) · Katzung Basic & Clinical Pharmacology 15th ed", "k": 18, "cbt": "cvs"}, {"n": 51, "t": "K18 · Farmakologi Obat Gagal Jantung", "q": "Bagaimana mekanisme kerja furosemid sebagai diuretik?", "o": ["Menghambat kotransporter Na⁺/Cl⁻ di tubulus distal", "Menghambat kanal natrium epitel di duktus kolektivus", "Menghambat kotransporter Na⁺/K⁺/2Cl⁻ (NKCC2) di ansa Henle bagian asenden tebal", "Menghambat reseptor aldosteron", "Menghambat karbonat anhidrase"], "a": "Menghambat kotransporter Na⁺/K⁺/2Cl⁻ (NKCC2) di ansa Henle bagian asenden tebal", "exp": "<b>Furosemid</b> adalah prototipe <b>diuretik kuat (loop diuretic)</b>. Obat ini bekerja pada membran luminal <b>segmen tebal ansa Henle asenden (thick ascending limb of Henle's loop)</b> dengan mengikat dan menghambat secara selektif kotransporter <b>$Na^+/K^+/2Cl^-$ (NKCC2)</b>.<br><br>Penghambatan ini meniadakan reabsorpsi sekitar 25% muatan natrium terfiltrasi, menghapuskan gradien hipertonisitas medula ginjal, dan memicu ekskresi masif air, $Na^+$, $K^+$, $Cl^-$, $Ca^{2+}$, dan $Mg^{2+}$ dalam urine.", "src": "PPT Diuretik & Gagal Jantung (K18) · Katzung Basic & Clinical Pharmacology 15th ed", "k": 18, "cbt": "cvs"}, {"n": 52, "t": "K18 · Farmakologi Obat Gagal Jantung", "q": "Seorang pasien memiliki fraksi ejeksi ventrikel kiri (LVEF) sebesar 30%. Berdasarkan nilai tersebut, pasien termasuk kategori gagal jantung yang mana?", "o": ["Heart failure with reduced ejection fraction (HFrEF)", "Heart failure with preserved ejection fraction (HFpEF)", "Heart failure with mildly reduced ejection fraction (HFmrEF)", "Gagal jantung dengan fraksi ejeksi normal", "Tidak dapat diklasifikasikan tanpa mengetahui denyut jantung"], "a": "Heart failure with reduced ejection fraction (HFrEF)", "exp": "Berdasarkan pedoman konsensus internasional (ESC/AHA/HFSA dan PERKI):<br>• <b>HFrEF (Heart Failure with Reduced Ejection Fraction):</b> LVEF <b>≤ 40%</b>. (Pasien dengan LVEF 30% masuk ke kategori ini, membutuhkan 4 pilar terapi medikamentosa terarah: ARNI/ACEI, Beta-blocker, MRA, dan SGLT2i).<br>• <b>HFmrEF (Mildly Reduced EF):</b> LVEF <b>41% – 49%</b>.<br>• <b>HFpEF (Preserved EF):</b> LVEF <b>≥ 50%</b> disertai bukti kelainan struktural/fungsional pengisian diastolik.", "src": "PPT Klasifikasi Gagal Jantung (K18) · ESC Guidelines for Heart Failure 2021/2023 · PERKI 2023", "k": 18, "cbt": "cvs"}, {"n": 53, "t": "K27 · Nyeri Dada Cardiac", "q": "Seorang mahasiswi mengalami nyeri dada, berdebar, dan sesak napas setelah konflik emosional. Jika evaluasi klinis tidak menemukan penyebab organik dan keluhan terutama dipicu stres emosional, etiologi yang paling mungkin adalah ....", "o": ["Pulmonal", "Kardiak", "Psikogenik", "Neurogenik", "Gastrointestinal"], "a": "Psikogenik", "exp": "Keluhan nyeri dada non-anginal (sering di apeks atau berpindah-pindah, menusuk), hiperventilasi, palpitasi, dan parestesia ekstremitas yang timbul segera setelah stres psikologis atau konflik interpersonal dengan <b>hasil evaluasi EKG, enzim jantung, dan rontgen toraks sepenuhnya normal</b> mengarah pada <b>nyeri dada etiologi psikogenik</b> (serangan panik / gangguan cemas / sindrom Da Costa).<br><br>Aktivasi simpatis berlebihan dan hiperventilasi memicu hipokapnia ($PCO_2$ turun), vasokonstriksi serebral, dan alkalosis respiratorik.", "src": "PPT Nyeri Dada Non-Kardiak (K27) · Harrison's Principles of Internal Medicine", "k": 27, "cbt": "cvs"}, {"n": 54, "t": "K27 · Nyeri Dada Cardiac", "q": "Seorang pasien mengalami nyeri dada akut. Manakah kondisi yang termasuk kelompok sindrom koroner akut (SKA)?", "o": ["Syok kardiogenik saja", "Angina tidak stabil, NSTEMI, dan STEMI", "Hipertensi kronis tanpa komplikasi", "Syok septik", "Tersedak akibat sumbatan jalan napas"], "a": "Angina tidak stabil, NSTEMI, dan STEMI", "exp": "<b>Sindrom Koroner Akut (SKA / Acute Coronary Syndrome / ACS)</b> adalah payung spektrum klinis darurat kardiovaskular akibat ruptur atau erosi plak aterosklerosis yang memicu trombosis intrakoroner akut. SKA terdiri dari 3 entitas klinis:<br>1. <b>Unstable Angina Pectoris (UAP / Angina Pektoris Tidak Stabil):</b> Iskemia akut tanpa nekrosis miokard (biomarker troponin negatif, deviasi ST/inversi T atau normal).<br>2. <b>Non-ST-segment Elevation Myocardial Infarction (NSTEMI):</b> Nekrosis miokard (troponin positif) tanpa elevasi segmen ST yang persisten.<br>3. <b>ST-segment Elevation Myocardial Infarction (STEMI):</b> Oklusi total arteri koroner akut dengan elevasi ST persisten dan nekrosis transmural miokard.", "src": "PPT Sindrom Koroner Akut (K27) · Pedoman PERKI SKA 2022 · Braunwald's Heart Disease", "k": 27, "cbt": "cvs"}, {"n": 55, "t": "K21 · Farmakologi Antibiotik pada Infeksi Saluran Napas", "q": "Seorang pasien di ICU mengalami pneumonia berat akibat bakteri penghasil extended-spectrum beta-lactamase (ESBL). Antibiotik manakah yang dapat digunakan untuk infeksi berat tersebut?", "o": ["Amoksisilin-klavulanat", "Sefuroksim", "Azitromisin", "Meropenem", "Penisilin V"], "a": "Meropenem", "exp": "Bakteri gram negatif penghasil <b>ESBL (Extended-Spectrum Beta-Lactamase)</b> resisten terhadap hampir seluruh penisilin, sefalosporin (generasi 1, 2, 3, dan 4), serta monobaktam.<br><br>Golongan <b>Karbapenem (seperti Meropenem, Imipenem/Silastatin)</b> adalah <b>drug of choice lini pertama</b> untuk infeksi sistemik berat akibat isolat penghasil ESBL di ICU, karena struktur karbapenem sangat resisten terhadap hidrolisis oleh enzim beta-laktamase spektrum luas tersebut.", "src": "PPT Antibiotik Saluran Napas (K21) · IDSA Guidance on the Treatment of Antimicrobial-Resistant Gram-Negative Infections", "k": 21, "cbt": "resp"}, {"n": 56, "t": "K20 · Farmakologi Obat TB", "q": "Bagaimana mekanisme kerja isoniazid dalam pengobatan tuberkulosis?", "o": ["Menghambat sintesis protein melalui ikatan dengan ribosom 50S", "Menghambat pembentukan DNA bakteri secara langsung", "Menghambat sintesis asam mikolat pada dinding sel Mycobacterium tuberculosis", "Menghambat enzim arabinosiltransferase", "Membentuk kompleks dengan DNA-dependent RNA polymerase"], "a": "Menghambat sintesis asam mikolat pada dinding sel Mycobacterium tuberculosis", "exp": "<b>Isoniazid (INH)</b> adalah prodrug bakterisid primer untuk TB. Di dalam kuman <i>Mycobacterium tuberculosis</i>, INH diaktivasi oleh enzim katalase-peroksidase mikobakteri (<b>KatG</b>) menjadi radikal isonikotinoil aktif.<br><br>Radikal ini berikatan kovalen dengan molekul NAD⁺ dan NADP⁺ membentuk aduk penghambat enzim <b>InhA (enoyl-acyl carrier protein reductase)</b> dan <b>KasA (beta-ketoacyl-ACP synthase)</b>, sehingga <b>menghambat sintesis asam mikolat (mycolic acid)</b> yang merupakan lipid struktural esensial penyusun dinding sel mikobakteri.", "src": "PPT Farmakologi Obat Anti TBC (K20) · Katzung Basic & Clinical Pharmacology 15th ed", "k": 20, "cbt": "resp"}, {"n": 57, "t": "K20 · Farmakologi Obat TB", "q": "Seorang pasien yang menjalani pengobatan tuberkulosis mengalami penglihatan kabur dan kesulitan membedakan warna merah dan hijau. Obat manakah yang paling mungkin menyebabkan efek samping tersebut?", "o": ["Rifampisin", "Isoniazid", "Pirazinamid", "Etambutol", "Streptomisin"], "a": "Etambutol", "exp": "Efek samping toksisitas kardinal dan paling khas dari <b>Etambutol (ETH/E)</b> adalah <b>neuritis retrobulbar (neuritis optik)</b> dosis-dependen.<br><br>Manifestasi klinisnya mencakup: penurunan tajam penglihatan (visual acuity), skotoma sentral, dan <b>kehilangan kemampuan diskriminasi warna merah-hijau (red-green color blindness / dyschromatopsia)</b>. Pemeriksaan ketajaman penglihatan dan tes warna Ishihara wajib dipantau berkala pada pasien yang mengonsumsi etambutol.", "src": "PPT Farmakologi Obat Anti TBC (K20) · WHO Treatment of Tuberculosis Guidelines · Katzung Pharmacology", "k": 20, "cbt": "resp"}, {"n": 58, "t": "K20 · Farmakologi Obat TB", "q": "Pasien yang mendapatkan isoniazid diberi vitamin untuk membantu mencegah neuropati perifer. Vitamin apakah yang dimaksud?", "o": ["Vitamin B₁", "Vitamin B₁₂", "Vitamin B₆ (piridoksin)", "Vitamin C", "Vitamin D"], "a": "Vitamin B₆ (piridoksin)", "exp": "Isoniazid (INH) memiliki struktur kimiawi mirip piridoksin sehingga bertindak sebagai antagonis kompetitif: INH berikatan dengan piridoksal fosfat membentuk hidrazon nonaktif, menghambat enzim piridoksin fosfokinase, dan memicu peningkatan ekskresi piridoksin melalui urin.<br><br>Defisiensi piridoksin menyebabkan kegagalan sintesis neurotransmiter GABA dan mielin, menimbulkan <b>neuropati perifer (parestesia rasa kebas dan kesemutan di ujung jari kaki/tangan)</b>. Untuk mencegah efek samping ini, pasien diberikan profilaksis <b>Vitamin B₆ (piridoksin)</b> dosis 10–50 mg/hari (terutama pada pasien malnutrisi, hamil, alkoholik, diabetes, atau gagal ginjal).", "src": "PPT Farmakologi Obat Anti TBC (K20) · Goodman & Gilman's Pharmacological Basis", "k": 20, "cbt": "resp"}, {"n": 59, "t": "K20 · Farmakologi Obat TB", "q": "Rifampisin dapat menimbulkan efek samping berupa ....", "o": ["Perubahan warna urine, air mata, dan cairan tubuh lainnya menjadi jingga kemerahan", "Neuropati perifer sebagai efek samping yang paling khas", "Gangguan penglihatan warna merah-hijau", "Neuritis optik sebagai efek samping utama", "Ototoksisitas sebagai efek samping utama"], "a": "Perubahan warna urine, air mata, dan cairan tubuh lainnya menjadi jingga kemerahan", "exp": "<b>Rifampisin (RIF/R)</b> memiliki sifat kimiawi alami sebagai senyawa kromofor berpigmen oranye-kemerahan larut lemak. Ekskresi molekul obat dan metabolitnya ke dalam sekresi tubuh menghasilkan <b>pewarnaan jingga kemerahan (red-orange discoloration) yang tidak berbahaya pada urine, air mata, keringat, saliva, dan feses</b>.<br><br>Pasien harus diedukasi sebelumnya agar tidak panik mengira terjadi kencing darah (hematuria) dan diperingatkan bahwa lensa kontak lunak dapat ternoda permanen.", "src": "PPT Farmakologi Obat Anti TBC (K20) · Katzung Basic & Clinical Pharmacology", "k": 20, "cbt": "resp"}, {"n": 60, "t": "K20 · Farmakologi Obat TB", "q": "Obat antituberkulosis manakah yang perlu dihindari selama kehamilan karena risiko ototoksisitas pada janin?", "o": ["Rifampisin", "Isoniazid", "Pirazinamid", "Etambutol", "Streptomisin"], "a": "Streptomisin", "exp": "<b>Streptomisin (SM/S)</b> adalah antibiotik golongan aminoglikosida yang <b>dikontraindikasikan pada wanita hamil (FDA Kategori D)</b>.<br><br>Streptomisin dapat menembus sawar plasenta dan terkonsentrasi di cairan amnion serta jaringan janin. Obat ini secara selektif merusak sel rambut koklea dan aparatus vestibular (nervus kranialis VIII), menyebabkan <b>ototoksisitas permanen berupa ketulian sensorineural kongenital (congenital deafness) dan gangguan keseimbangan</b> pada bayi yang dilahirkan.", "src": "PPT Farmakologi Obat Anti TBC (K20) · WHO TB Guidelines · Briggs Drugs in Pregnancy and Lactation", "k": 20, "cbt": "resp"}, {"n": 61, "t": "K20 · Farmakologi Obat TB", "q": "Bagaimana mekanisme kerja pirazinamid dalam pengobatan tuberkulosis?", "o": ["Menghambat ribosom 50S", "Diubah menjadi asam pirazinoat aktif yang bekerja terutama pada lingkungan asam dan mengganggu fungsi serta metabolisme energi mikobakteri", "Menghambat DNA gyrase", "Menghambat sintesis asam mikolat melalui InhA secara langsung", "Menghambat RNA polymerase secara langsung"], "a": "Diubah menjadi asam pirazinoat aktif yang bekerja terutama pada lingkungan asam dan mengganggu fungsi serta metabolisme energi mikobakteri", "exp": "<b>Pirazinamid (PZA/Z)</b> adalah prodrug yang dikonversi oleh enzim <b>nikotinamidase / pirazinamidase (PZase)</b> mikobakteri menjadi <b>asam pirazinoat (Pyrazinoic acid / POA)</b> aktif.<br><br>Dalam <b>lingkungan asam (pH asam)</b>—seperti di dalam fagosom makrofag inang dan sentrum kaseosa lesi tuberkulosis yang mengalami nekrosis—asam pirazinoat mengalami protonasi dan terakumulasi di dalam basil TB. Hal ini merusak potensial membran sel, mengganggu homeostasis pH intraseluler, menghambat sintesis asam lemak (FAS-I), dan melumpuhkan metabolisme energi kuman semidorman.", "src": "PPT Farmakologi Obat Anti TBC (K20) · Zhang & Mitchison, Nat Rev Microbiol · Katzung Pharmacology", "k": 20, "cbt": "resp"}, {"n": 62, "t": "K20 · Farmakologi Obat TB", "q": "Bagaimana mekanisme kerja bedaquiline dalam pengobatan tuberkulosis?", "o": ["Menghambat sintesis asam mikolat", "Menghambat DNA gyrase", "Menghambat arabinosiltransferase", "Menghambat ATP sintase mikobakteri sehingga produksi ATP terganggu", "Menghambat ribosom 30S"], "a": "Menghambat ATP sintase mikobakteri sehingga produksi ATP terganggu", "exp": "<b>Bedaquiline</b> (golongan diarilkuinolin) adalah obat anti-TB lini baru yang esensial dalam regimen pengobatan TB kebal obat (MDR-TB / XDR-TB).<br><br>Mekanisme kerjanya sangat spesifik dan unik: mengikat secara selektif <b>subunit c dari enzim ATP sintase mikobakteri</b> yang dikode oleh gen <i>atpE</i>. Penghambatan pompa proton ATP sintase ini melumpuhkan sintesis adenosin trifosfat (ATP), menyebabkan deplesi energi total dan kematian sel <i>Mycobacterium tuberculosis</i> baik yang bereplikasi aktif maupun dorman.", "src": "PPT Farmakologi Obat Anti TBC (K20) · Andries et al., Science · WHO Consolidated Guidelines on TB", "k": 20, "cbt": "resp"}, {"n": 63, "t": "K20 · Farmakologi Obat TB", "q": "Seorang pasien tuberkulosis menunjukkan resistensi terhadap isoniazid dan rifampisin. Apakah klasifikasi resistensi yang tepat?", "o": ["TB monoresistan rifampisin", "TB poliresistan tanpa resistensi rifampisin", "TB multidrug-resistant (MDR-TB)", "TB monoresistan isoniazid", "TB XDR secara otomatis"], "a": "TB multidrug-resistant (MDR-TB)", "exp": "Berdasarkan definisi resmi WHO dan Kemenkes RI:<br>• <b>Multidrug-Resistant Tuberculosis (TB-MDR):</b> Isolat kuman <i>M. tuberculosis</i> yang resisten secara simultan terhadap <b>minimal Isoniazid (INH) dan Rifampisin (RIF)</b>, dua obat bakterisid lini pertama yang paling poten, dengan atau tanpa resistensi terhadap OAT lini pertama lainnya.<br>• <i>Pre-XDR:</i> MDR-TB yang juga resisten terhadap salah satu fluorokuinolon.<br>• <i>XDR-TB:</i> MDR-TB yang resisten fluorokuinolon dan minimal salah satu obat grup A (Bedaquiline atau Linezolid).", "src": "PPT OAT Asdos Farmako / Pedoman Nasional Penanggulangan TB Kemenkes RI · WHO Guidelines", "k": 20, "cbt": "resp"}, {"n": 64, "t": "K21 · Farmakologi Antibiotik pada Infeksi Saluran Napas", "q": "Seorang pasien mengalami eksaserbasi akut penyakit paru obstruktif kronik dengan sputum purulen. Kultur menunjukkan Moraxella catarrhalis. Pasien pernah menggunakan amoksisilin dua bulan sebelumnya. Antibiotik manakah yang paling sesuai di antara pilihan berikut, jika bakteri sensitif dan tidak terdapat kontraindikasi?", "o": ["Amoksisilin dosis tinggi", "Eritromisin", "Penisilin V", "Amoksisilin-klavulanat", "Sefadroksil"], "a": "Amoksisilin-klavulanat", "exp": "Lebih dari 90–95% isolat <i>Moraxella catarrhalis</i> memproduksi enzim <b>beta-laktamase (BRO-1 dan BRO-2)</b> yang dengan mudah menghidrolisis dan menginaktivasi aminopenisilin polos (seperti amoksisilin saja). Selain itu, pasien memiliki riwayat pajanan amoksisilin 2 bulan sebelumnya.<br><br>Oleh karena itu, pilihan antibiotik oral yang paling tepat adalah <b>Amoksisilin-klavulanat (Ko-amoksiklav)</b>, di mana asam klavulanat bertindak sebagai penghambat kompetitif (suicide inhibitor) enzim beta-laktamase sehingga amoksisilin dapat mematikan kuman dengan menghambat sintesis peptidoglikan dinding sel.", "src": "PPT Antibiotik Saluran Napas (K21B) · GOLD Guidelines for COPD 2024 · IDSA/ATS Guidelines", "k": 21, "cbt": "resp"}, {"n": 65, "t": "K21 · Farmakologi Antibiotik pada Infeksi Saluran Napas", "q": "Seorang pasien mengalami batuk kronis dengan sputum purulen. Kultur menunjukkan Moraxella catarrhalis. Mengapa pemilihan antibiotik perlu mempertimbangkan produksi beta-laktamase oleh bakteri tersebut?", "o": ["Karena beta-laktamase meningkatkan kerja semua antibiotik beta-laktam", "Karena bakteri tidak memiliki dinding sel", "Karena enzim tersebut dapat menginaktivasi antibiotik beta-laktam tertentu sehingga diperlukan pemilihan obat sesuai pola resistensi", "Karena bakteri hanya sensitif terhadap antijamur", "Karena bakteri selalu resistan terhadap semua antibiotik"], "a": "Karena enzim tersebut dapat menginaktivasi antibiotik beta-laktam tertentu sehingga diperlukan pemilihan obat sesuai pola resistensi", "exp": "Enzim <b>beta-laktamase</b> yang disintesis oleh <i>Moraxella catarrhalis</i> memecah cincin beta-laktam dari antibiotik rentan (seperti penisilin, ampisilin, dan amoksisilin polos), menjadikannya tidak aktif secara mikrobiologis.<br><br>Oleh karena itu, klinisi harus memilih agen antibiotik yang resisten terhadap beta-laktamase atau kombinasi dengan beta-lactamase inhibitor (seperti amoksisilin-klavulanat, sefalosporin generasi 2/3, atau makrolid/fluorokuinolon) untuk mencegah kegagalan terapi akibat resistensi enzimatik.", "src": "PPT Mikrobiologi & Antibiotik (K21/K12) · Jawetz, Melnick, & Adelberg's Medical Microbiology 28th ed", "k": 21, "cbt": "resp"}, {"n": 66, "t": "K21 · Farmakologi Antibiotik pada Infeksi Saluran Napas", "q": "Seorang wanita usia 22 tahun datang ke puskesmas dengan keluhan pusing, demam, dan muntah 2x. Hasil lab menunjukkan leukositosis dan neutrofilia. Dokter mendiagnosis faringitis akut. Pasien mempunyai alergi terhadap antibiotik golongan penicillin. Antibiotik apakah yang cocok untuk pasien?", "o": ["ampicillin", "metrozolin", "ciprofloxacin", "sefadroxil", "sulfametoxazol"], "a": "sefadroxil", "exp": "Pada pasien faringitis streptokokus akut (GABHS / <i>Streptococcus pyogenes</i>) dengan <b>riwayat alergi penisilin non-anafilaktik / non-tipe I (bukan syok anafilaksis, angioedema, atau urtikaria luas)</b>, pedoman klinis IDSA merekomendasikan <b>sefalosporin generasi pertama oral</b> seperti <b>sefadroksil (atau sefaleksin)</b> selama 10 hari.<br><br>Ampisilin (A) merupakan golongan penisilin sehingga dikontraindikasikan; ciprofloxacin (C) tidak efektif untuk streptokokus faring dan berisiko resistensi; sulfametoksazol (E) tidak direkomendasikan untuk faringitis GAS karena tingginya angka kegagalan eradikasi dan persistensi.", "src": "PPT Antibiotik Saluran Napas (K21B) · IDSA Clinical Practice Guideline for Acute Pharyngitis", "k": 21, "cbt": "resp"}, {"n": 67, "t": "K21 · Farmakologi Antibiotik pada Infeksi Saluran Napas", "q": "Berapakah durasi terapi antibiotik oral yang lazim direkomendasikan untuk faringitis akibat Streptococcus grup A jika menggunakan penisilin atau amoksisilin?", "o": ["3–5 hari", "5–7 hari", "7–10 hari", "10 hari", "14 hari"], "a": "10 hari", "exp": "Durasi standar baku emas terapi antibiotik oral golongan penisilin (penisilin V oral) atau amoksisilin untuk faringitis akut akibat <b>Group A Beta-Hemolytic Streptococcus (GABHS / S. pyogenes)</b> adalah <b>penuh 10 hari</b>.<br><br><b>Penting:</b> Meskipun gejala klinis radang tenggorokan sering mereda dalam 3–4 hari, penyelesaian durasi 10 hari secara mutlak diperlukan untuk memastikan eradikasi komplit kuman dari orofaring dan <b>mencegah komplikasi pasca-streptokokus yang fatal, yaitu Demam Rematik Akut (Acute Rheumatic Fever) dan Penyakit Jantung Rematik</b>.", "src": "PPT Antibiotik Saluran Napas (K21B) · IDSA Pharyngitis Guidelines · AHA Guidelines on Rheumatic Fever", "k": 21, "cbt": "resp"}, {"n": 68, "t": "K21 · Farmakologi Antibiotik pada Infeksi Saluran Napas", "q": "Sefalosporin generasi pertama umumnya memiliki aktivitas yang baik terhadap bakteri apa?", "o": ["Mycoplasma dan Chlamydia", "Streptococcus dan Staphylococcus yang sensitif terhadap metisilin", "Semua bakteri penghasil ESBL", "Mycobacterium tuberculosis", "Pseudomonas aeruginosa sebagai kelompok utama"], "a": "Streptococcus dan Staphylococcus yang sensitif terhadap metisilin", "exp": "<b>Sefalosporin generasi pertama (seperti sefazolin parenteral, sefadroksil, dan sefaleksin oral)</b> memiliki spektrum aktivitas predominan terhadap <b>bakteri kokus Gram-positif</b>: sangat aktif melawan <i>Streptococcus pyogenes</i>, <i>Streptococcus pneumoniae</i>, dan <i>Staphylococcus aureus</i> yang sensitif terhadap metisilin (<b>MSSA</b>).<br><br>Golongan ini tidak memiliki aktivitas melawan MRSA, bakteri atipik (<i>Mycoplasma, Chlamydia</i> karena tidak berikatan PBP dinding sel), <i>Pseudomonas</i>, maupun bakteri penghasil ESBL.", "src": "PPT Antibiotik Saluran Napas (K21B) · Katzung Basic & Clinical Pharmacology 15th ed", "k": 21, "cbt": "resp"}, {"n": 69, "t": "K21 · Farmakologi Antibiotik pada Infeksi Saluran Napas", "q": "Haemophilus influenzae dapat menyebabkan sinusitis bakterial akut. Apabila antibiotik diperlukan, pilihan terapi empiris lini pertama yang lazim direkomendasikan untuk orang dewasa adalah ....", "o": ["Metronidazol", "Amoksisilin-klavulanat", "Siprofloksasin sebagai pilihan rutin pertama", "Isoniazid", "Etambutol"], "a": "Amoksisilin-klavulanat", "exp": "Berdasarkan pedoman klinis internasional (IDSA Guidelines for Acute Bacterial Rhinosinusitis / ABRS), terapi antibiotik empiris lini pertama untuk sinusitis bakterial akut pada orang dewasa adalah <b>Amoksisilin-klavulanat (Ko-amoksiklav)</b>.<br><br>Patogen utama sinusitis akut adalah <i>Streptococcus pneumoniae</i> dan <i>Haemophilus influenzae</i>. Karena prevalensi strain <i>H. influenzae</i> penghasil enzim beta-laktamase meningkat pesat (&gt; 30–40%), penambahan asam klavulanat esensial untuk mencegah kegagalan terapi yang sering terjadi pada amoksisilin tunggal.", "src": "PPT Antibiotik Saluran Napas (K21B) · IDSA Clinical Practice Guideline for Acute Bacterial Rhinosinusitis", "k": 21, "cbt": "resp"}, {"n": 70, "t": "K11 · Mikrobiologi pada Sistem Kardiovaskuler", "q": "Vegetasi pada endokarditis infektif terutama tersusun atas komponen apa?", "o": ["Kolagen murni tanpa sel inflamasi", "Fibrosit normal dan jaringan ikat sehat", "Fibrin, trombosit, mikroorganisme, dan debris seluler", "Eritrosit saja", "Lemak dan kristal kolesterol saja"], "a": "Fibrin, trombosit, mikroorganisme, dan debris seluler", "exp": "Lesi patognomonik pada endokarditis infektif adalah <b>vegetasi (vegetation)</b> yang melekat pada katup jantung. Secara histopatologis, vegetasi tersusun atas jalinan anyaman <b>fibrin, agregat trombosit, koloni mikroorganisme aktif (bakteri/jamur), serta debris seluler dan sel inflamasi (terutama neutrofil)</b>.<br><br>Vegetasi ini bersifat rapuh (friable) dan mudah lepas terbawa aliran darah menjadi septik emboli ke organ target (otak, limpa, ginjal).", "src": "PPT Patologi Anatomi & Mikrobiologi Kardiovaskuler (K11/K9) · Robbins & Cotran Pathologic Basis of Disease 10th ed", "k": 11, "cbt": "cvs"}, {"n": 71, "t": "K11 · Mikrobiologi pada Sistem Kardiovaskuler", "q": "Bakteri manakah yang merupakan penyebab penting endokarditis infektif pada orang dewasa, terutama pada kasus akut?", "o": ["Escherichia coli", "Staphylococcus aureus", "Mycobacterium tuberculosis", "Streptococcus pyogenes", "Streptococcus pneumoniae"], "a": "Staphylococcus aureus", "exp": "<b>Staphylococcus aureus</b> adalah patogen etiologi paling sering dan paling virulen pada <b>endokarditis infektif akut (Acute Infective Endocarditis)</b>, baik pada katup natif maupun katup prostetik dan pengguna obat suntik (IVDU).<br><br><i>S. aureus</i> memiliki faktor virulensi agresif (koagulase, adhesin MSCRAMM, eksotoksin) yang memungkinkannya menginvasi dan mendestruksi katup jantung normal yang sebelumnya sehat dalam hitungan hari, menyebabkan perforasi daun katup, abses miokard perivalvular, dan bakteremia destruktif masif.", "src": "PPT Mikrobiologi Kardiovaskuler (K11) · Mandell, Douglas, and Bennett's Principles and Practice of Infectious Diseases 9th ed", "k": 11, "cbt": "cvs"}, {"n": 72, "t": "K11 · Mikrobiologi pada Sistem Kardiovaskuler", "q": "Apakah salah satu fungsi fibrin dan trombosit dalam vegetasi endokarditis infektif bagi mikroorganisme yang berada di dalamnya?", "o": ["Membantu melindungi mikroorganisme dari mekanisme pertahanan imun dan mempersulit penetrasi antibiotik", "Menghentikan seluruh proses adhesi bakteri pada katup", "Meningkatkan eliminasi bakteri oleh fagosit secara langsung", "Mencegah pembentukan vegetasi", "Menghilangkan risiko embolisasi"], "a": "Membantu melindungi mikroorganisme dari mekanisme pertahanan imun dan mempersulit penetrasi antibiotik", "exp": "Bakteri yang menempel pada endotel katup memicu aktivasi kaskade koagulasi lokal dan agregasi platelet, menghasilkan selubung matriks tebal yang kaya akan <b>anyaman fibrin dan trombosit</b>.<br><br>Matriks fibrin-trombosit ini berfungsi sebagai <b>sawar pelindung fisik (protective biofilm-like sanctuary)</b> yang menghalangi neutrofil dan makrofag menjangkau koloni bakteri (mencegah fagositosis), menghambat penetrasi antibodi dan komplemen, serta secara substansial <b>mempersulit difusi dan penetrasi antibiotik</b>. Inilah alasan mengapa endokarditis infektif mutlak memerlukan antibiotik bakterisid dosis tinggi dengan durasi panjang (4–6 minggu).", "src": "PPT Patofisiologi Endokarditis (K11/K9) · Robbins & Cotran Pathologic Basis of Disease", "k": 11, "cbt": "cvs"}, {"n": 73, "t": "K22 · Parasit pada Sistem Respirasi", "q": "Ciri yang sesuai dengan infeksi Paragonimus westermani adalah ....", "o": ["Telur dapat ditemukan dalam sputum dan dapat tertelan sehingga ditemukan pula dalam tinja", "Telur hanya dikeluarkan melalui urine", "Larva filariform menembus kulit sebagai jalur infeksi utama", "Cacing dewasa hidup di usus halus", "Hospes perantara pertama adalah nyamuk"], "a": "Telur dapat ditemukan dalam sputum dan dapat tertelan sehingga ditemukan pula dalam tinja", "exp": "<b>Paragonimus westermani (Lung Fluke / Cacing Paru)</b> adalah trematoda jaringan yang cacing dewasanya hidup terbungkus kista di dalam parenkim paru manusia.<br><br><b>Karakteristik Diagnostik:</b> Cacing dewasa melepaskan telur beroperkulum ke dalam lumen bronkiolus. Telur dikeluarkan ke dunia luar bersama dahak saat batuk (<b>ditemukan dalam sputum</b>). Bila sputum tertelan oleh pasien, telur akan melewati saluran cerna dan <b>dapat ditemukan pada pemeriksaan tinja (feses)</b>.<br><br>Hospes perantara 1 adalah siput air tawar (<i>Semisulcospira</i>), dan hospes perantara 2 adalah kepiting atau udang batu air tawar (penularan terjadi melalui konsumsi kepiting/udang mentah atau kurang matang yang mengandung metaserkaria).", "src": "PPT Parasitologi Sistem Respirasi (K22) · Markell and Voge's Medical Parasitology 9th ed", "k": 22, "cbt": "resp"}, {"n": 74, "t": "K22 · Parasit pada Sistem Respirasi", "q": "Stadium infektif Ascaris lumbricoides bagi manusia adalah ....", "o": ["Telur yang belum mengalami embrionasi", "Larva rabditiform", "Larva filariform", "Telur berembrio yang mengandung larva infektif", "Mikrofilaria"], "a": "Telur berembrio yang mengandung larva infektif", "exp": "Manusia terinfeksi <i>Ascaris lumbricoides</i> secara fecal-oral melalui ingesti makanan, minuman, atau tangan yang terkontaminasi tanah mengandung <b>telur berembrio (telur matang) yang berisi larva stadium 2 / stadium infektif</b>.<br><br>Telur yang baru keluar bersama tinja (unembryonated egg) belum infektif dan membutuhkan waktu pematangan di tanah hangat dan lembap selama 2–3 minggu untuk berkembang menjadi telur berembrio infektif. Di duodenum manusia, larva menetas, menembus mukosa usus, bermigrasi ke peredaran darah/hati, lalu menuju kapiler alveolus paru (siklus paru / Loeffler's syndrome).", "src": "PPT Parasitologi Sistem Respirasi (K22) · CDC Parasites - Ascariasis · Gandahusada Parasitologi Kedokteran", "k": 22, "cbt": "resp"}, {"n": 75, "t": "K22 · Parasit pada Sistem Respirasi", "q": "Seorang pasien mengalami diare berdarah, anemia, dan eosinofilia. Pemeriksaan menemukan cacing tambang dewasa dengan tiga pasang gigi pada kapsul bukalnya. Spesies apakah yang paling mungkin?", "o": ["Ascaris lumbricoides", "Necator americanus", "Paragonimus westermani", "Ancylostoma duodenale", "Strongyloides stercoralis"], "a": "Ancylostoma duodenale", "exp": "Morfologi aparatus mulut (kapsul bukal) merupakan kunci diferensiasi spesies cacing tambang (hookworm):<br>• <b>Ancylostoma duodenale:</b> Memiliki <b>gigi kitin tajam (teeth)</b> pada tepi ventral kapsul bukalnya (klasik terdapat 2 hingga 3 pasang gigi taring melengkung).<br>• <b>Necator americanus:</b> Memiliki sepasang lempeng pemotong semilunar (<b>cutting plates</b>), bukan gigi tajam.<br><br><i>A. duodenale</i> menyebabkan kehilangan darah usus yang jauh lebih masif (sekitar 0,15–0,25 mL darah/cacing/hari) dibandingkan <i>N. americanus</i>, memicu anemia defisiensi besi berat dan diare berdarah.", "src": "PPT Parasitologi Sistem Respirasi (K22) · Manson's Tropical Infectious Diseases · CDC Hookworm", "k": 22, "cbt": "resp"}, {"n": 76, "t": "K22 · Parasit pada Sistem Respirasi", "q": "Pada infeksi cacing tambang, stadium infektif yang dapat menembus kulit manusia adalah ....", "o": ["Telur berembrio", "Larva rabditiform", "Larva filariform (L3)", "Kista", "Cacing dewasa"], "a": "Larva filariform (L3)", "exp": "Siklus hidup cacing tambang (<i>Ancylostoma duodenale</i> dan <i>Necator americanus</i>):<br>1. Telur keluar bersama feses ke tanah.<br>2. Telur menetas menjadi <b>larva rabditiform (L1–L2)</b> non-infektif yang memakan bakteri tanah.<br>3. Larva rabditiform berganti kulit menjadi <b>larva filariform (stadium L3)</b> yang langsing dan sangat motil.<br>4. <b>Larva filariform (L3)</b> inilah <b>stadium infektif</b> yang mampu menembus kulit utuh manusia (misalnya saat berjalan tanpa alas kaki), menimbulkan lesi kutaneus (ground itch / creeping eruption), lalu bermigrasi secara hematogen ke paru sebelum tertelan menuju usus halus.", "src": "PPT Parasitologi Sistem Respirasi (K22) · CDC Parasites - Hookworm", "k": 22, "cbt": "resp"}, {"n": 77, "t": "K22 · Parasit pada Sistem Respirasi", "q": "Seorang anak berusia 8 tahun mengalami batuk selama dua minggu, hemoglobin 8,9 g/dL, dan eosinofil 22%. Anak sering bermain di sawah tanpa alas kaki. Pemeriksaan awal apa yang paling relevan untuk mengevaluasi dugaan infeksi cacing tambang dengan manifestasi paru dan anemia?", "o": ["Endoskopi dan pemeriksaan feses", "Apusan darah tepi dan endoskopi", "Apusan darah tepi dan sputum", "Foto toraks dan pemeriksaan sputum", "Pemeriksaan feses dan foto toraks"], "a": "Pemeriksaan feses dan foto toraks", "exp": "Anak memiliki riwayat kontak tanah tanpa alas kaki, batuk subakut, anemia hipokromik mikrositik (Hb 8,9 g/dL), dan <b>hipereosinofilia masif (22%)</b>, sangat khas untuk migrasi transpulmoner larva cacing tambang (sindrom Loeffler) dan infestasi usus.<br><br><b>Pemeriksaan Awal Paling Relevan:</b><br>1. <b>Pemeriksaan feses mikroskopis (Kato-Katz / direct smear):</b> Menemukan telur cacing tambang untuk konfirmasi definitif infestasi parasit usus penyebab anemia kronis.<br>2. <b>Foto toraks (rontgen dada):</b> Mengevaluasi manifestasi paru, mendeteksi infiltrat transient / migratorik eosinofilik (pneumonitis eosinofilik / Loeffler's syndrome) akibat penetrasi larva di kapiler alveolar paru.<br><br>Endoskopi bersifat invasif dan bukan lini awal evaluasi anak.", "src": "PPT Parasitologi Sistem Respirasi (K22) · Nelson Textbook of Pediatrics · CDC Hookworm", "k": 22, "cbt": "resp"}, {"n": 78, "t": "K21 · Farmakologi Antibiotik pada Infeksi Saluran Napas", "q": "Seorang wanita 26 tahun datang dengan keluhan sakit kepala dan nyeri pada wajah yang memberat saat digerakkan/membungkuk, didiagnosis sinusitis bakterial akut pasca-influenza. Apakah antibiotik pertama yang diberikan?", "o": ["Amoksisilin-klavulanat", "Azitromisin", "Sefadroksil", "Amoksisilin", "Siprofloksasin"], "a": "Amoksisilin-klavulanat", "exp": "Pasien mengalami gejala khas <b>Sinusitis Bakterial Akut (Acute Bacterial Rhinosinusitis / ABRS)</b> pasca-infeksi virus (double sickening / nyeri wajah fasial yang memberat saat menunduk atau menoleh).<br><br>Berdasarkan pedoman klinis Infectious Diseases Society of America (<b>IDSA Clinical Practice Guideline for Acute Bacterial Rhinosinusitis</b>), antibiotik empiris lini pertama adalah <b>Amoksisilin-klavulanat (Ko-amoksiklav)</b>.<br><br>Kombinasi ini diperlukan karena patogen umum (<i>Haemophilus influenzae</i> dan <i>Moraxella catarrhalis</i>) memiliki tingkat resistensi beta-laktamase yang tinggi terhadap amoksisilin tunggal. Makrolid (azitromisin) tidak lagi direkomendasikan secara rutin karena angka resistensi pneumokokus mencapai &gt; 30%.", "src": "PPT Antibiotik Saluran Napas (K21B) · IDSA Clinical Practice Guideline for Acute Bacterial Rhinosinusitis", "k": 21, "cbt": "resp"}, {"n": 79, "t": "K3 · Gangguan Tekanan Darah", "q": "Hal yang tidak berpengaruh terhadap tekanan darah adalah sebagai berikut…", "o": ["Volume darah", "Frekuensi nafas", "Curah jantung", "Stroke volume", "Resistensi perifer"], "a": "Frekuensi nafas", "exp": "Secara biofisika kardiovaskular, <b>Tekanan Darah Arteri Sistemik (Blood Pressure / BP)</b> diatur secara langsung oleh formula fundamental:<br>$$\\text{Tekanan Darah (BP)} = \\text{Curah Jantung (CO)} \\times \\text{Resistensi Perifer Total (TPR)}$$<br>Di mana:<br>• <b>Curah Jantung (Cardiac Output):</b> Hasil kali <i>Stroke Volume (Isi Sekuncup)</i> dengan <i>Heart Rate (Denyut Jantung)</i>.<br>• <b>Volume Darah:</b> Menentukan venous return, end-diastolic volume (EDV), dan stroke volume melalui mekanisme Frank-Starling.<br>• <b>Resistensi Perifer:</b> Ditentukan oleh diameter tonus arteriol vaskular sistemik.<br><br><b>Frekuensi napas (respiratory rate)</b> adalah parameter ventilasi respirasi dan tidak berpengaruh langsung sebagai determinan mekanis hemodinamik tekanan darah arterial.", "src": "PPT Hemodinamik & Tekanan Darah (K3) · Guyton & Hall Medical Physiology 14th ed", "k": 3, "cbt": "cvs"}, {"n": 80, "t": "K25 · Sesak Napas Pulmonal", "q": "Seorang laki-laki mengalami kecelakaan dan kepalanya terbentur cukup keras. Setelah kejadian, ditemukan pola napas yang tidak teratur. Kerusakan pada bagian manakah yang paling mungkin menyebabkan gangguan pola napas tersebut?", "o": ["Kerusakan pada pusat pernapasan di medula oblongata", "Kerusakan pada pusat pernapasan di pons", "Asidosis metabolik", "Alkalosis respiratorik", "Alkalosis metabolik"], "a": "Kerusakan pada pusat pernapasan di medula oblongata", "exp": "<b>Medula oblongata</b> adalah stasiun pusat pengendali <b>ritme pernapasan dasar (basic automatic respiratory rhythm)</b> pada manusia, yang memuat gugus neuron <b>Dorsal Respiratory Group (DRG)</b> (pengendali inspirasi primer) dan <b>Ventral Respiratory Group (VRG)</b> (ekspirasi paksa dan ritmisitas kompleks pre-Bötzinger).<br><br>Benturan kepala keras yang mencederai medula oblongata melumpuhkan generator ritme otonom tersebut, memicu pernapasan yang sepenuhnya ataksik / tidak teratur (Biot's ataxic breathing) hingga henti napas sentral (apnea). Sementara itu, pusat di pons (pusat pneumotaksik dan apneustik) berperan memodulasi dan menghaluskan transisi inspirasi-ekspirasi.", "src": "PPT Kontrol Pernapasan Batang Otak (K25/K10) · Guyton & Hall Medical Physiology", "k": 25, "cbt": "resp"}, {"n": 81, "t": "K11 · Mikrobiologi pada Sistem Kardiovaskuler", "q": "Gejala yang sering ditemukan pada endokarditis infektif subakut adalah ....", "o": ["Aritmia ventrikel mendadak disertai palpitasi", "Sesak napas disertai penurunan toleransi aktivitas", "Pembengkakan tungkai disertai peningkatan tekanan vena jugularis", "Demam ringan, lemah, dan penurunan berat badan", "Demam menggigil disertai onset akut dan kondisi umum yang memburuk dengan cepat"], "a": "Demam ringan, lemah, dan penurunan berat badan", "exp": "<b>Endokarditis Infektif Subakut (Subacute Infective Endocarditis / SBE)</b> (lazimnya disebabkan oleh bakteri virulensi rendah seperti <i>Streptococcus viridans</i> pada katup jantung yang sebelumnya sudah abnormal) berkembang secara <b>insidius dan lambat selama berminggu-minggu hingga berbulan-bulan</b>.<br><br>Manifestasi klinisnya tidak khas dan menyerupai penyakit sistemik kronis:<br>• <b>Demam derajat rendah / subfebris yang berkepanjangan (low-grade fever)</b>.<br>• <b>Kelemahan umum, rasa mudah lelah (fatigue/malaise), anoreksia, keringat malam, dan penurunan berat badan nyata</b>.<br>• Kadang disertai bising jantung baru/berubah, splenomegali, serta tanda vaskular/imunologis mikro (petekie, Osler's nodes, Roth's spots).", "src": "PPT Endokarditis Subakut (K11) · Harrison's Principles of Internal Medicine 21st ed", "k": 11, "cbt": "cvs"}, {"n": 82, "t": "K21 · Farmakologi Antibiotik pada Infeksi Saluran Napas", "q": "Anak berusia 6 tahun didiagnosis mengalami sinusitis akut bakterial yang disebabkan oleh Haemophilus influenzae. Apakah antibiotik lini pertama yang paling tepat?", "o": ["Amoksisilin", "Sefiksim", "Kotrimoksazol", "Eritromisin", "Kloramfenikol"], "a": "Amoksisilin", "exp": "Pada populasi anak dengan infeksi saluran napas atas bakterial (sinusitis bakterial akut tanpa komplikasi atau otitis media akut), <b>Amoksisilin dosis tinggi (80–90 mg/kgBB/hari)</b> merupakan antibiotik lini pertama standar rekomendasi American Academy of Pediatrics (AAP).<br><br>Amoksisilin memiliki penetrasi jaringan mukosa saluran napas yang sangat baik, profil keamanan anak yang tinggi, dan ditoleransi dengan baik. (Bila terdapat resistensi beta-laktamase tinggi atau gagal terapi dalam 48–72 jam, terapi dieskalasi ke amoksisilin-klavulanat).", "src": "PPT Antibiotik Saluran Napas Anak (K21B) · AAP Clinical Practice Guideline for Acute Bacterial Sinusitis in Children", "k": 21, "cbt": "resp"}, {"n": 83, "t": "K22 · Parasit pada Sistem Respirasi", "q": "Di bawah ini yang merupakan ciri-ciri Paragonimus westermani, kecuali ....", "o": ["Kista berukuran 1-3 cm", "Kista terletak di superficial paru", "Jika terjadi inflamasi maka peritoneum akan lengket", "Di sekitar telur cacing terdapat granuloma", "Isi kista berisi cairan, eritrosit, dan satu cacing"], "a": "Jika terjadi inflamasi maka peritoneum akan lengket", "exp": "<b>Paragonimus westermani</b> bermukim di dalam <b>parenkim paru</b>, bukan di rongga peritoneum/abdomen.<br><br><b>Analisis Opsi:</b><ul><li><b>Pilihan C SALAH (Jawaban yang dicari):</b> Peradangan akibat ekskresi metabolit dan penetrasi cacing terjadi pada <b>pleura viseralis dan parietalis (menyebabkan adhesi pleura dan efusi pleura seroanguinosa)</b>, BUKAN perlekatan peritoneum abdomen.</li><li><b>Pilihan A, B, D, E BENAR secara patologi:</b> Cacing dewasa terbungkus dalam kista fibrotik paru berdiameter 1–3 cm, sering berlokasi di superfisial paru/subpleura, memicu reaksi inflamasi granulomatosa eosinofilik di sekitar telur, dan kista berisi cairan nekrotik kecokelatan, kristal Charcot-Leyden, eritrosit, serta cacing trematoda.</li></ul>", "src": "PPT Parasitologi Sistem Respirasi (K22) · Robbins Pathologic Basis of Disease · Parasitologi Kedokteran", "k": 22, "cbt": "resp"}, {"n": 84, "t": "K19 · Farmakologi Obat Sistem Respirasi", "q": "Obat batuk yang bekerja di pusat adalah ....", "o": ["Dextromethorphan", "Ambroxol", "Bromhexin", "Amoxicillin", "Penicillin"], "a": "Dextromethorphan", "exp": "<b>Dextromethorphan (DMP)</b> adalah <b>antitusif kerja sentral (centrally acting antitussive)</b> non-narkotik (analog dekstrorotatori dari levorfanol).<br><br>Obat ini bekerja dengan meningkatkan ambang batas rangsang refleks batuk melalui blokade reseptor NMDA dan agonisme reseptor sigma-1 di <b>pusat batuk medula oblongata</b>.<br><br>Sebaliknya, <i>ambroksol</i> dan <i>bromheksin</i> adalah mukolitik yang bekerja perifer di saluran napas, sedangkan <i>amoksisilin</i> dan <i>penisilin</i> adalah antibiotik antimikroba.", "src": "PPT Obat Batuk Sentral & Perifer (K19/K24) · Katzung Basic & Clinical Pharmacology 15th ed", "k": 19, "cbt": "resp"}, {"n": 85, "t": "K19 · Farmakologi Obat Sistem Respirasi", "q": "Kortikosteroid yang digunakan untuk terapi rhinitis adalah ....", "o": ["Guaifenesin", "Dextromethorphan", "Ambroxol", "Fluticasone", "Bromhexine"], "a": "Fluticasone", "exp": "<b>Fluticasone (Fluticasone propionate / furoate)</b> adalah <b>kortikosteroid topikal intranasal</b> dengan afinitas glukokortikoid yang sangat tinggi dan bioavailabilitas sistemik minimal (&lt; 1%).<br><br>Fluticasone merupakan terapi baku emas (first-line therapy) paling efektif untuk meredakan seluruh konstelasi gejala rinitis alergi dan non-alergi (bersin paroksismal, rinorea encer, gatal hidung, dan kongesti hidung tersumbat).<br><br>Guaifenesin adalah ekspektoran; Dextromethorphan adalah antitusif; Ambroxol dan Bromhexine adalah mukolitik.", "src": "PPT Obat Rinitis Alergi (K19) · ARIA Guidelines for Allergic Rhinitis · Katzung Pharmacology", "k": 19, "cbt": "resp"}];
+let Q = QALL;
+
+const TOPICS = [...new Set(QALL.map(q => q.t))];
+const SYL = {
+  "2": "Gangguan Embriologi Sistem Kardiovaskuler dan Respirasi",
+  "3": "Gangguan Tekanan Darah",
+  "4": "Syok",
+  "5": "Gangguan Pembuluh Darah Vena dan Arteri",
+  "6": "Edema",
+  "7": "Nyeri Dada",
+  "8": "Dada Berdebar-debar",
+  "9": "Patologi Sistem Kardiovaskuler",
+  "10": "Patologi Sistem Respirasi",
+  "11": "Mikrobiologi pada Sistem Kardiovaskuler",
+  "12": "Pemeriksaan Mikrobiologi pada Sistem Respirasi",
+  "13": "Pemeriksaan Laboratorium Sistem Kardiovaskuler",
+  "14": "Pemeriksaan Laboratorium Sistem Respirasi",
+  "15": "Farmakologi Obat Antihipertensi",
+  "16": "Farmakologi Obat Anti Angina",
+  "17": "Farmakologi Obat Anti Aritmia",
+  "18": "Farmakologi Obat Gagal Jantung",
+  "19": "Farmakologi Obat Sistem Respirasi: Obat Lokal Saluran Napas",
+  "20": "Farmakologi Obat TB",
+  "21": "Farmakologi Antibiotik pada Infeksi Saluran Napas",
+  "22": "Parasit pada Sistem Respirasi",
+  "23": "Napas Berbunyi",
+  "24": "Batuk",
+  "25": "Sesak Napas Pulmonal",
+  "26": "Nyeri Dada Pulmonal",
+  "27": "Nyeri Dada Cardiac",
+  "28": "Dasar-dasar EKG",
+  "29": "Sesak Napas Cardiac",
+  "30": "Sianosis"
+};
+
+let selK = new Set(QALL.map(q => q.k));
+let scope = 'all';
+
+function scopeOf(k){
+  const item = QALL.find(q => q.k === k);
+  return item ? item.cbt : 'cvs';
+}
+
+function renderScope(){
+  const cnt = {};
+  QALL.forEach(q => cnt[q.k] = (cnt[q.k] || 0) + 1);
+  const n1 = QALL.filter(q => q.cbt === 'cvs').length;
+  const n2 = QALL.filter(q => q.cbt === 'resp').length;
+  document.getElementById('sc-all').textContent = QALL.length + ' soal';
+  document.getElementById('sc-1').textContent = n1 + ' soal';
+  document.getElementById('sc-2').textContent = n2 + ' soal';
+  document.querySelectorAll('.scope-btn').forEach(b => {
+    const on = b.dataset.scope === scope;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', on);
+  });
+  let h = '';
+  [['cvs', 'CBT 2 · KARDIOVASKULAR & EKG'], ['resp', 'CBT 2 · RESPIRASI & FARMAKOLOGI']].forEach(([g, lbl]) => {
+    if (scope !== 'all' && scope !== g) return;
+    h += '<div class="k-group-lbl">' + lbl + '</div>';
+    Object.keys(SYL).map(Number).filter(k => scopeOf(k) === g && cnt[k]).forEach(k => {
+      const c = cnt[k] || 0;
+      const on = selK.has(k);
+      h += '<button class="k-chip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" onclick="toggleK(' + k + ')">K' + k + ' · ' + SYL[k] + ' <span class="kc">' + c + '</span></button>';
+    });
+  });
+  document.getElementById('k-wrap').innerHTML = h;
+  const n = filtered().length;
+  document.getElementById('sel-count').textContent = n;
+  document.querySelectorAll('.mode-btn').forEach(b => b.disabled = n === 0);
+}
+
+function filtered(){
+  return QALL.filter(q => (scope === 'all' || q.cbt === scope) && selK.has(q.k));
+}
+
+function setScope(s){
+  scope = s;
+  selK = new Set(QALL.filter(q => s === 'all' || q.cbt === s).map(q => q.k));
+  renderScope();
+}
+
+function toggleK(k){
+  selK.has(k) ? selK.delete(k) : selK.add(k);
+  renderScope();
+}
+
+function kAll(on){
+  selK = on ? new Set(QALL.filter(q => scope === 'all' || q.cbt === scope).map(q => q.k)) : new Set();
+  renderScope();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderScope();
+  loadStats();
+});
+
+let mode = 'study', cur = 0, answered = {}, flagged = new Set(), score = 0, streak = 0, timerInterval = null;
+let sessions = 0, bestScore = 0, allScores = [], topicStats = {};
+const KEY = 'kc32_nidu2_';
+
+function loadStats(){
+  try{
+    sessions = parseInt(localStorage.getItem(KEY+'s') || '0');
+    bestScore = parseInt(localStorage.getItem(KEY+'b') || '0');
+    allScores = JSON.parse(localStorage.getItem(KEY+'sc') || '[]');
+    topicStats = JSON.parse(localStorage.getItem(KEY+'t') || '{}');
+  }catch(e){}
+  renderStats();
+}
+
+function renderStats(){
+  document.getElementById('stat-sessions').textContent = sessions || '0';
+  document.getElementById('stat-best').textContent = bestScore ? bestScore + '/' + QALL.length : '—';
+  if(allScores.length > 0){
+    const avg = Math.round(allScores.reduce((a, b) => a + b.score, 0) / allScores.length);
+    document.getElementById('stat-avg').textContent = avg + ' (' + Math.round(avg / QALL.length * 100) + '%)';
+  } else {
+    document.getElementById('stat-avg').textContent = '—';
+  }
+  renderHistList();
+  renderTopicBar('topic-bar', topicStats);
+}
+
+function renderHistList(){
+  const list = document.getElementById('hist-list');
+  if(!allScores.length){
+    list.innerHTML = '<div class="no-hist">Belum ada sesi — yuk mulai sekarang!</div>';
+    return;
+  }
+  list.innerHTML = [...allScores].reverse().slice(0, 8).map(s => {
+    const tot = s.total || QALL.length;
+    const pct = Math.round(s.score / tot * 100);
+    return '<div class="hist-item"><span class="hi-mode">' + s.mode + '</span><span class="hi-date">' + s.date + '</span><span class="hi-score">' + s.score + '/' + tot + '</span><span class="hi-pct">' + pct + '%</span></div>';
+  }).join('');
+}
+
+function renderTopicBar(elId, stats){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  const tw = TOPICS.filter(t => stats[t] && (stats[t].correct + stats[t].wrong) > 0);
+  if(!tw.length){
+    el.innerHTML = '<div class="no-hist">Belum ada data topik.</div>';
+    return;
+  }
+  el.innerHTML = tw.map(t => {
+    const d = stats[t], total = d.correct + d.wrong, pct = Math.round(d.correct / total * 100);
+    return '<div class="topic-row"><span class="topic-name">' + t + '</span><div class="topic-track"><div class="topic-fill ' + (pct >= 75 ? 'good' : pct >= 50 ? 'mid' : 'low') + '" style="width:' + pct + '%"></div></div><span class="topic-pct">' + pct + '%</span></div>';
+  }).join('');
+}
+
+function clearHistory(){
+  if(!confirm('Hapus semua riwayat sesi MAS NIDU 2?')) return;
+  [KEY+'s', KEY+'b', KEY+'sc', KEY+'t'].forEach(k => localStorage.removeItem(k));
+  sessions = 0; bestScore = 0; allScores = []; topicStats = {};
+  renderStats();
+}
+
+function startQuiz(m){
+  Q = filtered();
+  if(!Q.length) return;
+  mode = m; cur = 0; answered = {}; flagged = new Set(); score = 0; streak = 0;
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('score-display').style.display = m === 'drill' ? 'none' : '';
+  const te = document.getElementById('timer-el');
+  clearInterval(timerInterval);
+  if(m === 'exam'){
+    te.style.display = '';
+    let t = Math.max(300, Math.round(5400 * Q.length / QALL.length)); // 90 menit (5400s) untuk 85 soal
+    timerInterval = setInterval(() => {
+      t--;
+      const m2 = Math.floor(t / 60), s = t % 60;
+      te.textContent = (m2 < 10 ? '0' : '') + m2 + ':' + (s < 10 ? '0' : '') + s;
+      te.className = 'timer-badge' + (t < 300 ? ' warning' : '') + (t < 60 ? ' danger' : '');
+      if(t <= 0){
+        clearInterval(timerInterval);
+        submitExam();
+      }
+    }, 1000);
+  } else {
+    te.style.display = 'none';
+  }
+  renderQ();
+}
+
+function renderQ(){
+  const total = Q.length, q = Q[cur];
+  document.getElementById('prog-fill').style.width = ((cur + 1) / total * 100) + '%';
+  document.getElementById('prog-txt').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('mode-badge').textContent = mode.charAt(0).toUpperCase() + mode.slice(1) + ' Mode';
+  const correct = Object.values(answered).filter(v => v === true).length;
+  const attempted = Object.keys(answered).filter(k => !k.includes('-')).length;
+  document.getElementById('score-display').textContent = correct + ' / ' + attempted;
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').textContent = cur === total - 1 ? (mode === 'exam' ? 'Kumpulkan ›' : 'Selesai ›') : 'Next ›';
+  document.getElementById('btn-flag').className = 'flag-btn' + (flagged.has(cur) ? ' flagged' : '');
+  const optsHTML = q.o.map((opt, i) => {
+    const key = String.fromCharCode(65 + i);
+    let cls = 'opt', badge = '';
+    if(answered.hasOwnProperty(cur)){
+      const isC = opt === q.a, wasC = answered[cur + '-choice'] === opt;
+      if(mode === 'exam'){
+        if(wasC) cls += ' selected';
+      } else {
+        if(isC){ cls += ' correct'; badge = '✓'; }
+        else if(wasC && !isC){ cls += ' incorrect'; badge = '✗'; }
+      }
+    }
+    const dis = answered.hasOwnProperty(cur) && mode !== 'drill' ? 'disabled' : '';
+    return '<button class="' + cls + '" ' + dis + ' onclick="selectOpt(this,' + i + ')"><span class="opt-key">' + key + '</span><span class="opt-body">' + opt + '</span><span class="opt-badge">' + badge + '</span></button>';
+  }).join('');
+  document.getElementById('q-card').innerHTML = '<div class="q-index">Soal ' + (cur + 1) + ' dari ' + total + '<span class="pill-tag">' + mode.toUpperCase() + '</span><span class="pill-tag accent">' + q.t + '</span>' + (flagged.has(cur) ? '<span class="pill-tag">Flagged ⚑</span>' : '') + '</div><div class="q-text">' + q.q + '</div><div class="opts">' + optsHTML + '</div>';
+  const expBox = document.getElementById('exp-box');
+  if(answered.hasOwnProperty(cur) && mode === 'study'){
+    document.getElementById('exp-answer').textContent = '✓ Jawaban: ' + q.a;
+    document.getElementById('exp-body').innerHTML = q.exp;
+    document.getElementById('exp-src').textContent = '📚 Sumber & Referensi: ' + q.src;
+    expBox.className = 'exp-box show';
+  } else {
+    expBox.className = 'exp-box';
+  }
+  renderMap();
+}
+
+function selectOpt(btn, optIdx){
+  const q = Q[cur];
+  const chosen = (typeof optIdx === 'number') ? q.o[optIdx] : optIdx;
+  const correct = chosen === q.a;
+  answered[cur + '-choice'] = chosen;
+  if(mode === 'drill'){
+    if(correct){
+      answered[cur] = true;
+      streak++;
+      showToast(streak % 5 === 0 ? '🔥 ' + streak + ' streak!' : '✓ Benar!');
+      setTimeout(() => {
+        if(cur < Q.length - 1) navigate(1);
+        else {
+          clearInterval(timerInterval);
+          document.getElementById('drill-overlay').classList.add('show');
+        }
+      }, 600);
+    } else {
+      btn.classList.add('drill-wrong-shake');
+      delete answered[cur];
+      delete answered[cur + '-choice'];
+      setTimeout(() => btn.classList.remove('drill-wrong-shake'), 400);
+      streak = 0;
+      showToast('✗ Kurang tepat, coba lagi!');
+    }
+    renderQ();
+    return;
+  }
+  answered[cur] = correct;
+  if(correct){
+    score++;
+    streak++;
+    showToast(streak % 5 === 0 ? '🔥 ' + streak + ' streak!' : '✓ Benar!');
+  } else {
+    streak = 0;
+    showToast('✗ Kurang tepat');
+  }
+  renderQ();
+}
+
+function navigate(dir){
+  if(dir === 1 && cur === Q.length - 1){
+    if(mode === 'exam'){
+      document.getElementById('exam-overlay').classList.add('show');
+      return;
+    }
+    showResults();
+    return;
+  }
+  cur = Math.max(0, Math.min(Q.length - 1, cur + dir));
+  renderQ();
+}
+
+function toggleFlag(){
+  flagged.has(cur) ? flagged.delete(cur) : flagged.add(cur);
+  renderQ();
+}
+
+function renderMap(){
+  document.getElementById('q-map').innerHTML = Q.map((_, i) => {
+    let cls = 'q-dot';
+    if(i === cur) cls += ' current';
+    else if(answered.hasOwnProperty(i)) cls += answered[i] ? ' answered' : ' wrong';
+    if(flagged.has(i)) cls += ' flagged-dot';
+    return '<div class="' + cls + '" onclick="jumpTo(' + i + ')">' + (i + 1) + '</div>';
+  }).join('');
+}
+
+function jumpTo(i){
+  cur = i;
+  renderQ();
+}
+
+function submitExam(){
+  closeOverlay('exam-overlay');
+  clearInterval(timerInterval);
+  Q.forEach((_, i) => {
+    if(!answered.hasOwnProperty(i)) answered[i] = false;
+  });
+  showResults();
+}
+
+function showResults(){
+  clearInterval(timerInterval);
+  const total = Q.length;
+  const correct = Object.values(answered).filter(v => v === true).length;
+  const wrong = Object.values(answered).filter(v => v === false).length;
+  const skip = total - Object.keys(answered).filter(k => !k.includes('-')).length;
+  const pct = Math.round(correct / total * 100);
+  const sT = {};
+  Q.forEach((q, i) => {
+    if(!sT[q.t]) sT[q.t] = { correct: 0, wrong: 0 };
+    if(answered.hasOwnProperty(i)){
+      if(answered[i]) sT[q.t].correct++;
+      else sT[q.t].wrong++;
+    }
+  });
+  Object.keys(sT).forEach(t => {
+    if(!topicStats[t]) topicStats[t] = { correct: 0, wrong: 0 };
+    topicStats[t].correct += sT[t].correct;
+    topicStats[t].wrong += sT[t].wrong;
+  });
+  sessions++;
+  const dateStr = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: '2-digit' });
+  allScores.push({ score: correct, total: Q.length, mode, date: dateStr });
+  if(allScores.length > 20) allScores.shift();
+  if(correct > bestScore) bestScore = correct;
+  try{
+    localStorage.setItem(KEY+'s', sessions);
+    localStorage.setItem(KEY+'b', bestScore);
+    localStorage.setItem(KEY+'sc', JSON.stringify(allScores));
+    localStorage.setItem(KEY+'t', JSON.stringify(topicStats));
+  }catch(e){}
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+  document.getElementById('final-score-display').innerHTML = '<span>' + correct + '</span>/' + Q.length;
+  document.getElementById('final-sub').textContent = pct + '% benar — ' + (pct >= 75 ? 'Lulus CBT! Sangat Memuaskan 🎉' : pct >= 60 ? 'Hampir Lolos! Tingkatkan lagi!' : 'Yuk perkuat lagi lewat Drill Mode!');
+  document.getElementById('r-correct').textContent = correct;
+  document.getElementById('r-wrong').textContent = wrong;
+  document.getElementById('r-skip').textContent = skip;
+  renderTopicBar('result-topic-bar', sT);
+}
+
+function reviewAnswers(){
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  mode = 'study';
+  cur = 0;
+  renderQ();
+}
+
+function showStart(){
+  clearInterval(timerInterval);
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('start-screen').style.display = 'block';
+  document.querySelectorAll('.overlay').forEach(el => el.classList.remove('show'));
+  loadStats();
+}
+
+function confirmExit(){
+  document.getElementById('exit-overlay').classList.add('show');
+}
+
+function closeOverlay(id){
+  document.getElementById(id).classList.remove('show');
+}
+
+function showToast(msg){
+  const t = document.getElementById('streak-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1500);
+}
+
+document.addEventListener('keydown', e => {
+  if(document.getElementById('quiz-screen').style.display === 'none') return;
+  const k = e.key.toLowerCase();
+  if(k === 'arrowright') navigate(1);
+  else if(k === 'arrowleft') navigate(-1);
+  else if(k === 'f') toggleFlag();
+  else if('abcde'.includes(k)){
+    const idx = 'abcde'.indexOf(k), q = Q[cur];
+    if(idx < q.o.length && (!answered.hasOwnProperty(cur) || mode === 'drill')){
+      const btns = document.querySelectorAll('.opts .opt');
+      if(btns[idx]) selectOpt(btns[idx], idx);
+    }
+  }
+});
+</script>
+</body>
+</html>
